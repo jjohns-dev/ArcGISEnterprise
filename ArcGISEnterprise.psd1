@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.4.12'
+    ModuleVersion     = '0.4.13'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -73,6 +73,7 @@
         'ConvertFrom-Epoch'
         'ConvertFrom-ArcGISLog'
         'Get-PortalAllowedOrigins'
+        'Get-PortalDefaultUserSettings'
         'Get-PortalGroupUserList'
         'Get-PortalIndexStatus'
         'Get-PortalLicense'
@@ -83,7 +84,7 @@
         'Get-PortalSecurityConfig'
         'Get-PortalSecurityPolicy'
         'Get-PortalRole'
-        'Get-PortalSelf'
+        'Get-PortalSettings'
         'Get-PortalToken'
         'Get-PortalUser'
         'Get-PortalUserGroup'
@@ -102,9 +103,13 @@
         'Remove-PortalRole'
         'Search-PortalContent'
         'Set-PortalAllowedOrigins'
+        'Set-PortalDefaultUserLicenseType'
+        'Set-PortalDefaultUserRole'
         'Set-PortalProxyHosts'
+        'Set-PortalPublicSharing'
         'Set-PortalRolePrivilege'
         'Set-PortalUserPassword'
+        'Set-PortalUserProfileEditing'
         'Set-ServerAllowedOrigins'
         'Set-ServerPSAPassword'
         'Test-PortalFederation'
@@ -121,6 +126,7 @@
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
     AliasesToExport   = @(
         'Get-AGSService'
+        'Get-PortalSelf'
         'Get-SecurityPolicy'
         'Test-PortalToken'
         'Update-PortalPSA'
