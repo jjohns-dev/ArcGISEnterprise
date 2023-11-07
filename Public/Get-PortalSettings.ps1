@@ -19,11 +19,23 @@ function Get-PortalSettings {
         PS C:\> Get-PortalSettings -Context 'https://arcgis.com/arcgis' -Token $token
         Gets Portal "self" configuration
     .NOTES
+        Name:     Get-PortalSettings
+        Author:   Phillip Glodowski, Justin Johns
+        Version:  0.3.0 | Last Edit: 2023-11-07
+        - 0.3.0 - Renamed to Get-PortalSettings
+        - 0.2.0 - Renamed to Get-PortalSelf
+        - 0.1.0 - Initial version (Test-PortalToken)
+        Comments: <Comment(s)>
         General notes
+        https://developers.arcgis.com/rest/users-groups-and-items/portal.htm
     #>
     [CmdletBinding()]
     [Alias('Test-PortalToken', 'Get-PortalSelf')]
     Param(
+        <# [Parameter(HelpMessage = 'Portal ID')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $PortalId = '0123456789ABCDEF', #>
+
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -36,15 +48,18 @@ function Get-PortalSettings {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Process {
+        # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/portals/self' -f $Context
+            #Uri    = ('{0}/sharing/rest/portals/{1}' -f $Context, $PortalId)
             Method = 'POST'
-            Body   = @{
-                f     = 'json'
-                token = $Token
-            }
+            Body   = @{ token = $Token; f = 'json' }
         }
+
+        # ADD SKIP CERTIFICATE CHECK IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
+        # SEND REQUEST
         Invoke-RestMethod @restParams
     }
 }
