@@ -4,6 +4,8 @@ function Set-PortalPublicSharing {
         Short description
     .DESCRIPTION
         Long description
+    .PARAMETER SharePublicly
+        Share objects publicly
     .PARAMETER PortalId
         Portal ID
     .PARAMETER Context
@@ -17,15 +19,16 @@ function Set-PortalPublicSharing {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Set-PortalPublicSharing
-        Explanation of what the example does
+        PS C:\> Set-PortalPublicSharing @cParams -SharePublicly $false
+        Disables the public sharing of Portal content
     .NOTES
         Name:     Set-PortalPublicSharing
-        Author:   Justin Johns
+        Author:   Phillip Glodowski, Justin Johns
         Version:  0.1.0 | Last Edit: 2023-11-06
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
+        https://developers.arcgis.com/rest/users-groups-and-items/update.htm
     #>
     [CmdletBinding()]
     Param(
@@ -33,7 +36,7 @@ function Set-PortalPublicSharing {
         [ValidateNotNullOrEmpty()]
         [System.String] $PortalId = '0123456789ABCDEF',
 
-        [Parameter(Mandatory, HelpMessage = '')]
+        [Parameter(Mandatory, HelpMessage = 'Share Portal items publicly')]
         [System.Boolean] $SharePublicly,
 
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
@@ -51,11 +54,6 @@ function Set-PortalPublicSharing {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
     }
     Process {
-        # do we need to get the existing settings and preserve any non-changing settings while
-        # making changes?
-
-        # is there a get?
-
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = ('{0}/sharing/rest/portals/{1}/update' -f $Context, $PortalId)
