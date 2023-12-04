@@ -15,8 +15,8 @@ function Set-ServerPSAPassword {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> <example usage>
-        Explanation of what the example does
+        PS C:\> Set-ServerPSAPassword -Context https://arcgisonline.com/arcgis -Credential $creds -NewPassword $new
+        Set the Portal user specified by the "username" property of the $creds credential object to the password in the $new credential object
     .NOTES
         Name:     Set-ServerPSAPassword
         Author:   Phillip Glodowski, Justin Johns
