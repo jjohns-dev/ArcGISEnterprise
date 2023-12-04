@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.4.13'
+    ModuleVersion     = '0.4.14'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()

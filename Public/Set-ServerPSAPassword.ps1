@@ -18,6 +18,13 @@ function Set-ServerPSAPassword {
         PS C:\> <example usage>
         Explanation of what the example does
     .NOTES
+        Name:     Set-ServerPSAPassword
+        Author:   Phillip Glodowski, Justin Johns
+        Version:  0.2.1 | Last Edit: 2023-12-04
+        - 0.2.1 - Fixed error handling
+        - 0.2.0 - Renamed cmdlet to Set-ServerPSAPassword
+        - 0.1.0 - Initial version (Update-ServerPSA)
+        Comments: <Comment(s)>
         General notes
         https://developers.arcgis.com/rest/enterprise-administration/server/psa.htm
         https://developers.arcgis.com/rest/enterprise-administration/server/updatepsa.htm
@@ -46,7 +53,7 @@ function Set-ServerPSAPassword {
         # VALIDATE USER EXISTENCE USING DISABLED PROPERTY
         # THIS IS THE ONLY PROPERTY RETURNED BY "Get-ServerPSA"
         if ($status.disabled -eq $false) {
-            # CHANGE PASSWORD
+            # SET REST PARAMETERS
             $restParams = @{
                 Uri     = '{0}/admin/security/psa/update' -f $Context
                 Method  = 'POST'
@@ -58,14 +65,12 @@ function Set-ServerPSAPassword {
                     password = $NewPassword.GetNetworkCredential().Password
                 }
             }
-            $rotate = Invoke-RestMethod @restParams
 
-            # VALIDATE ROTATION SUCCESS
-            if ($rotate.status -eq 'success') { $rotate }
-            else { Throw ('Error updating PSA password for ArcGIS Server: "{0}"' -f $Context) }
+            # CHANGE PASSWORD
+            Invoke-RestMethod @restParams
         }
         else {
-            Throw ('Error retrieving user for ArcGIS Server: "{0}"' -f $Context)
+            Write-Warning -Message 'ArcGIS Server PSA is disabled.'
         }
     }
 }
