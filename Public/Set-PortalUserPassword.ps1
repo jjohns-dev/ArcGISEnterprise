@@ -62,7 +62,7 @@ function Set-PortalUserPassword {
                 }
             }
 
-            # CHANGE PASSWORD
+            # SEND REQUEST
             Invoke-RestMethod @restParams
         }
         else {

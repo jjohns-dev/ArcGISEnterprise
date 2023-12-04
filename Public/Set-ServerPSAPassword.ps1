@@ -53,7 +53,7 @@ function Set-ServerPSAPassword {
         # VALIDATE USER EXISTENCE USING DISABLED PROPERTY
         # THIS IS THE ONLY PROPERTY RETURNED BY "Get-ServerPSA"
         if ($status.disabled -eq $false) {
-            # SET REST PARAMETERS
+            # SET REQUEST PARAMETERS
             $restParams = @{
                 Uri     = '{0}/admin/security/psa/update' -f $Context
                 Method  = 'POST'
@@ -66,7 +66,7 @@ function Set-ServerPSAPassword {
                 }
             }
 
-            # CHANGE PASSWORD
+            # SEND REQUEST
             Invoke-RestMethod @restParams
         }
         else {
