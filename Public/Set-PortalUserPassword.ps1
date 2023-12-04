@@ -15,10 +15,16 @@ function Set-PortalUserPassword {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> <example usage>
-        Explanation of what the example does
+        PS C:\> Set-PortalUserPassword -Context https://arcgisonline.com/arcgis -Credential $creds -NewPassword $new
+        Set the user ArcGIS Server specified by the "username" property of the $creds credential object to the password in the $new credential object
     .NOTES
-        General notes
+        Name:     Set-PortalUserPassword
+        Author:   Justin Johns
+        Version:  0.2.1 | Last Edit: 2023-12-04
+        - 0.2.1 - Fixed error handling
+        - 0.2.0 - Renamed cmdlet to Set-PortalUserPassword
+        - 0.1.0 - Initial version (Update-PortalPSA)
+        General notes:
     #>
     [CmdletBinding()]
     [Alias('Update-PortalPSA')]
@@ -45,7 +51,7 @@ function Set-PortalUserPassword {
 
         # VALIDATE USER EXISTENCE USING ID PROPERTY
         if ($status.id) {
-            # CHANGE PASSWORD
+            # SET REQUEST PARAMETERS
             $restParams = @{
                 Uri    = '{0}/sharing/rest/community/users/{1}/update' -f $Context, $username
                 Method = 'POST'
@@ -55,20 +61,12 @@ function Set-PortalUserPassword {
                     password = $NewPassword.GetNetworkCredential().Password
                 }
             }
-            $rotate = Invoke-RestMethod @restParams
 
-            # VALIDATE ROTATION SUCCESS
-            if ($true -eq $rotate.success) {
-                $rotate
-            }
-            else {
-                $details = $rotate.error.details | Out-String
-                $errArray = @($rotate.error.code, $rotate.error.messageCode, $rotate.error.message, $details)
-                Throw ('{0} -- {1} -- {2} -- {3}' -f $errArray)
-            }
+            # SEND REQUEST
+            Invoke-RestMethod @restParams
         }
         else {
-            Throw ('Error validating user "{0}" in Portal for ArcGIS: "{1}"' -f $username, $Context)
+            throw ('User "{0}" not found in Portal "{1}"' -f $username, $Context)
         }
     }
 }
