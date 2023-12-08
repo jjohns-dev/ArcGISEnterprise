@@ -1,30 +1,60 @@
-# Get-PortalSelf
+# Set-PortalUserProfileEditing
 
 ## SYNOPSIS
-Get Portal configuration or "self"
+Short description
 
 ## SYNTAX
 
 ```
-Get-PortalSelf [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+Set-PortalUserProfileEditing [[-PortalId] <String>] [-DisableEditing] <Boolean> [-Context] <Uri>
+ [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get Portal configuration or "self." This may also be a good test of
-Portal token validity
+Long description
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-PortalSelf -Context 'https://arcgis.com/arcgis' -Token $token
-Gets Portal "self" configuration
+Set-PortalUserProfileEditing @cParams -DisableEditing $true
+Disables Portal User Profile editing
 ```
 
 ## PARAMETERS
 
+### -PortalId
+Portal ID
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: 0123456789ABCDEF
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DisableEditing
+Portal User Profile Editing
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 2
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
-Target Portal context
+Portal context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
 Type: Uri
@@ -32,7 +62,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -47,7 +77,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -78,6 +108,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
+Name:     Set-PortalUserProfileEditing
+Author:   Phillip Glodowski, Justin Johns
+Version:  0.1.0 | Last Edit: 2023-11-06
+- 0.1.0 - Initial version
+Comments: \<Comment(s)\>
 General notes
+https://developers.arcgis.com/rest/users-groups-and-items/update.htm
 
 ## RELATED LINKS

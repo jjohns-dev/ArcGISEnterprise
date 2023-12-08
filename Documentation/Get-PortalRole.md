@@ -95,7 +95,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalRole
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2022-07-19
+Version:  0.1.1 | Last Edit: 2023-05-11
+- 0.1.1 - Makes multiple requests to get all roles if more than 50
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 General notes
