@@ -1,30 +1,45 @@
-# Get-PortalUserItem
+# Set-PortalDefaultUserRole
 
 ## SYNOPSIS
-Get Portal for ArcGIS user item
+Set the default User Role in Portal
 
 ## SYNTAX
 
 ```
-Get-PortalUserItem [-Username] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
- [<CommonParameters>]
+Set-PortalDefaultUserRole [[-PortalId] <String>] [-Role] <String> [-Context] <Uri> [-Token] <String>
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get items owned by user in Portal for ArcGIS
+Set the default User Role in Portal
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-PortalUserItem @commonParams -Username 'jsmith'
-Get all Portal items belonging to 'jsmith'
+Set-PortalDefaultUserRole -Role 'Viewer' @cParams
+Sets the default user type to 'Viewer'
 ```
 
 ## PARAMETERS
 
-### -Username
-Username
+### -PortalId
+Portal ID
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: 0123456789ABCDEF
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Role
+Portal Role
 
 ```yaml
 Type: String
@@ -32,7 +47,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -47,7 +62,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,7 +77,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -93,11 +108,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Get-PortalUserItem
-Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2022-09-29
+Name:     Set-PortalDefaultUserRole
+Author:   Phillip Glodowski, Justin Johns
+Version:  0.1.0 | Last Edit: 2023-11-06
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 General notes
+https://developers.arcgis.com/rest/users-groups-and-items/set-user-default-settings.htm
 
 ## RELATED LINKS

@@ -1,27 +1,42 @@
-# Update-PortalPSA
+# Get-PortalOAuthAppInfo
 
 ## SYNOPSIS
-Update Portal for ArcGIS PSA Account
+Get OAuth App Info
 
 ## SYNTAX
 
 ```
-Update-PortalPSA [-Context] <Uri> [-Credential] <PSCredential> [-NewPassword] <PSCredential>
+Get-PortalOAuthAppInfo [[-AppID] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Update Portal for ArcGIS PSA Account
+Get OAuth App Info
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-<example usage>
-Explanation of what the example does
+Get-PortalOAuthAppInfo @commonParams
+Gets the information associated with the app 'arcgisonline'
 ```
 
 ## PARAMETERS
+
+### -AppID
+AppID
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: Arcgisonline
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Context
 Portal context (e.g., https://arcgis.com/arcgis)
@@ -32,38 +47,38 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Credential
-PSCredential object containing current username and password
-
-```yaml
-Type: PSCredential
-Parameter Sets: (All)
-Aliases:
-
-Required: True
 Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -NewPassword
-PSCredential object containing new password
+### -Token
+Portal token
 
 ```yaml
-Type: PSCredential
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: True
 Position: 3
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SkipCertificateCheck
+Ignore missing or invalid certificate
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -78,6 +93,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
+Name:     Get-PortalOAuthAppInfo
+Author:   Justin Johns, Phillip Glodowski
+Version:  0.1.0 | Last Edit: 2023-03-14
+- 0.1.0 - Initial version
+Comments: \<Comment(s)\>
 General notes
+https://developers.arcgis.com/rest/enterprise-administration/portal/get-app-info.htm
 
 ## RELATED LINKS

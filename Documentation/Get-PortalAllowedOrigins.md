@@ -79,7 +79,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalAllowedOrigins
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2022-04-27
+Version:  0.1.1 | Last Edit: 2023-03-23
+- 0.1.1 - Added validation for no allowed origins
+- 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 General notes
 

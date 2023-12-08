@@ -1,33 +1,33 @@
-# Update-ServerPSA
+# Get-PortalUserItemList
 
 ## SYNOPSIS
-Update ArcGIS Server PSA Account
+Get Portal for ArcGIS user item list
 
 ## SYNTAX
 
 ```
-Update-ServerPSA [-Context] <Uri> [-Credential] <PSCredential> [-NewPassword] <PSCredential>
+Get-PortalUserItemList [-Username] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Update ArcGIS Server PSA Account
+Get all items owned by user in Portal for ArcGIS
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-<example usage>
-Explanation of what the example does
+Get-PortalUserItemList @commonParams -Username 'jsmith'
+Get all Portal items belonging to 'jsmith'
 ```
 
 ## PARAMETERS
 
-### -Context
-ArcGIS Server context (e.g., https://arcgis.com/arcgis)
+### -Username
+Username
 
 ```yaml
-Type: Uri
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -38,11 +38,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Credential
-PSCredential object containing current username and password
+### -Context
+Portal context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
-Type: PSCredential
+Type: Uri
 Parameter Sets: (All)
 Aliases:
 
@@ -53,17 +53,32 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -NewPassword
-PSCredential object containing new password
+### -Token
+Portal token
 
 ```yaml
-Type: PSCredential
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: True
 Position: 3
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SkipCertificateCheck
+Ignore missing or invalid certificate
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -78,9 +93,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
+Name:     Get-PortalUserItemList
+Author:   Justin Johns
+Version:  0.1.1 | Last Edit: 2023-13-20
+- 0.1.1 - Added automatic retrieval of paged results
+- 0.1.0 - Initial version
+Comments: \<Comment(s)\>
 General notes
-https://developers.arcgis.com/rest/enterprise-administration/server/psa.htm
-https://developers.arcgis.com/rest/enterprise-administration/server/updatepsa.htm
-https://developers.arcgis.com/rest/users-groups-and-items/update-user.htm
 
 ## RELATED LINKS
