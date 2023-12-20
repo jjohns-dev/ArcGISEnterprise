@@ -1,5 +1,5 @@
 function Get-ServerServiceInfo {
-    <# =========================================================================
+    <#
     .SYNOPSIS
         Get ArcGIS Server service info
     .DESCRIPTION
@@ -24,7 +24,7 @@ function Get-ServerServiceInfo {
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
-    ========================================================================= #>
+    #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
