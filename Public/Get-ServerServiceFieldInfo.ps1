@@ -10,6 +10,8 @@ function Get-ServerServiceFieldInfo {
         Get folder(s)
     .PARAMETER AllFolders
         Get all folders
+    .PARAMETER FieldLength
+        Field length threshold (default is greater than 254)
     .PARAMETER Token
         Portal token
     .PARAMETER SkipCertificateCheck
@@ -19,15 +21,16 @@ function Get-ServerServiceFieldInfo {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerServiceFieldInfo
-        Explanation of what the example does
+        PS C:\> Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
+        Returns an array of "esriFieldTypeString" fields with length larger than 254 characters
     .NOTES
         Name:     Get-ServiceFieldInfo
         Author:   Justin Johns
         Version:  0.1.0 | Last Edit: 2023-12-20
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
-        General notes
+        This function does not consider items in the root, meaning itesm that are not
+        in one of the folders in ArcGIS Server.
     #>
     [CmdletBinding(DefaultParameterSetName = '_fldr')]
     Param(
@@ -40,6 +43,9 @@ function Get-ServerServiceFieldInfo {
 
         [Parameter(Mandatory = $true, HelpMessage = 'Get all folders', ParameterSetName = '_all')]
         [System.Management.Automation.SwitchParameter] $AllFolders,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Field length threshold (default is greater than 254)')]
+        [System.Int32] $FieldLength = 254,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
@@ -87,10 +93,7 @@ function Get-ServerServiceFieldInfo {
             $Folder = $servicInfo.folders
         }
 
-        # SET FIELD LENGTH THRESHOLD
-        $threshold = 254
-
-        # LOOP ALL FOLDERS
+        # EVALUATE EACH FOLDER
         foreach ($fldr in $Folder) {
 
             # RESET URI
@@ -121,7 +124,7 @@ function Get-ServerServiceFieldInfo {
                     foreach ($field in $layerData.fields) {
 
                         # FILTER STRING TYPE FILEDS WITH MORE THAN X LENGTH
-                        if ($field.type -EQ 'esriFieldTypeString' -and $field.length -GE $threshold) {
+                        if ($field.type -EQ 'esriFieldTypeString' -and $field.length -GT $FieldLength) {
 
                             # CREATE CUSTOM OBJECT
                             [PSCustomObject] @{
