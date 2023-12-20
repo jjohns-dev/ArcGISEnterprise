@@ -95,6 +95,7 @@
         'Get-ServerLicense'
         'Get-ServerPSA'
         'Get-ServerService'
+        'Get-ServerServiceFieldInfo'
         'Get-ServerServiceInfo'
         'Get-ServerServiceList'
         'Get-ServerServicesDirectory'
