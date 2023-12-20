@@ -24,7 +24,7 @@ function Get-ServerServiceFieldInfo {
         PS C:\> Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
         Returns an array of "esriFieldTypeString" fields with length larger than 254 characters
     .NOTES
-        Name:     Get-ServiceFieldInfo
+        Name:     Get-ServerServiceFieldInfo
         Author:   Justin Johns
         Version:  0.1.0 | Last Edit: 2023-12-20
         - 0.1.0 - Initial version

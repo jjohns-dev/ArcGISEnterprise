@@ -15,10 +15,10 @@ function Get-ServerServiceInfo {
     .OUTPUTS
         System.String.
     .EXAMPLE
-        PS C:\> Get-ServerServiceFolder
+        PS C:\> Get-ServerServiceInfo
         Returns an service info including folders from ArcGIS Server
     .NOTES
-        Name:     Get-ServerServiceFolder
+        Name:     Get-ServerServiceInfo
         Author:   Justin Johns
         Version:  0.1.0 | Last Edit: 2023-12-20
         - 0.1.0 - Initial version
