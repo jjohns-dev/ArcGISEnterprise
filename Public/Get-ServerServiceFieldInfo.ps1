@@ -128,7 +128,7 @@ function Get-ServerServiceFieldInfo {
 
                             # CREATE CUSTOM OBJECT
                             [PSCustomObject] @{
-                                Folder            = $fldr
+                                #Folder            = $fldr
                                 ServiceName       = $service.name
                                 ServiceNameLength = $service.name.Length
                                 ServiceType       = $service.type
