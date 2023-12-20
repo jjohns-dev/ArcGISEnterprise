@@ -1,4 +1,4 @@
-# Get-ServerServiceInfo
+# Get-ServerServiceItemInfo
 
 ## SYNOPSIS
 Get service item info
@@ -6,7 +6,7 @@ Get service item info
 ## SYNTAX
 
 ```
-Get-ServerServiceInfo [-Context] <Uri> [-Token <String>] -Service <Object> [-Folder <String>]
+Get-ServerServiceItemInfo [-Context] <Uri> [-Token <String>] -Service <Object> [-Folder <String>]
  [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
@@ -17,7 +17,7 @@ Get service item info
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
+Get-ServerServiceItemInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
 Returns the service item info for service $s
 ```
 

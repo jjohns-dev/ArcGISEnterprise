@@ -97,6 +97,7 @@
         'Get-ServerService'
         'Get-ServerServiceFieldInfo'
         'Get-ServerServiceInfo'
+        'Get-ServerServiceItemInfo'
         'Get-ServerServiceList'
         'Get-ServerServicesDirectory'
         'Get-ServerToken'

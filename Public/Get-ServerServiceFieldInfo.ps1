@@ -55,32 +55,36 @@ function Get-ServerServiceFieldInfo {
         $baseUri = '{0}/rest/services' -f $Context
 
         # SET REQUEST PARAMETERS
-        $restParams = @{
-            Uri    = $baseUri
-            Method = 'GET'
-            Body   = @{ f = 'json'; token = $Token }
-        }
+        $restParams = @{ Method = 'GET'; Body = @{ f = 'json' } }
+
+        # ADD TOKEN IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('Token')) { $restParams.Body['token'] = $Token }
 
         # ADD SKIP CERTIFICATE CHECK IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
     }
     Process {
-        # GET FOLDERS
-        $request = Invoke-RestMethod @restParams
+        # SET PARAMETERS FOR SERVICE INFO
+        $servicInfoParams = $PSBoundParameters
+        if ($servicInfoParams.ContainsKey('Folder')) { $servicInfoParams.Remove('Folder') | Out-Null }
+        if ($servicInfoParams.ContainsKey('AllFolders')) { $servicInfoParams.Remove('AllFolders') | Out-Null }
+
+        # GET SERVICE INFO INCLUDING FOLDERS
+        $servicInfo = Get-ServerServiceInfo @servicInfoParams
 
         # CHECK FOR FOLDER PARAMETER
         if ($PSCmdlet.ParameterSetName -EQ '_fldr') {
             # EVALUATE EACH FOLDER
             foreach ($fldr in $Folder) {
                 # VALIDATE FOLDER EXISTS
-                if ($fldr -notin $request.folders) {
+                if ($fldr -notin $servicInfo.folders) {
                     throw ('Folder [{0}] not found.' -f $fldr)
                 }
             }
         }
         else {
             # GET ALL FOLDERS
-            $Folder = $request.folders
+            $Folder = $servicInfo.folders
         }
 
         # SET FIELD LENGTH THRESHOLD
