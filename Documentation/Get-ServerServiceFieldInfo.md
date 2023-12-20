@@ -7,14 +7,14 @@ Get ArcGIS Server service filed information
 
 ### _fldr (Default)
 ```
-Get-ServerServiceFieldInfo -Context <Uri> -Folder <String[]> [-Token <String>] [-SkipCertificateCheck]
- [<CommonParameters>]
+Get-ServerServiceFieldInfo -Context <Uri> -Folder <String[]> [-FieldLength <Int32>] [-Token <String>]
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ### _all
 ```
-Get-ServerServiceFieldInfo -Context <Uri> [-AllFolders] [-Token <String>] [-SkipCertificateCheck]
- [<CommonParameters>]
+Get-ServerServiceFieldInfo -Context <Uri> [-AllFolders] [-FieldLength <Int32>] [-Token <String>]
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -24,8 +24,8 @@ Get ArcGIS Server service filed information for "esriFieldTypeString" longer tha
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceFieldInfo
-Explanation of what the example does
+Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
+Returns an array of "esriFieldTypeString" fields with length larger than 254 characters
 ```
 
 ## PARAMETERS
@@ -75,6 +75,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -FieldLength
+Field length threshold (default is greater than 254)
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: 254
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Token
 Portal token
 
@@ -120,6 +135,7 @@ Author:   Justin Johns
 Version:  0.1.0 | Last Edit: 2023-12-20
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
-General notes
+This function does not consider items in the root, meaning itesm that are not
+in one of the folders in ArcGIS Server.
 
 ## RELATED LINKS
