@@ -5,7 +5,7 @@ Get ArcGIS Server service filed information
 
 ## SYNTAX
 
-### _fldr (Default)
+### _fltr (Default)
 ```
 Get-ServerServiceFieldInfo -Context <Uri> -Folder <String[]> [-FieldLength <Int32>] [-Token <String>]
  [-SkipCertificateCheck] [<CommonParameters>]
@@ -13,7 +13,7 @@ Get-ServerServiceFieldInfo -Context <Uri> -Folder <String[]> [-FieldLength <Int3
 
 ### _all
 ```
-Get-ServerServiceFieldInfo -Context <Uri> [-AllFolders] [-FieldLength <Int32>] [-Token <String>]
+Get-ServerServiceFieldInfo -Context <Uri> -Folder <String[]> [-AllFields] [-Token <String>]
  [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
@@ -50,7 +50,7 @@ Get folder(s)
 
 ```yaml
 Type: String[]
-Parameter Sets: _fldr
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -60,8 +60,23 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -AllFolders
-Get all folders
+### -FieldLength
+Field length threshold (default is greater than 254)
+
+```yaml
+Type: Int32
+Parameter Sets: _fltr
+Aliases:
+
+Required: False
+Position: Named
+Default value: 254
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -AllFields
+Get all fields
 
 ```yaml
 Type: SwitchParameter
@@ -71,21 +86,6 @@ Aliases:
 Required: True
 Position: Named
 Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -FieldLength
-Field length threshold (default is greater than 254)
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: 254
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
