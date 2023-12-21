@@ -131,6 +131,7 @@ function Get-ServerServiceFieldInfo {
                                 LayerNameLength       = $layer.name.Length
                                 FieldName             = $field.name
                                 FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
+                                FieldNameLength       = $field.name.length
                                 FieldType             = $field.type
                             }
                         }
@@ -151,6 +152,7 @@ function Get-ServerServiceFieldInfo {
                                     LayerNameLength      = $layer.name.Length
                                     FieldName            = $field.name
                                     FieldHasSpecialChars = if ($field.name -match '\W') { $true } else { $false }
+                                    FieldNameLength      = $field.name.length
                                     FieldType            = $field.type
                                     FieldLength          = $field.length
                                 }
