@@ -29,8 +29,8 @@ function Get-ServerServiceFieldInfo {
         Version:  0.1.0 | Last Edit: 2023-12-20
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
-        This function does not consider items in the root, meaning itesm that are not
-        in one of the folders in ArcGIS Server.
+        - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
+        - The function only supports the following service types: MapServer, ImageServer, FeatureServer
     #>
     [CmdletBinding(DefaultParameterSetName = '_fltr')]
     Param(
@@ -104,57 +104,82 @@ function Get-ServerServiceFieldInfo {
                 # GET LAYERS IN SERVICE
                 $serviceData = Invoke-RestMethod @restParams
 
-                # LOOP ALL LAYERS IN SERVICE
-                foreach ($layer in $serviceData.layers) {
+                # ACCOUNT FOR SERVICES THAT DO NOT HAVE LAYERS BUT DO HAVE FIELDS
+                if ($null -EQ $serviceData.layers) {
 
-                    # RESET URI
-                    $restParams['Uri'] = '{0}/{1}/{2}/{3}' -f $baseUri, $service.name, $service.type, $layer.id
+                    # EVALUATE EACH FIELD
+                    foreach ($field in $serviceData.fields) {
 
-                    # GET LAYER DATA
-                    $layerData = Invoke-RestMethod @restParams
-
-                    # LOOP ALL FIELDS
-                    foreach ($field in $layerData.fields) {
-
-                        # CHECK FOR "AllFields" PARAMETER
-                        if ($PSCmdlet.ParameterSetName -eq '_all') {
-
-                            # CREATE CUSTOM OBJECT
-                            [PSCustomObject] @{
-                                ServiceName           = $service.name
-                                ServiceNameLength     = $service.name.Length
-                                ServiceType           = $service.type
-                                SupportsDynamicLayers = $serviceData.supportsDynamicLayers
-                                LayerId               = $layer.id
-                                LayerName             = $layer.name
-                                LayerHasSpecialChars  = if ($layer.name -match '\W') { $true } else { $false }
-                                LayerNameLength       = $layer.name.Length
-                                FieldName             = $field.name
-                                FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
-                                FieldNameLength       = $field.name.length
-                                FieldType             = $field.type
-                            }
+                        # CREATE NEW FIELD OBJECT
+                        [PSCustomObject] @{
+                            ServiceName           = $service.name
+                            ServiceNameLength     = $service.name.Length
+                            ServiceType           = $service.type
+                            SupportsDynamicLayers = $null
+                            LayerId               = $null
+                            LayerName             = $null
+                            LayerHasSpecialChars  = $null
+                            LayerNameLength       = $null
+                            FieldName             = $field.name
+                            FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
+                            FieldNameLength       = $field.name.length
+                            FieldType             = $field.type
                         }
-                        else {
+                    }
+                }
+                else {
+                    # LOOP ALL LAYERS IN SERVICE
+                    foreach ($layer in $serviceData.layers) {
 
-                            # FILTER STRING TYPE FILEDS WITH MORE THAN X LENGTH
-                            if ($field.type -EQ 'esriFieldTypeString' -and $field.length -GT $FieldLength) {
+                        # RESET URI
+                        $restParams['Uri'] = '{0}/{1}/{2}/{3}' -f $baseUri, $service.name, $service.type, $layer.id
+
+                        # GET LAYER DATA
+                        $layerData = Invoke-RestMethod @restParams
+
+                        # LOOP ALL FIELDS
+                        foreach ($field in $layerData.fields) {
+
+                            # CHECK FOR "AllFields" PARAMETER
+                            if ($PSCmdlet.ParameterSetName -eq '_all') {
 
                                 # CREATE CUSTOM OBJECT
                                 [PSCustomObject] @{
-                                    #Folder            = $fldr
-                                    ServiceName          = $service.name
-                                    ServiceNameLength    = $service.name.Length
-                                    ServiceType          = $service.type
-                                    LayerId              = $layer.id
-                                    LayerName            = $layer.name
-                                    LayerHasSpecialChars = if ($layer.name -match '\W') { $true } else { $false }
-                                    LayerNameLength      = $layer.name.Length
-                                    FieldName            = $field.name
-                                    FieldHasSpecialChars = if ($field.name -match '\W') { $true } else { $false }
-                                    FieldNameLength      = $field.name.length
-                                    FieldType            = $field.type
-                                    FieldLength          = $field.length
+                                    ServiceName           = $service.name
+                                    ServiceNameLength     = $service.name.Length
+                                    ServiceType           = $service.type
+                                    SupportsDynamicLayers = $serviceData.supportsDynamicLayers
+                                    LayerId               = $layer.id
+                                    LayerName             = $layer.name
+                                    LayerHasSpecialChars  = if ($layer.name -match '\W') { $true } else { $false }
+                                    LayerNameLength       = $layer.name.Length
+                                    FieldName             = $field.name
+                                    FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
+                                    FieldNameLength       = $field.name.length
+                                    FieldType             = $field.type
+                                }
+                            }
+                            else {
+
+                                # FILTER STRING TYPE FILEDS WITH MORE THAN X LENGTH
+                                if ($field.type -EQ 'esriFieldTypeString' -and $field.length -GT $FieldLength) {
+
+                                    # CREATE CUSTOM OBJECT
+                                    [PSCustomObject] @{
+                                        #Folder            = $fldr
+                                        ServiceName          = $service.name
+                                        ServiceNameLength    = $service.name.Length
+                                        ServiceType          = $service.type
+                                        LayerId              = $layer.id
+                                        LayerName            = $layer.name
+                                        LayerHasSpecialChars = if ($layer.name -match '\W') { $true } else { $false }
+                                        LayerNameLength      = $layer.name.Length
+                                        FieldName            = $field.name
+                                        FieldHasSpecialChars = if ($field.name -match '\W') { $true } else { $false }
+                                        FieldNameLength      = $field.name.length
+                                        FieldType            = $field.type
+                                        FieldLength          = $field.length
+                                    }
                                 }
                             }
                         }
