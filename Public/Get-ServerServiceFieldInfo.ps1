@@ -8,10 +8,10 @@ function Get-ServerServiceFieldInfo {
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Folder
         Get folder(s)
+    .PARAMETER FieldTypeStringOnly
+        Only return "esriFieldTypeString" with a specifid FieldLength
     .PARAMETER FieldLength
         Field length threshold (default is greater than 254)
-    .PARAMETER AllFields
-        Get all fields
     .PARAMETER Token
         Portal token
     .PARAMETER SkipCertificateCheck
@@ -21,7 +21,10 @@ function Get-ServerServiceFieldInfo {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
+        PS C:\> Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas
+        Returns an array of fields with accompanying service and layer properties
+    .EXAMPLE
+        PS C:\> Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic -FieldTypeStringOnly
         Returns an array of "esriFieldTypeString" fields with length larger than 254 characters
     .NOTES
         Name:     Get-ServerServiceFieldInfo
@@ -32,7 +35,7 @@ function Get-ServerServiceFieldInfo {
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
         - The function only supports the following service types: MapServer, ImageServer, FeatureServer
     #>
-    [CmdletBinding(DefaultParameterSetName = '_fltr')]
+    [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -41,11 +44,11 @@ function Get-ServerServiceFieldInfo {
         [Parameter(Mandatory = $true, HelpMessage = 'Get folder')]
         [System.String[]] $Folder,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Field length threshold (default is greater than 254)', ParameterSetName = '_fltr')]
-        [System.Int32] $FieldLength = 254,
+        [Parameter(Mandatory = $false, HelpMessage = 'Only return "esriFieldTypeString"', ParameterSetName = '_ftso')]
+        [System.Management.Automation.SwitchParameter] $FieldTypeStringOnly,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Get all fields', ParameterSetName = '_all')]
-        [System.Management.Automation.SwitchParameter] $AllFields,
+        [Parameter(Mandatory = $false, HelpMessage = 'Field length threshold (default is greater than 254)', ParameterSetName = '_ftso')]
+        [System.Int32] $FieldLength = 254,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
@@ -141,25 +144,7 @@ function Get-ServerServiceFieldInfo {
                         foreach ($field in $layerData.fields) {
 
                             # CHECK FOR "AllFields" PARAMETER
-                            if ($PSCmdlet.ParameterSetName -eq '_all') {
-
-                                # CREATE CUSTOM OBJECT
-                                [PSCustomObject] @{
-                                    ServiceName           = $service.name
-                                    ServiceNameLength     = $service.name.Length
-                                    ServiceType           = $service.type
-                                    SupportsDynamicLayers = $serviceData.supportsDynamicLayers
-                                    LayerId               = $layer.id
-                                    LayerName             = $layer.name
-                                    LayerHasSpecialChars  = if ($layer.name -match '\W') { $true } else { $false }
-                                    LayerNameLength       = $layer.name.Length
-                                    FieldName             = $field.name
-                                    FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
-                                    FieldNameLength       = $field.name.length
-                                    FieldType             = $field.type
-                                }
-                            }
-                            else {
+                            if ($PSCmdlet.ParameterSetName -EQ '_ftso') {
 
                                 # FILTER STRING TYPE FILEDS WITH MORE THAN X LENGTH
                                 if ($field.type -EQ 'esriFieldTypeString' -and $field.length -GT $FieldLength) {
@@ -180,6 +165,23 @@ function Get-ServerServiceFieldInfo {
                                         FieldType            = $field.type
                                         FieldLength          = $field.length
                                     }
+                                }
+                            }
+                            else {
+                                # CREATE CUSTOM OBJECT
+                                [PSCustomObject] @{
+                                    ServiceName           = $service.name
+                                    ServiceNameLength     = $service.name.Length
+                                    ServiceType           = $service.type
+                                    SupportsDynamicLayers = $serviceData.supportsDynamicLayers
+                                    LayerId               = $layer.id
+                                    LayerName             = $layer.name
+                                    LayerHasSpecialChars  = if ($layer.name -match '\W') { $true } else { $false }
+                                    LayerNameLength       = $layer.name.Length
+                                    FieldName             = $field.name
+                                    FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
+                                    FieldNameLength       = $field.name.length
+                                    FieldType             = $field.type
                                 }
                             }
                         }
