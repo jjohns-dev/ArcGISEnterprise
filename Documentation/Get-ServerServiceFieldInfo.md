@@ -5,16 +5,9 @@ Get ArcGIS Server service filed information
 
 ## SYNTAX
 
-### _fltr (Default)
 ```
-Get-ServerServiceFieldInfo -Context <Uri> -Folder <String[]> [-FieldLength <Int32>] [-Token <String>]
- [-SkipCertificateCheck] [<CommonParameters>]
-```
-
-### _all
-```
-Get-ServerServiceFieldInfo -Context <Uri> -Folder <String[]> [-AllFields] [-Token <String>]
- [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerServiceFieldInfo -Context <Uri> -Folder <String[]> [-FieldTypeStringOnly] [-FieldLength <Int32>]
+ [-Token <String>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -24,7 +17,13 @@ Get ArcGIS Server service filed information for "esriFieldTypeString" longer tha
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
+Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas
+Returns an array of fields with accompanying service and layer properties
+```
+
+### EXAMPLE 2
+```
+Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic -FieldTypeStringOnly
 Returns an array of "esriFieldTypeString" fields with length larger than 254 characters
 ```
 
@@ -60,32 +59,32 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -FieldTypeStringOnly
+Only return "esriFieldTypeString" with a specifid FieldLength
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -FieldLength
 Field length threshold (default is greater than 254)
 
 ```yaml
 Type: Int32
-Parameter Sets: _fltr
+Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: Named
 Default value: 254
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -AllFields
-Get all fields
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: _all
-Aliases:
-
-Required: True
-Position: Named
-Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -130,12 +129,12 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Get-ServiceFieldInfo
+Name:     Get-ServerServiceFieldInfo
 Author:   Justin Johns
 Version:  0.1.0 | Last Edit: 2023-12-20
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
-This function does not consider items in the root, meaning itesm that are not
-in one of the folders in ArcGIS Server.
+- This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
+- The function only supports the following service types: MapServer, ImageServer, FeatureServer
 
 ## RELATED LINKS

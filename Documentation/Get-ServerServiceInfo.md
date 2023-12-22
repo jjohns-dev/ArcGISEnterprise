@@ -16,7 +16,7 @@ Get ArcGIS Server service info including folder(s)
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceFolder
+Get-ServerServiceInfo
 Returns an service info including folders from ArcGIS Server
 ```
 
@@ -77,7 +77,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.String.
 ## NOTES
-Name:     Get-ServerServiceFolder
+Name:     Get-ServerServiceInfo
 Author:   Justin Johns
 Version:  0.1.0 | Last Edit: 2023-12-20
 - 0.1.0 - Initial version
