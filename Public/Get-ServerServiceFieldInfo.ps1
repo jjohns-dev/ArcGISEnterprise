@@ -29,7 +29,8 @@ function Get-ServerServiceFieldInfo {
     .NOTES
         Name:     Get-ServerServiceFieldInfo
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-12-20
+        Version:  0.1.0 | Last Edit: 2024-01-02
+        - 0.1.1 - Fixed various defects
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
@@ -76,7 +77,8 @@ function Get-ServerServiceFieldInfo {
         # SET PARAMETERS FOR SERVICE INFO
         $servicInfoParams = $PSBoundParameters
         if ($servicInfoParams.ContainsKey('Folder')) { $servicInfoParams.Remove('Folder') | Out-Null }
-        if ($servicInfoParams.ContainsKey('AllFields')) { $servicInfoParams.Remove('AllFields') | Out-Null }
+        if ($servicInfoParams.ContainsKey('FieldTypeStringOnly')) { $servicInfoParams.Remove('FieldTypeStringOnly') | Out-Null }
+        if ($servicInfoParams.ContainsKey('FieldLength')) { $servicInfoParams.Remove('FieldLength') | Out-Null }
 
         # GET SERVICE INFO INCLUDING FOLDERS
         $servicInfo = Get-ServerServiceInfo @servicInfoParams
