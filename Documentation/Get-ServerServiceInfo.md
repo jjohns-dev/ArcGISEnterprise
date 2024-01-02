@@ -1,24 +1,23 @@
 # Get-ServerServiceInfo
 
 ## SYNOPSIS
-Get service item info
+Get ArcGIS Server service info
 
 ## SYNTAX
 
 ```
-Get-ServerServiceInfo [-Context] <Uri> [-Token <String>] -Service <Object> [-Folder <String>]
- [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerServiceInfo [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get service item info
+Get ArcGIS Server service info including folder(s)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
-Returns the service item info for service $s
+Get-ServerServiceInfo
+Returns an service info including folders from ArcGIS Server
 ```
 
 ## PARAMETERS
@@ -47,37 +46,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Service
-Service object returned from Get-Service or Get-ServerServiceList
-
-```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Folder
-Folder in ArcGIS Server
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -106,8 +75,13 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### None.
 ## OUTPUTS
 
-### System.Object.
+### System.String.
 ## NOTES
+Name:     Get-ServerServiceInfo
+Author:   Justin Johns
+Version:  0.1.0 | Last Edit: 2023-12-20
+- 0.1.0 - Initial version
+Comments: \<Comment(s)\>
 General notes
 
 ## RELATED LINKS
