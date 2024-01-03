@@ -1,17 +1,13 @@
 function Get-ServerServiceFieldInfo {
     <#
     .SYNOPSIS
-        Get ArcGIS Server service filed information
+        Get ArcGIS Server service field information
     .DESCRIPTION
-        Get ArcGIS Server service filed information for "esriFieldTypeString" longer than a given threshold
+        Get ArcGIS Server service field information for fields belonging to services and service layers
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Folder
         Get folder(s)
-    .PARAMETER FieldTypeStringOnly
-        Only return "esriFieldTypeString" with a specifid FieldLength
-    .PARAMETER FieldLength
-        Field length threshold (default is greater than 254)
     .PARAMETER Token
         Portal token
     .PARAMETER SkipCertificateCheck
@@ -24,13 +20,13 @@ function Get-ServerServiceFieldInfo {
         PS C:\> Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas
         Returns an array of fields with accompanying service and layer properties
     .EXAMPLE
-        PS C:\> Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic -FieldTypeStringOnly
-        Returns an array of "esriFieldTypeString" fields with length larger than 254 characters
+        PS C:\> Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
+        Returns an array of fields with length for "esriFieldTypeString" types
     .NOTES
         Name:     Get-ServerServiceFieldInfo
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-01-02
-        - 0.1.1 - Fixed various defects
+        Version:  0.1.0 | Last Edit: 2024-01-03
+        - 0.1.1 - Adjusted default behavior and removed parameters for targeting "esriFieldTypeString"
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
@@ -44,12 +40,6 @@ function Get-ServerServiceFieldInfo {
 
         [Parameter(Mandatory = $true, HelpMessage = 'Get folder')]
         [System.String[]] $Folder,
-
-        [Parameter(Mandatory = $false, HelpMessage = 'Only return "esriFieldTypeString"', ParameterSetName = '_ftso')]
-        [System.Management.Automation.SwitchParameter] $FieldTypeStringOnly,
-
-        [Parameter(Mandatory = $false, HelpMessage = 'Field length threshold (default is greater than 254)', ParameterSetName = '_ftso')]
-        [System.Int32] $FieldLength = 254,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
@@ -76,9 +66,7 @@ function Get-ServerServiceFieldInfo {
     Process {
         # SET PARAMETERS FOR SERVICE INFO
         $servicInfoParams = $PSBoundParameters
-        if ($servicInfoParams.ContainsKey('Folder')) { $servicInfoParams.Remove('Folder') | Out-Null }
-        if ($servicInfoParams.ContainsKey('FieldTypeStringOnly')) { $servicInfoParams.Remove('FieldTypeStringOnly') | Out-Null }
-        if ($servicInfoParams.ContainsKey('FieldLength')) { $servicInfoParams.Remove('FieldLength') | Out-Null }
+        $servicInfoParams.Remove('Folder') | Out-Null
 
         # GET SERVICE INFO INCLUDING FOLDERS
         $servicInfo = Get-ServerServiceInfo @servicInfoParams
@@ -117,10 +105,11 @@ function Get-ServerServiceFieldInfo {
 
                         # CREATE NEW FIELD OBJECT
                         [PSCustomObject] @{
+                            #Folder                = $fldr
                             ServiceName           = $service.name
                             ServiceNameLength     = $service.name.Length
                             ServiceType           = $service.type
-                            SupportsDynamicLayers = $null
+                            SupportsDynamicLayers = if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false }
                             LayerId               = $null
                             LayerName             = $null
                             LayerHasSpecialChars  = $null
@@ -129,6 +118,7 @@ function Get-ServerServiceFieldInfo {
                             FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
                             FieldNameLength       = $field.name.length
                             FieldType             = $field.type
+                            FieldLength           = if ($field.type -EQ 'esriFieldTypeString') { $field.length } else { $null }
                         }
                     }
                 }
@@ -145,46 +135,22 @@ function Get-ServerServiceFieldInfo {
                         # LOOP ALL FIELDS
                         foreach ($field in $layerData.fields) {
 
-                            # CHECK FOR "AllFields" PARAMETER
-                            if ($PSCmdlet.ParameterSetName -EQ '_ftso') {
-
-                                # FILTER STRING TYPE FILEDS WITH MORE THAN X LENGTH
-                                if ($field.type -EQ 'esriFieldTypeString' -and $field.length -GT $FieldLength) {
-
-                                    # CREATE CUSTOM OBJECT
-                                    [PSCustomObject] @{
-                                        #Folder            = $fldr
-                                        ServiceName          = $service.name
-                                        ServiceNameLength    = $service.name.Length
-                                        ServiceType          = $service.type
-                                        LayerId              = $layer.id
-                                        LayerName            = $layer.name
-                                        LayerHasSpecialChars = if ($layer.name -match '\W') { $true } else { $false }
-                                        LayerNameLength      = $layer.name.Length
-                                        FieldName            = $field.name
-                                        FieldHasSpecialChars = if ($field.name -match '\W') { $true } else { $false }
-                                        FieldNameLength      = $field.name.length
-                                        FieldType            = $field.type
-                                        FieldLength          = $field.length
-                                    }
-                                }
-                            }
-                            else {
-                                # CREATE CUSTOM OBJECT
-                                [PSCustomObject] @{
-                                    ServiceName           = $service.name
-                                    ServiceNameLength     = $service.name.Length
-                                    ServiceType           = $service.type
-                                    SupportsDynamicLayers = $serviceData.supportsDynamicLayers
-                                    LayerId               = $layer.id
-                                    LayerName             = $layer.name
-                                    LayerHasSpecialChars  = if ($layer.name -match '\W') { $true } else { $false }
-                                    LayerNameLength       = $layer.name.Length
-                                    FieldName             = $field.name
-                                    FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
-                                    FieldNameLength       = $field.name.length
-                                    FieldType             = $field.type
-                                }
+                            # CREATE CUSTOM OBJECT
+                            [PSCustomObject] @{
+                                #Folder                = $fldr
+                                ServiceName           = $service.name
+                                ServiceNameLength     = $service.name.Length
+                                ServiceType           = $service.type
+                                SupportsDynamicLayers = if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false }
+                                LayerId               = $layer.id
+                                LayerName             = $layer.name
+                                LayerHasSpecialChars  = if ($layer.name -match '\W') { $true } else { $false }
+                                LayerNameLength       = $layer.name.Length
+                                FieldName             = $field.name
+                                FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
+                                FieldNameLength       = $field.name.length
+                                FieldType             = $field.type
+                                FieldLength           = if ($field.type -EQ 'esriFieldTypeString') { $field.length } else { $null }
                             }
                         }
                     }
