@@ -25,8 +25,9 @@ function Get-ServerServiceFieldInfo {
     .NOTES
         Name:     Get-ServerServiceFieldInfo
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-01-03
-        - 0.1.1 - Adjusted default behavior and removed parameters for targeting "esriFieldTypeString"
+        Version:  0.1.2 | Last Edit: 2024-01-18
+        - 0.1.2 - (2024-01-18) Added more properties to report
+        - 0.1.1 - (2024-01-03) Adjusted default behavior and removed parameters for targeting "esriFieldTypeString"
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
@@ -112,8 +113,11 @@ function Get-ServerServiceFieldInfo {
                             SupportsDynamicLayers = if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false }
                             LayerId               = $null
                             LayerName             = $null
+                            LayerType             = $null
                             LayerHasSpecialChars  = $null
                             LayerNameLength       = $null
+                            GeometryType          = $null
+                            UniqueSymbology       = $null
                             FieldName             = $field.name
                             FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
                             FieldNameLength       = $field.name.length
@@ -144,8 +148,11 @@ function Get-ServerServiceFieldInfo {
                                 SupportsDynamicLayers = if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false }
                                 LayerId               = $layer.id
                                 LayerName             = $layer.name
+                                LayerType             = $layerData.type
                                 LayerHasSpecialChars  = if ($layer.name -match '\W') { $true } else { $false }
                                 LayerNameLength       = $layer.name.Length
+                                GeometryType          = $layerData.geometryType
+                                UniqueSymbology       = $layerData.drawingInfo.renderer.uniqueValueInfos.Count
                                 FieldName             = $field.name
                                 FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
                                 FieldNameLength       = $field.name.length
