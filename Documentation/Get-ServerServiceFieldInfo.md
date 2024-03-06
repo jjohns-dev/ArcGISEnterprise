@@ -101,8 +101,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-ServerServiceFieldInfo
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-01-03
-- 0.1.1 - Adjusted default behavior and removed parameters for targeting "esriFieldTypeString"
+Version:  0.1.2 | Last Edit: 2024-01-18
+- 0.1.2 - (2024-01-18) Added more properties to report
+- 0.1.1 - (2024-01-03) Adjusted default behavior and removed parameters for targeting "esriFieldTypeString"
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
