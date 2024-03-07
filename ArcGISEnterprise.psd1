@@ -107,6 +107,7 @@
         'New-ServerHostedFeatureTable'
         'Remove-PortalRole'
         'Remove-ServerService'
+        'Remove-ServerServiceLayer'
         'Search-PortalContent'
         'Set-PortalAllowedOrigins'
         'Set-PortalDefaultUserLicenseType'
