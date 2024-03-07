@@ -102,6 +102,7 @@
         'Get-ServerServiceList'
         'Get-ServerServicesDirectory'
         'Get-ServerToken'
+        'New-PortalHostedFeatureService'
         'New-PortalRole'
         'Remove-PortalRole'
         'Search-PortalContent'

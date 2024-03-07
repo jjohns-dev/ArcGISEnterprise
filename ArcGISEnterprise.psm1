@@ -15,6 +15,36 @@ foreach ( $directory in @('Public', 'Private') ) {
 New-Variable -Name 'context_regex' -Option Constant -Value '^.+[^/]$'
 New-Variable -Name 'token_regex' -Option Constant -Value '^[\w\.=-]+$'
 
+# FUNCTION VARIALBLES
+New-Variable -Name 'NewHostedServiceTemplate' -Value @'
+{
+    "name": "ApiTestService",
+    "serviceDescription": "This is the service description from the JSON template.",
+    "hasStaticData": false,
+    "maxRecordCount": 1000,
+    "supportedQueryFormats": "JSON",
+    "capabilities": "Create,Delete,Query,Update,Editing",
+    "description": "This is the description from the JSON template.",
+    "copyrightText": "This is the copyright text from the JSON template.",
+    "spatialReference": {
+        "wkid": 102100,
+        "latestWkid": 3857
+    },
+    "initialExtent": {
+        "xmin": -20037507.0671618,
+        "ymin": -30240971.9583862,
+        "xmax": 20037507.0671618,
+        "ymax": 18398924.324645,
+        "spatialReference": {
+            "wkid": 102100,
+            "latestWkid": 3857
+        }
+    },
+    "allowGeometryUpdates": false,
+    "units": "esriMeters"
+}
+'@
+
 # EXPORT MEMBERS
 # THESE ARE SPECIFIED IN THE MODULE MANIFEST AND THEREFORE DON'T NEED TO BE LISTED HERE
 #Export-ModuleMember -Function *
