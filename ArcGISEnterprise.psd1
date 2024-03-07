@@ -104,6 +104,7 @@
         'Get-ServerToken'
         'New-PortalHostedFeatureService'
         'New-PortalRole'
+        'New-ServerHostedFeatureTable'
         'Remove-PortalRole'
         'Search-PortalContent'
         'Set-PortalAllowedOrigins'
