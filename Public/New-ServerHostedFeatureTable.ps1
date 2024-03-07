@@ -37,8 +37,12 @@ function New-ServerHostedFeatureTable {
 
         [Parameter(Mandatory = $true, HelpMessage = 'Table schema')]
         [ValidateNotNullOrEmpty()]
-        [ValidateScript({ })]
-        [System.Object] $Schema,
+        [ValidateScript({
+            $reqProps = 'nullable', 'editable', 'type', 'modelName', 'name', 'alias'
+            $valid = foreach ($rp in $reqProps) { $rp -in $_[0].psobject.Properties.Name }
+            $false -notin $valid
+        })]
+        [System.Object[]] $Schema,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -57,6 +61,11 @@ function New-ServerHostedFeatureTable {
         # GET HOSTED NEW FEATURE SERVICE TEMPLATE AND CONVERT TO OBJECT
         Write-Verbose -Message 'Getting new table template...'
         $template = $NewHostedTableTemplate | ConvertFrom-Json
+
+        # SET VARIABLE FOR TABLE DATA TEMPLATE
+
+        # VALIDATE SCHEMA
+        #if ($Schema[0] -NE $template.fields[0]) { throw 'First object should be OBJECTID' }
     }
     Process {
         # UPDATE NAME PROPERTY IN TEMPLATE
@@ -65,7 +74,7 @@ function New-ServerHostedFeatureTable {
 
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/rest/admin/services/Hosted/{1}/FeatureServer/addToDefinition' -f $ConfirmPreference, $ServiceName
+            Uri    = '{0}/rest/admin/services/Hosted/{1}/FeatureServer/addToDefinition' -f $Context, $ServiceName
             Method = 'POST'
             Body   = @{
                 addToDefinition = $template | ConvertTo-Json -Depth 4 -Compress
