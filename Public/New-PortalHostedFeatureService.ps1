@@ -1,5 +1,5 @@
 function New-PortalHostedFeatureService {
-    <# =========================================================================
+    <#
     .SYNOPSIS
         Create new Hosted Feature Service
     .DESCRIPTION
@@ -25,8 +25,8 @@ function New-PortalHostedFeatureService {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> New-PortalHostedFeatureService
-        Explanation of what the example does
+        PS C:\> New-PortalHostedFeatureService -ServiceName myNewService -Description 'new' -Summary 'new' -Tag 'new', 'tag1'
+        Creates a new Hosted Feature Service with the name myNewService
     .NOTES
         Name:     New-PortalHostedFeatureService
         Author:   Justin Johns
@@ -34,7 +34,7 @@ function New-PortalHostedFeatureService {
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
-    ========================================================================= #>
+    #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
@@ -74,12 +74,12 @@ function New-PortalHostedFeatureService {
         # GET HOSTED NEW FEATURE SERVICE TEMPLATE AND CONVERT TO OBJECT
         Write-Verbose -Message 'Getting new hosted feature service template...'
         $template = $NewHostedServiceTemplate | ConvertFrom-Json
-
+    }
+    Process {
         # UPDATE NAME PROPERTY IN TEMPLATE
         Write-Verbose -Message 'Updating template...'
         $template.name = $ServiceName
-    }
-    Process {
+
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
             try {
