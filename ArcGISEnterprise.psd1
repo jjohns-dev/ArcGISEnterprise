@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.4.16'
+    ModuleVersion     = '0.5.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -105,6 +105,7 @@
         'New-PortalHostedFeatureService'
         'New-PortalRole'
         'New-ServerHostedFeatureTable'
+        'Remove-PortalItem'
         'Remove-PortalRole'
         'Remove-ServerService'
         'Remove-ServerServiceLayer'
