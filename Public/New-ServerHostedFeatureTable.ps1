@@ -27,7 +27,7 @@ function New-ServerHostedFeatureTable {
         Version:  0.1.0 | Last Edit: 2024-03-07
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
-        General notes
+        https://developers.arcgis.com/rest/services-reference/online/add-to-definition-feature-service-.htm
     #>
     [CmdletBinding()]
     Param(
@@ -35,7 +35,7 @@ function New-ServerHostedFeatureTable {
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Table schema')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Table schema')]
         [ValidateNotNullOrEmpty()]
         [ValidateScript({
             $reqProps = 'nullable', 'editable', 'type', 'modelName', 'name', 'alias'
@@ -58,26 +58,21 @@ function New-ServerHostedFeatureTable {
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
-        # GET HOSTED NEW FEATURE SERVICE TEMPLATE AND CONVERT TO OBJECT
+        # SET VARIABLE FOR TABLE DATA TEMPLATE
         Write-Verbose -Message 'Getting new table template...'
         $template = $NewHostedTableTemplate | ConvertFrom-Json
-
-        # SET VARIABLE FOR TABLE DATA TEMPLATE
-
-        # VALIDATE SCHEMA
-        #if ($Schema[0] -NE $template.fields[0]) { throw 'First object should be OBJECTID' }
     }
     Process {
         # UPDATE NAME PROPERTY IN TEMPLATE
         Write-Verbose -Message 'Updating template...'
-        $template.fields = $Schema
+        if ($PSBoundParameters.ContainsKey('Schema')) { $template.fields = $Schema } # need to change this
 
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/rest/admin/services/Hosted/{1}/FeatureServer/addToDefinition' -f $Context, $ServiceName
             Method = 'POST'
             Body   = @{
-                addToDefinition = $template | ConvertTo-Json -Depth 4 -Compress
+                addToDefinition = $template | ConvertTo-Json -Depth 5 -Compress
                 f               = 'json'
                 token           = $Token
             }
