@@ -28,3 +28,6 @@ Please see releases for updates and features
 | Remove-ServerService | `/deleteServices` | Deletes ArcGIS Server Service |
 | Remove-ServerServiceLayer | `/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
 |  | `` |  |
+
+- add "modifyDefinition"?? (update schema)
+- add new Server Hosted Feature Layer (point/polygon/line)

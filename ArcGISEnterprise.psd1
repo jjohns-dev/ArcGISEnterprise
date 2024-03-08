@@ -105,6 +105,7 @@
         'New-PortalHostedFeatureService'
         'New-PortalRole'
         'New-ServerHostedFeatureTable'
+        'New-TableSchemaObject'
         'Remove-PortalItem'
         'Remove-PortalRole'
         'Remove-ServerService'
