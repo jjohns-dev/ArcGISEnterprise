@@ -1,5 +1,5 @@
 function Remove-ServerServiceLayer {
-    <# =========================================================================
+    <#
     .SYNOPSIS
         Delete ArcGIS Server Service layer
     .DESCRIPTION
@@ -29,7 +29,7 @@ function Remove-ServerServiceLayer {
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/services-reference/online/delete-from-definition-feature-service-.htm
-    ========================================================================= #>
+    #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]

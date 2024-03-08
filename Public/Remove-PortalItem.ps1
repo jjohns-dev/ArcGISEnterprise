@@ -1,5 +1,5 @@
 function Remove-PortalItem {
-    <# =========================================================================
+    <#
     .SYNOPSIS
         Delete Portal Item
     .DESCRIPTION
@@ -30,7 +30,7 @@ function Remove-PortalItem {
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/delete-item.htm
-    ========================================================================= #>
+    #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Owner of Hosted Feature Service')]
