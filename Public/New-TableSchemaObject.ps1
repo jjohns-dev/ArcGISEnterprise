@@ -1,5 +1,5 @@
 function New-TableSchemaObject {
-    <# =========================================================================
+    <#
     .SYNOPSIS
         Create a new table schema object
     .DESCRIPTION
@@ -28,7 +28,7 @@ function New-TableSchemaObject {
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
-    ========================================================================= #>
+    #>
     [CmdletBinding(DefaultParameterSetName = '_typ')]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_typ', HelpMessage = 'Object type')]
