@@ -3,7 +3,8 @@ function Remove-ServerServiceLayer {
     .SYNOPSIS
         Delete ArcGIS Server Service layer
     .DESCRIPTION
-        Delete ArcGIS Server Service layer
+        Delete ArcGIS Server Service layer. This can be a point/line/polygon layer
+        or a talbe belonging to the Service.
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
     .PARAMETER LayerId
@@ -19,8 +20,8 @@ function Remove-ServerServiceLayer {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Remove-ServerServiceLayer
-        Explanation of what the example does
+        PS C:\> Remove-ServerServiceLayer -ServiceName myServer -LayerId 0
+        Removes layer 0 from "myServer"
     .NOTES
         Name:     Remove-ServerServiceLayer
         Author:   Justin Johns
@@ -70,9 +71,6 @@ function Remove-ServerServiceLayer {
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-
-        # SEND REQUEST
-        Invoke-RestMethod @restParams
 
         # SHOULD PROCESS
         if ($PSCmdlet.ShouldProcess($ServiceName, ('Delete Portal item layer [{0}]' -f $LayerId))) {

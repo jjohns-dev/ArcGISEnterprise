@@ -33,7 +33,7 @@ function New-PortalHostedFeatureService {
         Version:  0.1.0 | Last Edit: 2024-03-07
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
-        General notes
+        https://developers.arcgis.com/rest/users-groups-and-items/create-service.htm
     #>
     [CmdletBinding()]
     Param(

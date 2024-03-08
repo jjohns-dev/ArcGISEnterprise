@@ -3,11 +3,11 @@ function Remove-ServerService {
     .SYNOPSIS
         Delete Feature Service from ArcGIS Server
     .DESCRIPTION
-        Delete Feature Service from ArcGIS Server
+        Delete Feature Service from ArcGIS Server (DO NOT use this to delete a Hosted Feature Service)
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
     .PARAMETER Folder
-        Service folder (use "Hosted" for Hosted Feature Service)
+        Service folder
     .PARAMETER Type
         Service type
     .PARAMETER Context
