@@ -76,9 +76,9 @@ function New-TableSchemaObject {
                 defaultValue = $null
                 editable     = $false
                 length       = 8 # $null
-                type         = 'esriFieldTypeOID'
-                modelName    = 'OBJECTID'
-                sqlType      = 'sqlTypeInteger'
+                type         = $TableFieldTypes['oid'].type
+                modelName    = $TableFieldTypes['oid'].modelName
+                sqlType      = $TableFieldTypes['oid'].sqlType
                 name         = 'objectid'
                 alias        = 'OBJECTID'
             }
