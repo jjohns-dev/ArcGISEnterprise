@@ -131,7 +131,6 @@
 
     # Variables to export from this module
     VariablesToExport = @(
-        'TableFieldTypes'
         'NewHostedServiceTemplate'
         'NewHostedTableTemplate'
     )
