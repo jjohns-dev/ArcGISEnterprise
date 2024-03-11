@@ -1,13 +1,15 @@
-function Clear-PortalHostedFeatureService {
+function Add-ServerHostedFeatureRecord {
     <#
     .SYNOPSIS
-        Clear Portal Hosted Feature Service
+        Add record to Portal Hosted Feature Service
     .DESCRIPTION
-        Clear or purge all items from a table in a Hosted Feature Service Layer
+        Add records/data to a Portal Hosted Feature Service
+    .PARAMETER Record
+        Record or data to add to the Portal Hosted Feature Service
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
-    .PARAMETER Layer
-        Service Layer index
+    .PARAMETER LayerId
+        Service Layer ID
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -19,25 +21,30 @@ function Clear-PortalHostedFeatureService {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Clear-PortalHostedFeatureService @commonParams -ServiceName dashboard -Layer 0
-        Clear or purge all data from the "dashboard" Hosted Feature Service layer 0
+        PS C:\> Add-ServerHostedFeatureRecord @commonParams -Record $rec -ServiceName "dashboard"
+        Add records to a Hosted Feature Service named "dashboard"
     .NOTES
-        Name:     Clear-PortalHostedFeatureService
+        Name:     Add-ServerHostedFeatureRecord
         Author:   Justin Johns
         Version:  0.1.0 | Last Edit: 2023-04-04
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
     #>
-    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [CmdletBinding()]
     Param(
+        [Parameter(Mandatory = $true, HelpMessage = 'Record or feature to add')]
+        [ValidateScript({ $_.psobject.Members.Name -contains 'attributes' })]
+        [System.Object[]] $Record,
+
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Layer index')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Service Layer ID')]
         [ValidateNotNullOrEmpty()]
-        [System.Int32] $Layer,
+        [Alias('Layer')]
+        [System.Int32] $LayerId = 0,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -54,29 +61,18 @@ function Clear-PortalHostedFeatureService {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
     }
     Process {
-        # SET TRUNCATE PARAMETERS
+        # SET PARAMETERS FOR ADDING DATA
         $restParams = @{
-            Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/deleteFeatures' -f $Context, $ServiceName, $Layer
+            Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/addFeatures' -f $Context, $ServiceName, $LayerId
             Method = 'POST'
             Body   = @{
-                where = 'objectid >= 0'
-                f     = 'json'
-                token = $Token
+                features = $Record | ConvertTo-Json -Depth 5 -Compress
+                f        = 'json'
+                token    = $Token
             }
         }
 
-        Write-Verbose -Message ('Endpoint URI: [{0}]' -f $restParams['Uri'])
-
-        # ADD CERTIFICATE SKIP IF PROVIDED
-        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-
-        # SHOULD PROCESS
-        if ($PSCmdlet.ShouldProcess($ServiceName, ('Purge all records from service layer [{0}]' -f $Layer))) {
-
-            Write-Verbose -Message 'Invoking REST API endpoint "deleteFeatures"'
-
-            # INVOKE TRUNCATE PROCESS
-            Invoke-RestMethod @restParams
-        }
+        # INVOKE DATA ADD
+        Invoke-RestMethod @restParams
     }
 }

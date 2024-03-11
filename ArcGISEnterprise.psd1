@@ -67,9 +67,9 @@
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @(
-        'Add-PortalHostedFeatureRecord'
         'Add-PortalOAuthRedirectURI'
-        'Clear-PortalHostedFeatureService'
+        'Add-ServerHostedFeatureRecord'
+        'Clear-ServerHostedFeatureService'
         'ConvertFrom-Epoch'
         'ConvertFrom-ArcGISLog'
         'Get-PortalAllowedOrigins'
