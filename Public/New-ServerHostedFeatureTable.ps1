@@ -26,7 +26,7 @@ function New-ServerHostedFeatureTable {
     .NOTES
         Name:     New-ServerHostedFeatureTable
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-07
+        Version:  0.1.0 | Last Edit: 2024-03-11
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/services-reference/online/add-to-definition-feature-service-.htm
@@ -44,7 +44,7 @@ function New-ServerHostedFeatureTable {
         [Parameter(Mandatory = $true, HelpMessage = 'Table schema')]
         #[ValidateNotNullOrEmpty()]
         [ValidateScript({
-            $reqProps = @('nullable', 'editable', 'type', 'modelName', 'sqlType', 'name', 'alias')
+            $reqProps = @('nullable', 'editable', 'type', 'name', 'alias')
             $valid = foreach ($rp in $reqProps) { $rp -in $_[0].psobject.Properties.Name }
             $false -notin $valid
         })]
