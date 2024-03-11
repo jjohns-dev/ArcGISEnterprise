@@ -1,4 +1,4 @@
-function Clear-ServerHostedFeatureService { # change to Clear-ServerHostedFeatureService
+function Clear-ServerHostedFeatureService {
     <#
     .SYNOPSIS
         Clear Portal Hosted Feature Service
