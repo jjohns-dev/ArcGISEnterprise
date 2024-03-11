@@ -26,10 +26,10 @@ function Add-ServerHostedFeatureRecord {
     .NOTES
         Name:     Add-ServerHostedFeatureRecord
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-04-04
+        Version:  0.1.0 | Last Edit: 2023-03-11
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
-        General notes
+        https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
     #>
     [CmdletBinding()]
     Param(
@@ -66,7 +66,7 @@ function Add-ServerHostedFeatureRecord {
             Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/addFeatures' -f $Context, $ServiceName, $LayerId
             Method = 'POST'
             Body   = @{
-                features = $Record | ConvertTo-Json -Depth 5 -Compress
+                features = $Record | ConvertTo-Json -Depth 5 -Compress -AsArray
                 f        = 'json'
                 token    = $Token
             }

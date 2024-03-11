@@ -24,7 +24,7 @@ function New-TableSchemaObject {
     .NOTES
         Name:     New-TableSchemaObject
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-08
+        Version:  0.1.0 | Last Edit: 2024-03-11
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
