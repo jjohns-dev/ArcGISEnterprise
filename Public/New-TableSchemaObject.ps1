@@ -56,15 +56,15 @@ function New-TableSchemaObject {
 
         # CREATE LOOKUP TABLE FOR PROPERTIES
         New-Variable -Name 'TableFieldTypes' -Option ReadOnly -Value @{
-            oid    = @{ type = 'esriFieldTypeOID'; modelName = 'OBJECTID'; sqlType = 'sqlTypeInteger' }
-            string = @{ type = 'esriFieldTypeString'; modelName = 'type_text'; sqlType = 'sqlTypeVarchar' }
-            double = @{ type = 'esriFieldTypeDouble'; modelName = 'type_double'; sqlType = 'sqlTypeNumeric' }
-            short  = @{ type = 'esriFieldTypeSmallInteger'; modelName = 'type_int_short'; sqlType = 'sqlTypeSmallInt' }
-            long   = @{ type = 'esriFieldTypeInteger'; modelName = 'type_int_long'; sqlType = 'sqlTypeInteger' }
-            float  = @{ type = 'esriFieldTypeDouble'; modelName = 'type_float'; sqlType = 'sqlTypeNumeric' }
-            date   = @{ type = 'esriFieldTypeDate'; modelName = 'type_date'; sqlType = 'sqlTypeTimestamp' }
-            guid   = @{ type = 'esriFieldTypeGUID'; modelName = 'type_guid'; sqlType = 'sqlTypeVarchar' }
-            blob   = @{ type = 'esriFieldTypeBlob'; modelName = 'type_blob'; sqlType = 'sqlTypeBinary' }
+            oid    = 'esriFieldTypeOID'
+            string = 'esriFieldTypeString'
+            double = 'esriFieldTypeDouble'
+            short  = 'esriFieldTypeSmallInteger'
+            long   = 'esriFieldTypeInteger'
+            float  = 'esriFieldTypeDouble'
+            date   = 'esriFieldTypeDate'
+            guid   = 'esriFieldTypeGUID'
+            blob   = 'esriFieldTypeBlob'
         }
     }
     Process {
@@ -73,12 +73,9 @@ function New-TableSchemaObject {
             # CREATE AND RETURN OID OBJECT
             [PSCustomObject] @{
                 nullable     = $false
-                defaultValue = $null
                 editable     = $false
                 length       = 8 # $null
-                type         = $TableFieldTypes['oid'].type
-                modelName    = $TableFieldTypes['oid'].modelName
-                sqlType      = $TableFieldTypes['oid'].sqlType
+                type         = $TableFieldTypes['oid']
                 name         = 'objectid'
                 alias        = 'OBJECTID'
             }
@@ -87,12 +84,9 @@ function New-TableSchemaObject {
             # CREATE AND RETURN OBJECT
             [PSCustomObject] @{
                 nullable     = $true
-                defaultValue = $null
                 editable     = $true
                 length       = $Length #if ($PSBoundParameters.ContainsKey('Length')) { $Length } else { $null }
-                type         = $TableFieldTypes[$Type].type
-                modelName    = $TableFieldTypes[$Type].modelName
-                sqlType      = $TableFieldTypes[$Type].sqlType
+                type         = $TableFieldTypes[$Type]
                 name         = $Name
                 alias        = $Alias
             }
