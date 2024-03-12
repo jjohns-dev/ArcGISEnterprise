@@ -4,11 +4,6 @@ run-name: validate
 on:
   pull_request:
     branches: ["*"]
-    paths-ignore:
-      - README.md
-      - CONTRIBUTING.md
-      - .gitignore
-      - .github/**
 
 jobs:
   validate:
