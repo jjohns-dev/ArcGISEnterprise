@@ -32,7 +32,7 @@ function New-TableSchemaObject {
     [CmdletBinding(DefaultParameterSetName = '_typ')]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_typ', HelpMessage = 'Object type')]
-        [ValidateSet('date', 'short', 'blob', 'double', 'guid', 'string', 'long', 'float')]
+        [ValidateSet('oid', 'date', 'short', 'blob', 'double', 'guid', 'integer', 'string', 'long', 'float')]
         [System.String] $Type,
 
         [Parameter(Mandatory = $true, ParameterSetName = '_typ', HelpMessage = 'Schema object name')]
@@ -56,15 +56,16 @@ function New-TableSchemaObject {
 
         # CREATE LOOKUP TABLE FOR PROPERTIES
         New-Variable -Name 'TableFieldTypes' -Option ReadOnly -Value @{
-            oid    = 'esriFieldTypeOID'
-            string = 'esriFieldTypeString'
-            double = 'esriFieldTypeDouble'
-            short  = 'esriFieldTypeSmallInteger'
-            long   = 'esriFieldTypeInteger'
-            float  = 'esriFieldTypeDouble'
-            date   = 'esriFieldTypeDate'
-            guid   = 'esriFieldTypeGUID'
-            blob   = 'esriFieldTypeBlob'
+            oid     = 'esriFieldTypeOID'
+            string  = 'esriFieldTypeString'
+            double  = 'esriFieldTypeDouble'
+            short   = 'esriFieldTypeSmallInteger'
+            integer = 'esriFieldTypeInteger'
+            long    = 'esriFieldTypeInteger'
+            float   = 'esriFieldTypeDouble'
+            date    = 'esriFieldTypeDate'
+            guid    = 'esriFieldTypeGUID'
+            blob    = 'esriFieldTypeBlob'
         }
     }
     Process {
@@ -83,8 +84,8 @@ function New-TableSchemaObject {
         else {
             # CREATE AND RETURN OBJECT
             [PSCustomObject] @{
-                nullable     = $true
-                editable     = $true
+                nullable     = if ($Type -NE 'oid') { $true } else { $false }
+                editable     = if ($Type -NE 'oid') { $true } else { $false }
                 length       = $Length #if ($PSBoundParameters.ContainsKey('Length')) { $Length } else { $null }
                 type         = $TableFieldTypes[$Type]
                 name         = $Name

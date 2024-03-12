@@ -3,7 +3,7 @@ function Get-ServerHostedFeatureService {
     .SYNOPSIS
         Get Hosted Feature Service
     .DESCRIPTION
-        Get Hosted Feature Service from ArcGIS Server
+        Get Hosted Feature Service from ArcGIS Server. This will include layers and tables as well as schema details.
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
     .PARAMETER Context
