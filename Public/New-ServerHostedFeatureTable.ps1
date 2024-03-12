@@ -67,6 +67,13 @@ function New-ServerHostedFeatureTable {
         # SET VARIABLE FOR TABLE DATA TEMPLATE
         Write-Verbose -Message 'Getting new table template...'
         $definition = $NewHostedTableTemplate | ConvertFrom-Json
+
+        # VALIDATE NUMBER OF FIELDS IN SCHEMA
+        if ($Schema.Count -GT 68) {
+            # PRINT WARNING
+            Write-Warning -Message 'Schemas containing more than 68 fields don''t appear to be support through the REST API'
+            Write-Warning -Message 'Table creation may fail. Please use fewer columns.'
+        }
     }
     Process {
         # UPDATE NAME PROPERTY IN TEMPLATE
