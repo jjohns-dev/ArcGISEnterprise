@@ -7,8 +7,8 @@ Create new Hosted Feature Service
 
 ```
 New-PortalHostedFeatureService [-ServiceName] <String> [-Description] <String> [[-Summary] <String>]
- [-Tag] <String[]> [[-UserName] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
- [<CommonParameters>]
+ [-Tag] <String[]> [[-UserName] <String>] [[-FolderId] <String>] [-Context] <Uri> [-Token] <String>
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -99,6 +99,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -FolderId
+Destination Folder ID ofor Hosted Feature Service
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
 Portal context (e.g., https://arcgis.com/arcgis)
 
@@ -108,7 +123,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 6
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -123,7 +138,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 7
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -156,7 +171,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     New-PortalHostedFeatureService
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-07
+Version:  0.1.1 | Last Edit: 2024-03-13
+- 0.1.1 - Added FolderId parameter
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/users-groups-and-items/create-service.htm
