@@ -17,16 +17,16 @@ Please see releases for updates and features
 
 ## Function to API Mapping
 
-| Function | API Endpoint | Root | Description |
-| -------- | ------------ | ---- | ----------- |
-| Add-ServerHostedFeatureServiceRecord | `/addFeatures` | `/rest/services/Hosted/` | Appends data to table in Hosted Feature Service |
-| Clear-ServerHostedFeatureService | `/deleteFeatures` | `/rest/services/Hosted/` | Truncates table data in Hosted Feature Service |
-| Get-ServerHostedFeatureService | `/FeatureServer` | `/rest/services/Hosted/` | Gets Hosted Feature Service |
-| New-PortalHostedFeatureService | `/createService` | `/sharing/rest/content/users/` | Creates new Hosted Feature Service |
-| New-ServerHostedFeatureTable | `/addToDefinition` | `/rest/admin/services/Hosted/` | Creates table as a layer in Hosted Feature Service |
-| Remove-PortalItem | `/delete` | `/sharing/rest/content/users/` | Deletes Portal item (e.g., Hosted Feature Service) |
-| Remove-ServerService | `/deleteServices` | `/admin/services/` | Deletes ArcGIS Server Service |
-| Remove-ServerServiceLayer | `/deleteFromDefinition` | `/rest/admin/services/Hosted/` | Deletes table/layer from ArcGIS Server Service |
+| Function | Component | API Endpoint | Description |
+| -------- | --------- | ------------ | ----------- |
+| Add-ServerHostedFeatureServiceRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/addFeatures` | Appends data to table in Hosted Feature Service |
+| Clear-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/deleteFeatures` | Truncates table data in Hosted Feature Service |
+| Get-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer` | Gets Hosted Feature Service |
+| New-PortalHostedFeatureService | Portal | `/sharing/rest/content/users/<USERNAME>/createService` | Creates new Hosted Feature Service |
+| New-ServerHostedFeatureTable | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
+| Remove-PortalItem | Portal | `/sharing/rest/content/users/<USERNAME>/items/<ITEMID>/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
+| Remove-ServerService | Server | `/admin/services/deleteServices` | Deletes ArcGIS Server Service |
+| Remove-ServerServiceLayer | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
 
 ## Potential Future Functions
 
