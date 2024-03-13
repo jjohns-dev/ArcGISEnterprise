@@ -32,7 +32,8 @@ function New-PortalHostedFeatureService {
     .NOTES
         Name:     New-PortalHostedFeatureService
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-07
+        Version:  0.1.1 | Last Edit: 2024-03-13
+        - 0.1.1 - Added FolderId parameter
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/create-service.htm

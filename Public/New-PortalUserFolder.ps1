@@ -63,7 +63,7 @@ function New-PortalUserFolder {
                 $userSettings = Get-PortalSettings -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
 
                 # SET USER NAME
-                $UserName = $userSettings.user.username
+                $Username = $userSettings.user.username
             }
             catch {
                 # PASS ERROR
