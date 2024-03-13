@@ -1,4 +1,4 @@
-# Get-PortalUserGroup
+# Get-PortalUserGroupList
 
 ## SYNOPSIS
 Get Portal for ArcGIS user group
@@ -6,7 +6,7 @@ Get Portal for ArcGIS user group
 ## SYNTAX
 
 ```
-Get-PortalUserGroup [-Username] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+Get-PortalUserGroupList [-Username] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
@@ -17,7 +17,7 @@ Get groups owned by specified user in Portal for ArcGIS
 
 ### EXAMPLE 1
 ```
-Get-PortalUserGroup -Username jsmith -Context 'https://arcgis.com/arcgis' -Token $token
+Get-PortalUserGroupList -Username jsmith -Context 'https://arcgis.com/arcgis' -Token $token
 Get groups owned by user 'jsmith'
 ```
 
@@ -93,7 +93,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Get-PortalUserGroup
+Name:     Get-PortalUserGroupList
 Author:   Justin Johns
 Version:  0.1.0 | Last Edit: 2023-03-20
 - 0.1.1 - Added automatic retrieval of paginated data

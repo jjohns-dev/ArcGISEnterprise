@@ -88,7 +88,7 @@
         'Get-PortalSettings'
         'Get-PortalToken'
         'Get-PortalUser'
-        'Get-PortalUserGroup'
+        'Get-PortalUserGroupList'
         'Get-PortalUserItemList'
         'Get-PortalUserList'
         'Get-ServerAdminSetting'
@@ -140,6 +140,7 @@
     AliasesToExport   = @(
         'Get-AGSService'
         'Get-PortalSelf'
+        'Get-PortalUserGroup'
         'Get-SecurityPolicy'
         'Test-PortalToken'
         'Update-PortalPSA'
