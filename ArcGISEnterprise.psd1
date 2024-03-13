@@ -88,6 +88,7 @@
         'Get-PortalSettings'
         'Get-PortalToken'
         'Get-PortalUser'
+        'Get-PortalUserFolderList'
         'Get-PortalUserGroupList'
         'Get-PortalUserItemList'
         'Get-PortalUserList'
@@ -193,4 +194,5 @@
 
     # Default prefix for commands exported from this module. Override the default prefix using Import-Module -Prefix.
     # DefaultCommandPrefix = ''
+}
 }
