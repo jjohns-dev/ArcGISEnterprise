@@ -31,7 +31,7 @@ function New-PortalUserFolder {
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory, HelpMessage = 'Username')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
         [System.String] $Username,
 
@@ -54,6 +54,22 @@ function New-PortalUserFolder {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
     }
     Process {
+        # VALIDATE USERNAME
+        if (-Not $PSBoundParameters.ContainsKey('UserName')) {
+            try {
+                # GET USER PORTAL INFO
+                Write-Verbose -Message 'Getting user settings...'
+                $userSettings = Get-PortalSettings -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
+
+                # SET USER NAME
+                $UserName = $userSettings.user.username
+            }
+            catch {
+                # PASS ERROR
+                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+            }
+        }
+
         # SET PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/content/users/{1}/createFolder' -f $Context, $Username
