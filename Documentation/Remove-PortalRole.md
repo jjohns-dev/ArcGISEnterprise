@@ -7,7 +7,7 @@ Remove Role in Portal for ArcGIS
 
 ```
 Remove-PortalRole [-RoleId] <String> [[-PortalId] <String>] [-Context] <Uri> [-Token] <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+ [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -98,6 +98,37 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -110,10 +141,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Remove-PortalRole
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2022-07-19
-- 0.1.0 - Initial version
+Version:  0.1.1 | Last Edit: 2023-03-13
+- 0.1.1 - Added support for ShouldProcess
+- 0.1.0 - (2022-07-19) Initial version
 Comments: \<Comment(s)\>
-General notes
 https://developers.arcgis.com/rest/users-groups-and-items/delete-role.htm
 
 ## RELATED LINKS

@@ -72,6 +72,9 @@ function Add-ServerHostedFeatureRecord {
             }
         }
 
+        # ADD CERTIFICATE SKIP IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
         # INVOKE DATA ADD
         Invoke-RestMethod @restParams
     }
