@@ -7,6 +7,10 @@ function Edit-ServerHostedFeatureRecord {
         adding, updating, or deleting records/features.
     .PARAMETER Record
         Record or data to add to the Portal Hosted Feature Service
+    .PARAMETER Update
+        Record/feature to update
+    .PARAMETER Delete
+        ObjectId of record/feature to delete
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
     .PARAMETER LayerId
