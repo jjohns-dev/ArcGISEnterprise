@@ -14,6 +14,8 @@ function New-PortalHostedFeatureService {
         Hosted Feature Service tag
     .PARAMETER UserName
         Owner of Hosted Feature Service
+    .PARAMETER FolderId
+        Destination Folder ID ofor Hosted Feature Service
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -57,6 +59,10 @@ function New-PortalHostedFeatureService {
         [ValidateNotNullOrEmpty()]
         [System.String] $UserName,
 
+        [Parameter(Mandatory = $false, HelpMessage = 'Destination folder ID')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $FolderId,
+
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -96,9 +102,17 @@ function New-PortalHostedFeatureService {
             }
         }
 
+        # CHECK FOR FOLDERID PARAMETER & SET REST URI
+        if ($PSBoundParameters.ContainsKey('FolderId')) {
+            $restUri = '{0}/sharing/rest/content/users/{1}/{2}/createService' -f $Context, $UserName, $FolderId
+        }
+        else {
+            $restUri = '{0}/sharing/rest/content/users/{1}/createService' -f $Context, $UserName
+        }
+
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/sharing/rest/content/users/{1}/createService' -f $Context, $UserName
+            Uri    = $restUri
             Method = 'POST'
             Body   = @{
                 createParameters = $template | ConvertTo-Json -Depth 4 -Compress
