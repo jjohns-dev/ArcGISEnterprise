@@ -24,7 +24,8 @@ function Clear-ServerHostedFeatureService {
     .NOTES
         Name:     Clear-ServerHostedFeatureService
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-04-04
+        Version:  0.1.1 | Last Edit: 2024-03-12
+        - 0.1.1 - Update function name and parameter name
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
@@ -72,7 +73,7 @@ function Clear-ServerHostedFeatureService {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # SHOULD PROCESS
-        if ($PSCmdlet.ShouldProcess($ServiceName, ('Purge all records from service layer [{0}]' -f $Layer))) {
+        if ($PSCmdlet.ShouldProcess($ServiceName, ('Purge all records from service layer ID [{0}]' -f $LayerId))) {
 
             Write-Verbose -Message 'Invoking REST API endpoint "deleteFeatures"'
 
