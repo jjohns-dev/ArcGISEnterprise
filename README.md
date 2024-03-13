@@ -23,6 +23,7 @@ Please see releases for updates and features
 | Clear-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Get-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer` | Gets Hosted Feature Service |
 | New-PortalHostedFeatureService | Portal | `/sharing/rest/content/users/<USERNAME>/createService` | Creates new Hosted Feature Service |
+| New-PortalUserFolder | Portal | `/sharing/rest/content/users/<USERNAME>/createFolder` | Creates new folder in Portal |
 | New-ServerHostedFeatureTable | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
 | Remove-PortalItem | Portal | `/sharing/rest/content/users/<USERNAME>/items/<ITEMID>/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
 | Remove-ServerService | Server | `/admin/services/deleteServices` | Deletes ArcGIS Server Service |
