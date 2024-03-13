@@ -3,6 +3,35 @@
 PowerShell module for ArcGIS Enterprise REST API. Includes functions for both
 ArcGIS Server and Portal for ArcGIS.
 
+## Function Naming
+
+Like all PowerShell functions and cmdlets, the functions in this module follow the `Verb` `-` `Noun` scheme.
+Each `Noun` will start with the ArcGIS Enterprise component the function should be executaged against.
+For example, to use `Get-PortalRole` pass a Portal for ArcGIS URI argument in the `-Context` parameter.
+Or, as another example, pass an ArcGIS Server URI argument to the `-Context` parameter for `Set-ServerAllowedOrigins`
+to set/update the allowed origins property in ArcGIS Server.
+
 ## Updates
 
 Please see releases for updates and features
+
+## Function to API Mapping
+
+| Function | Component | API Endpoint | Description |
+| -------- | --------- | ------------ | ----------- |
+| Add-ServerHostedFeatureServiceRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/addFeatures` | Appends data to table in Hosted Feature Service |
+| Clear-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/deleteFeatures` | Truncates table data in Hosted Feature Service |
+| Get-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer` | Gets Hosted Feature Service |
+| New-PortalHostedFeatureService | Portal | `/sharing/rest/content/users/<USERNAME>/createService` | Creates new Hosted Feature Service |
+| New-ServerHostedFeatureTable | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
+| Remove-PortalItem | Portal | `/sharing/rest/content/users/<USERNAME>/items/<ITEMID>/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
+| Remove-ServerService | Server | `/admin/services/deleteServices` | Deletes ArcGIS Server Service |
+| Remove-ServerServiceLayer | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
+
+## Potential Future Functions
+
+| API Endpoint | Description | Link |
+| ------------ | ----------- | ---- |
+| `updateDefinition` | Update schema | [developer guide](https://developers.arcgis.com/rest/services-reference/online/update-definition-feature-layer-.htm) |
+
+- Add new Server Hosted Feature Layer (point/polygon/line)

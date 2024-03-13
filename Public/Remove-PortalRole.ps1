@@ -24,13 +24,13 @@ function Remove-PortalRole {
     .NOTES
         Name:     Remove-PortalRole
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2022-07-19
-        - 0.1.0 - Initial version
+        Version:  0.1.1 | Last Edit: 2023-03-13
+        - 0.1.1 - Added support for ShouldProcess
+        - 0.1.0 - (2022-07-19) Initial version
         Comments: <Comment(s)>
-        General notes
         https://developers.arcgis.com/rest/users-groups-and-items/delete-role.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Portal Role ID')]
         [ValidateNotNullOrEmpty()]
@@ -59,16 +59,17 @@ function Remove-PortalRole {
         $restParams = @{
             Uri    = '{0}/sharing/rest/portals/{1}/roles/{2}/delete' -f $Context, $PortalId, $RoleId
             Method = 'POST'
-            Body   = @{
-                f     = 'json'
-                token = $Token
-            }
+            Body   = @{ f = 'json'; token = $Token }
         }
 
         # ADD SKIP CERTIFICATE CHECK IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # INVOKE QUERY
-        Invoke-RestMethod @restParams
+        # SHOULD PROCESS
+        if ($PSCmdlet.ShouldProcess($RoleId, 'Delete Portal role')) {
+
+            # INVOKE TRUNCATE PROCESS
+            Invoke-RestMethod @restParams
+        }
     }
 }

@@ -1,4 +1,4 @@
-function Add-PortalHostedFeatureRecord {
+function Add-ServerHostedFeatureRecord {
     <#
     .SYNOPSIS
         Add record to Portal Hosted Feature Service
@@ -8,8 +8,8 @@ function Add-PortalHostedFeatureRecord {
         Record or data to add to the Portal Hosted Feature Service
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
-    .PARAMETER Layer
-        Service Layer index
+    .PARAMETER LayerId
+        Service Layer ID
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -21,20 +21,19 @@ function Add-PortalHostedFeatureRecord {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Add-PortalHostedFeatureRecord @commonParams -Record $rec -ServiceName "dashboard"
+        PS C:\> Add-ServerHostedFeatureRecord @commonParams -Record $rec -ServiceName "dashboard"
         Add records to a Hosted Feature Service named "dashboard"
     .NOTES
-        Name:     Add-PortalHostedFeatureRecord
+        Name:     Add-ServerHostedFeatureRecord
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-04-04
+        Version:  0.1.0 | Last Edit: 2023-03-11
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
-        General notes
+        https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
     #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Record or feature to add')]
-        #[ValidateScript({ ($_ | Get-Member -MemberType NoteProperty).Name -contains 'attributes' })]
         [ValidateScript({ $_.psobject.Members.Name -contains 'attributes' })]
         [System.Object[]] $Record,
 
@@ -42,9 +41,10 @@ function Add-PortalHostedFeatureRecord {
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Layer index')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Service Layer ID')]
         [ValidateNotNullOrEmpty()]
-        [System.Int32] $Layer = 0,
+        [Alias('Layer')]
+        [System.Int32] $LayerId = 0,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -63,14 +63,17 @@ function Add-PortalHostedFeatureRecord {
     Process {
         # SET PARAMETERS FOR ADDING DATA
         $restParams = @{
-            Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/addFeatures' -f $Context, $ServiceName, $Layer
+            Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/addFeatures' -f $Context, $ServiceName, $LayerId
             Method = 'POST'
             Body   = @{
-                features = $Record | ConvertTo-Json -Depth 5 -Compress
+                features = $Record | ConvertTo-Json -Depth 5 -Compress -AsArray
                 f        = 'json'
                 token    = $Token
             }
         }
+
+        # ADD CERTIFICATE SKIP IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE DATA ADD
         Invoke-RestMethod @restParams

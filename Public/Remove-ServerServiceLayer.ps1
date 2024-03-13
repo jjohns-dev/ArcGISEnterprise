@@ -1,13 +1,14 @@
-function Clear-PortalHostedFeatureService {
+function Remove-ServerServiceLayer {
     <#
     .SYNOPSIS
-        Clear Portal Hosted Feature Service
+        Delete ArcGIS Server Service layer
     .DESCRIPTION
-        Clear or purge all items from a table in a Hosted Feature Service Layer
+        Delete ArcGIS Server Service layer. This can be a point/line/polygon layer
+        or a talbe belonging to the Service.
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
-    .PARAMETER Layer
-        Service Layer index
+    .PARAMETER LayerId
+        Service layer ID
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -19,15 +20,15 @@ function Clear-PortalHostedFeatureService {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Clear-PortalHostedFeatureService @commonParams -ServiceName dashboard -Layer 0
-        Clear or purge all data from the "dashboard" Hosted Feature Service layer 0
+        PS C:\> Remove-ServerServiceLayer -ServiceName myServer -LayerId 0
+        Removes layer 0 from "myServer"
     .NOTES
-        Name:     Clear-PortalHostedFeatureService
+        Name:     Remove-ServerServiceLayer
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-04-04
+        Version:  0.1.0 | Last Edit: 2024-03-07
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
-        General notes
+        https://developers.arcgis.com/rest/services-reference/online/delete-from-definition-feature-service-.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
@@ -35,9 +36,9 @@ function Clear-PortalHostedFeatureService {
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Layer index')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Layer ID')]
         [ValidateNotNullOrEmpty()]
-        [System.Int32] $Layer,
+        [System.Int32] $LayerId,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -54,26 +55,27 @@ function Clear-PortalHostedFeatureService {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
     }
     Process {
-        # SET TRUNCATE PARAMETERS
+        # UPDATE NAME PROPERTY IN TEMPLATE
         $restParams = @{
-            Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/deleteFeatures' -f $Context, $ServiceName, $Layer
+            Uri    = '{0}/rest/admin/services/Hosted/{1}/FeatureServer/deleteFromDefinition' -f $Context, $ServiceName
             Method = 'POST'
             Body   = @{
-                where = 'objectid >= 0'
-                f     = 'json'
-                token = $Token
+                f                    = 'json'
+                token                = $Token
+                deleteFromDefinition = @{ layers = @( @{ id = $LayerId } ) } | ConvertTo-Json -Compress
             }
         }
 
+        # WRITE VERBOSE MESSAGE
         Write-Verbose -Message ('Endpoint URI: [{0}]' -f $restParams['Uri'])
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # SHOULD PROCESS
-        if ($PSCmdlet.ShouldProcess($ServiceName, ('Purge all records from service layer [{0}]' -f $Layer))) {
+        if ($PSCmdlet.ShouldProcess($ServiceName, ('Delete Portal item layer [{0}]' -f $LayerId))) {
 
-            Write-Verbose -Message 'Invoking REST API endpoint "deleteFeatures"'
+            Write-Verbose -Message 'Invoking REST API endpoint "deleteFromDefinition"'
 
             # INVOKE TRUNCATE PROCESS
             Invoke-RestMethod @restParams
