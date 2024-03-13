@@ -23,7 +23,7 @@ Please see releases for updates and features
 | Clear-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Edit-ServerHostedFeatureRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/applyEdits` | Adds, updates, or deletes features/records from a table layer |
 | Get-PortalUserFolderList | Portal | `/sharing/rest/content/users/<USERNAME>` | Gets list of folders owned by user in Portal |
-| Get-PortalUserGroup | Portal | `/sharing/rest/community/groups` | Search for groups owned by specified user. Additional options available |
+| Get-PortalUserGroupList | Portal | `/sharing/rest/community/groups` | Search for groups owned by specified user. Additional options available |
 | Get-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer` | Gets Hosted Feature Service |
 | New-PortalHostedFeatureService | Portal | `/sharing/rest/content/users/<USERNAME>/createService` | Creates new Hosted Feature Service |
 | New-PortalUserFolder | Portal | `/sharing/rest/content/users/<USERNAME>/createFolder` | Creates new folder in Portal |
