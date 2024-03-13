@@ -27,6 +27,7 @@ function New-PortalUserFolder {
         Version:  0.1.0 | Last Edit: 2024-03-13
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
+        https://developers.arcgis.com/rest/users-groups-and-items/create-folder.htm
         General notes:
     #>
     [CmdletBinding()]
