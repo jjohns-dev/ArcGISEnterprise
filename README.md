@@ -21,6 +21,7 @@ Please see releases for updates and features
 | -------- | --------- | ------------ | ----------- |
 | Add-ServerHostedFeatureServiceRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/addFeatures` | Appends data to table in Hosted Feature Service |
 | Clear-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/deleteFeatures` | Truncates table data in Hosted Feature Service |
+| Edit-ServerHostedFeatureRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/applyEdits` | Adds, updates, or deletes features/records from a table layer |
 | Get-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer` | Gets Hosted Feature Service |
 | New-PortalHostedFeatureService | Portal | `/sharing/rest/content/users/<USERNAME>/createService` | Creates new Hosted Feature Service |
 | New-ServerHostedFeatureTable | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
