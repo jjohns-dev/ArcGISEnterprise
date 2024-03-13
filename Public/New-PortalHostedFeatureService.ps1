@@ -60,7 +60,7 @@ function New-PortalHostedFeatureService {
         [System.String] $UserName,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Destination folder ID')]
-        [ValidateNotNullOrEmpty()]
+        [ValidatePattern('[a-f0-9]{32}')]
         [System.String] $FolderId,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
