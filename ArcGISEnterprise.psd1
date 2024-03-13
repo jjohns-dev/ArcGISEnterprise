@@ -72,6 +72,7 @@
         'Clear-ServerHostedFeatureService'
         'ConvertFrom-Epoch'
         'ConvertFrom-ArcGISLog'
+        'Edit-ServerHostedFeatureRecord'
         'Get-PortalAllowedOrigins'
         'Get-PortalDefaultUserSettings'
         'Get-PortalGroupUserList'
