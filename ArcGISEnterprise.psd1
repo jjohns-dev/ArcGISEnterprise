@@ -104,6 +104,7 @@
         'Get-ServerToken'
         'New-PortalHostedFeatureService'
         'New-PortalRole'
+        'New-PortalUserFolder'
         'New-ServerHostedFeatureTable'
         'New-TableSchemaObject'
         'Remove-PortalItem'
