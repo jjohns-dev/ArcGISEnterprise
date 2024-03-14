@@ -170,7 +170,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Edit-ServerHostedFeatureRecord
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-13
+Version:  0.1.0 | Last Edit: 2024-03-14
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/services-reference/enterprise/apply-edits-feature-service-layer-.htm
