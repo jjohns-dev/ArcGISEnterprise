@@ -32,6 +32,7 @@ Please see releases for updates and features
 | Remove-PortalItem | Portal | `/sharing/rest/content/users/<USERNAME>/items/<ITEMID>/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
 | Remove-ServerService | Server | `/admin/services/deleteServices` | Deletes ArcGIS Server Service |
 | Remove-ServerServiceLayer | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
+| Write-PortalUserItem | Portal | `/sharing/rest/content/users/<USERNAME>/addItem` | Uploads a Portal item (file item) |
 
 ## Potential Future Functions
 
