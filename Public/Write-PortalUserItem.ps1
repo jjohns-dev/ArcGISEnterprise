@@ -1,5 +1,5 @@
 function Write-PortalUserItem {
-    <# =========================================================================
+    <#
     .SYNOPSIS
         Upload file item to Portal for ArcGIS
     .DESCRIPTION
@@ -35,7 +35,8 @@ function Write-PortalUserItem {
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/add-item.htm
         https://developers.arcgis.com/rest/users-groups-and-items/items-and-item-types.htm
-    ========================================================================= #>
+        https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod
+    #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
