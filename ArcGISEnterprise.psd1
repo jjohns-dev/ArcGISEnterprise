@@ -104,6 +104,7 @@
         'Get-ServerServiceList'
         'Get-ServerServicesDirectory'
         'Get-ServerToken'
+        'Invoke-ServerHostedFeatureQuery'
         'New-PortalHostedFeatureService'
         'New-PortalRole'
         'New-PortalUserFolder'
