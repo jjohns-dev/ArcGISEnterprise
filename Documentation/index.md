@@ -21,8 +21,13 @@ Please see releases for updates and features
 | -------- | --------- | ------------ | ----------- |
 | Add-ServerHostedFeatureServiceRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/addFeatures` | Appends data to table in Hosted Feature Service |
 | Clear-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/deleteFeatures` | Truncates table data in Hosted Feature Service |
+| Edit-ServerHostedFeatureRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/applyEdits` | Adds, updates, or deletes features/records from a table layer |
+| Get-PortalUserFolderList | Portal | `/sharing/rest/content/users/<USERNAME>` | Gets list of folders owned by user in Portal |
+| Get-PortalUserGroupList | Portal | `/sharing/rest/community/groups` | Search for groups owned by specified user. Additional options available |
 | Get-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer` | Gets Hosted Feature Service |
+| Invoke-ServerHostedFeatureQuery | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/query` | Query feature service layer. Additional options available |
 | New-PortalHostedFeatureService | Portal | `/sharing/rest/content/users/<USERNAME>/createService` | Creates new Hosted Feature Service |
+| New-PortalUserFolder | Portal | `/sharing/rest/content/users/<USERNAME>/createFolder` | Creates new folder in Portal |
 | New-ServerHostedFeatureTable | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
 | Remove-PortalItem | Portal | `/sharing/rest/content/users/<USERNAME>/items/<ITEMID>/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
 | Remove-ServerService | Server | `/admin/services/deleteServices` | Deletes ArcGIS Server Service |

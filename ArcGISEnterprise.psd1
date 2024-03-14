@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.5.0'
+    ModuleVersion     = '0.5.1'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -72,6 +72,7 @@
         'Clear-ServerHostedFeatureService'
         'ConvertFrom-Epoch'
         'ConvertFrom-ArcGISLog'
+        'Edit-ServerHostedFeatureRecord'
         'Get-PortalAllowedOrigins'
         'Get-PortalDefaultUserSettings'
         'Get-PortalGroupUserList'
@@ -88,7 +89,7 @@
         'Get-PortalToken'
         'Get-PortalUser'
         'Get-PortalUserFolderList'
-        'Get-PortalUserGroup'
+        'Get-PortalUserGroupList'
         'Get-PortalUserItemList'
         'Get-PortalUserList'
         'Get-ServerAdminSetting'
@@ -103,6 +104,7 @@
         'Get-ServerServiceList'
         'Get-ServerServicesDirectory'
         'Get-ServerToken'
+        'Invoke-ServerHostedFeatureQuery'
         'New-PortalHostedFeatureService'
         'New-PortalRole'
         'New-PortalUserFolder'
@@ -141,6 +143,7 @@
     AliasesToExport   = @(
         'Get-AGSService'
         'Get-PortalSelf'
+        'Get-PortalUserGroup'
         'Get-SecurityPolicy'
         'Test-PortalToken'
         'Update-PortalPSA'
