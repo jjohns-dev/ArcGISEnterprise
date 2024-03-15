@@ -32,6 +32,7 @@ Please see releases for updates and features
 | New-PortalHostedFeatureService | Portal | `/sharing/rest/content/users/<USERNAME>/createService` | Creates new Hosted Feature Service |
 | New-PortalUserFolder | Portal | `/sharing/rest/content/users/<USERNAME>/createFolder` | Creates new folder in Portal |
 | New-ServerHostedFeatureTable | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
+| Publish-PortalCsvItemAsTable | Portal | `/sharing/rest/content/users/<USERNAME>/publish` | Publish CSV item (Portal item) as Hosted Table. Additional options available |
 | Remove-PortalItem | Portal | `/sharing/rest/content/users/<USERNAME>/items/<ITEMID>/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
 | Remove-ServerService | Server | `/admin/services/deleteServices` | Deletes ArcGIS Server Service |
 | Remove-ServerServiceLayer | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |

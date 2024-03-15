@@ -1,9 +1,9 @@
 function Get-PortalJobStatus {
     <#
     .SYNOPSIS
-        Short description
+        Get Portal job status
     .DESCRIPTION
-        Long description
+        Gets the job status for a Portal job
     .PARAMETER ItemId
         Id of Portal item
     .PARAMETER JobType
@@ -23,8 +23,8 @@ function Get-PortalJobStatus {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-PortalJobStatus
-        Explanation of what the example does
+        PS C:\> Get-PortalJobStatus -ItemId $iid -JobId j808b16d104894c8b8d9404555966eb6e @commonParams
+        Gets the job status for a publish job with id j808b16d104894c8b8d9404555966eb6e and Item ID $iid
     .NOTES
         Name:     Get-PortalJobStatus
         Author:   Justin Johns

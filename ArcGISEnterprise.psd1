@@ -112,6 +112,7 @@
         'New-PortalUserFolder'
         'New-ServerHostedFeatureTable'
         'New-TableSchemaObject'
+        'Publish-PortalCsvItemAsTable'
         'Remove-PortalItem'
         'Remove-PortalRole'
         'Remove-ServerService'
