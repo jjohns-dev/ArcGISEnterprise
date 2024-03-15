@@ -105,6 +105,7 @@
         'Get-ServerServicesDirectory'
         'Get-ServerToken'
         'Invoke-ServerHostedFeatureQuery'
+        'Move-PortalUserItem'
         'New-PortalHostedFeatureService'
         'New-PortalRole'
         'New-PortalUserFolder'
