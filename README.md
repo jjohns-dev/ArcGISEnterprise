@@ -22,6 +22,7 @@ Please see releases for updates and features
 | Add-ServerHostedFeatureServiceRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/addFeatures` | Appends data to table in Hosted Feature Service |
 | Clear-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Edit-ServerHostedFeatureRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/applyEdits` | Adds, updates, or deletes features/records from a table layer |
+| Get-PortalJobStatus | Portal | `/sharing/rest/content/users/<USERNAME>/items/<ITEMID>/status` | Get Portal job status |
 | Get-PortalUserFolderList | Portal | `/sharing/rest/content/users/<USERNAME>` | Gets list of folders owned by user in Portal |
 | Get-PortalUserGroupList | Portal | `/sharing/rest/community/groups` | Search for groups owned by specified user. Additional options available |
 | Get-PortalUserItemList | Portal | `/sharing/rest/search` | Search Portal. Additional options available |

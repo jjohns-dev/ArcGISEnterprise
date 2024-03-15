@@ -79,6 +79,10 @@ function New-TableSchemaObject {
                 type         = $TableFieldTypes['oid']
                 name         = 'objectid'
                 alias        = 'OBJECTID'
+                locationType = "unknown"
+                defaultValue = $null
+                domain       = $null
+                #sqlType      = $TableFieldTypes['oid']
             }
         }
         else {
@@ -90,6 +94,10 @@ function New-TableSchemaObject {
                 type         = $TableFieldTypes[$Type]
                 name         = $Name
                 alias        = $Alias
+                locationType = "unknown"
+                defaultValue = $null
+                domain       = $null
+                #sqlType      = $TableFieldTypes[$Type]
             }
         }
     }
