@@ -45,7 +45,7 @@ function New-TableSchemaObject {
         [System.String] $Alias,
 
         [Parameter(Mandatory = $false, ParameterSetName = '_typ', HelpMessage = 'Field maximum length')]
-        [ValidateRange(1, 1000)]
+        [ValidateRange(1, 8000)]
         [System.Int32] $Length,
 
         [Parameter(Mandatory = $true, ParameterSetName = '_oid', HelpMessage = 'Internal OID property')]
