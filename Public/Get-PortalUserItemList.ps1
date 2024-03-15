@@ -4,7 +4,7 @@ function Get-PortalUserItemList {
         Get Portal for ArcGIS user item list
     .DESCRIPTION
         Get all items owned by user in Portal for ArcGIS
-    .PARAMETER Username
+    .PARAMETER UserName
         Username
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
@@ -17,28 +17,29 @@ function Get-PortalUserItemList {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-PortalUserItemList @commonParams -Username 'jsmith'
+        PS C:\> Get-PortalUserItemList @commonParams -UserName 'jsmith'
         Get all Portal items belonging to 'jsmith'
     .NOTES
         Name:     Get-PortalUserItemList
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2023-13-20
-        - 0.1.1 - Added automatic retrieval of paged results
+        Version:  0.1.2 | Last Edit: 2024-03-15
+        - 0.1.2 - (2024-03-15) Made UserName parameter optional
+        - 0.1.1 - (2023-13-20) Added automatic retrieval of paged results
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
-        General notes
+        https://developers.arcgis.com/rest/users-groups-and-items/search.htm
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory, HelpMessage = 'Username')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Username,
+        [System.String] $UserName,
 
-        [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(Mandatory, HelpMessage = 'Portal token')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
@@ -47,6 +48,22 @@ function Get-PortalUserItemList {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # VALIDATE USER NAME
+        if (-Not $PSBoundParameters.ContainsKey('UserName')) {
+            try {
+                # GET USER PORTAL INFO
+                Write-Verbose -Message 'Getting user settings...'
+                $userSettings = Get-PortalSettings -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
+
+                # SET USER NAME
+                $UserName = $userSettings.user.username
+            }
+            catch {
+                # PASS ERROR
+                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+            }
+        }
 
         # CREATE USER ARRAY
         $itemList = [System.Collections.Generic.List[System.Object]]::new()
@@ -59,7 +76,7 @@ function Get-PortalUserItemList {
             Body   = @{
                 f     = 'json'
                 token = $Token
-                q     = 'owner:{0}' -f $Username
+                q     = 'owner:{0}' -f $UserName
                 num   = 100
             }
         }
