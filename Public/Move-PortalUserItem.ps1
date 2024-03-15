@@ -38,7 +38,7 @@ function Move-PortalUserItem {
         [System.String[]] $ItemId,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Destination folder ID (use forward shlash "/" to move item to root folder)')]
-        [ValidatePattern('[a-f0-9]{32}')]
+        [ValidatePattern('([a-f0-9]{32}|/)')]
         [System.String] $FolderId,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
