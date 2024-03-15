@@ -56,16 +56,16 @@ function New-TableSchemaObject {
 
         # CREATE LOOKUP TABLE FOR PROPERTIES
         New-Variable -Name 'TableFieldTypes' -Option ReadOnly -Value @{
-            oid     = 'esriFieldTypeOID'
-            string  = 'esriFieldTypeString'
-            double  = 'esriFieldTypeDouble'
-            short   = 'esriFieldTypeSmallInteger'
-            integer = 'esriFieldTypeInteger'
-            long    = 'esriFieldTypeInteger'
-            float   = 'esriFieldTypeDouble'
-            date    = 'esriFieldTypeDate'
-            guid    = 'esriFieldTypeGUID'
-            blob    = 'esriFieldTypeBlob'
+            oid     = @{ sqlType = 'sqlTypeInteger'; type = 'esriFieldTypeOID' }
+            string  = @{ sqlType = 'sqlTypeVarchar'; type = 'esriFieldTypeString' }
+            short   = @{ sqlType = 'sqlTypeSmallInt'; type = 'esriFieldTypeSmallInteger' }
+            long    = @{ sqlType = 'sqlTypeSmallInt'; type = 'esriFieldTypeInteger' }
+            integer = @{ sqlType = 'sqlTypeInteger'; type = 'esriFieldTypeInteger' }
+            double  = @{ sqlType = 'sqlTypeNumeric'; type = 'esriFieldTypeDouble' }
+            float   = @{ sqlType = 'sqlTypeNumeric'; type = 'esriFieldTypeDouble' }
+            date    = @{ sqlType = 'sqlTypeTimestamp'; type = 'esriFieldTypeDate' }
+            guid    = @{ sqlType = 'sqlTypeVarchar'; type = 'esriFieldTypeGUID' }
+            blob    = @{ sqlType = 'sqlTypeBinary'; type = 'esriFieldTypeBlob' }
         }
     }
     Process {
@@ -76,13 +76,13 @@ function New-TableSchemaObject {
                 nullable     = $false
                 editable     = $false
                 length       = 8 # $null
-                type         = $TableFieldTypes['oid']
+                type         = $TableFieldTypes.oid['type']
                 name         = 'objectid'
                 alias        = 'OBJECTID'
                 locationType = "unknown"
                 defaultValue = $null
                 domain       = $null
-                #sqlType      = $TableFieldTypes['oid']
+                sqlType      = $TableFieldTypes.oid['sqlType']
             }
         }
         else {
@@ -91,13 +91,13 @@ function New-TableSchemaObject {
                 nullable     = if ($Type -NE 'oid') { $true } else { $false }
                 editable     = if ($Type -NE 'oid') { $true } else { $false }
                 length       = $Length #if ($PSBoundParameters.ContainsKey('Length')) { $Length } else { $null }
-                type         = $TableFieldTypes[$Type]
+                type         = $TableFieldTypes[$Type].type
                 name         = $Name
                 alias        = $Alias
                 locationType = "unknown"
                 defaultValue = $null
                 domain       = $null
-                #sqlType      = $TableFieldTypes[$Type]
+                sqlType      = $TableFieldTypes[$Type].sqlType
             }
         }
     }
