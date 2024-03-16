@@ -6,19 +6,19 @@ Create new Hosted Feature Serivce table
 ## SYNTAX
 
 ```
-New-ServerHostedFeatureTable [-ServiceName] <String> [[-TableName] <String>] [-Schema] <Object[]>
+New-ServerHostedFeatureTable [-ServiceName] <String> [[-TableName] <String>] [-Field] <Object[]>
  [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Create new Hosted Feature Serivce table
+Create new table "layer" in a Hosted Feature Serivce
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-New-ServerHostedFeatureTable
-Explanation of what the example does
+New-ServerHostedFeatureTable -ServiceName myNewService -TableName 'DataTable' -Field $schema @commonParams
+Creates a new table "layer" in a Hosted Feature Service with the name DataTable
 ```
 
 ## PARAMETERS
@@ -53,13 +53,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Schema
-Table schema
+### -Field
+Table field (i.e., schema)
 
 ```yaml
 Type: Object[]
 Parameter Sets: (All)
-Aliases:
+Aliases: Schema
 
 Required: True
 Position: 3
@@ -125,7 +125,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     New-ServerHostedFeatureTable
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-11
+Version:  0.1.0 | Last Edit: 2024-03-16
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/services-reference/online/add-to-definition-feature-service-.htm
