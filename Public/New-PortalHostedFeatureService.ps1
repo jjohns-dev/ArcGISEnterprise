@@ -32,7 +32,7 @@ function New-PortalHostedFeatureService {
     .NOTES
         Name:     New-PortalHostedFeatureService
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-03-13
+        Version:  0.1.1 | Last Edit: 2024-03-16
         - 0.1.1 - Added FolderId parameter
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
@@ -77,6 +77,9 @@ function New-PortalHostedFeatureService {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # SET TEMPLATE
+        New-Variable -Name 'NewHostedServiceTemplate' -Option ReadOnly -Value '{"name":"ApiTestService","serviceDescription":"This is the service description from the JSON template.","hasStaticData":false,"maxRecordCount":1000,"supportedQueryFormats":"JSON","capabilities":"Create,Delete,Query,Update,Editing","description":"This is the description from the JSON template.","copyrightText":"This is the copyright text from the JSON template.","spatialReference":{"wkid":102100,"latestWkid":3857},"initialExtent":{"xmin":-20037507.0671618,"ymin":-30240971.9583862,"xmax":20037507.0671618,"ymax":18398924.324645,"spatialReference":{"wkid":102100,"latestWkid":3857}},"allowGeometryUpdates":false,"units":"esriMeters"}'
 
         # GET HOSTED NEW FEATURE SERVICE TEMPLATE AND CONVERT TO OBJECT
         Write-Verbose -Message 'Getting new hosted feature service template...'
