@@ -142,7 +142,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Publish-PortalCsvItemAsTable
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-15
+Version:  0.1.0 | Last Edit: 2024-03-16
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/users-groups-and-items/publish-item.htm
