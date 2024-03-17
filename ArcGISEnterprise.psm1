@@ -14,6 +14,7 @@ foreach ( $directory in @('Public', 'Private') ) {
 # ONLY VALIDATE URI DOES NOT END WITH FORWARD SLASH. OLD REGEX: '^https?://[\w\/\.:-]+[^/]$'
 New-Variable -Name 'context_regex' -Option Constant -Value '^.+[^/]$'
 New-Variable -Name 'token_regex' -Option Constant -Value '^[\w\.=-]+$'
+New-Variable -Name 'ModulePrivate' -Option Constant -Value "$PSScriptRoot\Private"
 
 # EXPORT MEMBERS
 # FUNCTIONS ARE SPECIFIED IN THE MODULE MANIFEST AND DON'T NEED TO BE LISTED HERE
