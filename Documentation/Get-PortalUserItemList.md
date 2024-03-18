@@ -6,7 +6,7 @@ Get Portal for ArcGIS user item list
 ## SYNTAX
 
 ```
-Get-PortalUserItemList [-Username] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+Get-PortalUserItemList [[-UserName] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
@@ -17,13 +17,13 @@ Get all items owned by user in Portal for ArcGIS
 
 ### EXAMPLE 1
 ```
-Get-PortalUserItemList @commonParams -Username 'jsmith'
+Get-PortalUserItemList @commonParams -UserName 'jsmith'
 Get all Portal items belonging to 'jsmith'
 ```
 
 ## PARAMETERS
 
-### -Username
+### -UserName
 Username
 
 ```yaml
@@ -31,7 +31,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False
@@ -95,10 +95,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalUserItemList
 Author:   Justin Johns
-Version:  0.1.1 | Last Edit: 2023-13-20
-- 0.1.1 - Added automatic retrieval of paged results
+Version:  0.1.2 | Last Edit: 2024-03-15
+- 0.1.2 - (2024-03-15) Made UserName parameter optional
+- 0.1.1 - (2023-13-20) Added automatic retrieval of paged results
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
-General notes
+https://developers.arcgis.com/rest/users-groups-and-items/search.htm
 
 ## RELATED LINKS

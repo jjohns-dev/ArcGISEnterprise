@@ -8,8 +8,8 @@ function New-PortalHostedFeatureService {
         Portal Hosted Feature Service Name
     .PARAMETER Description
         Hosted Feature Service description
-    .PARAMETER Summary
-        Hosted Feature Service summary
+    .PARAMETER Snippet
+        Hosted Feature Service snippet (i.e., summary)
     .PARAMETER Tag
         Hosted Feature Service tag
     .PARAMETER UserName
@@ -32,7 +32,7 @@ function New-PortalHostedFeatureService {
     .NOTES
         Name:     New-PortalHostedFeatureService
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-03-13
+        Version:  0.1.1 | Last Edit: 2024-03-16
         - 0.1.1 - Added FolderId parameter
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
@@ -48,9 +48,10 @@ function New-PortalHostedFeatureService {
         [ValidateNotNullOrEmpty()]
         [System.String] $Description,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Hosted Feature Service summary')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Hosted Feature Service snippet (i.e., summary)')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Summary,
+        [Alias('Summary')]
+        [System.String] $Snippet,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Hosted Feature Service tag')]
         [ValidateNotNullOrEmpty()]
@@ -78,9 +79,10 @@ function New-PortalHostedFeatureService {
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
-        # GET HOSTED NEW FEATURE SERVICE TEMPLATE AND CONVERT TO OBJECT
+        # GET HOSTED FEATURE SERVICE TEMPLATE AND CONVERT TO OBJECT
         Write-Verbose -Message 'Getting new hosted feature service template...'
-        $template = $NewHostedServiceTemplate | ConvertFrom-Json
+        $template = Get-Content -Path "$ModulePrivate\hosted_feature_service.template" | ConvertFrom-Json
+
     }
     Process {
         # UPDATE NAME PROPERTY IN TEMPLATE
@@ -105,15 +107,15 @@ function New-PortalHostedFeatureService {
 
         # CHECK FOR FOLDERID PARAMETER & SET REST URI
         if ($PSBoundParameters.ContainsKey('FolderId')) {
-            $restUri = '{0}/sharing/rest/content/users/{1}/{2}/createService' -f $Context, $UserName, $FolderId
+            $uri = '{0}/sharing/rest/content/users/{1}/{2}/createService' -f $Context, $UserName, $FolderId
         }
         else {
-            $restUri = '{0}/sharing/rest/content/users/{1}/createService' -f $Context, $UserName
+            $uri = '{0}/sharing/rest/content/users/{1}/createService' -f $Context, $UserName
         }
 
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = $restUri
+            Uri    = $uri
             Method = 'POST'
             Body   = @{
                 createParameters = $template | ConvertTo-Json -Depth 4 -Compress

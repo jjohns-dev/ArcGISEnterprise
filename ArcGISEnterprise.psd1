@@ -77,6 +77,7 @@
         'Get-PortalDefaultUserSettings'
         'Get-PortalGroupUserList'
         'Get-PortalIndexStatus'
+        'Get-PortalJobStatus'
         'Get-PortalLicense'
         'Get-PortalMachines'
         'Get-PortalMachineStatus'
@@ -105,11 +106,13 @@
         'Get-ServerServicesDirectory'
         'Get-ServerToken'
         'Invoke-ServerHostedFeatureQuery'
+        'Move-PortalUserItem'
         'New-PortalHostedFeatureService'
         'New-PortalRole'
         'New-PortalUserFolder'
         'New-ServerHostedFeatureTable'
         'New-TableSchemaObject'
+        'Publish-PortalCsvItemAsTable'
         'Remove-PortalItem'
         'Remove-PortalRole'
         'Remove-ServerService'
@@ -128,16 +131,14 @@
         'Test-PortalFederation'
         'Test-PortalHealth'
         'Test-ServerHealth'
+        'Write-PortalUserItem'
     )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
     CmdletsToExport   = @()
 
     # Variables to export from this module
-    VariablesToExport = @(
-        'NewHostedServiceTemplate'
-        'NewHostedTableTemplate'
-    )
+    VariablesToExport = @()
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
     AliasesToExport   = @(

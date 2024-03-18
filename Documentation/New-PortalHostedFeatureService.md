@@ -171,7 +171,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     New-PortalHostedFeatureService
 Author:   Justin Johns
-Version:  0.1.1 | Last Edit: 2024-03-13
+Version:  0.1.1 | Last Edit: 2024-03-16
 - 0.1.1 - Added FolderId parameter
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
