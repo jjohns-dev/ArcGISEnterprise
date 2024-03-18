@@ -21,7 +21,7 @@ function New-ServerHostedFeatureTable {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> New-ServerHostedFeatureTable -ServiceName myNewService -TableName 'DataTable' -Field $schema @commonParams
+        PS C:\> New-ServerHostedFeatureTable -ServiceName myNewService -TableName 'DataTable' -Field $Field @commonParams
         Creates a new table "layer" in a Hosted Feature Service with the name DataTable
     .NOTES
         Name:     New-ServerHostedFeatureTable
@@ -70,7 +70,7 @@ function New-ServerHostedFeatureTable {
         $definition = Get-Content -Path "$ModulePrivate\hosted_feature_service_table.template" | ConvertFrom-Json
 
         # VALIDATE NUMBER OF FIELDS IN SCHEMA
-        if ($Schema.Count -GT 68) {
+        if ($Field.Count -GT 68) {
             # PRINT WARNING
             Write-Warning -Message 'Schemas containing more than 68 fields don''t appear to be support through the REST API'
             Write-Warning -Message 'Table creation may fail. Please use fewer columns.'
@@ -84,7 +84,7 @@ function New-ServerHostedFeatureTable {
         $definition.layers[0].name = $TableName
 
         # ADD FIELD SCHEMA TO TEMPLATE
-        $definition.layers[0].fields = $Schema
+        $definition.layers[0].fields = $Field
 
         # SET REQUEST PARAMETERS
         $restParams = @{
