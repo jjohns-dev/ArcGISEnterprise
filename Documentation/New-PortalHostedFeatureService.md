@@ -6,7 +6,7 @@ Create new Hosted Feature Service
 ## SYNTAX
 
 ```
-New-PortalHostedFeatureService [-ServiceName] <String> [-Description] <String> [[-Summary] <String>]
+New-PortalHostedFeatureService [-ServiceName] <String> [-Description] <String> [[-Snippet] <String>]
  [-Tag] <String[]> [[-UserName] <String>] [[-FolderId] <String>] [-Context] <Uri> [-Token] <String>
  [-SkipCertificateCheck] [<CommonParameters>]
 ```
@@ -54,13 +54,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Summary
-Hosted Feature Service summary
+### -Snippet
+Hosted Feature Service snippet (i.e., summary)
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: Summary
 
 Required: False
 Position: 3

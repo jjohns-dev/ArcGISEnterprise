@@ -17,7 +17,7 @@ Create new table "layer" in a Hosted Feature Serivce
 
 ### EXAMPLE 1
 ```
-New-ServerHostedFeatureTable -ServiceName myNewService -TableName 'DataTable' -Field $schema @commonParams
+New-ServerHostedFeatureTable -ServiceName myNewService -TableName 'DataTable' -Field $Field @commonParams
 Creates a new table "layer" in a Hosted Feature Service with the name DataTable
 ```
 
