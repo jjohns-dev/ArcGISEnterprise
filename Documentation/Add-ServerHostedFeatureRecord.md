@@ -125,7 +125,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Add-ServerHostedFeatureRecord
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2023-03-11
+Version:  0.1.1 | Last Edit: 2023-03-17
+- 0.1.1 - Added formatting of record to freatures
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
