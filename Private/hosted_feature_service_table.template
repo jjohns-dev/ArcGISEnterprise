@@ -1,6 +1,9 @@
 {
     "layers": [
         {
+            "name": "DataTable",
+            "type": "Table",
+            "objectIdField": "objectid",
             "fields": [
                 {
                     "nullable": false,
@@ -110,10 +113,7 @@
                     "alias": "TYPE_BLOB",
                     "type": "esriFieldTypeBlob"
                 }
-            ],
-            "name": "DataTable",
-            "objectIdField": "objectid",
-            "type": "Table"
+            ]
         }
     ]
 }
