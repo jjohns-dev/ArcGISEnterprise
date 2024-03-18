@@ -31,7 +31,8 @@ function Edit-ServerHostedFeatureRecord {
     .NOTES
         Name:     Edit-ServerHostedFeatureRecord
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-14
+        Version:  0.1.1 | Last Edit: 2024-03-17
+        - 0.1.1 - Added formatting of record to freatures
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/services-reference/enterprise/apply-edits-feature-service-layer-.htm
@@ -39,7 +40,8 @@ function Edit-ServerHostedFeatureRecord {
     [CmdletBinding(DefaultParameterSetName = '_adds')]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_adds', HelpMessage = 'Record/feature to add')]
-        [ValidateScript({ $_.psobject.Members.Name -contains 'attributes' })]
+        #[ValidateScript({ $_.psobject.Members.Name -contains 'attributes' })]
+        [ValidateNotNullOrEmpty()]
         [System.Object[]] $Record,
 
         [Parameter(Mandatory = $true, ParameterSetName = '_updates', HelpMessage = 'Record/feature to update')]
@@ -72,8 +74,15 @@ function Edit-ServerHostedFeatureRecord {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # SET COLLECTION FOR FEATURE RECORDS
+        $features = [System.Collections.Generic.List[System.Object]]::new()
     }
     Process {
+        # ADD RECORD TO COLLECTION
+        # REMOVED DECLARATION AS PSCUSTOMOBJECT AS IT WILL CONVERT TO JSON ANYWAY
+        foreach ($i in $Record) { $features.Add((@{ attributes = $i })) }
+
         # SET PARAMETERS FOR ADDING DATA
         $restParams = @{
             Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/applyEdits' -f $Context, $ServiceName, $LayerId
@@ -87,7 +96,7 @@ function Edit-ServerHostedFeatureRecord {
 
         # CHECK FOR ADDS, UPDATES, OR DELETES
         if ($PSBoundParameters.ContainsKey('Record')) {
-            $restParams.Body['adds'] = $Record | ConvertTo-Json -Depth 10 -Compress -AsArray
+            $restParams.Body['adds'] = $features | ConvertTo-Json -Depth 10 -Compress -AsArray
         }
         elseif ($PSBoundParameters.ContainsKey('Update')) {
             $restParams.Body['updates'] = $Update | ConvertTo-Json -Depth 10 -Compress -AsArray

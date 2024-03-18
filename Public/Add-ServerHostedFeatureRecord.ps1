@@ -26,7 +26,8 @@ function Add-ServerHostedFeatureRecord {
     .NOTES
         Name:     Add-ServerHostedFeatureRecord
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-03-11
+        Version:  0.1.1 | Last Edit: 2023-03-17
+        - 0.1.1 - Added formatting of record to freatures
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
@@ -34,7 +35,8 @@ function Add-ServerHostedFeatureRecord {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Record or feature to add')]
-        [ValidateScript({ $_.psobject.Members.Name -contains 'attributes' })]
+        #[ValidateScript({ $_.psobject.Members.Name -contains 'attributes' })]
+        [ValidateNotNullOrEmpty()]
         [System.Object[]] $Record,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
@@ -59,14 +61,21 @@ function Add-ServerHostedFeatureRecord {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # SET COLLECTION FOR FEATURE RECORDS
+        $features = [System.Collections.Generic.List[System.Object]]::new()
     }
     Process {
+        # ADD RECORD TO COLLECTION
+        # REMOVED DECLARATION AS PSCUSTOMOBJECT AS IT WILL CONVERT TO JSON ANYWAY
+        foreach ($i in $Record) { $features.Add((@{ attributes = $i })) }
+
         # SET PARAMETERS FOR ADDING DATA
         $restParams = @{
             Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/addFeatures' -f $Context, $ServiceName, $LayerId
             Method = 'POST'
             Body   = @{
-                features = $Record | ConvertTo-Json -Depth 5 -Compress -AsArray
+                features = $features | ConvertTo-Json -Depth 5 -Compress -AsArray
                 f        = 'json'
                 token    = $Token
             }
