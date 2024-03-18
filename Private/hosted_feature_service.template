@@ -1,6 +1,6 @@
 {
-    "name": "ApiTestService",
-    "serviceDescription": "This is the service description from the JSON template.",
+    "name": "ServiceName",
+    "serviceDescription": "This is the service description (will be overwritten by REST parameters)",
     "hasStaticData": false,
     "maxRecordCount": 1000,
     "supportedQueryFormats": "JSON",

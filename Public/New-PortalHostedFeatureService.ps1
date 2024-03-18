@@ -8,8 +8,8 @@ function New-PortalHostedFeatureService {
         Portal Hosted Feature Service Name
     .PARAMETER Description
         Hosted Feature Service description
-    .PARAMETER Summary
-        Hosted Feature Service summary
+    .PARAMETER Snippet
+        Hosted Feature Service snippet (i.e., summary)
     .PARAMETER Tag
         Hosted Feature Service tag
     .PARAMETER UserName
@@ -48,9 +48,10 @@ function New-PortalHostedFeatureService {
         [ValidateNotNullOrEmpty()]
         [System.String] $Description,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Hosted Feature Service summary')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Hosted Feature Service snippet (i.e., summary)')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Summary,
+        [Alias('Summary')]
+        [System.String] $Snippet,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Hosted Feature Service tag')]
         [ValidateNotNullOrEmpty()]
@@ -106,15 +107,15 @@ function New-PortalHostedFeatureService {
 
         # CHECK FOR FOLDERID PARAMETER & SET REST URI
         if ($PSBoundParameters.ContainsKey('FolderId')) {
-            $restUri = '{0}/sharing/rest/content/users/{1}/{2}/createService' -f $Context, $UserName, $FolderId
+            $uri = '{0}/sharing/rest/content/users/{1}/{2}/createService' -f $Context, $UserName, $FolderId
         }
         else {
-            $restUri = '{0}/sharing/rest/content/users/{1}/createService' -f $Context, $UserName
+            $uri = '{0}/sharing/rest/content/users/{1}/createService' -f $Context, $UserName
         }
 
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = $restUri
+            Uri    = $uri
             Method = 'POST'
             Body   = @{
                 createParameters = $template | ConvertTo-Json -Depth 4 -Compress
