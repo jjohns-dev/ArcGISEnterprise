@@ -27,6 +27,7 @@ Please see releases for updates and features
 | Get-PortalUserGroupList | Portal | `/sharing/rest/community/groups` | Search for groups owned by specified user. Additional options available |
 | Get-PortalUserItemList | Portal | `/sharing/rest/search` | Search Portal. Additional options available |
 | Get-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer` | Gets Hosted Feature Service |
+| Invoke-PortalItemAnalysis | Portal | `/sharing/rest/content/features/analyze` | Analyze file prior to publishing |
 | Invoke-ServerHostedFeatureQuery | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/query` | Query feature service layer. Additional options available |
 | Move-PortalUserItem | Portal | `/sharing/rest/content/users/<USERNAME>/moveItems` | Move Portal item to folder |
 | New-PortalHostedFeatureService | Portal | `/sharing/rest/content/users/<USERNAME>/createService` | Creates new Hosted Feature Service |

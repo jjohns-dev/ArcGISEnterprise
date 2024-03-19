@@ -115,7 +115,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     New-TableSchemaObject
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-11
+Version:  0.1.0 | Last Edit: 2024-03-19
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 General notes
