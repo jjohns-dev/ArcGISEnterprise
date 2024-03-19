@@ -105,6 +105,7 @@
         'Get-ServerServiceList'
         'Get-ServerServicesDirectory'
         'Get-ServerToken'
+        'Invoke-PortalItemAnalysis'
         'Invoke-ServerHostedFeatureQuery'
         'Move-PortalUserItem'
         'New-PortalHostedFeatureService'
