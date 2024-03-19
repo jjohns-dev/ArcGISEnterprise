@@ -77,6 +77,7 @@
         'Get-PortalDefaultUserSettings'
         'Get-PortalGroupUserList'
         'Get-PortalIndexStatus'
+        'Get-PortalItemDataStore'
         'Get-PortalJobStatus'
         'Get-PortalLicense'
         'Get-PortalMachines'
