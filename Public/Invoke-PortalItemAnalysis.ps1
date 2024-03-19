@@ -5,9 +5,11 @@ function Invoke-PortalItemAnalysis {
     .DESCRIPTION
         Invoke API endpoint "analyze." Analysis file prior to publishing
     .PARAMETER ItemId
-        Id of Portal item
+        Id of previously uploaded Portal item
+    .PARAMETER File
+        System.IO.FileInfo object to POST and analyze
     .PARAMETER FileType
-        File type to be analyzed
+        File type
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -29,13 +31,17 @@ function Invoke-PortalItemAnalysis {
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/analyze.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = '_itid')]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Id of Portal item')]
+        [Parameter(Mandatory = $true, ParameterSetName = '_itid', HelpMessage = 'Id of previously uploaded Portal item')]
         [ValidatePattern('[a-f0-9]{32}')]
         [System.String] $ItemId,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'File type to be analyzed')]
+        [Parameter(Mandatory = $true, ParameterSetName = '_post', HelpMessage = 'System.IO.FileInfo object to POST and analyze')]
+        [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
+        [System.IO.FileInfo] $File,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'File type')]
         [ValidateSet('shapefile', 'csv', 'excel', 'geoPackage')]
         [System.String] $FileType,
 
@@ -58,12 +64,24 @@ function Invoke-PortalItemAnalysis {
         $restParams = @{
             Uri    = '{0}/sharing/rest/content/features/analyze' -f $Context
             Method = 'POST'
-            Body   = @{
-                f        = 'json'
-                token    = $Token
-                itemId   = $ItemId
-                filetype = $FileType
-            }
+        }
+
+        # SET QUERY PARAMS
+        $qParams = @{ f = 'json'; token = $Token; fileType = $FileType }
+
+        # WRITE VERBOSE PARAMETER SET
+        Write-Verbose -Message ('Parameter set [{0}]' -f $PSCmdlet.ParameterSetName)
+
+        # CHECK PARAMETER GROUP
+        if ($PSCmdlet.ParameterSetName -EQ '_itid') {
+            # ADD APPROPRIATE PARAMETERS FOR PORTAL ITEM ANALYZE
+            $qParams.Add('itemId', $ItemId)
+            $restParams.Add('Body', $qParams)
+        }
+        elseif ($PSCmdlet.ParameterSetName -EQ '_post') {
+            # ADD APPROPRIATE PARAMETERS FOR POST AND ANALYZE
+            $qParams.Add('file', $File)
+            $restParams.Add('Form', $qParams)
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED
