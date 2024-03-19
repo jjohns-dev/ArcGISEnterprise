@@ -1,5 +1,5 @@
 function Get-PortalItemDataStore {
-    <# =========================================================================
+    <#
     .SYNOPSIS
         Get server object for Portal DataStore item
     .DESCRIPTION
@@ -28,7 +28,7 @@ function Get-PortalItemDataStore {
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
-    ========================================================================= #>
+    #>
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_itid', HelpMessage = 'Id of previously uploaded Portal item')]
