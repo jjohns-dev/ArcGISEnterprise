@@ -20,7 +20,8 @@ function Get-ServerServiceList {
         PS C:\> Get-ServerServiceList -Context 'https://arcgis.com/arcgis' -Token $token
         Returns all services in ArcGIS Server
     .NOTES
-        General notes
+        General notes:
+        https://developers.arcgis.com/rest/enterprise-administration/server/services.htm
     #>
     [CmdletBinding()]
     Param(
@@ -41,16 +42,21 @@ function Get-ServerServiceList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Process {
-        # SET SERVICES URI
-        if ($PSBoundParameters.ContainsKey('Folder')) { $uri = '{0}/admin/services/{1}' -f $Context, $FolderName }
-        else { $uri = '{0}/admin/services' -f $Context }
-
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = $uri
+            Uri    = '{0}/admin/services' -f $Context
             Method = 'GET'
             Body   = @{ f = 'json' }
         }
+
+        # CHECK FOR FOLDER NAME PARAMETER
+        if ($PSBoundParameters.ContainsKey('FolderName')) {
+            # ADD FOLDER TO URI
+            $restParams['Uri'] = '{0}/admin/services/{1}' -f $Context, $FolderName
+        }
+
+        # OUTPUT VERBOSE
+        Write-Verbose -Message ('Target URI [{0}]' -f $restParams.Uri)
 
         # ADD TOKEN IF PROVIDED
         if ($PSBoundParameters.ContainsKey('Token')) { $restParams.Body['token'] = $Token }
