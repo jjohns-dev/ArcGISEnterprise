@@ -21,6 +21,7 @@ function Get-ServerAdminServicesDirectory {
         General notes
     #>
     [CmdletBinding()]
+    [Alias('Get-ServerServicesDirectory')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
