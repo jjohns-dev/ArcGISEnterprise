@@ -1,4 +1,4 @@
-function Get-PortalItemDataStore {
+function Get-PortalDataStoreServer {
     <#
     .SYNOPSIS
         Get server object for Portal DataStore item
@@ -19,10 +19,10 @@ function Get-PortalItemDataStore {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-PortalItemDataStore -ItemId $itemId @commonParams
+        PS C:\> Get-PortalDataStoreServer -ItemId $itemId @commonParams
         Returns an array of Servers where the DataStore item ID is registered
     .NOTES
-        Name:     Get-PortalItemDataStore
+        Name:     Get-PortalDataStoreServer
         Author:   Justin Johns
         Version:  0.1.0 | Last Edit: 2024-03-19
         - 0.1.0 - Initial version

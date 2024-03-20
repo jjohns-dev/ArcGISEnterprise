@@ -32,7 +32,7 @@ Please see releases for updates and features
 | Add-ServerHostedFeatureServiceRecord | Server | `[root]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/addFeatures` | Appends data to table in Hosted Feature Service |
 | Clear-ServerHostedFeatureService | Server | `[root]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Edit-ServerHostedFeatureRecord | Server | `[root]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
-| Get-PortalItemDataStore | Portal | `[root]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |
+| Get-PortalDataStoreServer | Portal | `[root]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |
 | Get-PortalJobStatus | Portal | `[root]/content/users/[USERNAME]/items/[ITEMID]/status` | Get Portal job status |
 | Get-PortalUserFolderList | Portal | `[root]/content/users/[USERNAME]` | Gets list of folders owned by user in Portal |
 | Get-PortalUserGroupList | Portal | `[root]/community/groups` | Search for groups owned by specified user. Additional options available |
