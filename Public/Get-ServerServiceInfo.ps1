@@ -26,7 +26,7 @@ function Get-ServerServiceInfo {
         - 0.1.1 - (2024-03-20) Added ability to get service information for services in specified folder
         - 0.1.0 - (2023-12-20) Initial version
         Comments: <Comment(s)>
-        General notes
+        https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory.htm
     #>
     [CmdletBinding()]
     Param(
