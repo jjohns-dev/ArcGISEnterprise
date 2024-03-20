@@ -4,10 +4,8 @@ function Get-ServerServiceItemInfo {
         Get ArcGIS Server service item information
     .DESCRIPTION
         Get ArcGIS Server service item information/details
-    .PARAMETER ServiceName
-        Name of ArcGIS Server service
-    .PARAMETER ServiceType
-        ArcGIS Server service type
+    .PARAMETER Service
+        ArcGIS Server service object (use Get-ServerAdminServiceList to retrieve object)
     .PARAMETER FolderName
         ArcGIS Server folder name
     .PARAMETER Context
@@ -30,13 +28,17 @@ function Get-ServerServiceItemInfo {
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Name of ArcGIS Server service')]
+        [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service object (use Get-ServerAdminServiceList)')]
+        [ValidateScript({ $_.serviceName -and $_.type })]
+        [System.Object] $Service,
+
+        <# [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service name')]
         [ValidateNotNullOrEmpty()]
-        [System.Object] $ServiceName,
+        [System.String] $ServiceName,
 
         [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service type')]
-        [ValidateSet('FeatureServer', 'MapServer', 'ImageServer', 'GeometryServer', 'GPServer', 'GeocodeServer')]
-        [System.String] $ServiceType,
+        [ValidateSet('MapServer', 'GeoDataServer', 'ImagerServer', 'GeoProcessingServer', 'GeocodeServer')]
+        [System.String] $ServiceType, #>
 
         [Parameter(Mandatory = $false, HelpMessage = 'ArcGIS Server folder name')]
         [ValidateNotNullOrEmpty()]
@@ -57,7 +59,7 @@ function Get-ServerServiceItemInfo {
     Process {
         # SET URI PATH
         if ($PSBoundParameters.ContainsKey('FolderName')) {
-            $uri = '{0}/admin/services/{1}/{2}.{3}/iteminfo' -f $Context, $FolderName, $ServiceName, $ServiceType
+            $uri = '{0}/admin/services/{1}/{2}.{3}/iteminfo' -f $Context, $FolderName, $Service.serviceName, $Service.type
         }
         else {
             $uri = '{0}/admin/services/{1}.{2}/iteminfo' -f $Context, $ServiceName, $ServiceType
