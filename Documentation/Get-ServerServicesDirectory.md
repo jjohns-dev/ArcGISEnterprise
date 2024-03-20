@@ -1,4 +1,4 @@
-# Get-ServerServicesDirectory
+# Get-ServerAdminServicesDirectory
 
 ## SYNOPSIS
 Get ArcGIS Server services directory
@@ -6,7 +6,7 @@ Get ArcGIS Server services directory
 ## SYNTAX
 
 ```
-Get-ServerServicesDirectory [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerAdminServicesDirectory [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -16,7 +16,7 @@ Get ArcGIS Server services directory configuration data
 
 ### EXAMPLE 1
 ```
-Get-ServerServicesDirectory -Context 'https://arcgis.com/arcgis' -Token $token
+Get-ServerAdminServicesDirectory -Context 'https://arcgis.com/arcgis' -Token $token
 Returns ArcGIS Server services directory content
 ```
 

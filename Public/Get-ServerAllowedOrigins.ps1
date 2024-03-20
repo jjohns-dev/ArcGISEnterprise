@@ -58,7 +58,7 @@ function Get-ServerAllowedOrigins {
             (Invoke-RestMethod @restParams).allowedOrigins.Split(',')
         }
         else {
-            $origins = (Get-ServerServicesDirectory @PSBoundParameters).allowedOrigins
+            $origins = (Get-ServerAdminServicesDirectory @PSBoundParameters).allowedOrigins
             if ($origins.Count -EQ 0) { $null } else { $origins.Split(',') }
         }
     }
