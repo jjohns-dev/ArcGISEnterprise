@@ -1,4 +1,4 @@
-# Get-ServerService
+# Get-ServerAdminService
 
 ## SYNOPSIS
 Get ArcGIS service
@@ -6,7 +6,7 @@ Get ArcGIS service
 ## SYNTAX
 
 ```
-Get-ServerService [-Context] <Uri> [-Token <String>] -ServiceName <String> -ServiceType <String>
+Get-ServerAdminService [-Context] <Uri> [-Token <String>] -ServiceName <String> -ServiceType <String>
  [-Folder <String>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
