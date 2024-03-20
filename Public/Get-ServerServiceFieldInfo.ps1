@@ -4,8 +4,8 @@ function Get-ServerServiceFieldInfo {
         Get ArcGIS Server service field information
     .DESCRIPTION
         Get ArcGIS Server service field information for fields belonging to services and service layers
-    .PARAMETER Folder
-        Get folder(s)
+    .PARAMETER FolderName
+        Target folder
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -25,7 +25,8 @@ function Get-ServerServiceFieldInfo {
     .NOTES
         Name:     Get-ServerServiceFieldInfo
         Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-01-18
+        Version:  0.1.3 | Last Edit: 2024-03-20
+        - 0.1.3 - (2024-03-20) Updated parameter name for consistency
         - 0.1.2 - (2024-01-18) Added more properties to report
         - 0.1.1 - (2024-01-03) Adjusted default behavior and removed parameters for targeting "esriFieldTypeString"
         - 0.1.0 - Initial version
@@ -35,8 +36,10 @@ function Get-ServerServiceFieldInfo {
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Get folder')]
-        [System.String[]] $Folder,
+        [Parameter(Mandatory = $true, HelpMessage = 'Target folder')]
+        [ValidateNotNullOrEmpty()]
+        [Alias('Folder')]
+        [System.String[]] $FolderName,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -73,7 +76,7 @@ function Get-ServerServiceFieldInfo {
         $servicInfo = Get-ServerServiceInfo @servicInfoParams
 
         # EVALUATE EACH FOLDER
-        foreach ($fldr in $Folder) {
+        foreach ($fldr in $FolderName) {
             # VALIDATE FOLDER EXISTS
             if ($fldr -notin $servicInfo.folders) {
                 throw ('Folder [{0}] not found.' -f $fldr)
@@ -81,7 +84,7 @@ function Get-ServerServiceFieldInfo {
         }
 
         # EVALUATE EACH FOLDER
-        foreach ($fldr in $Folder) {
+        foreach ($fldr in $FolderName) {
 
             # RESET URI
             $restParams['Uri'] = '{0}/{1}' -f $baseUri, $fldr
