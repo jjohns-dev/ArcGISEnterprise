@@ -4,10 +4,12 @@ function Get-ServerServiceItemInfo {
         Get ArcGIS Server service item information
     .DESCRIPTION
         Get ArcGIS Server service item information/details
-    .PARAMETER Service
-        Service object returned from Get-ServerServiceList or Get-ServerAdminServiceList
-    .PARAMETER Folder
-        Folder in ArcGIS Server
+    .PARAMETER ServiceName
+        Name of ArcGIS Server service
+    .PARAMETER ServiceType
+        ArcGIS Server service type
+    .PARAMETER FolderName
+        ArcGIS Server folder name
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -22,23 +24,30 @@ function Get-ServerServiceItemInfo {
         PS C:\> Get-ServerServiceItemInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
         Returns the service item info for service $s
     .NOTES
-        General notes
+        General notes:
+        Used to require passing in a "Service" object from Get-ServerAdminServiceList
+        https://developers.arcgis.com/rest/enterprise-administration/server/services.htm
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory, HelpMessage = 'Service object returned from Get-ServerServiceList or Get-ServerAdminServiceList')]
-        [ValidateScript({ $_.serviceName -and $_.type })]
-        [System.Object] $Service,
-
-        [Parameter(HelpMessage = 'Folder')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Name of ArcGIS Server service')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Folder,
+        [System.Object] $ServiceName,
 
-        [Parameter(Mandatory, Position = 0, HelpMessage = 'Target Portal context')]
+        [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service type')]
+        [ValidateSet('FeatureServer', 'MapServer', 'ImageServer', 'GeometryServer', 'GPServer', 'GeocodeServer')]
+        [System.String] $ServerType,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'ArcGIS Server folder name')]
+        [ValidateNotNullOrEmpty()]
+        [Alias('Folder')]
+        [System.String] $FolderName,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(HelpMessage = 'Portal token')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
@@ -47,11 +56,11 @@ function Get-ServerServiceItemInfo {
     )
     Process {
         # SET URI PATH
-        if ($PSBoundParameters.ContainsKey('Folder')) {
-            $uri = '{0}/admin/services/{1}/{2}.{3}/iteminfo' -f $Context, $Folder, $Service.serviceName, $Service.type
+        if ($PSBoundParameters.ContainsKey('FolderName')) {
+            $uri = '{0}/admin/services/{1}/{2}.{3}/iteminfo' -f $Context, $FolderName, $ServiceName, $ServiceType
         }
         else {
-            $uri = '{0}/admin/services/{1}.{2}/iteminfo' -f $Context, $Service.serviceName, $Service.type
+            $uri = '{0}/admin/services/{1}.{2}/iteminfo' -f $Context, $ServiceName, $ServiceType
         }
 
         # SET REQUEST PARAMETERS
