@@ -4,6 +4,8 @@ function Get-ServerServiceInfo {
         Get ArcGIS Server service information
     .DESCRIPTION
         Get ArcGIS Server service information including folder(s)
+    .PARAMETER FolderName
+        Target folder to retrieve service info
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -20,13 +22,19 @@ function Get-ServerServiceInfo {
     .NOTES
         Name:     Get-ServerServiceInfo
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-12-20
-        - 0.1.0 - Initial version
+        Version:  0.1.1 | Last Edit: 2024-03-20
+        - 0.1.1 - (2024-03-20) Added ability to get service information for services in specified folder
+        - 0.1.0 - (2023-12-20) Initial version
         Comments: <Comment(s)>
         General notes
     #>
     [CmdletBinding()]
     Param(
+        [Parameter(Mandatory = $false, HelpMessage = 'Target folder to retrieve service info')]
+        [ValidateNotNullOrEmpty()]
+        [Alias('Folder')]
+        [System.String] $FolderName,
+
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -40,7 +48,8 @@ function Get-ServerServiceInfo {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
-
+    }
+    Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/rest/services' -f $Context
@@ -48,13 +57,21 @@ function Get-ServerServiceInfo {
             Body   = @{ f = 'json' }
         }
 
+        # CHECK FOR FOLDER NAME PARAMETER
+        if ($PSBoundParameters.ContainsKey('FolderName')) {
+            # UPDATE URI WITH FOLDER PATH
+            $restParams['Uri'] = '{0}/rest/services/{1}' -f $Context, $FolderName
+        }
+
+        # OUTPUT VERBOSE
+        Write-Verbose -Message ('Target URI [{0}]' -f $restParams.Uri)
+
         # ADD TOKEN IF PROVIDED
         if ($PSBoundParameters.ContainsKey('Token')) { $restParams.Body['token'] = $Token }
 
         # ADD SKIP CERTIFICATE CHECK IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-    }
-    Process {
+
         # GET FOLDERS
         Invoke-RestMethod @restParams
     }
