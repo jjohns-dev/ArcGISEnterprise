@@ -5,7 +5,7 @@ function Get-ServerServiceItemInfo {
     .DESCRIPTION
         Get ArcGIS Server service item information/details
     .PARAMETER Service
-        Service object returned from Get-Service or Get-ServerServiceList
+        Service object returned from Get-ServerServiceList or Get-ServerAdminServiceList
     .PARAMETER Folder
         Folder in ArcGIS Server
     .PARAMETER Context
@@ -26,7 +26,7 @@ function Get-ServerServiceItemInfo {
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory, HelpMessage = 'Service object returned from Get-Service or Get-ServerServiceList')]
+        [Parameter(Mandatory, HelpMessage = 'Service object returned from Get-ServerServiceList or Get-ServerAdminServiceList')]
         [ValidateScript({ $_.serviceName -and $_.type })]
         [System.Object] $Service,
 

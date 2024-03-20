@@ -54,7 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -Service
-Service object returned from Get-Service or Get-ServerServiceList
+Service object returned from Get-Service or Get-ServerAdminServiceList
 
 ```yaml
 Type: Object

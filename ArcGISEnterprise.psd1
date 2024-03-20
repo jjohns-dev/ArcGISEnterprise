@@ -103,7 +103,7 @@
         'Get-ServerServiceFieldInfo'
         'Get-ServerServiceInfo'
         'Get-ServerServiceItemInfo'
-        'Get-ServerServiceList'
+        'Get-ServerAdminServiceList'
         'Get-ServerServicesDirectory'
         'Get-ServerToken'
         'Invoke-PortalItemAnalysis'

@@ -1,4 +1,4 @@
-# Get-ServerServiceList
+# Get-ServerAdminServiceList
 
 ## SYNOPSIS
 Get list of services from ArcGIS Server
@@ -6,7 +6,7 @@ Get list of services from ArcGIS Server
 ## SYNTAX
 
 ```
-Get-ServerServiceList [-Context] <Uri> [-Token <String>] [-Folder <String>] [-SkipCertificateCheck]
+Get-ServerAdminServiceList [-Context] <Uri> [-Token <String>] [-Folder <String>] [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
@@ -17,7 +17,7 @@ Get list of services and info from ArcGIS Server
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceList -Context 'https://arcgis.com/arcgis' -Token $token
+Get-ServerAdminServiceList -Context 'https://arcgis.com/arcgis' -Token $token
 Returns all services in ArcGIS Server
 ```
 
