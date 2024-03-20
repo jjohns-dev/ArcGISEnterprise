@@ -1,4 +1,4 @@
-function Get-ServerServiceItemInfo {
+function Get-ServerAdminServiceItemInfo {
     <#
     .SYNOPSIS
         Get ArcGIS Server service item information
@@ -19,7 +19,7 @@ function Get-ServerServiceItemInfo {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerServiceItemInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
+        PS C:\> Get-ServerAdminServiceItemInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
         Returns the service item info for service $s
     .NOTES
         General notes:
