@@ -6,7 +6,7 @@ Get ArcGIS Server service
 ## SYNTAX
 
 ```
-Get-ServerAdminService -ServiceName <String> -ServiceType <String> [-Folder <String>] [-Context] <Uri>
+Get-ServerAdminService -ServiceName <String> -ServiceType <String> [-FolderName <String>] [-Context] <Uri>
  [-Token <String>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
@@ -53,13 +53,13 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Folder
-Folder in ArcGIS Server
+### -FolderName
+Folder name in ArcGIS Server
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: Folder
 
 Required: False
 Position: Named
