@@ -5,7 +5,7 @@ function Get-PortalDataStoreServer {
     .DESCRIPTION
         Get server object for Portal DataStore item
     .PARAMETER ItemId
-        Portal item ID
+        Portal item ID of Data Store item
     .PARAMETER PortalId
         Portal application ID
     .PARAMETER Context
@@ -31,7 +31,7 @@ function Get-PortalDataStoreServer {
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true, ParameterSetName = '_itid', HelpMessage = 'Id of previously uploaded Portal item')]
+        [Parameter(Mandatory = $true, ParameterSetName = '_itid', HelpMessage = 'Portal item ID of Data Store item')]
         [ValidatePattern('[a-f0-9]{32}')]
         [System.String] $ItemId,
 
