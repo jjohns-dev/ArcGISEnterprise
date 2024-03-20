@@ -73,7 +73,7 @@ function Get-ServerServiceFieldInfo {
         $servicInfoParams.Remove('Folder') | Out-Null
 
         # GET SERVICE INFO INCLUDING FOLDERS
-        $servicInfo = Get-ServerServiceInfo @servicInfoParams
+        $servicInfo = Get-ServerServiceList @servicInfoParams
 
         # EVALUATE EACH FOLDER
         foreach ($fldr in $FolderName) {
