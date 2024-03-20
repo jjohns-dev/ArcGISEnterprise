@@ -1,19 +1,19 @@
 function Get-ServerService {
     <#
     .SYNOPSIS
-        Get ArcGIS service
+        Get ArcGIS Server service
     .DESCRIPTION
-        Get ArcGIS service
-    .PARAMETER Context
-        Portal context (e.g., https://arcgis.com/arcgis)
-    .PARAMETER Token
-        Portal token
+        Get ArcGIS Service service
     .PARAMETER ServiceName
         Name of service
     .PARAMETER ServiceType
         Type of service (e.g., FeatureServer or MapServer)
     .PARAMETER Folder
         Folder in ArcGIS Server
+    .PARAMETER Context
+        Portal context (e.g., https://arcgis.com/arcgis)
+    .PARAMETER Token
+        Portal token
     .PARAMETER SkipCertificateCheck
         Ignore missing or invalid certificate
     .INPUTS
@@ -29,14 +29,6 @@ function Get-ServerService {
     [CmdletBinding()]
     [Alias('Get-AGSService')]
     Param(
-        [Parameter(Mandatory, Position = 0, HelpMessage = 'Target Portal context')]
-        [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
-        [System.Uri] $Context,
-
-        [Parameter(HelpMessage = 'Portal token')]
-        [ValidateScript({ $_ -match $token_regex })]
-        [System.String] $Token,
-
         [Parameter(Mandatory, HelpMessage = 'Service name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
@@ -49,6 +41,14 @@ function Get-ServerService {
         [Parameter(HelpMessage = 'Folder')]
         [ValidateNotNullOrEmpty()]
         [System.String] $Folder,
+
+        [Parameter(Mandatory, Position = 0, HelpMessage = 'Target Portal context')]
+        [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
+        [System.Uri] $Context,
+
+        [Parameter(HelpMessage = 'Portal token')]
+        [ValidateScript({ $_ -match $token_regex })]
+        [System.String] $Token,
 
         [Parameter(HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck

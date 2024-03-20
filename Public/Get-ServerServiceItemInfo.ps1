@@ -1,17 +1,17 @@
 function Get-ServerServiceItemInfo {
     <#
     .SYNOPSIS
-        Get service item info
+        Get ArcGIS Server service item information
     .DESCRIPTION
-        Get service item info
-    .PARAMETER Context
-        Portal context (e.g., https://arcgis.com/arcgis)
-    .PARAMETER Token
-        Portal token
+        Get ArcGIS Server service item information/details
     .PARAMETER Service
         Service object returned from Get-Service or Get-ServerServiceList
     .PARAMETER Folder
         Folder in ArcGIS Server
+    .PARAMETER Context
+        Portal context (e.g., https://arcgis.com/arcgis)
+    .PARAMETER Token
+        Portal token
     .PARAMETER SkipCertificateCheck
         Ignore missing or invalid certificate
     .INPUTS
@@ -26,6 +26,14 @@ function Get-ServerServiceItemInfo {
     #>
     [CmdletBinding()]
     Param(
+        [Parameter(Mandatory, HelpMessage = 'Service object returned from Get-Service or Get-ServerServiceList')]
+        [ValidateScript({ $_.serviceName -and $_.type })]
+        [System.Object] $Service,
+
+        [Parameter(HelpMessage = 'Folder')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $Folder,
+
         [Parameter(Mandatory, Position = 0, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -33,14 +41,6 @@ function Get-ServerServiceItemInfo {
         [Parameter(HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
-
-        [Parameter(Mandatory, HelpMessage = 'Service object returned from Get-Service or Get-ServerServiceList')]
-        [ValidateScript({$_.serviceName -and $_.type})]
-        [System.Object] $Service,
-
-        [Parameter(HelpMessage = 'Folder')]
-        [ValidateNotNullOrEmpty()]
-        [System.String] $Folder,
 
         [Parameter(HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck

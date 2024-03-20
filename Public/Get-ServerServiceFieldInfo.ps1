@@ -4,10 +4,10 @@ function Get-ServerServiceFieldInfo {
         Get ArcGIS Server service field information
     .DESCRIPTION
         Get ArcGIS Server service field information for fields belonging to services and service layers
-    .PARAMETER Context
-        Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Folder
         Get folder(s)
+    .PARAMETER Context
+        Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
         Portal token
     .PARAMETER SkipCertificateCheck
@@ -35,12 +35,12 @@ function Get-ServerServiceFieldInfo {
     #>
     [CmdletBinding()]
     Param(
+        [Parameter(Mandatory = $true, HelpMessage = 'Get folder')]
+        [System.String[]] $Folder,
+
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
-
-        [Parameter(Mandatory = $true, HelpMessage = 'Get folder')]
-        [System.String[]] $Folder,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]

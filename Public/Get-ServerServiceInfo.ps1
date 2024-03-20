@@ -1,9 +1,9 @@
 function Get-ServerServiceInfo {
     <#
     .SYNOPSIS
-        Get ArcGIS Server service info
+        Get ArcGIS Server service information
     .DESCRIPTION
-        Get ArcGIS Server service info including folder(s)
+        Get ArcGIS Server service information including folder(s)
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
