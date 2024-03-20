@@ -1,4 +1,4 @@
-# Get-ServerLicense
+# Get-ServerAdminLicense
 
 ## SYNOPSIS
 Get ArcGIS Server license
@@ -6,7 +6,7 @@ Get ArcGIS Server license
 ## SYNTAX
 
 ```
-Get-ServerLicense [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerAdminLicense [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -16,7 +16,7 @@ Get ArcGIS Server license information
 
 ### EXAMPLE 1
 ```
-Get-ServerLicense -Context 'https://arcgis.com/arcgis' -Token $token
+Get-ServerAdminLicense -Context 'https://arcgis.com/arcgis' -Token $token
 Returns ArcGIS Server license info
 ```
 

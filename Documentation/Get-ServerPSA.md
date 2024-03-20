@@ -1,4 +1,4 @@
-# Get-ServerPSA
+# Get-ServerAdminPSA
 
 ## SYNOPSIS
 Get Portal user
@@ -6,7 +6,7 @@ Get Portal user
 ## SYNTAX
 
 ```
-Get-ServerPSA [-Context] <Uri> [-Token] <String> [[-Referer] <String>] [<CommonParameters>]
+Get-ServerAdminPSA [-Context] <Uri> [-Token] <String> [[-Referer] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -16,7 +16,7 @@ Get Portal user
 
 ### EXAMPLE 1
 ```
-Get-ServerPSA -Context 'https://arcgis.com/arcgis' -Token $token
+Get-ServerAdminPSA -Context 'https://arcgis.com/arcgis' -Token $token
 Get PSA user from Server
 ```
 

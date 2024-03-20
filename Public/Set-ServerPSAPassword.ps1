@@ -48,10 +48,10 @@ function Set-ServerPSAPassword {
         $token = Get-ServerToken -Context $Context -Credential $Credential -Client 'referer' -Referer 'referer'
 
         # CHECK USER STATUS
-        $status = Get-ServerPSA -Context $Context -Token $token.token
+        $status = Get-ServerAdminPSA -Context $Context -Token $token.token
 
         # VALIDATE USER EXISTENCE USING DISABLED PROPERTY
-        # THIS IS THE ONLY PROPERTY RETURNED BY "Get-ServerPSA"
+        # THIS IS THE ONLY PROPERTY RETURNED BY "Get-ServerAdminPSA"
         if ($status.disabled -eq $false) {
             # SET REQUEST PARAMETERS
             $restParams = @{
