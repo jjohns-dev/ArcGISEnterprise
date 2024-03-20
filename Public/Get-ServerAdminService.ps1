@@ -8,8 +8,8 @@ function Get-ServerAdminService {
         Name of service
     .PARAMETER ServiceType
         Type of service (e.g., FeatureServer or MapServer)
-    .PARAMETER Folder
-        Folder in ArcGIS Server
+    .PARAMETER FolderName
+        Folder name in ArcGIS Server
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -29,24 +29,25 @@ function Get-ServerAdminService {
     [CmdletBinding()]
     [Alias('Get-ServerService')]
     Param(
-        [Parameter(Mandatory, HelpMessage = 'Service name')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Service name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
 
-        [Parameter(Mandatory, HelpMessage = 'Service name')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Service name')]
         [ValidateNotNullOrEmpty()]
         #[ValidateSet('FeatureServer', 'MapServer')]
         [System.String] $ServiceType,
 
-        [Parameter(HelpMessage = 'Folder')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Folder,
+        [Alias('Folder')]
+        [System.String] $FolderName,
 
-        [Parameter(Mandatory, Position = 0, HelpMessage = 'Target Portal context')]
+        [Parameter(Mandatory = $true, Position = 0, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(HelpMessage = 'Portal token')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
@@ -55,8 +56,8 @@ function Get-ServerAdminService {
     )
     Process {
         # SET URI PATH
-        if ($PSBoundParameters.ContainsKey('Folder')) {
-            $uri = '{0}/admin/services/{1}/{2}.{3}' -f $Context, $Folder, $ServiceName, $ServiceType
+        if ($PSBoundParameters.ContainsKey('FolderName')) {
+            $uri = '{0}/admin/services/{1}/{2}.{3}' -f $Context, $FolderName, $ServiceName, $ServiceType
         }
         else {
             $uri = '{0}/admin/services/{1}.{2}' -f $Context, $ServiceName, $ServiceType
