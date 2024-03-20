@@ -6,8 +6,8 @@ Get ArcGIS Server service field information
 ## SYNTAX
 
 ```
-Get-ServerServiceFieldInfo [-Context] <Uri> [-Folder] <String[]> [[-Token] <String>] [-SkipCertificateCheck]
- [<CommonParameters>]
+Get-ServerServiceFieldInfo [-FolderName] <String[]> [-Context] <Uri> [[-Token] <String>]
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -29,13 +29,13 @@ Returns an array of fields with length for "esriFieldTypeString" types
 
 ## PARAMETERS
 
-### -Context
-Portal context (e.g., https://arcgis.com/arcgis)
+### -FolderName
+Target folder
 
 ```yaml
-Type: Uri
+Type: String[]
 Parameter Sets: (All)
-Aliases:
+Aliases: Folder
 
 Required: True
 Position: 1
@@ -44,11 +44,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Folder
-Get folder(s)
+### -Context
+Portal context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
-Type: String[]
+Type: Uri
 Parameter Sets: (All)
 Aliases:
 
@@ -101,7 +101,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-ServerServiceFieldInfo
 Author:   Justin Johns
-Version:  0.1.2 | Last Edit: 2024-01-18
+Version:  0.1.3 | Last Edit: 2024-03-20
+- 0.1.3 - (2024-03-20) Updated parameter name for consistency
 - 0.1.2 - (2024-01-18) Added more properties to report
 - 0.1.1 - (2024-01-03) Adjusted default behavior and removed parameters for targeting "esriFieldTypeString"
 - 0.1.0 - Initial version

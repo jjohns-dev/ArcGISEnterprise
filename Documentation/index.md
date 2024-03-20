@@ -17,27 +17,38 @@ Please see releases for updates and features
 
 ## Function to API Mapping
 
+### Root Directories
+
+| Component | Name | Path |
+| --------- | ---- | ---- |
+| Portal | root | `/sharing/rest` |
+| Server | root | `/rest/services` |
+| Server | admin | `/rest/admin` |
+
+### API Endpoints
+
 | Function | Component | API Endpoint | Description |
 | -------- | --------- | ------------ | ----------- |
-| Add-ServerHostedFeatureServiceRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/addFeatures` | Appends data to table in Hosted Feature Service |
-| Clear-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/deleteFeatures` | Truncates table data in Hosted Feature Service |
-| Edit-ServerHostedFeatureRecord | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/applyEdits` | Adds, updates, or deletes features/records from a table layer |
-| Get-PortalJobStatus | Portal | `/sharing/rest/content/users/<USERNAME>/items/<ITEMID>/status` | Get Portal job status |
-| Get-PortalUserFolderList | Portal | `/sharing/rest/content/users/<USERNAME>` | Gets list of folders owned by user in Portal |
-| Get-PortalUserGroupList | Portal | `/sharing/rest/community/groups` | Search for groups owned by specified user. Additional options available |
-| Get-PortalUserItemList | Portal | `/sharing/rest/search` | Search Portal. Additional options available |
-| Get-ServerHostedFeatureService | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer` | Gets Hosted Feature Service |
-| Invoke-PortalItemAnalysis | Portal | `/sharing/rest/content/features/analyze` | Analyze file prior to publishing |
-| Invoke-ServerHostedFeatureQuery | Server | `/rest/services/Hosted/<SERVICENAME>/FeatureServer/<LAYERID>/query` | Query feature service layer. Additional options available |
-| Move-PortalUserItem | Portal | `/sharing/rest/content/users/<USERNAME>/moveItems` | Move Portal item to folder |
-| New-PortalHostedFeatureService | Portal | `/sharing/rest/content/users/<USERNAME>/createService` | Creates new Hosted Feature Service |
-| New-PortalUserFolder | Portal | `/sharing/rest/content/users/<USERNAME>/createFolder` | Creates new folder in Portal |
-| New-ServerHostedFeatureTable | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
-| Publish-PortalCsvItemAsTable | Portal | `/sharing/rest/content/users/<USERNAME>/publish` | Publish CSV item (Portal item) as Hosted Table. Additional options available |
-| Remove-PortalItem | Portal | `/sharing/rest/content/users/<USERNAME>/items/<ITEMID>/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
+| Add-ServerHostedFeatureServiceRecord | Server | `[root]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/addFeatures` | Appends data to table in Hosted Feature Service |
+| Clear-ServerHostedFeatureService | Server | `[root]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/deleteFeatures` | Truncates table data in Hosted Feature Service |
+| Edit-ServerHostedFeatureRecord | Server | `[root]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
+| Get-PortalDataStoreServer | Portal | `[root]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |
+| Get-PortalJobStatus | Portal | `[root]/content/users/[USERNAME]/items/[ITEMID]/status` | Get Portal job status |
+| Get-PortalUserFolderList | Portal | `[root]/content/users/[USERNAME]` | Gets list of folders owned by user in Portal |
+| Get-PortalUserGroupList | Portal | `[root]/community/groups` | Search for groups owned by specified user. Additional options available |
+| Get-PortalUserItemList | Portal | `[root]/search` | Search Portal. Additional options available |
+| Get-ServerHostedFeatureService | Server | `[root]/Hosted/[SERVICENAME]/FeatureServer` | Gets Hosted Feature Service |
+| Invoke-PortalItemAnalysis | Portal | `[root]/content/features/analyze` | Analyze file prior to publishing |
+| Invoke-ServerHostedFeatureQuery | Server | `[root]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query feature service layer. Additional options available |
+| Move-PortalUserItem | Portal | `[root]/content/users/[USERNAME]/moveItems` | Move Portal item to folder |
+| New-PortalHostedFeatureService | Portal | `[root]/content/users/[USERNAME]/createService` | Creates new Hosted Feature Service |
+| New-PortalUserFolder | Portal | `[root]/content/users/[USERNAME]/createFolder` | Creates new folder in Portal |
+| New-ServerHostedFeatureTable | Server | `[admin]/services/Hosted/[SERVICENAME]/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
+| Publish-PortalCsvItemAsTable | Portal | `[root]/content/users/[USERNAME]/publish` | Publish CSV item (Portal item) as Hosted Table. Additional options available |
+| Remove-PortalItem | Portal | `[root]/content/users/[USERNAME]/items/[ITEMID]/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
 | Remove-ServerService | Server | `/admin/services/deleteServices` | Deletes ArcGIS Server Service |
-| Remove-ServerServiceLayer | Server | `/rest/admin/services/Hosted/<SERVICENAME>/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
-| Write-PortalUserItem | Portal | `/sharing/rest/content/users/<USERNAME>/addItem` | Uploads a Portal item (file item) |
+| Remove-ServerServiceLayer | Server | `[admin]/services/Hosted/[SERVICENAME]/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
+| Write-PortalUserItem | Portal | `[root]/content/users/[USERNAME]/addItem` | Uploads a Portal item (file item) |
 
 ## Potential Future Functions
 
