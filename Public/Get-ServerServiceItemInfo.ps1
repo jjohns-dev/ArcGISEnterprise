@@ -36,7 +36,7 @@ function Get-ServerServiceItemInfo {
 
         [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service type')]
         [ValidateSet('FeatureServer', 'MapServer', 'ImageServer', 'GeometryServer', 'GPServer', 'GeocodeServer')]
-        [System.String] $ServerType,
+        [System.String] $ServiceType,
 
         [Parameter(Mandatory = $false, HelpMessage = 'ArcGIS Server folder name')]
         [ValidateNotNullOrEmpty()]
