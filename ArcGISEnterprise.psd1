@@ -117,6 +117,7 @@
         'Publish-PortalCsvItemAsTable'
         'Remove-PortalItem'
         'Remove-PortalRole'
+        'Remove-ServerFolder'
         'Remove-ServerService'
         'Remove-ServerServiceLayer'
         'Search-PortalContent'

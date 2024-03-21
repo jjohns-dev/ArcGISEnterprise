@@ -30,7 +30,7 @@ function New-ServerFolder {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'New ArcGIS Server folder name')]
-        [ValidatePattern('^[a-z0-9_]{30}$')]
+        [ValidatePattern('^\w{1,30}$')]
         [System.String] $FolderName,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
