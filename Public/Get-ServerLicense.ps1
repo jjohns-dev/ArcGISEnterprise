@@ -34,6 +34,7 @@ function Get-ServerLicense {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Process {
+        # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/admin/system/licenses' -f $Context
             Method = 'GET'
@@ -42,7 +43,11 @@ function Get-ServerLicense {
                 token = $Token
             }
         }
+
+        # ADD SKIP CERTIFICATE CHECK
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
+        # SEND REQUEST
         Invoke-RestMethod @restParams
     }
 }

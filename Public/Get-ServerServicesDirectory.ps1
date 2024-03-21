@@ -34,6 +34,7 @@ function Get-ServerServicesDirectory {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Process {
+        # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/admin/system/handlers/rest/servicesdirectory' -f $Context
             Method = 'GET'
@@ -42,7 +43,11 @@ function Get-ServerServicesDirectory {
                 token = $Token
             }
         }
+
+        # ADD SKIP CERTIFICATE CHECK
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
+        # SEND REQUEST
         Invoke-RestMethod @restParams
     }
 }

@@ -6,8 +6,8 @@ Get Portal for ArcGIS user item list
 ## SYNTAX
 
 ```
-Get-PortalUserItemList [[-UserName] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
- [<CommonParameters>]
+Get-PortalUserItemList [[-UserName] <String>] [[-Type] <String[]>] [-Context] <Uri> [-Token] <String>
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -38,6 +38,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Type
+Portal item type
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
 Portal context (e.g., https://arcgis.com/arcgis)
 
@@ -47,7 +62,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,7 +77,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -95,8 +110,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalUserItemList
 Author:   Justin Johns
-Version:  0.1.2 | Last Edit: 2024-03-15
-- 0.1.2 - (2024-03-15) Made UserName parameter optional
+Version:  0.1.2 | Last Edit: 2024-03-21
+- 0.1.2 - (2024-03-21) Made UserName parameter optional and added parameter for item type
 - 0.1.1 - (2023-13-20) Added automatic retrieval of paged results
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>

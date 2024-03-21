@@ -6,6 +6,8 @@ function Get-PortalUserItemList {
         Get all items owned by user in Portal for ArcGIS
     .PARAMETER UserName
         Username
+    .PARAMETER Type
+        Portal item type
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -22,8 +24,8 @@ function Get-PortalUserItemList {
     .NOTES
         Name:     Get-PortalUserItemList
         Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-03-15
-        - 0.1.2 - (2024-03-15) Made UserName parameter optional
+        Version:  0.1.2 | Last Edit: 2024-03-21
+        - 0.1.2 - (2024-03-21) Made UserName parameter optional and added parameter for item type
         - 0.1.1 - (2023-13-20) Added automatic retrieval of paged results
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
@@ -34,6 +36,10 @@ function Get-PortalUserItemList {
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
         [System.String] $UserName,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal item type')]
+        [ValidateSet('Map Service', 'Feature Service', 'Data Store', 'Web Map')] # this list will need updating
+        [System.String[]] $Type,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -123,7 +129,8 @@ function Get-PortalUserItemList {
             }
 
             # RETURN USERS
-            $itemList
+            if ($PSBoundParameters.ContainsKey('Type')) { $itemList | Where-Object type -IN $Type }
+            else { $itemList }
         }
     }
 }

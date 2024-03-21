@@ -1,57 +1,27 @@
 # Get-ServerService
 
 ## SYNOPSIS
-Get ArcGIS service
+Get ArcGIS Server service
 
 ## SYNTAX
 
 ```
-Get-ServerService [-Context] <Uri> [-Token <String>] -ServiceName <String> -ServiceType <String>
- [-Folder <String>] [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerService -ServiceName <String> -ServiceType <String> [-FolderName <String>] [-Context] <Uri>
+ [-Token <String>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get ArcGIS service
+Get ArcGIS Service service
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-AGSService -Context 'https://arcgis.com/arcgis' -Token $token -ServiceName SampleWorldCities -ServiceType MapServer
+Get-ServerService -Context 'https://arcgis.com/arcgis' -Token $token -ServiceName SampleWorldCities -ServiceType MapServer
 Returns the service object for the SampleWorldCities service
 ```
 
 ## PARAMETERS
-
-### -Context
-Portal context (e.g., https://arcgis.com/arcgis)
-
-```yaml
-Type: Uri
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Token
-Portal token
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
 
 ### -ServiceName
 Name of service
@@ -83,8 +53,38 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Folder
-Folder in ArcGIS Server
+### -FolderName
+Folder name in ArcGIS Server
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: Folder
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Context
+Portal context (e.g., https://arcgis.com/arcgis)
+
+```yaml
+Type: Uri
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Token
+Portal token
 
 ```yaml
 Type: String

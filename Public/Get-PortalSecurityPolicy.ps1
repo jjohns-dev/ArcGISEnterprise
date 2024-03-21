@@ -4,12 +4,14 @@ function Get-PortalSecurityPolicy {
         Get Portal security policy
     .DESCRIPTION
         Get Portal security policy for user of provided token
+    .PARAMETER PortalId
+        Portal internal ID
     .PARAMETER Context
         Target Portal context
     .PARAMETER Token
         Portal token
-    .PARAMETER Id
-        Portal internal ID
+    .PARAMETER SkipCertificateCheck
+        Ignore missing or invalid certificate
     .INPUTS
         None.
     .OUTPUTS
@@ -23,6 +25,11 @@ function Get-PortalSecurityPolicy {
     [CmdletBinding()]
     [Alias('Get-SecurityPolicy')]
     Param(
+        [Parameter(HelpMessage = 'Portal application ID')]
+        [ValidateNotNullOrEmpty()]
+        [Alias('Id')]
+        [System.String] $PortalId = '0123456789ABCDEF',
+
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -31,13 +38,13 @@ function Get-PortalSecurityPolicy {
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
-        [Parameter(HelpMessage = 'Portal application ID')]
-        [ValidateNotNullOrEmpty()]
-        [System.String] $Id = '0123456789ABCDEF'
+        [Parameter(HelpMessage = 'Skip SSL certificate check')]
+        [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Process {
+        # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/sharing/rest/portals/{1}/securityPolicy' -f $Context, $Id
+            Uri    = '{0}/sharing/rest/portals/{1}/securityPolicy' -f $Context, $PortalId
             Method = 'POST'
             Body   = @{
                 f     = 'json'
@@ -45,6 +52,10 @@ function Get-PortalSecurityPolicy {
             }
         }
 
+        # ADD CERTIFICATE SKIP IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
+        # INVOKE GETSERVERS
         Invoke-RestMethod @restParams
     }
 }

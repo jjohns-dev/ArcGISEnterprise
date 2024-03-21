@@ -1,27 +1,57 @@
 # Get-ServerServiceList
 
 ## SYNOPSIS
-Get list of services from ArcGIS Server
+Get ArcGIS Server service information
 
 ## SYNTAX
 
 ```
-Get-ServerServiceList [-Context] <Uri> [-Token <String>] [-Folder <String>] [-SkipCertificateCheck]
- [<CommonParameters>]
+Get-ServerServiceList [[-FolderName] <String>] [-Admin] [-Context] <Uri> [[-Token] <String>]
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get list of services and info from ArcGIS Server
+Get ArcGIS Server service information including folder(s)
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceList -Context 'https://arcgis.com/arcgis' -Token $token
-Returns all services in ArcGIS Server
+Get-ServerServiceList
+Returns an service info including folders from ArcGIS Server
 ```
 
 ## PARAMETERS
+
+### -FolderName
+Target folder to retrieve service info
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: Folder
+
+Required: False
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Admin
+Use admin API endpoint
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Context
 Portal context (e.g., https://arcgis.com/arcgis)
@@ -32,7 +62,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -47,22 +77,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Folder
-Folder in ArcGIS Server
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -91,8 +106,15 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### None.
 ## OUTPUTS
 
-### System.Object.
+### System.String.
 ## NOTES
-General notes
+Name:     Get-ServerServiceList
+Author:   Justin Johns
+Version:  0.1.1 | Last Edit: 2024-03-21
+- 0.1.1 - (2024-03-20) Changed name, added ability to get service information for services in specified folder
+- 0.1.0 - (2023-12-20) Initial version
+Comments: \<Comment(s)\>
+https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory.htm (REST endpoint)
+https://developers.arcgis.com/rest/enterprise-administration/server/services.htm (Admin endpoint)
 
 ## RELATED LINKS

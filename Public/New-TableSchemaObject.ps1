@@ -24,7 +24,7 @@ function New-TableSchemaObject {
     .NOTES
         Name:     New-TableSchemaObject
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-11
+        Version:  0.1.0 | Last Edit: 2024-03-19
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
@@ -90,7 +90,7 @@ function New-TableSchemaObject {
             [PSCustomObject] @{
                 nullable     = if ($Type -NE 'oid') { $true } else { $false }
                 editable     = if ($Type -NE 'oid') { $true } else { $false }
-                length       = $Length #if ($PSBoundParameters.ContainsKey('Length')) { $Length } else { $null }
+                length       = if ($PSBoundParameters.ContainsKey('Length')) { $Length } else { $null }
                 type         = $TableFieldTypes[$Type].type
                 name         = $Name
                 alias        = $Alias

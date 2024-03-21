@@ -6,7 +6,8 @@ Get Portal user
 ## SYNTAX
 
 ```
-Get-ServerPSA [-Context] <Uri> [-Token] <String> [[-Referer] <String>] [<CommonParameters>]
+Get-ServerPSA [[-Referer] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -22,6 +23,21 @@ Get PSA user from Server
 
 ## PARAMETERS
 
+### -Referer
+Portal referer
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: Referer-value
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
 ArcGIS Server context (e.g., https://arcgis.com/arcgis)
 
@@ -31,7 +47,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -46,23 +62,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Referer
-Portal referer
+### -SkipCertificateCheck
+Ignore missing or invalid certificate
 
 ```yaml
-Type: String
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
-Default value: Referer-value
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

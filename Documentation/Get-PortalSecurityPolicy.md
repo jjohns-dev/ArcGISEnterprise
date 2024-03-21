@@ -6,7 +6,8 @@ Get Portal security policy
 ## SYNTAX
 
 ```
-Get-PortalSecurityPolicy [-Context] <Uri> [-Token] <String> [[-Id] <String>] [<CommonParameters>]
+Get-PortalSecurityPolicy [[-PortalId] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -22,6 +23,21 @@ Get security policy for Portal user
 
 ## PARAMETERS
 
+### -PortalId
+Portal internal ID
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: Id
+
+Required: False
+Position: 1
+Default value: 0123456789ABCDEF
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
 Target Portal context
 
@@ -31,7 +47,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -46,23 +62,23 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Id
-Portal internal ID
+### -SkipCertificateCheck
+Ignore missing or invalid certificate
 
 ```yaml
-Type: String
+Type: SwitchParameter
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
-Default value: 0123456789ABCDEF
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
