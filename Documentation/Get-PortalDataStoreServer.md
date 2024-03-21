@@ -6,7 +6,7 @@ Get server object for Portal DataStore item
 ## SYNTAX
 
 ```
-Get-PortalDataStoreServer -ItemId <String> [-PortalId <String>] -Context <Uri> -Token <String>
+Get-PortalDataStoreServer [-ItemId] <String> [[-PortalId] <String>] [-Context] <Uri> [-Token] <String>
  [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -47,7 +47,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 2
 Default value: 0123456789ABCDEF
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,7 +62,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -77,7 +77,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -110,7 +110,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalDataStoreServer
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-19
+Version:  0.1.0 | Last Edit: 2024-03-21
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 General notes

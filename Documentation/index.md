@@ -46,18 +46,21 @@ Please see releases for updates and features
 | Get-ServerServicesDirectory | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Get service directory from admin endpoint |
 | Get-ServerSetting | Server | `/[SETTINGSURL]` | Get Server settings from admin endpoint |
 | Get-ServerServiceFieldInfo | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]` | Get service field info |
-| Get-ServerServiceList | Server | `[ROOT]` and `[ADMIN]/services` | Get lise of services |
+| Get-ServerServiceList | Server | `[ROOT]` and `[ADMIN]/services` | Get list of services in ArcGIS Server |
 | Get-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer` | Gets Hosted Feature Service |
 | Invoke-PortalItemAnalysis | Portal | `[ROOT]/content/features/analyze` | Analyze file prior to publishing |
 | Invoke-ServerHostedFeatureQuery | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query feature service layer. Additional options available |
 | Move-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/moveItems` | Move Portal item to folder |
 | New-PortalHostedFeatureService | Portal | `[ROOT]/content/users/[USERNAME]/createService` | Creates new Hosted Feature Service |
 | New-PortalUserFolder | Portal | `[ROOT]/content/users/[USERNAME]/createFolder` | Creates new folder in Portal |
+| New-ServerFolder | Server | `[ADMIN]/services/createFolder` | Create a new folder in ArcGIS Server |
 | New-ServerHostedFeatureTable | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
 | Publish-PortalCsvItemAsTable | Portal | `[ROOT]/content/users/[USERNAME]/publish` | Publish CSV item (Portal item) as Hosted Table. Additional options available |
 | Remove-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
+| Remove-ServerFolder | Server | `[ADMIN]/services/[FOLDERNAME]/deleteFolder` | Deletes folder in ArcGIS Server and all services in folder |
 | Remove-ServerService | Server | `[ADMIN]/services/deleteServices` | Deletes ArcGIS Server Service |
 | Remove-ServerServiceLayer | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
+| Test-PortalDataStore | Portal | `[ROOT]/sharing/rest/portals/[PORTALID]/datastores/validate` | Validates connection between Data Store and ArcGIS Server |
 | Write-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/addItem` | Uploads a Portal item (file item) |
 
 ## Potential Future Functions
