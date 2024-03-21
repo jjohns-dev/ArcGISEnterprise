@@ -4,8 +4,8 @@ function Get-ServerServiceItemInfo {
         Get ArcGIS Server service item information
     .DESCRIPTION
         Get ArcGIS Server service item information/details
-    .PARAMETER Service
-        ArcGIS Server service object (use Get-ServerServiceList -Admin to retrieve object)
+    .PARAMETER ServiceName
+        ArcGIS Server service name
     .PARAMETER FolderName
         ArcGIS Server folder name
     .PARAMETER Context
@@ -27,17 +27,17 @@ function Get-ServerServiceItemInfo {
     #>
     [CmdletBinding()]
     Param(
-        <# [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service object (use Get-ServerAdminServiceList -Admin)')]
+        <# [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service object (use Get-ServerServiceList -Admin)')]
         [ValidateScript({ $_.serviceName -and $_.type })]
-        [System.Object] $Service, #>
+        [System.Object] $Service,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service type')]
+        [ValidateSet('MapServer', 'GeoDataServer', 'ImagerServer', 'GeoProcessingServer', 'GeocodeServer')]
+        [System.String] $ServiceType, #>
 
         [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
-
-        <# [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service type')]
-        [ValidateSet('MapServer', 'GeoDataServer', 'ImagerServer', 'GeoProcessingServer', 'GeocodeServer')]
-        [System.String] $ServiceType, #>
 
         [Parameter(Mandatory = $false, HelpMessage = 'ArcGIS Server folder name')]
         [ValidateNotNullOrEmpty()]
@@ -58,8 +58,11 @@ function Get-ServerServiceItemInfo {
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
-        # GET SERVICE LIST
-        $svcList = Get-ServerAdminServiceList -Admin @PSBoundParameters # $ServiceName will be the parameters, no $ServiceType needed
+        # SET PARAMETERS
+        $svcParams = $PSBoundParameters; $svcParams.Remove('ServiceName') | Out-Null
+
+        # GET SERVICE LIST - $ServiceName WILL BE THE PARAMETERS, NO $ServiceType NEEDED
+        $svcList = Get-ServerServiceList -Admin @svcParams
 
         # GET SERVICE
         $service = $svcList.services | Where-Object serviceName -EQ $ServiceName
@@ -68,19 +71,16 @@ function Get-ServerServiceItemInfo {
         if (-Not $service) { throw ('Error 404: Service [{0}] not found.' -f $ServiceName) }
     }
     Process {
-        # SET URI PATH
-        if ($PSBoundParameters.ContainsKey('FolderName')) {
-            $uri = '{0}/admin/services/{1}/{2}.{3}/iteminfo' -f $Context, $FolderName, $service.serviceName, $service.type
-        }
-        else {
-            $uri = '{0}/admin/services/{1}.{2}/iteminfo' -f $Context, $service.serviceName, $service.type
-        }
-
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = $uri
+            Uri    = '{0}/admin/services/{1}.{2}/iteminfo' -f $Context, $service.serviceName, $service.type
             Method = 'GET'
             Body   = @{ f = 'json' }
+        }
+
+        # SET URI PATH
+        if ($PSBoundParameters.ContainsKey('FolderName')) {
+            $restParams['Uri'] = '{0}/admin/services/{1}/{2}.{3}/iteminfo' -f $Context, $FolderName, $service.serviceName, $service.type
         }
 
         # ADD TOKEN IF PROVIDED
