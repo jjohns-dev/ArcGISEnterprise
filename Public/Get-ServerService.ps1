@@ -1,4 +1,4 @@
-function Get-ServerAdminService {
+function Get-ServerService {
     <#
     .SYNOPSIS
         Get ArcGIS Server service
@@ -21,13 +21,12 @@ function Get-ServerAdminService {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerAdminService -Context 'https://arcgis.com/arcgis' -Token $token -ServiceName SampleWorldCities -ServiceType MapServer
+        PS C:\> Get-ServerService -Context 'https://arcgis.com/arcgis' -Token $token -ServiceName SampleWorldCities -ServiceType MapServer
         Returns the service object for the SampleWorldCities service
     .NOTES
         General notes
     #>
     [CmdletBinding()]
-    [Alias('Get-ServerService')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service name')]
         [ValidateNotNullOrEmpty()]

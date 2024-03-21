@@ -1,4 +1,4 @@
-# Get-ServerAdminSetting
+# Get-ServerSetting
 
 ## SYNOPSIS
 Get ArcGIS Server admin setting
@@ -6,7 +6,7 @@ Get ArcGIS Server admin setting
 ## SYNTAX
 
 ```
-Get-ServerAdminSetting [-Context] <Uri> [-SettingUrl] <String> [-Token] <String> [-SkipCertificateCheck]
+Get-ServerSetting [-Context] <Uri> [-SettingUrl] <String> [-Token] <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
@@ -17,7 +17,7 @@ Get ArcGIS Server admin setting
 
 ### EXAMPLE 1
 ```
-Get-ServerAdminSetting -Context https://arcgis.com/arcgis -SettingUrl 'admin/security/tokens'
+Get-ServerSetting -Context https://arcgis.com/arcgis -SettingUrl 'admin/security/tokens'
 Explanation of what the example does
 ```
 
@@ -93,7 +93,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:      Get-ServerAdminSetting
+Name:      Get-ServerSetting
 Author:    Justin Johns
 Version:   0.1.0 | Last Edit: 2022-04-15
 - \<VersionNotes\> (or remove this line if no version notes)

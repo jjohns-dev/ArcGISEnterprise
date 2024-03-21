@@ -1,13 +1,11 @@
-function Get-ServerAdminPSA {
+function Get-ServerServicesDirectory {
     <#
     .SYNOPSIS
-        Get Portal user
+        Get ArcGIS Server services directory
     .DESCRIPTION
-        Get Portal user
-    .PARAMETER Referer
-        Portal referer
+        Get ArcGIS Server services directory configuration data
     .PARAMETER Context
-        ArcGIS Server context (e.g., https://arcgis.com/arcgis)
+        Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
         Portal token
     .PARAMETER SkipCertificateCheck
@@ -17,22 +15,18 @@ function Get-ServerAdminPSA {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerAdminPSA -Context 'https://arcgis.com/arcgis' -Token $token
-        Get PSA user from Server
+        PS C:\> Get-ServerServicesDirectory -Context 'https://arcgis.com/arcgis' -Token $token
+        Returns ArcGIS Server services directory content
     .NOTES
         General notes
     #>
     [CmdletBinding()]
-    [Alias('Get-ServerPSA')]
     Param(
-        [Parameter(Mandatory = $false, HelpMessage = 'Referer')]
-        [System.String] $Referer = 'referer-value',
-
-        [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
+        [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Portal token')]
+        [Parameter(Mandatory, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
@@ -42,10 +36,9 @@ function Get-ServerAdminPSA {
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri     = '{0}/admin/security/psa' -f $Context
-            Method  = 'POST'
-            Headers = @{ Referer = $Referer }
-            Body    = @{
+            Uri    = '{0}/admin/system/handlers/rest/servicesdirectory' -f $Context
+            Method = 'GET'
+            Body   = @{
                 f     = 'json'
                 token = $Token
             }

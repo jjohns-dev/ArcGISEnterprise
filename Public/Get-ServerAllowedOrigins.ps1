@@ -1,4 +1,4 @@
-function Get-ServerAdminAllowedOrigins {
+function Get-ServerAllowedOrigins {
     <#
     .DESCRIPTION
         Get the allowed origins for ArcGIS Server
@@ -16,10 +16,10 @@ function Get-ServerAdminAllowedOrigins {
         System.String.
     .EXAMPLE
         PS C:\> $params = @{ Context = 'https://arcgis.com/arcgis'; Token = $token }
-        PS C:\> Get-ServerAdminAllowedOrigins @params
+        PS C:\> Get-ServerAllowedOrigins @params
         Gets the allowed origins for ArcGIS Server
     .NOTES
-        Name:     Get-ServerAdminAllowedOrigins
+        Name:     Get-ServerAllowedOrigins
         Author:   Justin Johns
         Version:  0.1.2 | Last Edit: 2023-05-19 [0.1.2]
         - 0.1.2 - Updated code to account for no allowed origins set
@@ -29,7 +29,6 @@ function Get-ServerAdminAllowedOrigins {
         General notes
     #>
     [CmdletBinding()]
-    [Alias('Get-ServerAllowedOrigins')]
     Param(
         [Parameter(HelpMessage = 'Get SOAP Allowed Origins')]
         [System.Management.Automation.SwitchParameter] $SOAP,
@@ -59,7 +58,7 @@ function Get-ServerAdminAllowedOrigins {
             (Invoke-RestMethod @restParams).allowedOrigins.Split(',')
         }
         else {
-            $origins = (Get-ServerAdminServicesDirectory @PSBoundParameters).allowedOrigins
+            $origins = (Get-ServerServicesDirectory @PSBoundParameters).allowedOrigins
             if ($origins.Count -EQ 0) { $null } else { $origins.Split(',') }
         }
     }

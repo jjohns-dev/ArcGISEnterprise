@@ -69,7 +69,7 @@ function Set-ServerAllowedOrigins {
         }
         else {
             # GET SERVICES DIRECTORY DATA
-            $servDir = Get-ServerAdminServicesDirectory @cmnParams
+            $servDir = Get-ServerServicesDirectory @cmnParams
 
             # VALIDATE PREVIOUS CALL WAS SUCCESSFUL
             if (-NOT $servDir) { Throw 'Unable to retrieve ArcGIS Server properties' }

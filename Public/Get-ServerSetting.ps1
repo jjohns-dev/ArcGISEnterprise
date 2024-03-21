@@ -1,11 +1,13 @@
-function Get-ServerAdminServicesDirectory {
+function Get-ServerSetting {
     <#
     .SYNOPSIS
-        Get ArcGIS Server services directory
+        Get ArcGIS Server admin setting
     .DESCRIPTION
-        Get ArcGIS Server services directory configuration data
+        Get ArcGIS Server admin setting
     .PARAMETER Context
-        Portal context (e.g., https://arcgis.com/arcgis)
+        Target Portal context
+    .PARAMETER SettingUrl
+        ArcGIS Server setting URL
     .PARAMETER Token
         Portal token
     .PARAMETER SkipCertificateCheck
@@ -15,17 +17,25 @@ function Get-ServerAdminServicesDirectory {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerAdminServicesDirectory -Context 'https://arcgis.com/arcgis' -Token $token
-        Returns ArcGIS Server services directory content
+        PS C:\> Get-ServerSetting -Context https://arcgis.com/arcgis -SettingUrl 'admin/security/tokens'
+        Explanation of what the example does
     .NOTES
+        Name:      Get-ServerSetting
+        Author:    Justin Johns
+        Version:   0.1.0 | Last Edit: 2022-04-15
+        - <VersionNotes> (or remove this line if no version notes)
+        Comments: <Comment(s)>
         General notes
     #>
     [CmdletBinding()]
-    [Alias('Get-ServerServicesDirectory')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
+
+        [Parameter(Mandatory, HelpMessage = 'ArcGIS Server setting URL')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $SettingUrl,
 
         [Parameter(Mandatory, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
@@ -35,20 +45,15 @@ function Get-ServerAdminServicesDirectory {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Process {
-        # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/admin/system/handlers/rest/servicesdirectory' -f $Context
+            Uri    = '{0}/{1}' -f $Context, $SettingUrl
             Method = 'GET'
             Body   = @{
                 f     = 'json'
                 token = $Token
             }
         }
-
-        # ADD SKIP CERTIFICATE CHECK
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-
-        # SEND REQUEST
         Invoke-RestMethod @restParams
     }
 }

@@ -1,4 +1,4 @@
-function Get-ServerAdminServiceItemInfo {
+function Get-ServerServiceItemInfo {
     <#
     .SYNOPSIS
         Get ArcGIS Server service item information
@@ -19,14 +19,13 @@ function Get-ServerAdminServiceItemInfo {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerAdminServiceItemInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
+        PS C:\> Get-ServerServiceItemInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
         Returns the service item info for service $s
     .NOTES
         General notes:
         https://developers.arcgis.com/rest/enterprise-administration/server/services.htm
     #>
     [CmdletBinding()]
-    [Alias('Get-ServerServiceItemInfo')]
     Param(
         <# [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service object (use Get-ServerAdminServiceList -Admin)')]
         [ValidateScript({ $_.serviceName -and $_.type })]

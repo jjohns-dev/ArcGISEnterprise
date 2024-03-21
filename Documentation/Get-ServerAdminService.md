@@ -1,4 +1,4 @@
-# Get-ServerAdminService
+# Get-ServerService
 
 ## SYNOPSIS
 Get ArcGIS Server service
@@ -6,7 +6,7 @@ Get ArcGIS Server service
 ## SYNTAX
 
 ```
-Get-ServerAdminService -ServiceName <String> -ServiceType <String> [-FolderName <String>] [-Context] <Uri>
+Get-ServerService -ServiceName <String> -ServiceType <String> [-FolderName <String>] [-Context] <Uri>
  [-Token <String>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
@@ -17,7 +17,7 @@ Get ArcGIS Service service
 
 ### EXAMPLE 1
 ```
-Get-ServerAdminService -Context 'https://arcgis.com/arcgis' -Token $token -ServiceName SampleWorldCities -ServiceType MapServer
+Get-ServerService -Context 'https://arcgis.com/arcgis' -Token $token -ServiceName SampleWorldCities -ServiceType MapServer
 Returns the service object for the SampleWorldCities service
 ```
 

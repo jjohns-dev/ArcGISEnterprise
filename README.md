@@ -38,13 +38,13 @@ Please see releases for updates and features
 | Get-PortalUserFolderList | Portal | `[ROOT]/content/users/[USERNAME]` | Gets list of folders owned by user in Portal |
 | Get-PortalUserGroupList | Portal | `[ROOT]/community/groups` | Search for groups owned by specified user. Additional options available |
 | Get-PortalUserItemList | Portal | `[ROOT]/search` | Search Portal. Additional options available |
-| Get-ServerAdminAllowedOrigins | Server | `[ADMIN]/system/handlers/soap/soaphandlerconfig` | Get allowed origins for Server |
-| Get-ServerAdminLicense | Server | `[ADMIN]/system/licenses` | Get Server license info |
-| Get-ServerAdminPSA | Server | `[ADMIN]/security/psa` | Get Server PSA account |
-| Get-ServerAdminService | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]` | Get service from admin endpoint |
-| Get-ServerAdminServiceItemInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/iteminfo` | Get service item info from admin endpoint |
-| Get-ServerAdminServicesDirectory | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Get service directory from admin endpoint |
-| Get-ServerAdminSettings | Server | `/[SETTINGSURL]` | Get Server settings from admin endpoint |
+| Get-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/soap/soaphandlerconfig` | Get allowed origins for Server |
+| Get-ServerLicense | Server | `[ADMIN]/system/licenses` | Get Server license info |
+| Get-ServerPSA | Server | `[ADMIN]/security/psa` | Get Server PSA account |
+| Get-ServerService | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]` | Get service from admin endpoint |
+| Get-ServerServiceItemInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/iteminfo` | Get service item info from admin endpoint |
+| Get-ServerServicesDirectory | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Get service directory from admin endpoint |
+| Get-ServerSetting | Server | `/[SETTINGSURL]` | Get Server settings from admin endpoint |
 | Get-ServerServiceFieldInfo | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]` | Get service field info |
 | Get-ServerServiceList | Server | `[ROOT]` and `[ADMIN]/services` | Get lise of services |
 | Get-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer` | Gets Hosted Feature Service |

@@ -1,4 +1,4 @@
-function Get-ServerAdminLicense {
+function Get-ServerLicense {
     <#
     .SYNOPSIS
         Get ArcGIS Server license
@@ -15,13 +15,12 @@ function Get-ServerAdminLicense {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerAdminLicense -Context 'https://arcgis.com/arcgis' -Token $token
+        PS C:\> Get-ServerLicense -Context 'https://arcgis.com/arcgis' -Token $token
         Returns ArcGIS Server license info
     .NOTES
         General notes
     #>
     [CmdletBinding()]
-    [Alias('Get-ServerLicense')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
