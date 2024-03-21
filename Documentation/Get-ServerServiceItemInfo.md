@@ -24,9 +24,7 @@ Returns the service item info for service $s
 ## PARAMETERS
 
 ### -ServiceName
-\[Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service object (use Get-ServerAdminServiceList -Admin)')\]
-       \[ValidateScript({ $_.serviceName -and $_.type })\]
-       \[System.Object\] $Service,
+ArcGIS Server service name
 
 ```yaml
 Type: String
