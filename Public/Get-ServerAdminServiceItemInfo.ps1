@@ -5,7 +5,7 @@ function Get-ServerAdminServiceItemInfo {
     .DESCRIPTION
         Get ArcGIS Server service item information/details
     .PARAMETER Service
-        ArcGIS Server service object (use Get-ServerAdminServiceList to retrieve object)
+        ArcGIS Server service object (use Get-ServerServiceList -Admin to retrieve object)
     .PARAMETER FolderName
         ArcGIS Server folder name
     .PARAMETER Context
@@ -23,21 +23,20 @@ function Get-ServerAdminServiceItemInfo {
         Returns the service item info for service $s
     .NOTES
         General notes:
-        Used to require passing in a "Service" object from Get-ServerAdminServiceList
         https://developers.arcgis.com/rest/enterprise-administration/server/services.htm
     #>
     [CmdletBinding()]
     [Alias('Get-ServerServiceItemInfo')]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service object (use Get-ServerAdminServiceList)')]
+        <# [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service object (use Get-ServerAdminServiceList -Admin)')]
         [ValidateScript({ $_.serviceName -and $_.type })]
-        [System.Object] $Service,
+        [System.Object] $Service, #>
 
-        <# [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service name')]
+        [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service type')]
+        <# [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service type')]
         [ValidateSet('MapServer', 'GeoDataServer', 'ImagerServer', 'GeoProcessingServer', 'GeocodeServer')]
         [System.String] $ServiceType, #>
 
@@ -57,13 +56,25 @@ function Get-ServerAdminServiceItemInfo {
         [Parameter(HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
+    Begin {
+        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # GET SERVICE LIST
+        $svcList = Get-ServerAdminServiceList -Admin @PSBoundParameters # $ServiceName will be the parameters, no $ServiceType needed
+
+        # GET SERVICE
+        $service = $svcList.services | Where-Object serviceName -EQ $ServiceName
+
+        # VALIDATE SERVICE
+        if (-Not $service) { throw ('Error 404: Service [{0}] not found.' -f $ServiceName) }
+    }
     Process {
         # SET URI PATH
         if ($PSBoundParameters.ContainsKey('FolderName')) {
-            $uri = '{0}/admin/services/{1}/{2}.{3}/iteminfo' -f $Context, $FolderName, $Service.serviceName, $Service.type
+            $uri = '{0}/admin/services/{1}/{2}.{3}/iteminfo' -f $Context, $FolderName, $service.serviceName, $service.type
         }
         else {
-            $uri = '{0}/admin/services/{1}.{2}/iteminfo' -f $Context, $ServiceName, $ServiceType
+            $uri = '{0}/admin/services/{1}.{2}/iteminfo' -f $Context, $service.serviceName, $service.type
         }
 
         # SET REQUEST PARAMETERS

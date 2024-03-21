@@ -99,7 +99,6 @@
         'Get-ServerAdminPSA'
         'Get-ServerAdminService'
         'Get-ServerAdminServiceItemInfo'
-        'Get-ServerAdminServiceList'
         'Get-ServerAdminServicesDirectory'
         'Get-ServerAdminSetting'
         'Get-ServerHostedFeatureService'

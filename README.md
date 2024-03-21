@@ -43,11 +43,10 @@ Please see releases for updates and features
 | Get-ServerAdminPSA | Server | `[ADMIN]/security/psa` | Get Server PSA account |
 | Get-ServerAdminService | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]` | Get service from admin endpoint |
 | Get-ServerAdminServiceItemInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/iteminfo` | Get service item info from admin endpoint |
-| Get-ServerAdminServiceList | Server | `[ADMIN]/services` | Get lise of services from admin endpoint |
 | Get-ServerAdminServicesDirectory | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Get service directory from admin endpoint |
 | Get-ServerAdminSettings | Server | `/[SETTINGSURL]` | Get Server settings from admin endpoint |
 | Get-ServerServiceFieldInfo | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]` | Get service field info |
-| Get-ServerServiceList | Server | `[ROOT]` | Get lise of services |
+| Get-ServerServiceList | Server | `[ROOT]` and `[ADMIN]/services` | Get lise of services |
 | Get-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer` | Gets Hosted Feature Service |
 | Invoke-PortalItemAnalysis | Portal | `[ROOT]/content/features/analyze` | Analyze file prior to publishing |
 | Invoke-ServerHostedFeatureQuery | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query feature service layer. Additional options available |
