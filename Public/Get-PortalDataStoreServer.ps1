@@ -24,18 +24,18 @@ function Get-PortalDataStoreServer {
     .NOTES
         Name:     Get-PortalDataStoreServer
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-19
+        Version:  0.1.0 | Last Edit: 2024-03-21
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true, ParameterSetName = '_itid', HelpMessage = 'Portal item ID of Data Store item')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal item ID of Data Store item')]
         [ValidatePattern('[a-f0-9]{32}')]
         [System.String] $ItemId,
 
-        [Parameter(HelpMessage = 'Portal application ID')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal application ID')]
         [ValidateNotNullOrEmpty()]
         [System.String] $PortalId = '0123456789ABCDEF',
 
@@ -47,7 +47,7 @@ function Get-PortalDataStoreServer {
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
-        [Parameter(HelpMessage = 'Skip SSL certificate check')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {

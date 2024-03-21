@@ -129,6 +129,7 @@
         'Set-PortalUserProfileEditing'
         'Set-ServerAllowedOrigins'
         'Set-ServerPSAPassword'
+        'Test-PortalDataStoreValidation'
         'Test-PortalFederation'
         'Test-PortalHealth'
         'Test-ServerHealth'
