@@ -6,6 +6,8 @@ function Get-PortalUserItemList {
         Get all items owned by user in Portal for ArcGIS
     .PARAMETER UserName
         Username
+    .PARAMETER Type
+        Portal item type
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
