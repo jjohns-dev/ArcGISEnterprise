@@ -1,33 +1,33 @@
-# Get-ServerServiceItemInfo
+# Get-ServerSetting
 
 ## SYNOPSIS
-Get ArcGIS Server service item information
+Get ArcGIS Server admin setting
 
 ## SYNTAX
 
 ```
-Get-ServerServiceItemInfo [-Service] <Object> [[-FolderName] <String>] [-Context] <Uri>
- [[-Token] <String>] [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerSetting [-Context] <Uri> [-SettingUrl] <String> [-Token] <String> [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get ArcGIS Server service item information/details
+Get ArcGIS Server admin setting
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceItemInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
-Returns the service item info for service $s
+Get-ServerSetting -Context https://arcgis.com/arcgis -SettingUrl 'admin/security/tokens'
+Explanation of what the example does
 ```
 
 ## PARAMETERS
 
-### -Service
-ArcGIS Server service object (use Get-ServerAdminServiceList to retrieve object)
+### -Context
+Target Portal context
 
 ```yaml
-Type: Object
+Type: Uri
 Parameter Sets: (All)
 Aliases:
 
@@ -38,31 +38,16 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -FolderName
-ArcGIS Server folder name
+### -SettingUrl
+ArcGIS Server setting URL
 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: Folder
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Context
-Portal context (e.g., https://arcgis.com/arcgis)
-
-```yaml
-Type: Uri
-Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -76,8 +61,8 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: False
-Position: 4
+Required: True
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -108,8 +93,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-General notes:
-Used to require passing in a "Service" object from Get-ServerAdminServiceList
-https://developers.arcgis.com/rest/enterprise-administration/server/services.htm
+Name:      Get-ServerSetting
+Author:    Justin Johns
+Version:   0.1.0 | Last Edit: 2022-04-15
+- \<VersionNotes\> (or remove this line if no version notes)
+Comments: \<Comment(s)\>
+General notes
 
 ## RELATED LINKS

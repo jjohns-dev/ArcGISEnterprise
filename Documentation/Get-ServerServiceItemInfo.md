@@ -1,30 +1,47 @@
-# Get-ServerAdminServiceList
+# Get-ServerServiceItemInfo
 
 ## SYNOPSIS
-Get list of services from ArcGIS Server
+Get ArcGIS Server service item information
 
 ## SYNTAX
 
 ```
-Get-ServerAdminServiceList [[-FolderName] <String>] [-Context] <Uri> [[-Token] <String>]
+Get-ServerServiceItemInfo [-ServiceName] <String> [[-FolderName] <String>] [-Context] <Uri> [[-Token] <String>]
  [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get list of services and info from ArcGIS Server
+Get ArcGIS Server service item information/details
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-ServerAdminServiceList -Context 'https://arcgis.com/arcgis' -Token $token
-Returns all services in ArcGIS Server
+Get-ServerServiceItemInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
+Returns the service item info for service $s
 ```
 
 ## PARAMETERS
 
+### -ServiceName
+\[Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service object (use Get-ServerAdminServiceList -Admin)')\]
+       \[ValidateScript({ $_.serviceName -and $_.type })\]
+       \[System.Object\] $Service,
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: True
+Position: 1
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -FolderName
-Name of folder in ArcGIS Server
+ArcGIS Server folder name
 
 ```yaml
 Type: String
@@ -32,7 +49,7 @@ Parameter Sets: (All)
 Aliases: Folder
 
 Required: False
-Position: 1
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -47,7 +64,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,7 +79,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False

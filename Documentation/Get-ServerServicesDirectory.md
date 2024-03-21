@@ -6,8 +6,7 @@ Get ArcGIS Server services directory
 ## SYNTAX
 
 ```
-Get-ServerServicesDirectory [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
- [<CommonParameters>]
+Get-ServerServicesDirectory [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
