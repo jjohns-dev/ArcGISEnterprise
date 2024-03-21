@@ -1,0 +1,68 @@
+function New-ServerFolder {
+    <#
+    .SYNOPSIS
+        Create new folder in ArcGIS Server
+    .DESCRIPTION
+        Create new folder in ArcGIS Server
+    .PARAMETER FolderName
+        New ArcGIS Server folder name
+    .PARAMETER Context
+        Server context (e.g., https://arcgis.com/arcgis)
+    .PARAMETER Token
+        Portal token
+    .PARAMETER SkipCertificateCheck
+        Ignore missing or invalid certificate
+    .INPUTS
+        None.
+    .OUTPUTS
+        System.Object.
+    .EXAMPLE
+        PS C:\> New-ServerFolder -FolderName 'my_test_folder' @commonParams
+        Creates a new folder named 'my_test_folder' in ArcGIS Server
+    .NOTES
+        Name:     New-ServerFolder
+        Author:   Justin Johns
+        Version:  0.1.0 | Last Edit: 2024-03-21
+        - 0.1.0 - Initial version
+        Comments: <Comment(s)>
+        https://developers.arcgis.com/rest/enterprise-administration/enterprise/create-folder.htm
+    #>
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $true, HelpMessage = 'New ArcGIS Server folder name')]
+        [ValidatePattern('^[a-z0-9_]{30}$')]
+        [System.String] $FolderName,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
+        [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
+        [System.Uri] $Context,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal token')]
+        [ValidateScript({ $_ -match $token_regex })]
+        [System.String] $Token,
+
+        [Parameter(HelpMessage = 'Skip SSL certificate check')]
+        [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
+    )
+    Begin {
+        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+    }
+    Process {
+        # SET REQUEST PARAMETERS
+        $restParams = @{
+            Uri    = '{0}/admin/services/createFolder' -f $Context
+            Method = 'POST'
+            Body   = @{
+                f          = 'json'
+                token      = $Token
+                folderName = $FolderName
+            }
+        }
+
+        # ADD CERTIFICATE SKIP IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
+        # INVOKE REQUEST
+        Invoke-RestMethod @restParams
+    }
+}

@@ -111,6 +111,7 @@
         'New-PortalHostedFeatureService'
         'New-PortalRole'
         'New-PortalUserFolder'
+        'New-ServerFolder'
         'New-ServerHostedFeatureTable'
         'New-TableSchemaObject'
         'Publish-PortalCsvItemAsTable'
