@@ -1,4 +1,4 @@
-function Test-PortalDataStoreValidation {
+function Test-PortalDataStore {
     <#
     .SYNOPSIS
         Validates Data Store connection
@@ -23,10 +23,10 @@ function Test-PortalDataStoreValidation {
     .EXAMPLE
         PS C:\> $item = Get-PortalUserItemList -UserName 'janedoe@fake.com' @commonParams | Where-Object title -EQ 'test_store_internal'
         PS C:\> $server = Get-PortalDataStoreServer -ItemId $item.id @commonParams
-        PS C:\> Test-PortalDataStoreValidation -ItemId $item.id -ServerId $server.servers[0].id @commonParams
+        PS C:\> Test-PortalDataStore -ItemId $item.id -ServerId $server.servers[0].id @commonParams
         Validates the Data Store item named 'test_store_internal' connection to the ArcGIS Server
     .NOTES
-        Name:     Test-PortalDataStoreValidation
+        Name:     Test-PortalDataStore
         Author:   Justin Johns
         Version:  0.1.0 | Last Edit: 2024-03-21
         - 0.1.0 - Initial version
