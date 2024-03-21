@@ -58,6 +58,7 @@ Please see releases for updates and features
 | Remove-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
 | Remove-ServerService | Server | `[ADMIN]/services/deleteServices` | Deletes ArcGIS Server Service |
 | Remove-ServerServiceLayer | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
+| Test-PortalDataStoreValidation | Portal | `[ROOT]/sharing/rest/portals/[PORTALID]/datastores/validate` | Validates connection between Data Store and ArcGIS Server |
 | Write-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/addItem` | Uploads a Portal item (file item) |
 
 ## Potential Future Functions
