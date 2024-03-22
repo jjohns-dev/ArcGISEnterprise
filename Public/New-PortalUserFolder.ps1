@@ -36,25 +36,25 @@ function New-PortalUserFolder {
         [ValidateNotNullOrEmpty()]
         [System.String] $Username,
 
-        [Parameter(Mandatory, HelpMessage = 'Title of new folder')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Title of new folder')]
         [ValidateNotNullOrEmpty()]
+        [Alias('FolderName')]
         [System.String] $Title,
 
-        [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(Mandatory, HelpMessage = 'Portal token')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
-        [Parameter(HelpMessage = 'Skip SSL certificate check')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
-    }
-    Process {
+
         # VALIDATE USERNAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
             try {
@@ -70,7 +70,8 @@ function New-PortalUserFolder {
                 throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
             }
         }
-
+    }
+    Process {
         # SET PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/content/users/{1}/createFolder' -f $Context, $Username
