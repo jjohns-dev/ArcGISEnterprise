@@ -111,6 +111,7 @@
         'New-PortalHostedFeatureService'
         'New-PortalRole'
         'New-PortalUserFolder'
+        'New-PortalUserGroup'
         'New-ServerFolder'
         'New-ServerHostedFeatureTable'
         'New-TableSchemaObject'
