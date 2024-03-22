@@ -63,6 +63,7 @@ Please see releases for updates and features
 | Remove-ServerFolder | Server | `[ADMIN]/services/[FOLDERNAME]/deleteFolder` | Deletes folder in ArcGIS Server and all services in folder |
 | Remove-ServerService | Server | `[ADMIN]/services/deleteServices` | Deletes ArcGIS Server Service |
 | Remove-ServerServiceLayer | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
+| Revoke-PortalUserItemAccess | Portal | `[ROOT]/content/users/[USERNAME]/unshareItems` | Unshare Portal item |
 | Test-PortalDataStore | Portal | `[ROOT]/sharing/rest/portals/[PORTALID]/datastores/validate` | Validates connection between Data Store and ArcGIS Server |
 | Write-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/addItem` | Uploads a Portal item (file item) |
 

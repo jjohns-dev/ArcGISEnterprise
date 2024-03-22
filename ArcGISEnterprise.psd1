@@ -123,6 +123,7 @@
         'Remove-ServerFolder'
         'Remove-ServerService'
         'Remove-ServerServiceLayer'
+        'Revoke-PortalUserItemAccess'
         'Search-PortalContent'
         'Set-PortalAllowedOrigins'
         'Set-PortalDefaultUserLicenseType'
