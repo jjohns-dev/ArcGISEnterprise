@@ -92,6 +92,7 @@
         'Get-PortalUser'
         'Get-PortalUserFolderList'
         'Get-PortalUserGroupList'
+        'Get-PortalUserItem'
         'Get-PortalUserItemList'
         'Get-PortalUserList'
         'Get-ServerAllowedOrigins'

@@ -37,6 +37,7 @@ Please see releases for updates and features
 | Get-PortalJobStatus | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/status` | Get Portal job status |
 | Get-PortalUserFolderList | Portal | `[ROOT]/content/users/[USERNAME]` | Gets list of folders owned by user in Portal |
 | Get-PortalUserGroupList | Portal | `[ROOT]/community/groups` | Search for groups owned by specified user. Additional options available |
+| Get-PortalUserItem | Portal | `[ROOT]/content/items/[ITEMID]` | Get Portal item |
 | Get-PortalUserItemList | Portal | `[ROOT]/search` | Search Portal. Additional options available |
 | Get-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/soap/soaphandlerconfig` | Get allowed origins for Server |
 | Get-ServerLicense | Server | `[ADMIN]/system/licenses` | Get Server license info |
