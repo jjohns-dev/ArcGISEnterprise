@@ -1,4 +1,4 @@
-function Get-Portaltem {
+function Get-PortalItem {
     <#
     .SYNOPSIS
         Get Portal item
@@ -17,10 +17,10 @@ function Get-Portaltem {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-Portaltem -ItemId 0e68d8058b744d1c95f709d2ae975232 @commonParams
+        PS C:\> Get-PortalItem -ItemId 0e68d8058b744d1c95f709d2ae975232 @commonParams
         Returns Portal item with ID 0e68d8058b744d1c95f709d2ae975232
     .NOTES
-        Name:     Get-Portaltem
+        Name:     Get-PortalItem
         Author:   Justin Johns
         Version:  0.1.0 | Last Edit: 2024-03-22
         - 0.1.0 - Initial version
