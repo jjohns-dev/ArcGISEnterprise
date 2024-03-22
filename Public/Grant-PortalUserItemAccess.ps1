@@ -100,7 +100,7 @@ function Grant-PortalUserItemAccess {
 
         # CHECK FOR PARAMETER SET NAME
         switch ($PSCmdlet.ParameterSetName) {
-            '_grp' { $restParams['Body'].Add('groups', ($GroupIid -join ',')) }
+            '_grp' { $restParams['Body'].Add('groups', ($GroupId -join ',')) }
             '_ery' { $restParams['Body'].Add('everyone', $true) }
             '_org' { $restParams['Body'].Add('org', $true) }
         }
