@@ -105,6 +105,7 @@
         'Get-ServerServicesDirectory'
         'Get-ServerSetting'
         'Get-ServerToken'
+        'Grant-PortalUserItemAccess'
         'Invoke-PortalItemAnalysis'
         'Invoke-ServerHostedFeatureQuery'
         'Move-PortalUserItem'
