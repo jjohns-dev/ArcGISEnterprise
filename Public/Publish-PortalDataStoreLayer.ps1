@@ -55,7 +55,7 @@ function Publish-PortalDataStoreLayer {
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/publish-layers.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = '_init')]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_init', HelpMessage = 'DataStore Portal item ID')]
         [Parameter(Mandatory = $true, ParameterSetName = '_sync', HelpMessage = 'DataStore Portal item ID')]
