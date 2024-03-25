@@ -118,6 +118,7 @@
         'New-ServerHostedFeatureTable'
         'New-TableSchemaObject'
         'Publish-PortalCsvItemAsTable'
+        'Publish-PortalDataStoreLayer'
         'Remove-PortalItem'
         'Remove-PortalRole'
         'Remove-PortalUserGroup'
