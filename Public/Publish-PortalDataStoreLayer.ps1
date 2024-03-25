@@ -27,8 +27,26 @@ function Publish-PortalDataStoreLayer {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Publish-PortalDataStoreLayer
-        Explanation of what the example does
+        PS C:\> $itemList = Get-PortalUserItemList -Type 'Data Store' @commonParams
+        PS C:\> $item = $itemList | Where-Object title -EQ 'DataStore_data_owner'
+        PS C:\> $server = Get-PortalDataStoreServer -ItemId $item.id @commonParams
+        PS C:\> $ptlFldList = Get-PortalUserFolderList @commonParams
+        PS C:\> $portalFolder = $ptlFldList | Where-Object title -eq 'EGDB_Data_Owner'
+        PS C:\> $serverInfo = Get-ServerServiceInfo -Context $target.Server -Token $token.token
+        PS C:\> $serverFolder = $serverInfo.folders | Where-Object { $_ -EQ 'EGDB_Data_Owner' }
+        PS C:\> $params = @{
+            DataStoreId      = $item.id
+            PortalFolderId   = $portalFolder.id
+            ServerId         = $server.servers[0].id
+            ServerFolderName = $serverFolder
+        }
+        PS C:\> $pub = Publish-PortalDataStoreLayer @params @commonParams
+        PS C:\> Get-PortalJobStatus -JobId $pub.jobId -DataStoreId $pub.datastoreId -ServerId $pub.serverId @commonParams
+        Publishes as ... layers all datasets in the 'DataStore_data_owner' DataStore item in Portal. Then check the job status.
+    .EXAMPLE
+        PS C:\> $sync = Publish-PortalDataStoreLayer -DataStoreId -SyncItemInfo $item.id @commonParams
+        PS C:\> Get-PortalJobStatus -JobId $sync.jobId -DataStoreId $sync.datastoreId -ServerId $sync.serverId @commonParams
+        Syncs and update all layer item properties using using source dataset's metadata. Then check the job status.
     .NOTES
         Name:     Publish-PortalDataStoreLayer
         Author:   Justin Johns
