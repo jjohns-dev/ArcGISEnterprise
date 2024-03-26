@@ -1,0 +1,150 @@
+function New-PortalUserGroup {
+    <#
+    .SYNOPSIS
+        Create new Portal user group
+    .DESCRIPTION
+        Create new Portal user group
+    .PARAMETER Title
+        Group title or name
+    .PARAMETER Access
+        Group access level
+    .PARAMETER Description
+        Group description
+    .PARAMETER Snippet
+        Group snippet or summary
+    .PARAMETER Tag
+        Group tag
+    .PARAMETER SortField
+        Group sort field
+    .PARAMETER SortOrder
+        Group sort order
+    .PARAMETER IsViewOnly
+        Set group to view only
+    .PARAMETER IsInvitationOnly
+        Set group to invitation only
+    .PARAMETER Capability
+        Group capability
+    .PARAMETER LeavingDisallowed
+        Set leaving to disallowed
+    .PARAMETER HiddenMembers
+        Set members to hidden
+    .PARAMETER MembershipAccess
+        Group membership access
+    .PARAMETER Context
+        Server context (e.g., https://arcgis.com/arcgis)
+    .PARAMETER Token
+        Portal token
+    .PARAMETER SkipCertificateCheck
+        Ignore missing or invalid certificate
+    .INPUTS
+        None.
+    .OUTPUTS
+        System.Object.
+    .EXAMPLE
+        PS C:\> New-PortalUserGroup
+        Creates a new folder named 'my_test_folder' in ArcGIS Server
+    .NOTES
+        Name:     New-PortalUserGroup
+        Author:   Justin Johns
+        Version:  0.1.0 | Last Edit: 2024-03-22
+        - 0.1.0 - Initial version
+        Comments: <Comment(s)>
+        https://developers.arcgis.com/rest/users-groups-and-items/create-group.htm
+    #>
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $true, HelpMessage = 'Group title or name')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $Title,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Group access level')]
+        [ValidateSet('private', 'org', 'public')]
+        [System.String] $Access = 'private',
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Group description')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $Description,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Group snippet or summary')]
+        [ValidateNotNullOrEmpty()]
+        [Alias('Summary')]
+        [System.String] $Snippet,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Group tag')]
+        [ValidateNotNullOrEmpty()]
+        [System.String[]] $Tag,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Group sort field')]
+        [ValidateSet('title', 'owner', 'avgrating', 'numviews', 'created', 'modified')]
+        [System.String] $SortField = 'title',
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Group sort order')]
+        [ValidateSet('asc', 'desc')]
+        [System.String] $SortOrder = 'desc',
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Set group to view only')]
+        [System.Management.Automation.SwitchParameter] $IsViewOnly,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Set group to invitation only')]
+        [System.Boolean] $IsInvitationOnly = $true,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Group capability')]
+        [ValidateSet('updateItemControl', 'distributed')]
+        [System.String] $Capability = 'updateItemControl',
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Set leaving to disallowed')]
+        [System.Management.Automation.SwitchParameter] $LeavingDisallowed,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Set members to hidden')]
+        [System.Management.Automation.SwitchParameter] $HiddenMembers,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Group membership access')]
+        [ValidateSet('org', 'collaboration', 'none')]
+        [System.String] $MembershipAccess = 'org',
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
+        [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
+        [System.Uri] $Context,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal token')]
+        [ValidateScript({ $_ -match $token_regex })]
+        [System.String] $Token,
+
+        [Parameter(HelpMessage = 'Skip SSL certificate check')]
+        [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
+    )
+    Begin {
+        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+    }
+    Process {
+        # SET REQUEST PARAMETERS
+        $restParams = @{
+            Uri    = '{0}/sharing/rest/community/createGroup' -f $Context
+            Method = 'POST'
+            Body   = @{
+                f                 = 'json'
+                token             = $Token
+                title             = $Title
+                access            = $Access
+                description       = $Description
+                snippet           = $Snippet
+                tags              = $Tag -join ','
+                sortField         = $SortField
+                sortOrder         = $SortOrder
+                isViewOnly        = if ($PSBoundParameters.ContainsKey('IsViewOnly')) { $true } else { $false }
+                isInvitationOnly  = $IsInvitationOnly
+                capabilities      = $Capability
+                leavingDisallowed = if ($PSBoundParameters.ContainsKey('LeavingDisallowed')) { $true } else { $false }
+                hiddenMembers     = if ($PSBoundParameters.ContainsKey('HiddenMembers')) { $true } else { $false }
+                membershipAccess  = $MembershipAccess
+                autoJoin          = $false
+            }
+        }
+
+        # ADD CERTIFICATE SKIP IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
+        # INVOKE REQUEST
+        Invoke-RestMethod @restParams
+    }
+}

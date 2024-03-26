@@ -4,7 +4,7 @@ function Get-PortalUserGroupList {
         Get Portal for ArcGIS user group
     .DESCRIPTION
         Get groups owned by specified user in Portal for ArcGIS
-    .PARAMETER Username
+    .PARAMETER UserName
         Username
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
@@ -17,7 +17,7 @@ function Get-PortalUserGroupList {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-PortalUserGroupList -Username jsmith -Context 'https://arcgis.com/arcgis' -Token $token
+        PS C:\> Get-PortalUserGroupList -UserName jsmith -Context 'https://arcgis.com/arcgis' -Token $token
         Get groups owned by user 'jsmith'
     .NOTES
         Name:     Get-PortalUserGroupList
@@ -31,23 +31,39 @@ function Get-PortalUserGroupList {
     [CmdletBinding()]
     [Alias('Get-PortalUserGroup')]
     Param(
-        [Parameter(Mandatory, HelpMessage = 'Username')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Username,
+        [System.String] $UserName,
 
-        [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(Mandatory, HelpMessage = 'Portal token')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
-        [Parameter(HelpMessage = 'Skip SSL certificate check')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # VALIDATE USER NAME
+        if (-Not $PSBoundParameters.ContainsKey('UserName')) {
+            try {
+                # GET USER PORTAL INFO
+                Write-Verbose -Message 'Getting user settings...'
+                $userSettings = Get-PortalSettings -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
+
+                # SET USER NAME
+                $UserName = $userSettings.user.username
+            }
+            catch {
+                # PASS ERROR
+                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+            }
+        }
 
         # CREATE USER ARRAY
         $groupList = [System.Collections.Generic.List[System.Object]]::new()
@@ -64,7 +80,7 @@ function Get-PortalUserGroupList {
                 # THE SYNTAX 'q = "jsmith"' WILL FIND THE USER ACROSS MULTIPLE
                 # FIELDS RATHER THAN JUST THE OWNER FIELD. USE Search-PortalContent
                 # TO FIND A USERNAME AS A SEARCH TERM FOR MULTIPLE FIELDS
-                q     = 'owner:"{0}"' -f $Username
+                q     = 'owner:"{0}"' -f $UserName
             }
         }
 

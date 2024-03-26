@@ -23,6 +23,9 @@ function Invoke-PortalItemAnalysis {
     .EXAMPLE
         PS C:\> Invoke-PortalItemAnalysis -ItemId ea42cab6e3654405b54f0b2b50a0041b -FileType CSV @commonParams
         Analyzes the CSV item with ID ea42cab6e3654405b54f0b2b50a0041b
+    .EXAMPLE
+        PS C:\> Invoke-PortalItemAnalysis -File C:\file.csv -FileType CSV @commonParams
+        Analyzes the CSV file C:\file.csv
     .NOTES
         Name:     Invoke-PortalItemAnalysis
         Author:   Justin Johns
@@ -53,7 +56,7 @@ function Invoke-PortalItemAnalysis {
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
-        [Parameter(HelpMessage = 'Skip SSL certificate check')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
