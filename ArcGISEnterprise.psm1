@@ -12,7 +12,7 @@ foreach ( $directory in @('Public', 'Private') ) {
 # VARIABLES
 # NOT VALIDATING CONTEXT URL STRUCTURE AS THIS IS DONE BY [SYSTEM.URI] OBJECT
 # ONLY VALIDATE URI DOES NOT END WITH FORWARD SLASH. OLD REGEX: '^https?://[\w\/\.:-]+[^/]$'
-New-Variable -Name 'context_regex' -Option Constant -Value '^.+[^/]$'
+New-Variable -Name 'context_regex' -Option Constant -Value '^https?://.+[^/]$'
 New-Variable -Name 'token_regex' -Option Constant -Value '^[\w\.=-]+$'
 New-Variable -Name 'ModulePrivate' -Option Constant -Value "$PSScriptRoot\Private"
 
