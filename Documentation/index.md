@@ -37,6 +37,7 @@ Please see releases for updates and features
 | Get-PortalJobStatus | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/status` | Get Portal job status |
 | Get-PortalUserFolderList | Portal | `[ROOT]/content/users/[USERNAME]` | Gets list of folders owned by user in Portal |
 | Get-PortalUserGroupList | Portal | `[ROOT]/community/groups` | Search for groups owned by specified user. Additional options available |
+| Get-PortalItem | Portal | `[ROOT]/content/items/[ITEMID]` | Get Portal item |
 | Get-PortalUserItemList | Portal | `[ROOT]/search` | Search Portal. Additional options available |
 | Get-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/soap/soaphandlerconfig` | Get allowed origins for Server |
 | Get-ServerLicense | Server | `[ADMIN]/system/licenses` | Get Server license info |
@@ -48,18 +49,23 @@ Please see releases for updates and features
 | Get-ServerServiceFieldInfo | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]` | Get service field info |
 | Get-ServerServiceList | Server | `[ROOT]` and `[ADMIN]/services` | Get list of services in ArcGIS Server |
 | Get-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer` | Gets Hosted Feature Service |
+| Grant-PortalUserItemAccess | Portal | `[ROOT]/content/users/[USERNAME]/shareItems` | Share Portal item |
 | Invoke-PortalItemAnalysis | Portal | `[ROOT]/content/features/analyze` | Analyze file prior to publishing |
 | Invoke-ServerHostedFeatureQuery | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query feature service layer. Additional options available |
 | Move-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/moveItems` | Move Portal item to folder |
 | New-PortalHostedFeatureService | Portal | `[ROOT]/content/users/[USERNAME]/createService` | Creates new Hosted Feature Service |
 | New-PortalUserFolder | Portal | `[ROOT]/content/users/[USERNAME]/createFolder` | Creates new folder in Portal |
+| New-PortalUserGroup | Portal | `[ROOT]/community/createGroup` | Create new Portal user group |
 | New-ServerFolder | Server | `[ADMIN]/services/createFolder` | Create a new folder in ArcGIS Server |
 | New-ServerHostedFeatureTable | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
 | Publish-PortalCsvItemAsTable | Portal | `[ROOT]/content/users/[USERNAME]/publish` | Publish CSV item (Portal item) as Hosted Table. Additional options available |
+| Publish-PortalDataStoreLayer | Portal | `[ROOT]portals/[PORTALID]/datastores/allDatasets/publishLayers` | Publish on map layer and one feature layer from dataset in DataStore |
 | Remove-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
+| Remove-PortalUserGroup | Portal | `[ROOT]/community/groups/[GROUPID]/delete` | Delete Portal user group |
 | Remove-ServerFolder | Server | `[ADMIN]/services/[FOLDERNAME]/deleteFolder` | Deletes folder in ArcGIS Server and all services in folder |
 | Remove-ServerService | Server | `[ADMIN]/services/deleteServices` | Deletes ArcGIS Server Service |
 | Remove-ServerServiceLayer | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
+| Revoke-PortalUserItemAccess | Portal | `[ROOT]/content/users/[USERNAME]/unshareItems` | Unshare Portal item |
 | Test-PortalDataStore | Portal | `[ROOT]/sharing/rest/portals/[PORTALID]/datastores/validate` | Validates connection between Data Store and ArcGIS Server |
 | Write-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/addItem` | Uploads a Portal item (file item) |
 

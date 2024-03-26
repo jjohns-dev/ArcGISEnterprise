@@ -28,6 +28,12 @@ Invoke-PortalItemAnalysis -ItemId ea42cab6e3654405b54f0b2b50a0041b -FileType CSV
 Analyzes the CSV item with ID ea42cab6e3654405b54f0b2b50a0041b
 ```
 
+### EXAMPLE 2
+```
+Invoke-PortalItemAnalysis -File C:\file.csv -FileType CSV @commonParams
+Analyzes the CSV file C:\file.csv
+```
+
 ## PARAMETERS
 
 ### -ItemId
