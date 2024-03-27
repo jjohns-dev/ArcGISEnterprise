@@ -6,7 +6,7 @@ Get Portal for ArcGIS user group
 ## SYNTAX
 
 ```
-Get-PortalUserGroupList [-Username] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+Get-PortalUserGroupList [[-UserName] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
@@ -17,13 +17,13 @@ Get groups owned by specified user in Portal for ArcGIS
 
 ### EXAMPLE 1
 ```
-Get-PortalUserGroupList -Username jsmith -Context 'https://arcgis.com/arcgis' -Token $token
+Get-PortalUserGroupList -UserName jsmith -Context 'https://arcgis.com/arcgis' -Token $token
 Get groups owned by user 'jsmith'
 ```
 
 ## PARAMETERS
 
-### -Username
+### -UserName
 Username
 
 ```yaml
@@ -31,7 +31,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False

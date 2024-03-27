@@ -44,7 +44,7 @@ Title of new folder
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases:
+Aliases: FolderName
 
 Required: True
 Position: 2
