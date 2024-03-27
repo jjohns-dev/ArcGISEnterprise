@@ -70,7 +70,7 @@ function Get-ServerServiceFieldInfo {
     Process {
         # SET PARAMETERS FOR SERVICE INFO
         $servicInfoParams = $PSBoundParameters
-        $servicInfoParams.Remove('Folder') | Out-Null
+        $servicInfoParams.Remove('FolderName') | Out-Null
 
         # GET SERVICE INFO INCLUDING FOLDERS
         $servicInfo = Get-ServerServiceList @servicInfoParams
