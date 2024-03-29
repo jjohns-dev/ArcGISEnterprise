@@ -30,8 +30,9 @@ function Search-PortalContent {
     .NOTES
         Name:     Search-PortalContent
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2023-03-21
-        - 0.1.1 - Removed raw query
+        Version:  0.1.2 | Last Edit: 2024-03-29
+        - 0.1.2 - (2024-03-29) Switch to filter rather than q (query)
+        - 0.1.1 - (2023-03-21) Removed raw query
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
@@ -94,36 +95,33 @@ function Search-PortalContent {
         # ADD SEARCH PARAMS
         switch ($PSBoundParameters.Keys) {
             'Id' {
-                $restParams.Body['q'] = 'id:"{0}"' -f $Id
-                $searchParams = 1
+                $restParams.Body['filter'] = 'id:"{0}"' -f $Id
+                $searchParams = $true
             }
             'Owner' {
-                if ($searchParams) { $restParams.Body['q'] += ' AND owner:"{0}"' -f $Owner }
-                else { $restParams.Body['q'] = 'owner:"{0}"' -f $Owner }
-                $searchParams++
+                if ($searchParams) { $restParams.Body['filter'] += ' AND owner:"{0}"' -f $Owner }
+                else { $restParams.Body['filter'] = 'owner:"{0}"' -f $Owner }
+                $searchParams = $true
             }
             'Tag' {
-                if ($searchParams) { $restParams.Body['q'] += ' AND tags:"{0}"' -f $Tag }
-                else { $restParams.Body['q'] = 'tags:"{0}"' -f $Tag }
-                $searchParams++
+                if ($searchParams) { $restParams.Body['filter'] += ' AND tags:"{0}"' -f $Tag }
+                else { $restParams.Body['filter'] = 'tags:"{0}"' -f $Tag }
+                $searchParams = $true
             }
             'Type' {
-                if ($searchParams) { $restParams.Body['q'] += ' AND type:"{0}"' -f $Type }
-                else { $restParams.Body['q'] = 'type:"{0}"' -f $Type }
-                $searchParams++
+                if ($searchParams) { $restParams.Body['filter'] += ' AND type:"{0}"' -f $Type }
+                else { $restParams.Body['filter'] = 'type:"{0}"' -f $Type }
+                $searchParams = $true
             }
             'Title' {
-                if ($searchParams) { $restParams.Body['q'] += ' AND title:"{0}"' -f $Title }
-                else { $restParams.Body['q'] = 'title:"{0}"' -f $Title }
-                $searchParams++
+                if ($searchParams) { $restParams.Body['filter'] += ' AND title:"{0}"' -f $Title }
+                else { $restParams.Body['filter'] = 'title:"{0}"' -f $Title }
+                $searchParams = $true
             }
         }
 
-        # SHOW QUERY CRITERIA COUNT
-        Write-Verbose -Message ('Query criteria in search: {0}' -f $searchParams)
-
         # SHOW QUERY STRING
-        Write-Verbose -Message ('Query string: [{0}]' -f $restParams.Body['q'])
+        Write-Verbose -Message ('Query string: [{0}]' -f $restParams.Body['filter'])
         #Write-Verbose -Message ($restParams.Body | Out-String)
 
         # ADD CERTIFICATE SKIP IF PROVIDED
