@@ -1,4 +1,4 @@
-# Search-PortalContent
+# Find-PortalItem
 
 ## SYNOPSIS
 Search Portal for ArcGIS content
@@ -6,7 +6,7 @@ Search Portal for ArcGIS content
 ## SYNTAX
 
 ```
-Search-PortalContent [[-Id] <String>] [[-Owner] <String>] [[-Tag] <String>] [[-Type] <String>]
+Find-PortalItem [[-Id] <String>] [[-Owner] <String>] [[-Tag] <String>] [[-Type] <String>]
  [[-Title] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
@@ -17,7 +17,7 @@ Search Portal for ArcGIS content by user, item ID, etc.
 
 ### EXAMPLE 1
 ```
-Search-PortalContent @commonParams -Owner 'jsmith'
+Find-PortalItem @commonParams -Owner 'jsmith'
 Get all Portal items belonging to 'jsmith'
 ```
 
@@ -153,7 +153,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Search-PortalContent
+Name:     Find-PortalItem
 Author:   Justin Johns
 Version:  0.1.1 | Last Edit: 2023-03-21
 - 0.1.1 - Removed raw query

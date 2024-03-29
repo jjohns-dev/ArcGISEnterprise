@@ -1,4 +1,4 @@
-function Search-PortalContent {
+function Find-PortalItem {
     <#
     .SYNOPSIS
         Search Portal for ArcGIS content
@@ -25,17 +25,18 @@ function Search-PortalContent {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Search-PortalContent @commonParams -Owner 'jsmith'
+        PS C:\> Find-PortalItem @commonParams -Owner 'jsmith'
         Get all Portal items belonging to 'jsmith'
     .NOTES
-        Name:     Search-PortalContent
+        Name:     Find-PortalItem
         Author:   Justin Johns
         Version:  0.1.2 | Last Edit: 2024-03-29
-        - 0.1.2 - (2024-03-29) Switch to filter rather than q (query)
+        - 0.1.2 - (2024-03-29) Renamed function and switch to filter rather than q (query)
         - 0.1.1 - (2023-03-21) Removed raw query
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
+        https://developers.arcgis.com/rest/users-groups-and-items/search.htm
         https://developers.arcgis.com/rest/users-groups-and-items/search-reference.htm
         This function does not yet support multiple search values for a given criterion
         (e.g., can only search for a single "tag" not two tags)
