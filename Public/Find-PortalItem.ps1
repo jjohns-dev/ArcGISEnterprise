@@ -45,7 +45,7 @@ function Find-PortalItem {
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Id')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Id,
+        [System.String[]] $Id,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Owner')]
         [ValidateNotNullOrEmpty()]
@@ -100,7 +100,23 @@ function Find-PortalItem {
         # ADD SEARCH PARAMS
         switch ($PSBoundParameters.Keys) {
             'Id' {
-                $restParams.Body['filter'] = 'id:"{0}"' -f $Id
+                # CHECK FOR MULTIPLE VALUES
+                if ($Id.Count -GT 1) {
+                    # ADD APPROPRIATE SYNTAX
+                    $queryString = foreach ($i in $Id) { 'id:"{0}"' -f $i }
+
+                    # ADD GROUPING
+                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                }
+                else {
+                    # SET QUERY STRING TO SINGLE VALUE
+                    $queryString = 'id:"{0}"' -f $Id
+                }
+
+                # ADD FILTER TO QUERY PARAMETERS
+                $restParams.Body['filter'] = $queryString
+
+                # SET SEARCH PARAMS ADDED
                 $searchParams = $true
             }
             'Owner' {
