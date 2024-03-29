@@ -24,7 +24,8 @@ function Get-PortalUserItemList {
     .NOTES
         Name:     Get-PortalUserItemList
         Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-03-21
+        Version:  0.1.3 | Last Edit: 2024-03-29
+        - 0.1.3 - (2024-03-29) Updates to filter query for type
         - 0.1.2 - (2024-03-21) Made UserName parameter optional and added parameter for item type
         - 0.1.1 - (2023-13-20) Added automatic retrieval of paged results
         - 0.1.0 - Initial version
@@ -38,7 +39,9 @@ function Get-PortalUserItemList {
         [System.String] $UserName,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Portal item type')]
-        [ValidateSet('Map Service', 'Feature Service', 'Data Store', 'Web Map')] # this list will need updating
+        #[ValidateNotNullOrEmpty()]
+        # THIS LIST WILL NEED UPDATING
+        [ValidateSet('Map Service', 'Feature Service', 'Data Store', 'Web Map', 'CSV', 'CSV Collection')]
         [System.String[]] $Type,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
@@ -80,12 +83,31 @@ function Get-PortalUserItemList {
             Uri    = '{0}/sharing/rest/search' -f $Context
             Method = 'POST'
             Body   = @{
-                f     = 'json'
-                token = $Token
-                q     = 'owner:{0}' -f $UserName
-                num   = 100
+                f      = 'json'
+                token  = $Token
+                filter = 'owner:"{0}"' -f $UserName
+                num    = 100
             }
         }
+
+        # CHECK FOR TYPE
+        if ($PSBoundParameters.ContainsKey('Type')) {
+            # CHECK FOR MULTIPLE VALUES
+            if ($Type.Count -GT 1) {
+                # ADD APPROPRIATE SYNTAX
+                $typeString = foreach ($t in $Type) { 'type:"{0}"' -f $t }
+
+                # ADD GROUPING
+                $restParams.Body.filter += ' and ({0})' -f ($typeString -join ' OR ')
+            }
+            else {
+                # ADD SINGLE TYPE
+                $restParams.Body.filter += ' and type:"{0}"' -f $Type
+            }
+        }
+
+        # OUTPUT VERBOSE
+        Write-Verbose -Message ('Query filter: [{0}]' -f $restParams.Body.filter)
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
@@ -129,8 +151,7 @@ function Get-PortalUserItemList {
             }
 
             # RETURN USERS
-            if ($PSBoundParameters.ContainsKey('Type')) { $itemList | Where-Object type -IN $Type }
-            else { $itemList }
+            $itemList
         }
     }
 }
