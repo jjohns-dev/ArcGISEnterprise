@@ -31,7 +31,7 @@ function Find-PortalItem {
         Name:     Find-PortalItem
         Author:   Justin Johns
         Version:  0.1.2 | Last Edit: 2024-03-29
-        - 0.1.2 - (2024-03-29) Renamed function and switch to filter rather than q (query)
+        - 0.1.2 - (2024-03-29) Renamed function, switch to filter rather than q (query), add support for multiple values
         - 0.1.1 - (2023-03-21) Removed raw query
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
@@ -53,7 +53,7 @@ function Find-PortalItem {
 
         [Parameter(Mandatory = $false, HelpMessage = 'Tag')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Tag,
+        [System.String[]] $Tag,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Type')]
         [ValidateNotNullOrEmpty()]
@@ -125,8 +125,24 @@ function Find-PortalItem {
                 $searchParams = $true
             }
             'Tag' {
-                if ($searchParams) { $restParams.Body['filter'] += ' AND tags:"{0}"' -f $Tag }
-                else { $restParams.Body['filter'] = 'tags:"{0}"' -f $Tag }
+                # CHECK FOR MULTIPLE VALUES
+                if ($Tag.Count -GT 1) {
+                    # ADD APPROPRIATE SYNTAX
+                    $queryString = foreach ($i in $Tag) { 'tags:"{0}"' -f $i }
+
+                    # ADD GROUPING
+                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                }
+                else {
+                    # SET QUERY STRING TO SINGLE VALUE
+                    $queryString = 'tags:"{0}"' -f $Tag
+                }
+
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($searchParams) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
+                else { $restParams.Body['filter'] = $queryString }
+
+                # SET SEARCH PARAMS ADDED
                 $searchParams = $true
             }
             'Type' {
