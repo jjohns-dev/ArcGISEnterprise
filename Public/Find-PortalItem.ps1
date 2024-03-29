@@ -5,15 +5,15 @@ function Find-PortalItem {
     .DESCRIPTION
         Search Portal for ArcGIS content by user, item ID, etc.
     .PARAMETER Id
-        Id
+        Portal item Id
     .PARAMETER Owner
-        Owner
+        Portal item owner
     .PARAMETER Tag
-        Tag
+        Portal item tag
     .PARAMETER Type
-        Type
+        Portal item type
     .PARAMETER Title
-        Title
+        Portal item title (supports partial matches)
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -43,25 +43,25 @@ function Find-PortalItem {
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $false, HelpMessage = 'Id')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal item Id')]
         [ValidateNotNullOrEmpty()]
         [System.String[]] $Id,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Owner')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal item owner')]
         [ValidateNotNullOrEmpty()]
         [System.String[]] $Owner,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Tag')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal item tag')]
         [ValidateNotNullOrEmpty()]
         [System.String[]] $Tag,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Type')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal item type')]
         [ValidateNotNullOrEmpty()]
         [System.String[]] $Type,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Title')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal item title (supports partial matches)')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Title,
+        [System.String[]] $Title,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -183,15 +183,28 @@ function Find-PortalItem {
                 $searchParams = $true
             }
             'Title' {
-                if ($searchParams) { $restParams.Body['filter'] += ' AND title:"{0}"' -f $Title }
-                else { $restParams.Body['filter'] = 'title:"{0}"' -f $Title }
-                $searchParams = $true
+                # CHECK FOR MULTIPLE VALUES
+                if ($Title.Count -GT 1) {
+                    # ADD APPROPRIATE SYNTAX
+                    $queryString = foreach ($i in $Title) { 'title:"{0}"' -f $i }
+
+                    # ADD GROUPING
+                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                }
+                else {
+                    # SET QUERY STRING TO SINGLE VALUE
+                    $queryString = 'title:"{0}"' -f $Title
+                }
+
+                $restParams.Body['q'] = $queryString
             }
         }
 
-        # SHOW QUERY STRING
-        Write-Verbose -Message ('Query string: [{0}]' -f $restParams.Body['filter'])
-        #Write-Verbose -Message ($restParams.Body | Out-String)
+        # FILTER STRING "filter" SHOULD BE USED FOR EXACT MATCHES
+        Write-Verbose -Message ('Filter string: [{0}]' -f $restParams.Body['filter'])
+
+        # QUERY STRING "q" SHOULD ONLY BE USED FOR FULL TEXT SEARCH OR RESULTS DEPENDENT ON RELEVANCE SCORES
+        Write-Verbose -Message ('Query string: [{0}]' -f $restParams.Body['q'])
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
