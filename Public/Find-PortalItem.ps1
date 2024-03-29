@@ -57,7 +57,7 @@ function Find-PortalItem {
 
         [Parameter(Mandatory = $false, HelpMessage = 'Type')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Type,
+        [System.String[]] $Type,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Title')]
         [ValidateNotNullOrEmpty()]
@@ -146,8 +146,24 @@ function Find-PortalItem {
                 $searchParams = $true
             }
             'Type' {
-                if ($searchParams) { $restParams.Body['filter'] += ' AND type:"{0}"' -f $Type }
-                else { $restParams.Body['filter'] = 'type:"{0}"' -f $Type }
+                # CHECK FOR MULTIPLE VALUES
+                if ($Type.Count -GT 1) {
+                    # ADD APPROPRIATE SYNTAX
+                    $queryString = foreach ($i in $Type) { 'type:"{0}"' -f $i }
+
+                    # ADD GROUPING
+                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                }
+                else {
+                    # SET QUERY STRING TO SINGLE VALUE
+                    $queryString = 'type:"{0}"' -f $Type
+                }
+
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($searchParams) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
+                else { $restParams.Body['filter'] = $queryString }
+
+                # SET SEARCH PARAMS ADDED
                 $searchParams = $true
             }
             'Title' {
