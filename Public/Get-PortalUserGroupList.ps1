@@ -78,7 +78,7 @@ function Get-PortalUserGroupList {
                 token = $Token
                 num   = 100
                 # THE SYNTAX 'q = "jsmith"' WILL FIND THE USER ACROSS MULTIPLE
-                # FIELDS RATHER THAN JUST THE OWNER FIELD. USE Search-PortalContent
+                # FIELDS RATHER THAN JUST THE OWNER FIELD. USE Find-PortalItem
                 # TO FIND A USERNAME AS A SEARCH TERM FOR MULTIPLE FIELDS
                 q     = 'owner:"{0}"' -f $UserName
             }
