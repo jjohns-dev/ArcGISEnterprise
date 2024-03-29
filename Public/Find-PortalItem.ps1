@@ -49,7 +49,7 @@ function Find-PortalItem {
 
         [Parameter(Mandatory = $false, HelpMessage = 'Owner')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Owner,
+        [System.String[]] $Owner,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Tag')]
         [ValidateNotNullOrEmpty()]
@@ -77,6 +77,11 @@ function Find-PortalItem {
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
+        # CHECK FOR NO INPUT
+        if (-NOT $Id -AND -NOT $Owner -AND -NOT $Tag -AND -NOT $Type -AND -NOT $Title) {
+            Throw 'No seach parameter found. Please add search parameter and try again.'
+        }
+
         # CREATE USER ARRAY
         $itemList = [System.Collections.Generic.List[System.Object]]::new()
     }
@@ -85,12 +90,11 @@ function Find-PortalItem {
         $restParams = @{
             Uri    = '{0}/sharing/rest/search' -f $Context
             Method = 'POST'
-            Body   = @{ f = 'json'; token = $Token }
-        }
-
-        # CHECK FOR NO INPUT
-        if (-NOT $Id -AND -NOT $Owner -AND -NOT $Tag -AND -NOT $Type -AND -NOT $Title) {
-            Throw 'No seach parameter found. Please add search parameter and try again.'
+            Body   = @{
+                f     = 'json'
+                token = $Token
+                num   = 100
+            }
         }
 
         # ADD SEARCH PARAMS
@@ -100,8 +104,24 @@ function Find-PortalItem {
                 $searchParams = $true
             }
             'Owner' {
-                if ($searchParams) { $restParams.Body['filter'] += ' AND owner:"{0}"' -f $Owner }
-                else { $restParams.Body['filter'] = 'owner:"{0}"' -f $Owner }
+                # CHECK FOR MULTIPLE VALUES
+                if ($Owner.Count -GT 1) {
+                    # ADD APPROPRIATE SYNTAX
+                    $queryString = foreach ($i in $Owner) { 'owner:"{0}"' -f $i }
+
+                    # ADD GROUPING
+                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                }
+                else {
+                    # SET QUERY STRING TO SINGLE VALUE
+                    $queryString = 'owner:"{0}"' -f $Owner
+                }
+
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($searchParams) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
+                else { $restParams.Body['filter'] = $queryString }
+
+                # SET SEARCH PARAMS ADDED
                 $searchParams = $true
             }
             'Tag' {
