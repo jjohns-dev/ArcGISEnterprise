@@ -14,6 +14,10 @@ function Find-PortalItem {
         Portal item type
     .PARAMETER Title
         Portal item title (supports partial matches)
+    .PARAMETER Created
+        Created date
+    .PARAMETER Modified
+        Modified date
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -63,6 +67,14 @@ function Find-PortalItem {
         [ValidateNotNullOrEmpty()]
         [System.String[]] $Title,
 
+        [Parameter(Mandatory = $false, HelpMessage = 'Created date')]
+        [ValidateNotNullOrEmpty()]
+        [System.DateTime] $Created,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Modified date')]
+        [ValidateNotNullOrEmpty()]
+        [System.DateTime] $Modified,
+
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -78,9 +90,9 @@ function Find-PortalItem {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
         # CHECK FOR NO INPUT
-        if (-NOT $Id -AND -NOT $Owner -AND -NOT $Tag -AND -NOT $Type -AND -NOT $Title) {
+        <# if (-NOT $Id -AND -NOT $Owner -AND -NOT $Tag -AND -NOT $Type -AND -NOT $Title) {
             Throw 'No seach parameter found. Please add search parameter and try again.'
-        }
+        } #>
 
         # CREATE USER ARRAY
         $itemList = [System.Collections.Generic.List[System.Object]]::new()
@@ -116,8 +128,8 @@ function Find-PortalItem {
                 # ADD FILTER TO QUERY PARAMETERS
                 $restParams.Body['filter'] = $queryString
 
-                # SET SEARCH PARAMS ADDED
-                $searchParams = $true
+                # SET HAS FILTER PARAMETER
+                $hasFilter = $true
             }
             'Owner' {
                 # CHECK FOR MULTIPLE VALUES
@@ -134,11 +146,11 @@ function Find-PortalItem {
                 }
 
                 # ADD WITH GROUPING IF APPROPRIATE
-                if ($searchParams) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
                 else { $restParams.Body['filter'] = $queryString }
 
-                # SET SEARCH PARAMS ADDED
-                $searchParams = $true
+                # SET HAS FILTER PARAMETER
+                $hasFilter = $true
             }
             'Tag' {
                 # CHECK FOR MULTIPLE VALUES
@@ -155,11 +167,11 @@ function Find-PortalItem {
                 }
 
                 # ADD WITH GROUPING IF APPROPRIATE
-                if ($searchParams) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
                 else { $restParams.Body['filter'] = $queryString }
 
-                # SET SEARCH PARAMS ADDED
-                $searchParams = $true
+                # SET HAS FILTER PARAMETER
+                $hasFilter = $true
             }
             'Type' {
                 # CHECK FOR MULTIPLE VALUES
@@ -176,11 +188,11 @@ function Find-PortalItem {
                 }
 
                 # ADD WITH GROUPING IF APPROPRIATE
-                if ($searchParams) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
                 else { $restParams.Body['filter'] = $queryString }
 
-                # SET SEARCH PARAMS ADDED
-                $searchParams = $true
+                # SET HAS FILTER PARAMETER
+                $hasFilter = $true
             }
             'Title' {
                 # CHECK FOR MULTIPLE VALUES
@@ -196,7 +208,45 @@ function Find-PortalItem {
                     $queryString = 'title:"{0}"' -f $Title
                 }
 
+                # ADD QUERY TO PARAMETERS
                 $restParams.Body['q'] = $queryString
+
+                # SET HAS QUERY PARAMETER
+                $hasQ = $true
+            }
+            'Created' {
+                # CONVERT TO EPOCH MILISECONDS
+                $start = [System.DateTimeOffset]::new($Created).ToUnixTimeMilliseconds()
+
+                # SET NOW IN EPOCH
+                $unixNow = [System.DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+
+                # SET QUERY STRING
+                $queryString = '(created:[{0} TO {1}])' -f $start, $unixNow
+
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($hasQ) { $restParams.Body['q'] += ' and {0}' -f $queryString }
+                else { $restParams.Body['q'] = $queryString }
+
+                # SET HAS QUERY PARAMETER
+                $hasQ = $true
+            }
+            'Modified' {
+                # CONVERT TO EPOCH MILISECONDS
+                $start = [System.DateTimeOffset]::new($Modified).ToUnixTimeMilliseconds()
+
+                # SET NOW IN EPOCH
+                $unixNow = [System.DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+
+                # SET QUERY STRING
+                $queryString = '(modified:[{0} TO {1}])' -f $start, $unixNow
+
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($hasQ) { $restParams.Body['q'] += ' and {0}' -f $queryString }
+                else { $restParams.Body['q'] = $queryString }
+
+                # SET HAS QUERY PARAMETER
+                $hasQ = $true
             }
         }
 
