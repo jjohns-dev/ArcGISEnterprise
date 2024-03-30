@@ -69,7 +69,7 @@ function Find-PortalItem {
 
         [Parameter(Mandatory = $false, HelpMessage = 'Created date')]
         [ValidateNotNullOrEmpty()]
-        [System.DateTime] $Created,
+        [System.DateTime] $Created, # CreatedBegin / CreatedEnd
 
         [Parameter(Mandatory = $false, HelpMessage = 'Modified date')]
         [ValidateNotNullOrEmpty()]
@@ -89,8 +89,8 @@ function Find-PortalItem {
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
-        # CHECK FOR NO INPUT
-        <# if (-NOT $Id -AND -NOT $Owner -AND -NOT $Tag -AND -NOT $Type -AND -NOT $Title) {
+        <# # CHECK FOR NO INPUT
+        if (-NOT $Id -AND -NOT $Owner -AND -NOT $Tag -AND -NOT $Type -AND -NOT $Title) {
             Throw 'No seach parameter found. Please add search parameter and try again.'
         } #>
 
@@ -115,18 +115,19 @@ function Find-PortalItem {
                 # CHECK FOR MULTIPLE VALUES
                 if ($Id.Count -GT 1) {
                     # ADD APPROPRIATE SYNTAX
-                    $queryString = foreach ($i in $Id) { 'id:"{0}"' -f $i }
+                    $filterString = foreach ($i in $Id) { 'id:"{0}"' -f $i }
 
                     # ADD GROUPING
-                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                    $filterString = '({0})' -f ($filterString -join ' OR ')
                 }
                 else {
                     # SET QUERY STRING TO SINGLE VALUE
-                    $queryString = 'id:"{0}"' -f $Id
+                    $filterString = 'id:"{0}"' -f $Id
                 }
 
-                # ADD FILTER TO QUERY PARAMETERS
-                $restParams.Body['filter'] = $queryString
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $filterString }
+                else { $restParams.Body['filter'] = $filterString }
 
                 # SET HAS FILTER PARAMETER
                 $hasFilter = $true
@@ -135,19 +136,19 @@ function Find-PortalItem {
                 # CHECK FOR MULTIPLE VALUES
                 if ($Owner.Count -GT 1) {
                     # ADD APPROPRIATE SYNTAX
-                    $queryString = foreach ($i in $Owner) { 'owner:"{0}"' -f $i }
+                    $filterString = foreach ($i in $Owner) { 'owner:"{0}"' -f $i }
 
                     # ADD GROUPING
-                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                    $filterString = '({0})' -f ($filterString -join ' OR ')
                 }
                 else {
                     # SET QUERY STRING TO SINGLE VALUE
-                    $queryString = 'owner:"{0}"' -f $Owner
+                    $filterString = 'owner:"{0}"' -f $Owner
                 }
 
                 # ADD WITH GROUPING IF APPROPRIATE
-                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
-                else { $restParams.Body['filter'] = $queryString }
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $filterString }
+                else { $restParams.Body['filter'] = $filterString }
 
                 # SET HAS FILTER PARAMETER
                 $hasFilter = $true
@@ -156,19 +157,19 @@ function Find-PortalItem {
                 # CHECK FOR MULTIPLE VALUES
                 if ($Tag.Count -GT 1) {
                     # ADD APPROPRIATE SYNTAX
-                    $queryString = foreach ($i in $Tag) { 'tags:"{0}"' -f $i }
+                    $filterString = foreach ($i in $Tag) { 'tags:"{0}"' -f $i }
 
                     # ADD GROUPING
-                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                    $filterString = '({0})' -f ($filterString -join ' OR ')
                 }
                 else {
                     # SET QUERY STRING TO SINGLE VALUE
-                    $queryString = 'tags:"{0}"' -f $Tag
+                    $filterString = 'tags:"{0}"' -f $Tag
                 }
 
                 # ADD WITH GROUPING IF APPROPRIATE
-                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
-                else { $restParams.Body['filter'] = $queryString }
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $filterString }
+                else { $restParams.Body['filter'] = $filterString }
 
                 # SET HAS FILTER PARAMETER
                 $hasFilter = $true
@@ -177,19 +178,19 @@ function Find-PortalItem {
                 # CHECK FOR MULTIPLE VALUES
                 if ($Type.Count -GT 1) {
                     # ADD APPROPRIATE SYNTAX
-                    $queryString = foreach ($i in $Type) { 'type:"{0}"' -f $i }
+                    $filterString = foreach ($i in $Type) { 'type:"{0}"' -f $i }
 
                     # ADD GROUPING
-                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                    $filterString = '({0})' -f ($filterString -join ' OR ')
                 }
                 else {
                     # SET QUERY STRING TO SINGLE VALUE
-                    $queryString = 'type:"{0}"' -f $Type
+                    $filterString = 'type:"{0}"' -f $Type
                 }
 
                 # ADD WITH GROUPING IF APPROPRIATE
-                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
-                else { $restParams.Body['filter'] = $queryString }
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $filterString }
+                else { $restParams.Body['filter'] = $filterString }
 
                 # SET HAS FILTER PARAMETER
                 $hasFilter = $true
@@ -208,8 +209,9 @@ function Find-PortalItem {
                     $queryString = 'title:"{0}"' -f $Title
                 }
 
-                # ADD QUERY TO PARAMETERS
-                $restParams.Body['q'] = $queryString
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($hasQ) { $restParams.Body['q'] += ' and {0}' -f $queryString }
+                else { $restParams.Body['q'] = $queryString }
 
                 # SET HAS QUERY PARAMETER
                 $hasQ = $true
