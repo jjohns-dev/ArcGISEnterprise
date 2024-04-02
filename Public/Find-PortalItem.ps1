@@ -305,7 +305,7 @@ function Find-PortalItem {
             if ($remainingItems -GT 0) {
 
                 do {
-
+                    # OUTPUT VERBOSE MESSAGE
                     Write-Verbose -Message ('Remaining items: {0}' -f $remainingItems)
 
                     # RESET START
