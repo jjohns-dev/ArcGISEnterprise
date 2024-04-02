@@ -14,10 +14,14 @@ function Find-PortalItem {
         Portal item type
     .PARAMETER Title
         Portal item title (supports partial matches)
-    .PARAMETER Created
-        Created date
-    .PARAMETER Modified
-        Modified date
+    .PARAMETER CreatedDateBegin
+        Created date begin
+    .PARAMETER CreatedDateEnd
+        Created date end
+    .PARAMETER ModifiedDateBegin
+        Modified date begin
+    .PARAMETER ModifiedDateEnd
+        Modified date end
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -34,8 +38,8 @@ function Find-PortalItem {
     .NOTES
         Name:     Find-PortalItem
         Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-03-29
-        - 0.1.2 - (2024-03-29) Renamed function, switch to filter rather than q (query), add support for multiple values
+        Version:  0.1.2 | Last Edit: 2024-04-02
+        - 0.1.2 - (2024-04-02) Renamed function, switch to filter rather than q (query), add support for multiple values
         - 0.1.1 - (2023-03-21) Removed raw query
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
@@ -67,13 +71,21 @@ function Find-PortalItem {
         [ValidateNotNullOrEmpty()]
         [System.String[]] $Title,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Created date')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Created date begin')]
         [ValidateNotNullOrEmpty()]
-        [System.DateTime] $Created, # CreatedBegin / CreatedEnd
+        [System.DateTime] $CreatedDateBegin,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Modified date')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Created date end')]
         [ValidateNotNullOrEmpty()]
-        [System.DateTime] $Modified,
+        [System.DateTime] $CreatedDateEnd,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Modified date begin')]
+        [ValidateNotNullOrEmpty()]
+        [System.DateTime] $ModifiedDateBegin,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Modified date end')]
+        [ValidateNotNullOrEmpty()]
+        [System.DateTime] $ModifiedDateEnd,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -93,6 +105,12 @@ function Find-PortalItem {
         if (-NOT $Id -AND -NOT $Owner -AND -NOT $Tag -AND -NOT $Type -AND -NOT $Title) {
             Throw 'No seach parameter found. Please add search parameter and try again.'
         } #>
+
+        # VALIDATE DATE PARAMETERS
+        if ($PSBoundParameters.Keys -match 'CreatedDate' -and $PSBoundParameters.Keys -match 'ModifiedDate') {
+            # THOW ERROR
+            Write-Error -Message 'Using both created and modified dates produces unexpected results. Please use only one date type.' -ErrorAction Stop
+        }
 
         # CREATE USER ARRAY
         $itemList = [System.Collections.Generic.List[System.Object]]::new()
@@ -216,15 +234,18 @@ function Find-PortalItem {
                 # SET HAS QUERY PARAMETER
                 $hasQ = $true
             }
-            'Created' {
+            'CreatedDateBegin' {
                 # CONVERT TO EPOCH MILISECONDS
-                $start = [System.DateTimeOffset]::new($Created).ToUnixTimeMilliseconds()
+                $start = [System.DateTimeOffset]::new($CreatedDateBegin).ToUnixTimeMilliseconds()
+
+                # SET CREATED END DATE IF NOT PROVIDED
+                if (-Not $PSBoundParameters.ContainsKey('CreatedDateEnd')) { $CreatedDateEnd = Get-Date }
 
                 # SET NOW IN EPOCH
-                $unixNow = [System.DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+                $end = [System.DateTimeOffset]::new($CreatedDateEnd).ToUnixTimeMilliseconds()
 
                 # SET QUERY STRING
-                $queryString = '(created:[{0} TO {1}])' -f $start, $unixNow
+                $queryString = '(created:[{0} TO {1}])' -f $start, $end
 
                 # ADD WITH GROUPING IF APPROPRIATE
                 if ($hasQ) { $restParams.Body['q'] += ' and {0}' -f $queryString }
@@ -233,15 +254,18 @@ function Find-PortalItem {
                 # SET HAS QUERY PARAMETER
                 $hasQ = $true
             }
-            'Modified' {
+            'ModifiedDateBegin' {
                 # CONVERT TO EPOCH MILISECONDS
-                $start = [System.DateTimeOffset]::new($Modified).ToUnixTimeMilliseconds()
+                $start = [System.DateTimeOffset]::new($ModifiedDateBegin).ToUnixTimeMilliseconds()
+
+                # SET MODIFIED END DATE IF NOT PROVIDED
+                if (-Not $PSBoundParameters.ContainsKey('ModifiedDateEnd')) { $ModifiedDateEnd = Get-Date }
 
                 # SET NOW IN EPOCH
-                $unixNow = [System.DateTimeOffset]::UtcNow.ToUnixTimeMilliseconds()
+                $end = [System.DateTimeOffset]::new($ModifiedDateEnd).ToUnixTimeMilliseconds()
 
                 # SET QUERY STRING
-                $queryString = '(modified:[{0} TO {1}])' -f $start, $unixNow
+                $queryString = '(modified:[{0} TO {1}])' -f $start, $end
 
                 # ADD WITH GROUPING IF APPROPRIATE
                 if ($hasQ) { $restParams.Body['q'] += ' and {0}' -f $queryString }
