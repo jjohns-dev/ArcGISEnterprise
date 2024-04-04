@@ -14,6 +14,14 @@ function Find-PortalItem {
         Portal item type
     .PARAMETER Title
         Portal item title (supports partial matches)
+    .PARAMETER CreatedDateBegin
+        Created date begin
+    .PARAMETER CreatedDateEnd
+        Created date end
+    .PARAMETER ModifiedDateBegin
+        Modified date begin
+    .PARAMETER ModifiedDateEnd
+        Modified date end
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -30,8 +38,8 @@ function Find-PortalItem {
     .NOTES
         Name:     Find-PortalItem
         Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-03-29
-        - 0.1.2 - (2024-03-29) Renamed function, switch to filter rather than q (query), add support for multiple values
+        Version:  0.1.2 | Last Edit: 2024-04-02
+        - 0.1.2 - (2024-04-02) Renamed function, switch to filter rather than q (query), add support for multiple values
         - 0.1.1 - (2023-03-21) Removed raw query
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
@@ -63,6 +71,22 @@ function Find-PortalItem {
         [ValidateNotNullOrEmpty()]
         [System.String[]] $Title,
 
+        [Parameter(Mandatory = $false, HelpMessage = 'Created date begin')]
+        [ValidateNotNullOrEmpty()]
+        [System.DateTime] $CreatedDateBegin,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Created date end')]
+        [ValidateNotNullOrEmpty()]
+        [System.DateTime] $CreatedDateEnd,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Modified date begin')]
+        [ValidateNotNullOrEmpty()]
+        [System.DateTime] $ModifiedDateBegin,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Modified date end')]
+        [ValidateNotNullOrEmpty()]
+        [System.DateTime] $ModifiedDateEnd,
+
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -77,9 +101,15 @@ function Find-PortalItem {
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
-        # CHECK FOR NO INPUT
+        <# # CHECK FOR NO INPUT
         if (-NOT $Id -AND -NOT $Owner -AND -NOT $Tag -AND -NOT $Type -AND -NOT $Title) {
             Throw 'No seach parameter found. Please add search parameter and try again.'
+        } #>
+
+        # VALIDATE DATE PARAMETERS
+        if ($PSBoundParameters.Keys -match 'CreatedDate' -and $PSBoundParameters.Keys -match 'ModifiedDate') {
+            # THOW ERROR
+            Write-Error -Message 'Using both created and modified dates produces unexpected results. Please use only one date type.' -ErrorAction Stop
         }
 
         # CREATE USER ARRAY
@@ -103,84 +133,85 @@ function Find-PortalItem {
                 # CHECK FOR MULTIPLE VALUES
                 if ($Id.Count -GT 1) {
                     # ADD APPROPRIATE SYNTAX
-                    $queryString = foreach ($i in $Id) { 'id:"{0}"' -f $i }
+                    $filterString = foreach ($i in $Id) { 'id:"{0}"' -f $i }
 
                     # ADD GROUPING
-                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                    $filterString = '({0})' -f ($filterString -join ' OR ')
                 }
                 else {
                     # SET QUERY STRING TO SINGLE VALUE
-                    $queryString = 'id:"{0}"' -f $Id
+                    $filterString = 'id:"{0}"' -f $Id
                 }
 
-                # ADD FILTER TO QUERY PARAMETERS
-                $restParams.Body['filter'] = $queryString
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $filterString }
+                else { $restParams.Body['filter'] = $filterString }
 
-                # SET SEARCH PARAMS ADDED
-                $searchParams = $true
+                # SET HAS FILTER PARAMETER
+                $hasFilter = $true
             }
             'Owner' {
                 # CHECK FOR MULTIPLE VALUES
                 if ($Owner.Count -GT 1) {
                     # ADD APPROPRIATE SYNTAX
-                    $queryString = foreach ($i in $Owner) { 'owner:"{0}"' -f $i }
+                    $filterString = foreach ($i in $Owner) { 'owner:"{0}"' -f $i }
 
                     # ADD GROUPING
-                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                    $filterString = '({0})' -f ($filterString -join ' OR ')
                 }
                 else {
                     # SET QUERY STRING TO SINGLE VALUE
-                    $queryString = 'owner:"{0}"' -f $Owner
+                    $filterString = 'owner:"{0}"' -f $Owner
                 }
 
                 # ADD WITH GROUPING IF APPROPRIATE
-                if ($searchParams) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
-                else { $restParams.Body['filter'] = $queryString }
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $filterString }
+                else { $restParams.Body['filter'] = $filterString }
 
-                # SET SEARCH PARAMS ADDED
-                $searchParams = $true
+                # SET HAS FILTER PARAMETER
+                $hasFilter = $true
             }
             'Tag' {
                 # CHECK FOR MULTIPLE VALUES
                 if ($Tag.Count -GT 1) {
                     # ADD APPROPRIATE SYNTAX
-                    $queryString = foreach ($i in $Tag) { 'tags:"{0}"' -f $i }
+                    $filterString = foreach ($i in $Tag) { 'tags:"{0}"' -f $i }
 
                     # ADD GROUPING
-                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                    $filterString = '({0})' -f ($filterString -join ' OR ')
                 }
                 else {
                     # SET QUERY STRING TO SINGLE VALUE
-                    $queryString = 'tags:"{0}"' -f $Tag
+                    $filterString = 'tags:"{0}"' -f $Tag
                 }
 
                 # ADD WITH GROUPING IF APPROPRIATE
-                if ($searchParams) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
-                else { $restParams.Body['filter'] = $queryString }
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $filterString }
+                else { $restParams.Body['filter'] = $filterString }
 
-                # SET SEARCH PARAMS ADDED
-                $searchParams = $true
+                # SET HAS FILTER PARAMETER
+                $hasFilter = $true
             }
             'Type' {
                 # CHECK FOR MULTIPLE VALUES
                 if ($Type.Count -GT 1) {
                     # ADD APPROPRIATE SYNTAX
-                    $queryString = foreach ($i in $Type) { 'type:"{0}"' -f $i }
+                    $filterString = foreach ($i in $Type) { 'type:"{0}"' -f $i }
 
                     # ADD GROUPING
-                    $queryString = '({0})' -f ($queryString -join ' OR ')
+                    $filterString = '({0})' -f ($filterString -join ' OR ')
                 }
                 else {
                     # SET QUERY STRING TO SINGLE VALUE
-                    $queryString = 'type:"{0}"' -f $Type
+                    $filterString = 'type:"{0}"' -f $Type
                 }
 
                 # ADD WITH GROUPING IF APPROPRIATE
-                if ($searchParams) { $restParams.Body['filter'] += ' and {0}' -f $queryString }
-                else { $restParams.Body['filter'] = $queryString }
+                if ($hasFilter) { $restParams.Body['filter'] += ' and {0}' -f $filterString }
+                else { $restParams.Body['filter'] = $filterString }
 
-                # SET SEARCH PARAMS ADDED
-                $searchParams = $true
+                # SET HAS FILTER PARAMETER
+                $hasFilter = $true
             }
             'Title' {
                 # CHECK FOR MULTIPLE VALUES
@@ -196,7 +227,52 @@ function Find-PortalItem {
                     $queryString = 'title:"{0}"' -f $Title
                 }
 
-                $restParams.Body['q'] = $queryString
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($hasQ) { $restParams.Body['q'] += ' and {0}' -f $queryString }
+                else { $restParams.Body['q'] = $queryString }
+
+                # SET HAS QUERY PARAMETER
+                $hasQ = $true
+            }
+            'CreatedDateBegin' {
+                # CONVERT TO EPOCH MILISECONDS
+                $start = [System.DateTimeOffset]::new($CreatedDateBegin).ToUnixTimeMilliseconds()
+
+                # SET CREATED END DATE IF NOT PROVIDED
+                if (-Not $PSBoundParameters.ContainsKey('CreatedDateEnd')) { $CreatedDateEnd = Get-Date }
+
+                # SET NOW IN EPOCH
+                $end = [System.DateTimeOffset]::new($CreatedDateEnd).ToUnixTimeMilliseconds()
+
+                # SET QUERY STRING
+                $queryString = '(created:[{0} TO {1}])' -f $start, $end
+
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($hasQ) { $restParams.Body['q'] += ' and {0}' -f $queryString }
+                else { $restParams.Body['q'] = $queryString }
+
+                # SET HAS QUERY PARAMETER
+                $hasQ = $true
+            }
+            'ModifiedDateBegin' {
+                # CONVERT TO EPOCH MILISECONDS
+                $start = [System.DateTimeOffset]::new($ModifiedDateBegin).ToUnixTimeMilliseconds()
+
+                # SET MODIFIED END DATE IF NOT PROVIDED
+                if (-Not $PSBoundParameters.ContainsKey('ModifiedDateEnd')) { $ModifiedDateEnd = Get-Date }
+
+                # SET NOW IN EPOCH
+                $end = [System.DateTimeOffset]::new($ModifiedDateEnd).ToUnixTimeMilliseconds()
+
+                # SET QUERY STRING
+                $queryString = '(modified:[{0} TO {1}])' -f $start, $end
+
+                # ADD WITH GROUPING IF APPROPRIATE
+                if ($hasQ) { $restParams.Body['q'] += ' and {0}' -f $queryString }
+                else { $restParams.Body['q'] = $queryString }
+
+                # SET HAS QUERY PARAMETER
+                $hasQ = $true
             }
         }
 
@@ -229,7 +305,7 @@ function Find-PortalItem {
             if ($remainingItems -GT 0) {
 
                 do {
-
+                    # OUTPUT VERBOSE MESSAGE
                     Write-Verbose -Message ('Remaining items: {0}' -f $remainingItems)
 
                     # RESET START
