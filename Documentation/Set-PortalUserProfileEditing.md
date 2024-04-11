@@ -1,7 +1,7 @@
 # Set-PortalUserProfileEditing
 
 ## SYNOPSIS
-Short description
+Set the User Profile Editing setting of Portal for ArcGIS
 
 ## SYNTAX
 
@@ -11,7 +11,7 @@ Set-PortalUserProfileEditing [[-PortalId] <String>] [-DisableEditing] <Boolean> 
 ```
 
 ## DESCRIPTION
-Long description
+Set the User Profile Editing setting of Portal for ArcGIS
 
 ## EXAMPLES
 

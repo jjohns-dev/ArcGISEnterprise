@@ -108,5 +108,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### System.Object.
 ## NOTES
 General notes
+https://developers.arcgis.com/rest/users-groups-and-items/generate-token.htm
 
 ## RELATED LINKS

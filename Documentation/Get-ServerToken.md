@@ -142,4 +142,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 https://myDomain.com/arcgis/admin/login
 https://myDomain.com/arcgis/admin/generateToken
 
+https://developers.arcgis.com/rest/enterprise-administration/server/generatetoken.htm
+
 ## RELATED LINKS
