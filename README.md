@@ -45,7 +45,7 @@ Please see releases for updates and features
 | Get-PortalJobStatus | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/status` | Get Portal job status |
 | Get-PortalLicense | Portal | `[ADMIN]/license` | Get Portal license |
 | Get-PortalMachines | Portal | `[ADMIN]/machines` | Get Portal machines |
-| Get-PortalMachineStatus | Portal | `[ADMIN]/machiens/status/[MACHINENAME]` | Get Portal machine status |
+| Get-PortalMachineStatus | Portal | `[ADMIN]/machines/status/[MACHINENAME]` | Get Portal machine status |
 | Get-PortalOAuthAppInfo | Portal | `[ADMIN]/security/oauth/getAppInfo` | Get OAuth App Info |
 | Get-PortalOAuthToken | Portal | `[ROOT]/oauth2/token` | Get Portal OAuth token |
 | Get-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/roles` | Get Portal for ArcGIS Role |
