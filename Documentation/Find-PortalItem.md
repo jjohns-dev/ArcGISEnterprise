@@ -7,7 +7,9 @@ Search Portal for ArcGIS content
 
 ```
 Find-PortalItem [[-Id] <String[]>] [[-Owner] <String[]>] [[-Tag] <String[]>] [[-Type] <String[]>]
- [[-Title] <String[]>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+ [[-Title] <String[]>] [[-CreatedDateBegin] <DateTime>] [[-CreatedDateEnd] <DateTime>]
+ [[-ModifiedDateBegin] <DateTime>] [[-ModifiedDateEnd] <DateTime>] [-Context] <Uri> [-Token] <String>
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -98,6 +100,66 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -CreatedDateBegin
+Created date begin
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CreatedDateEnd
+Created date end
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ModifiedDateBegin
+Modified date begin
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 8
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ModifiedDateEnd
+Modified date end
+
+```yaml
+Type: DateTime
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 9
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
 Portal context (e.g., https://arcgis.com/arcgis)
 
@@ -107,7 +169,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 6
+Position: 10
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -122,7 +184,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 7
+Position: 11
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -155,8 +217,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Find-PortalItem
 Author:   Justin Johns
-Version:  0.1.2 | Last Edit: 2024-03-29
-- 0.1.2 - (2024-03-29) Renamed function, switch to filter rather than q (query), add support for multiple values
+Version:  0.1.2 | Last Edit: 2024-04-02
+- 0.1.2 - (2024-04-02) Renamed function, switch to filter rather than q (query), add support for multiple values
 - 0.1.1 - (2023-03-21) Removed raw query
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>

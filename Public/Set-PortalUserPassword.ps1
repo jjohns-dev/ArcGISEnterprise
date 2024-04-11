@@ -1,9 +1,9 @@
 function Set-PortalUserPassword {
     <#
     .SYNOPSIS
-        Set Portal for ArcGIS PSA Account
+        Set password for Portal user
     .DESCRIPTION
-        Set Portal for ArcGIS PSA Account
+        Set password for Portal user
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Credential
@@ -25,6 +25,7 @@ function Set-PortalUserPassword {
         - 0.2.0 - Renamed cmdlet to Set-PortalUserPassword
         - 0.1.0 - Initial version (Update-PortalPSA)
         General notes:
+        https://developers.arcgis.com/rest/users-groups-and-items/update-user.htm
     #>
     [CmdletBinding()]
     [Alias('Update-PortalPSA')]

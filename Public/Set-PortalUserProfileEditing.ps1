@@ -1,9 +1,9 @@
 function Set-PortalUserProfileEditing {
     <#
     .SYNOPSIS
-        Short description
+        Set the User Profile Editing setting of Portal for ArcGIS
     .DESCRIPTION
-        Long description
+        Set the User Profile Editing setting of Portal for ArcGIS
     .PARAMETER DisableEditing
         Portal User Profile Editing
     .PARAMETER PortalId

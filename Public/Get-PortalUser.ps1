@@ -19,6 +19,7 @@ function Get-PortalUser {
         Get user 'joe' from Portal
     .NOTES
         General notes
+        https://developers.arcgis.com/rest/users-groups-and-items/user.htm
     #>
     [CmdletBinding()]
     Param(

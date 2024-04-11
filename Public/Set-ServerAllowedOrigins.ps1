@@ -32,6 +32,7 @@ function Set-ServerAllowedOrigins {
         - 0.1.0 - Initial version
         General notes
         https://developers.arcgis.com/rest/enterprise-administration/server/edit-soap-handler-config.htm
+        https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit.htm
     #>
     [CmdletBinding()]
     Param(

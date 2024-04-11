@@ -118,5 +118,6 @@ Version:  0.1.4 | Last Edit: 2023-05-10
 - 0.1.0 - Initial version
 General notes
 https://developers.arcgis.com/rest/enterprise-administration/server/edit-soap-handler-config.htm
+https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit.htm
 
 ## RELATED LINKS

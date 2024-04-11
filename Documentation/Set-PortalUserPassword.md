@@ -1,7 +1,7 @@
 # Set-PortalUserPassword
 
 ## SYNOPSIS
-Set Portal for ArcGIS PSA Account
+Set password for Portal user
 
 ## SYNTAX
 
@@ -11,7 +11,7 @@ Set-PortalUserPassword [-Context] <Uri> [-Credential] <PSCredential> [-NewPasswo
 ```
 
 ## DESCRIPTION
-Set Portal for ArcGIS PSA Account
+Set password for Portal user
 
 ## EXAMPLES
 
@@ -85,5 +85,6 @@ Version:  0.2.1 | Last Edit: 2023-12-04
 - 0.2.0 - Renamed cmdlet to Set-PortalUserPassword
 - 0.1.0 - Initial version (Update-PortalPSA)
 General notes:
+https://developers.arcgis.com/rest/users-groups-and-items/update-user.htm
 
 ## RELATED LINKS

@@ -117,5 +117,6 @@ Version:  0.1.2 | Last Edit: 2023-01-05
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 General notes
+https://developers.arcgis.com/rest/enterprise-administration/portal/update-security-configuration.htm
 
 ## RELATED LINKS

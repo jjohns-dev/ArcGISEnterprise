@@ -21,6 +21,7 @@ function Get-PortalToken {
         Generate token for mydomain.com
     .NOTES
         General notes
+        https://developers.arcgis.com/rest/users-groups-and-items/generate-token.htm
     #>
     [CmdletBinding()]
     Param(

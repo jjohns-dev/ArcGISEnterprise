@@ -1,9 +1,9 @@
 function Set-PortalPublicSharing {
     <#
     .SYNOPSIS
-        Short description
+        Set the Public Sharing setting of Portal
     .DESCRIPTION
-        Long description
+        Set the Public Sharing setting of Portal
     .PARAMETER SharePublicly
         Share objects publicly
     .PARAMETER PortalId

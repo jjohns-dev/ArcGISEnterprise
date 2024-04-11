@@ -19,6 +19,7 @@ function Get-PortalLicense {
         Get license information from Portal
     .NOTES
         General notes
+        https://developers.arcgis.com/rest/enterprise-administration/portal/license.htm
     #>
     [CmdletBinding()]
     Param(

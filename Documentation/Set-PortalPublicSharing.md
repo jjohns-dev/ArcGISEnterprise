@@ -1,7 +1,7 @@
 # Set-PortalPublicSharing
 
 ## SYNOPSIS
-Short description
+Set the Public Sharing setting of Portal
 
 ## SYNTAX
 
@@ -11,7 +11,7 @@ Set-PortalPublicSharing [[-PortalId] <String>] [-SharePublicly] <Boolean> [-Cont
 ```
 
 ## DESCRIPTION
-Long description
+Set the Public Sharing setting of Portal
 
 ## EXAMPLES
 

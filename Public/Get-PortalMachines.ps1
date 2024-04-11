@@ -19,6 +19,7 @@ function Get-PortalMachines {
         Get user from Portal
     .NOTES
         General notes
+        https://developers.arcgis.com/rest/enterprise-administration/portal/machines.htm
     #>
     [CmdletBinding()]
     Param(

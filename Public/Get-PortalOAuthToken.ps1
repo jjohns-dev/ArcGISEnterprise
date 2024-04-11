@@ -19,6 +19,7 @@ function Get-PortalOAuthToken {
         Get OAuth token for Portal application
     .NOTES
         General notes
+        https://developers.arcgis.com/rest/users-groups-and-items/token.htm
     #>
     [CmdletBinding()]
     Param(

@@ -29,6 +29,8 @@ function Get-ServerToken {
         -- SERVER ENDPONITS --
         https://myDomain.com/arcgis/admin/login
         https://myDomain.com/arcgis/admin/generateToken
+
+        https://developers.arcgis.com/rest/enterprise-administration/server/generatetoken.htm
     #>
     [CmdletBinding()]
     Param(
