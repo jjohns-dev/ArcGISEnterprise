@@ -22,6 +22,7 @@ Please see releases for updates and features
 | Component | Name | Path |
 | --------- | ---- | ---- |
 | Portal | ROOT | `/sharing/rest` |
+| Portal | ADMIN | `/portaladmin` |
 | Server | ROOT | `/rest/services` |
 | Server | RADMIN | `/rest/admin` |
 | Server | ADMIN | `/admin` |
@@ -30,16 +31,33 @@ Please see releases for updates and features
 
 | Function | Component | API Endpoint | Description |
 | -------- | --------- | ------------ | ----------- |
-| Add-ServerHostedFeatureServiceRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/addFeatures` | Appends data to table in Hosted Feature Service |
+| Add-PortalOAuthRedirectURI | Portal | `[ADMIN]/security/oauth/updateAppInfo` | Add redirect URI to Portal OAuth app |
+| Add-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/addFeatures` | Appends data to table in Hosted Feature Service |
 | Clear-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Edit-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
 | Find-PortalItem | Portal | `[ROOT]/search` | Returns Portal item based on search criteria |
+| Get-PortalAllowedOrigins | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |
 | Get-PortalDataStoreServer | Portal | `[ROOT]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |
+| Get-PortalDefaultUserSettings | Portal | `[ROOT]/portals/[PORTALID]/userDefaultSettings` | Get default user settings from Portal |
+| Get-PortalGroupUserList | Portal | `[ROOT]/community/groups/[GROUPID]/userList` | Get users from group in Portal for ArcGIS |
+| Get-PortalIndexStatus | Portal | `[ADMIN]/system/indexer/status` | Get Portal index status |
+| Get-PortalItem | Portal | `[ROOT]/content/items/[ITEMID]` | Get Portal item |
 | Get-PortalJobStatus | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/status` | Get Portal job status |
+| Get-PortalLicense | Portal | `[ADMIN]/license` | Get Portal license |
+| Get-PortalMachines | Portal | `[ADMIN]/machines` | Get Portal machines |
+| Get-PortalMachineStatus | Portal | `[ADMIN]/machiens/status/[MACHINENAME]` | Get Portal machine status |
+| Get-PortalOAuthAppInfo | Portal | `[ADMIN]/security/oauth/getAppInfo` | Get OAuth App Info |
+| Get-PortalOAuthToken | Portal | `[ROOT]/oauth2/token` | Get Portal OAuth token |
+| Get-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/roles` | Get Portal for ArcGIS Role |
+| Get-PortalSecurityConfig | Portal |   `[ADMIN]/security/config` | Get Portal security configuration |
+| Get-PortalSecurityPolicy | Portal | `[ROOT]/portals/[PORTALID]/securityPolicy` | Get Portal security policy |
+| Get-PortalSettings | Portal | `[ROOT]/portals/[PORTALID]` | Get Portal configuration or "self" |
+| Get-PortalToken | Portal | `[ROOT]/generateToken` | Generate token for ArcGIS Portal |
+| Get-PortalUser | Portal | `[ROOT]/community/users/[USERNAME]` | Get Portal user |
 | Get-PortalUserFolderList | Portal | `[ROOT]/content/users/[USERNAME]` | Gets list of folders owned by user in Portal |
 | Get-PortalUserGroupList | Portal | `[ROOT]/community/groups` | Search for groups owned by specified user. Additional options available |
-| Get-PortalItem | Portal | `[ROOT]/content/items/[ITEMID]` | Get Portal item |
 | Get-PortalUserItemList | Portal | `[ROOT]/search` | Search Portal. Additional options available |
+| Get-PortalUserList | Portal | `[ROOT]/portals/[PORTALID]/users` | Get list of all Portal users |
 | Get-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/soap/soaphandlerconfig` | Get allowed origins for Server |
 | Get-ServerLicense | Server | `[ADMIN]/system/licenses` | Get Server license info |
 | Get-ServerPSA | Server | `[ADMIN]/security/psa` | Get Server PSA account |
@@ -47,6 +65,7 @@ Please see releases for updates and features
 | Get-ServerServiceItemInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/iteminfo` | Get service item info from admin endpoint |
 | Get-ServerServicesDirectory | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Get service directory from admin endpoint |
 | Get-ServerSetting | Server | `/[SETTINGSURL]` | Get Server settings from admin endpoint |
+| Get-ServerToken | Server | `[ADMIN]/generateToken` | Generate token for ArcGIS Server |
 | Get-ServerServiceFieldInfo | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]` | Get service field info |
 | Get-ServerServiceList | Server | `[ROOT]` and `[ADMIN]/services` | Get list of services in ArcGIS Server |
 | Get-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer` | Gets Hosted Feature Service |
@@ -55,6 +74,7 @@ Please see releases for updates and features
 | Invoke-ServerHostedFeatureQuery | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query feature service layer. Additional options available |
 | Move-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/moveItems` | Move Portal item to folder |
 | New-PortalHostedFeatureService | Portal | `[ROOT]/content/users/[USERNAME]/createService` | Creates new Hosted Feature Service |
+| New-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/createRole` | Create new Role in Portal for ArcGIS |
 | New-PortalUserFolder | Portal | `[ROOT]/content/users/[USERNAME]/createFolder` | Creates new folder in Portal |
 | New-PortalUserGroup | Portal | `[ROOT]/community/createGroup` | Create new Portal user group |
 | New-ServerFolder | Server | `[ADMIN]/services/createFolder` | Create a new folder in ArcGIS Server |
@@ -62,12 +82,26 @@ Please see releases for updates and features
 | Publish-PortalCsvItemAsTable | Portal | `[ROOT]/content/users/[USERNAME]/publish` | Publish CSV item (Portal item) as Hosted Table. Additional options available |
 | Publish-PortalDataStoreLayer | Portal | `[ROOT]portals/[PORTALID]/datastores/allDatasets/publishLayers` | Publish on map layer and one feature layer from dataset in DataStore |
 | Remove-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
+| Remove-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/roles/[ROLEID]/delete` | Remove Role in Portal for ArcGIS |
 | Remove-PortalUserGroup | Portal | `[ROOT]/community/groups/[GROUPID]/delete` | Delete Portal user group |
 | Remove-ServerFolder | Server | `[ADMIN]/services/[FOLDERNAME]/deleteFolder` | Deletes folder in ArcGIS Server and all services in folder |
 | Remove-ServerService | Server | `[ADMIN]/services/deleteServices` | Deletes ArcGIS Server Service |
 | Remove-ServerServiceLayer | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
 | Revoke-PortalUserItemAccess | Portal | `[ROOT]/content/users/[USERNAME]/unshareItems` | Unshare Portal item |
+| Set-PortalAllowedOrigins | Portal | `[ROOT]/portals/[PORTALID]/update` | Set the allowed origins property for Portal |
+| Set-PortalDefaultUserLicenseType | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User License Type in Portal |
+| Set-PortalDefaultUserRole | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User Role in Portal |
+| Set-PortalProxyHosts | Portal | `[ADMIN]/security/config/update` | Set Portal security configuration |
+| Set-PortalPublicSharing | Portal | `[ROOT]/portals/[PORTALID]/update` | Set the Public Sharing setting of Portal for ArcGIS |
+| Set-PortalRolePrivilege | Portal | `[ROOT]/portals/[PORTALID]` | Set privilege for Portal for ArcGIS Role |
+| Set-PortalUserPassword | Portal | `[ROOT]/community/users/[USERNAME]/update` | Set password for Portal user |
+| Set-PortalUserProfileEditing | Portal | `[ROOT]/portals/[PORTALID]/update` | Set the User Profile Editing setting of Portal for ArcGIS |
+| Set-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Set ArcGIS Server allowed origins |
+| Set-ServerPSAPassword | Server | `[ADMIN]/security/psa/update` | Set ArcGIS Server PSA Account |
 | Test-PortalDataStore | Portal | `[ROOT]/sharing/rest/portals/[PORTALID]/datastores/validate` | Validates connection between Data Store and ArcGIS Server |
+| Test-PortalDataStore | Portal | `[ROOT]/portals/[PORTALID]/datastores/validate` | Validates Data Store connection |
+| Test-PortalFederation | Portal | `[ADMIN]/federation/servers/validate` | Validate Portal federation status |
+| Test-ServerHealth | Server | `/rest/info/healthCheck` | Validates ArcGIS Server health |
 | Write-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/addItem` | Uploads a Portal item (file item) |
 
 ## Potential Future Functions

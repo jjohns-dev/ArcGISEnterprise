@@ -31,6 +31,7 @@ function Set-PortalProxyHosts {
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         General notes
+        https://developers.arcgis.com/rest/enterprise-administration/portal/update-security-configuration.htm
     #>
     [CmdletBinding()]
     Param(

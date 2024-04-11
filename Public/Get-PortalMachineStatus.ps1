@@ -21,6 +21,7 @@ function Get-PortalMachineStatus {
         Get status of Portal system
     .NOTES
         General notes
+        https://developers.arcgis.com/rest/enterprise-administration/portal/status.htm
     #>
     [CmdletBinding()]
     Param(

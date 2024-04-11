@@ -21,6 +21,7 @@ function Get-PortalSecurityPolicy {
         Get security policy for Portal user
     .NOTES
         General notes
+        https://developers.arcgis.com/rest/users-groups-and-items/security-policy.htm
     #>
     [CmdletBinding()]
     [Alias('Get-SecurityPolicy')]

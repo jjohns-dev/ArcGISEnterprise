@@ -21,6 +21,7 @@ function Set-PortalAllowedOrigins {
         Sets the allowed origins property to 'https://arcgis.com,https://test.com'
     .NOTES
         General notes
+        https://developers.arcgis.com/rest/users-groups-and-items/update.htm
     #>
     [CmdletBinding()]
     Param(

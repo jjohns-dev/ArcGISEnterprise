@@ -19,6 +19,7 @@ function Get-PortalIndexStatus {
         Get status of Portal indexes
     .NOTES
         General notes
+        https://developers.arcgis.com/rest/enterprise-administration/portal/indexer-status.htm
     #>
     [CmdletBinding()]
     Param(

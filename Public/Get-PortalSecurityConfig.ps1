@@ -19,6 +19,7 @@ function Get-PortalSecurityConfig {
         Get security configuration from Portal
     .NOTES
         General notes
+        https://developers.arcgis.com/rest/enterprise-administration/portal/security-configuration.htm
     #>
     [CmdletBinding()]
     Param(
