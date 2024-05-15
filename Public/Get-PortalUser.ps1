@@ -23,11 +23,11 @@ function Get-PortalUser {
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(Mandatory, HelpMessage = 'Portal username')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal username')]
         [ValidatePattern('^[\w\.@-]+$')]
         [System.String] $Username,
 

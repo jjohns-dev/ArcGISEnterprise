@@ -26,14 +26,13 @@ function Remove-PortalItem {
     .NOTES
         Name:     Remove-PortalItem
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-07
-        - 0.1.0 - Initial version
+        Version:  0.1.1 | Last Edit: 2024-05-15
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/delete-item.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Owner of Hosted Feature Service')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Owner of Hosted Feature Service')]
         [ValidateNotNullOrEmpty()]
         [System.String] $UserName,
 
@@ -57,6 +56,22 @@ function Remove-PortalItem {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # VALIDATE USER NAME
+        if (-Not $PSBoundParameters.ContainsKey('UserName')) {
+            try {
+                # GET USER PORTAL INFO
+                Write-Verbose -Message 'Getting user settings...'
+                $userSettings = Get-PortalSettings -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
+
+                # SET USER NAME
+                $UserName = $userSettings.user.username
+            }
+            catch {
+                # PASS ERROR
+                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+            }
+        }
     }
     Process {
         # UPDATE NAME PROPERTY IN TEMPLATE

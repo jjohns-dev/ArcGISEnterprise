@@ -4,7 +4,7 @@ function New-PortalUserFolder {
         Creates a new folder in Portal for the specified user
     .DESCRIPTION
         Creates a new folder in Portal for the specified user
-    .PARAMETER Username
+    .PARAMETER UserName
         Username
     .PARAMETER Title
         Title of new folder
@@ -34,7 +34,7 @@ function New-PortalUserFolder {
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
-        [System.String] $Username,
+        [System.String] $UserName,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Title of new folder')]
         [ValidateNotNullOrEmpty()]
