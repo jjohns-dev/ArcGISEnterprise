@@ -42,7 +42,7 @@ function Format-CsvHeader {
         $headers = $content.Split(',')
 
         # CREATE NEW, SANITIZED HEADERS
-        $newHeaders = foreach ($h in $headers) { $h.ToLower().Replace(' ', '_') }
+        $newHeaders = foreach ($h in $headers) { $h.Trim().ToLower().Replace(' ', '_') }
 
         # CHECK FOR KEEP HEADERS
         if ($KeepHeaders) {
