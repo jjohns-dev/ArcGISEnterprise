@@ -73,6 +73,7 @@
         'ConvertFrom-ArcGISLog'
         'ConvertFrom-Epoch'
         'Edit-ServerHostedFeatureRecord'
+        'Format-CsvHeader'
         'Get-PortalAllowedOrigins'
         'Get-PortalDataStoreServer'
         'Get-PortalDefaultUserSettings'
