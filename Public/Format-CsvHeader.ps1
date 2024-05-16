@@ -1,0 +1,57 @@
+function Format-CsvHeader {
+    <#
+    .SYNOPSIS
+        Clean CSV data headers
+    .DESCRIPTION
+        Cleans or sanitizes CSV data headers by converting to lowercase and replacing spaces with underscores
+    .PARAMETER Path
+        CSV file path
+    .PARAMETER KeepHeaders
+        Keep original headers
+    .INPUTS
+        None.
+    .OUTPUTS
+        System.Object.
+    .EXAMPLE
+        PS C:\> Format-CsvHeader -Path C:\temp\file.csv
+        Sanitizes headers and returns data as array of objects
+    .NOTES
+        Name:     Format-CsvHeader
+        Author:   Justin Johns
+        Version:  0.1.0 | Last Edit: 2024-05-15
+        Comments: <Comment(s)>
+    #>
+    [CmdletBinding()]
+    Param(
+        [Parameter(Mandatory = $true, Position = 0, HelpMessage = 'CSV file path')]
+        [ValidateScript({ Test-Path -Path $_ -PathType Leaf -Filter '*.csv' })]
+        [System.String] $Path,
+
+        [Parameter(HelpMessage = 'Keep original headers')]
+        [System.Management.Automation.SwitchParameter] $KeepHeaders
+    )
+    Begin {
+        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+    }
+    Process {
+        # GET FILE CONTENT
+        $content = Get-Content -Path $Path -TotalCount 1
+        #$content = [System.Collections.Generic.List[System.Object]]::new((Get-Content -Path $file.FullName))
+
+        # GET CSV DATA HEADERS - USING "Get-Member" REORDERS THE HEADERS BOO!!!
+        $headers = $content.Split(',')
+
+        # CREATE NEW, SANITIZED HEADERS
+        $newHeaders = foreach ($h in $headers) { $h.Trim().ToLower().Replace(' ', '_') }
+
+        # CHECK FOR KEEP HEADERS
+        if ($KeepHeaders) {
+            # IMPORT DATA AGAIN WITH NEW HEADERS, KEEPING OLD HEADERS
+            Import-Csv -Path $Path -Header $newHeaders
+        }
+        else {
+            # IMPORT DATA AGAIN WITH NEW HEADERS, SKIPPING OLD HEADERS
+            Import-Csv -Path $Path -Header $newHeaders | Select-Object -Skip 1
+        }
+    }
+}

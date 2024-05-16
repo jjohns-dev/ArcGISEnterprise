@@ -6,7 +6,7 @@ Creates a new folder in Portal for the specified user
 ## SYNTAX
 
 ```
-New-PortalUserFolder [[-Username] <String>] [-Title] <String> [-Context] <Uri> [-Token] <String>
+New-PortalUserFolder [[-UserName] <String>] [-Title] <String> [-Context] <Uri> [-Token] <String>
  [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
@@ -23,7 +23,7 @@ Creates a folder titled 'NewFolder' in Portal for the user 'jsmith'.
 
 ## PARAMETERS
 
-### -Username
+### -UserName
 Username
 
 ```yaml
