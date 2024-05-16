@@ -6,7 +6,7 @@ Delete Portal Item
 ## SYNTAX
 
 ```
-Remove-PortalItem [-UserName] <String> [-ItemId] <String> [[-Force] <Boolean>] [-Context] <Uri>
+Remove-PortalItem [[-UserName] <String>] [-ItemId] <String> [[-Force] <Boolean>] [-Context] <Uri>
  [-Token] <String> [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
@@ -32,7 +32,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False
@@ -157,8 +157,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Remove-PortalItem
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-07
-- 0.1.0 - Initial version
+Version:  0.1.1 | Last Edit: 2024-05-15
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/users-groups-and-items/delete-item.htm
 
