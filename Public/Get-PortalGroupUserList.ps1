@@ -22,28 +22,27 @@ function Get-PortalGroupUserList {
     .NOTES
         Name:     Get-PortalGroupUserList
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2023-03-20
-        - 0.1.1 - Added automatic retrieval of paginated data
-        - 0.1.0 - Initial version
+        Version:  0.1.2 | Last Edit: 2024-05-28
+        - Version history is capture in repository commit history
         Comments: <Comment(s)>
         General notes
         https://developers.arcgis.com/rest/users-groups-and-items/group-users-list.htm
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory, HelpMessage = 'Group ID')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]
         [System.String] $GroupID,
 
-        [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(Mandatory, HelpMessage = 'Portal token')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
-        [Parameter(HelpMessage = 'Skip SSL certificate check')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
