@@ -45,8 +45,10 @@ function Get-PortalToken {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Process {
+        # SET REFERER IF NOT PROVIDED
         $Referer = if ($PSBoundParameters.ContainsKey('Referer')) { $Referer } else { '{0}://{1}' -f $Context.Scheme, $Context.Authority }
 
+        # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/generateToken' -f $Context
             Method = "POST"
@@ -60,10 +62,13 @@ function Get-PortalToken {
             }
         }
 
+        # ADD SKIP FOR TLS CERTIFICATE VERIFICATION
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
+        # OUTPUT VERBOSE
         Write-Verbose -Message ('Referer: {0}' -f $restParams['Body']['referer'])
 
+        # TRY REQUEST
         try { $response = Invoke-RestMethod @restParams }
         catch { $response = $_.Exception.Response }
 
