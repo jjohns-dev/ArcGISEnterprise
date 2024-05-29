@@ -26,7 +26,6 @@ function Get-PortalToken {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal URI including context (e.g., https://arcgis.com/arcgis)')]
-        #[Alias('Uri')]
         [ValidateScript({ $_.OriginalString -match $context_regex })]
         [System.Uri] $Context,
 
@@ -35,6 +34,7 @@ function Get-PortalToken {
         [System.Management.Automation.PSCredential] $Credential,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Referer')]
+        [ValidateNotNullOrEmpty()]
         [System.String] $Referer,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Token expiration time in minutes')]
