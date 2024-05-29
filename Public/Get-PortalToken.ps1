@@ -25,23 +25,23 @@ function Get-PortalToken {
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory, HelpMessage = 'Portal URI including context (e.g., https://arcgis.com/arcgis)')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal URI including context (e.g., https://arcgis.com/arcgis)')]
         #[Alias('Uri')]
         [ValidateScript({ $_.OriginalString -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(Mandatory, HelpMessage = 'PS Credential object containing username and password')]
+        [Parameter(Mandatory = $true, HelpMessage = 'PS Credential object containing username and password')]
         [ValidateNotNullOrEmpty()]
         [System.Management.Automation.PSCredential] $Credential,
 
-        [Parameter(HelpMessage = 'Referer')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Referer')]
         [System.String] $Referer,
 
-        [Parameter(HelpMessage = 'Token expiration time in minutes')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Token expiration time in minutes')]
         [ValidateRange(1,900)]
         [System.Int32] $Expiration = 60,
 
-        [Parameter(HelpMessage = 'Skip SSL certificate check')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Process {
@@ -51,7 +51,7 @@ function Get-PortalToken {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/generateToken' -f $Context
-            Method = "POST"
+            Method = 'POST'
             Body   = @{
                 username   = $Credential.UserName
                 password   = $Credential.GetNetworkCredential().password
