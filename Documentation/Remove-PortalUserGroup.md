@@ -6,8 +6,8 @@ Delete Portal user group
 ## SYNTAX
 
 ```
-Remove-PortalUserGroup [-GroupId] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
- [<CommonParameters>]
+Remove-PortalUserGroup [-GroupId] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [-WhatIf]
+ [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -83,6 +83,37 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -95,8 +126,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Remove-PortalUserGroup
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-22
-- 0.1.0 - Initial version
+Version:  0.1.1 | Last Edit: 2024-05-30
+- Version history is capture in repository commit history
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/users-groups-and-items/delete-group.htm
 

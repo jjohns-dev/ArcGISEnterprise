@@ -22,12 +22,12 @@ function Remove-ServerFolder {
     .NOTES
         Name:     Remove-ServerFolder
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-21
-        - 0.1.0 - Initial version
+        Version:  0.1.1 | Last Edit: 2024-05-30
+        - Version history is capture in repository commit history
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/enterprise-administration/server/deletefolder.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'New ArcGIS Server folder name')]
         [ValidatePattern('^\w{1,30}$')]
@@ -58,7 +58,10 @@ function Remove-ServerFolder {
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        # SHOULD PROCESS
+        if ($PSCmdlet.ShouldProcess($FolderName, ('Delete Server folder'))) {
+            # INVOKE REQUEST
+            Invoke-RestMethod @restParams
+        }
     }
 }
