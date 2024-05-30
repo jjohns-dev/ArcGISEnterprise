@@ -85,6 +85,7 @@ Please see releases for updates and features
 | Publish-PortalDataStoreLayer | Portal | `[ROOT]portals/[PORTALID]/datastores/allDatasets/publishLayers` | Publish on map layer and one feature layer from dataset in DataStore |
 | Remove-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
 | Remove-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/roles/[ROLEID]/delete` | Remove Role in Portal for ArcGIS |
+| Remove-PortalUser | Portal | `[ROOT]/sharing/rest/portals/[PORTALID]/removeUsers` | Deletes Portal user |
 | Remove-PortalUserFromGroup | Portal | `[ROOT]/community/groups/[GROUPID]/removeUsers` | Remove Portal user from group |
 | Remove-PortalUserGroup | Portal | `[ROOT]/community/groups/[GROUPID]/delete` | Delete Portal user group |
 | Remove-ServerFolder | Server | `[ADMIN]/services/[FOLDERNAME]/deleteFolder` | Deletes folder in ArcGIS Server and all services in folder |
