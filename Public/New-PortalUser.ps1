@@ -38,7 +38,7 @@ function New-PortalUser {
     .NOTES
         Name:     New-PortalUser
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-05-29
+        Version:  0.1.0 | Last Edit: 2024-05-30
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/create-user/
@@ -137,7 +137,7 @@ function New-PortalUser {
         }
 
         # OUTPUT VERBOSE
-        Write-Verbose -Message ('Request parameters: {0}' -f ($restParams.Body | Out-String))
+        Write-Verbose -Message ('Provider: {0}' -f $restParams.Body['provider'])
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
