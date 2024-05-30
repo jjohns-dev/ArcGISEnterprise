@@ -24,12 +24,12 @@ function Remove-PortalUserFromGroup {
     .NOTES
         Name:     Remove-PortalUserFromGroup
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-05-28
+        Version:  0.1.0 | Last Edit: 2024-05-30
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/remove-users-from-group/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]
@@ -68,7 +68,10 @@ function Remove-PortalUserFromGroup {
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        # SHOULD PROCESS
+        if ($PSCmdlet.ShouldProcess($UserName, ('Remove user from group "{0}"' -f $GroupID))) {
+            # INVOKE REQUEST
+            Invoke-RestMethod @restParams
+        }
     }
 }
