@@ -73,6 +73,7 @@ Please see releases for updates and features
 | Grant-PortalUserItemAccess | Portal | `[ROOT]/content/users/[USERNAME]/shareItems` | Share Portal item |
 | Invoke-PortalItemAnalysis | Portal | `[ROOT]/content/features/analyze` | Analyze file prior to publishing |
 | Invoke-ServerHostedFeatureQuery | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query feature service layer. Additional options available |
+| New-PortalUser | Portal | `[ADMIN]/security/users/createUser` | Create new Portal user |
 | Move-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/moveItems` | Move Portal item to folder |
 | New-PortalHostedFeatureService | Portal | `[ROOT]/content/users/[USERNAME]/createService` | Creates new Hosted Feature Service |
 | New-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/createRole` | Create new Role in Portal for ArcGIS |

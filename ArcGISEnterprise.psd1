@@ -114,6 +114,7 @@
         'Move-PortalUserItem'
         'New-PortalHostedFeatureService'
         'New-PortalRole'
+        'New-PortalUser'
         'New-PortalUserFolder'
         'New-PortalUserGroup'
         'New-ServerFolder'
