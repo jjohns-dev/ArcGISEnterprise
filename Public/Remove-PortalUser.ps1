@@ -30,7 +30,7 @@ function Remove-PortalUser {
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/remove-users-portal/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
@@ -72,7 +72,10 @@ function Remove-PortalUser {
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        # SHOULD PROCESS
+        if ($PSCmdlet.ShouldProcess($UserName, ('Delete user'))) {
+            # INVOKE REQUEST
+            Invoke-RestMethod @restParams
+        }
     }
 }
