@@ -32,6 +32,7 @@ Please see releases for updates and features
 | Function | Component | API Endpoint | Description |
 | -------- | --------- | ------------ | ----------- |
 | Add-PortalOAuthRedirectURI | Portal | `[ADMIN]/security/oauth/updateAppInfo` | Add redirect URI to Portal OAuth app |
+| Add-PortalUserToGroup | Portal | `[ROOT]/community/groups/[GROUPID]/addUsers` | Add Portal user to Portal group |
 | Add-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/addFeatures` | Appends data to table in Hosted Feature Service |
 | Clear-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Edit-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
@@ -49,7 +50,7 @@ Please see releases for updates and features
 | Get-PortalOAuthAppInfo | Portal | `[ADMIN]/security/oauth/getAppInfo` | Get OAuth App Info |
 | Get-PortalOAuthToken | Portal | `[ROOT]/oauth2/token` | Get Portal OAuth token |
 | Get-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/roles` | Get Portal for ArcGIS Role |
-| Get-PortalSecurityConfig | Portal |   `[ADMIN]/security/config` | Get Portal security configuration |
+| Get-PortalSecurityConfig | Portal | `[ADMIN]/security/config` | Get Portal security configuration |
 | Get-PortalSecurityPolicy | Portal | `[ROOT]/portals/[PORTALID]/securityPolicy` | Get Portal security policy |
 | Get-PortalSettings | Portal | `[ROOT]/portals/[PORTALID]` | Get Portal configuration or "self" |
 | Get-PortalToken | Portal | `[ROOT]/generateToken` | Generate token for ArcGIS Portal |
@@ -72,6 +73,7 @@ Please see releases for updates and features
 | Grant-PortalUserItemAccess | Portal | `[ROOT]/content/users/[USERNAME]/shareItems` | Share Portal item |
 | Invoke-PortalItemAnalysis | Portal | `[ROOT]/content/features/analyze` | Analyze file prior to publishing |
 | Invoke-ServerHostedFeatureQuery | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query feature service layer. Additional options available |
+| New-PortalUser | Portal | `[ADMIN]/security/users/createUser` | Create new Portal user |
 | Move-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/moveItems` | Move Portal item to folder |
 | New-PortalHostedFeatureService | Portal | `[ROOT]/content/users/[USERNAME]/createService` | Creates new Hosted Feature Service |
 | New-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/createRole` | Create new Role in Portal for ArcGIS |
@@ -83,6 +85,8 @@ Please see releases for updates and features
 | Publish-PortalDataStoreLayer | Portal | `[ROOT]portals/[PORTALID]/datastores/allDatasets/publishLayers` | Publish on map layer and one feature layer from dataset in DataStore |
 | Remove-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
 | Remove-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/roles/[ROLEID]/delete` | Remove Role in Portal for ArcGIS |
+| Remove-PortalUser | Portal | `[ROOT]/sharing/rest/portals/[PORTALID]/removeUsers` | Deletes Portal user |
+| Remove-PortalUserFromGroup | Portal | `[ROOT]/community/groups/[GROUPID]/removeUsers` | Remove Portal user from group |
 | Remove-PortalUserGroup | Portal | `[ROOT]/community/groups/[GROUPID]/delete` | Delete Portal user group |
 | Remove-ServerFolder | Server | `[ADMIN]/services/[FOLDERNAME]/deleteFolder` | Deletes folder in ArcGIS Server and all services in folder |
 | Remove-ServerService | Server | `[ADMIN]/services/deleteServices` | Deletes ArcGIS Server Service |
