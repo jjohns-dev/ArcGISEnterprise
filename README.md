@@ -106,6 +106,7 @@ Please see releases for updates and features
 | Test-PortalDataStore | Portal | `[ROOT]/portals/[PORTALID]/datastores/validate` | Validates Data Store connection |
 | Test-PortalFederation | Portal | `[ADMIN]/federation/servers/validate` | Validate Portal federation status |
 | Test-ServerHealth | Server | `/rest/info/healthCheck` | Validates ArcGIS Server health |
+| Update-PortalUser | Portal | `[ROOT]/community/users/[USERNAME]/update` | Update Portal user properties |
 | Write-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/addItem` | Uploads a Portal item (file item) |
 
 ## Potential Future Functions
