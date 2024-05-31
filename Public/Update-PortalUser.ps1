@@ -159,13 +159,17 @@ function Update-PortalUser {
         # OUTPUT VERBOSE
         Write-Verbose -Message ('Set provider: [{0}]' -f $restParams.Body['provider'])
 
-        # DELETE THIS BEFORE MERGING PR
-        Write-Verbose -Message ('Request parameters: {0}' -f ($restParams.Body | Out-String))
+        # BE SURE TO DELETE OR COMMENT THIS BEFORE MERGING PR
+        #Write-Verbose -Message ('Request parameters: {0}' -f ($restParams.Body | Out-String))
 
         # SHOULD PROCESS
         if ($PSCmdlet.ShouldProcess($UserName, ('Update Portal user'))) {
             # INVOKE REQUEST
             Invoke-RestMethod @restParams
         }
+    }
+    Clean {
+        # REMOVE SECRETS
+        Remove-Variable -Name 'bstr', 'unsecurePassword' -Force -Confirm:$false -ErrorAction Ignore
     }
 }
