@@ -137,7 +137,10 @@ function New-PortalUser {
         }
 
         # OUTPUT VERBOSE
-        Write-Verbose -Message ('Provider: {0}' -f $restParams.Body['provider'])
+        Write-Verbose -Message ('Provider: [{0}]' -f $restParams.Body['provider'])
+
+        # BE SURE TO DELETE OR COMMENT THIS BEFORE MERGING PR
+        #Write-Verbose -Message ('Request parameters: {0}' -f ($restParams.Body | Out-String))
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
