@@ -43,6 +43,7 @@ Please see releases for updates and features
 | Get-PortalGroupUserList | Portal | `[ROOT]/community/groups/[GROUPID]/userList` | Get users from group in Portal for ArcGIS |
 | Get-PortalIndexStatus | Portal | `[ADMIN]/system/indexer/status` | Get Portal index status |
 | Get-PortalItem | Portal | `[ROOT]/content/items/[ITEMID]` | Get Portal item |
+| Get-PortalItemData | Portal | `[ROOT]/content/items/[ITEMID]/data` | Get Portal item data |
 | Get-PortalJobStatus | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/status` | Get Portal job status |
 | Get-PortalLicense | Portal | `[ADMIN]/license` | Get Portal license |
 | Get-PortalMachines | Portal | `[ADMIN]/machines` | Get Portal machines |

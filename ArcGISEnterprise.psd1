@@ -81,6 +81,7 @@
         'Get-PortalGroupUserList'
         'Get-PortalIndexStatus'
         'Get-PortalItem'
+        'Get-PortalItemData'
         'Get-PortalJobStatus'
         'Get-PortalLicense'
         'Get-PortalMachines'
