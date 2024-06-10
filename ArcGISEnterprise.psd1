@@ -147,6 +147,7 @@
         'Test-PortalFederation'
         'Test-PortalHealth'
         'Test-ServerHealth'
+        'Update-PortalItem'
         'Update-PortalUser'
         'Write-PortalUserItem'
     )
