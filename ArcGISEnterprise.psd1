@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.5.6'
+    ModuleVersion     = '0.5.7'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -81,6 +81,7 @@
         'Get-PortalGroupUserList'
         'Get-PortalIndexStatus'
         'Get-PortalItem'
+        'Get-PortalItemData'
         'Get-PortalJobStatus'
         'Get-PortalLicense'
         'Get-PortalMachines'
@@ -146,6 +147,7 @@
         'Test-PortalFederation'
         'Test-PortalHealth'
         'Test-ServerHealth'
+        'Update-PortalItem'
         'Update-PortalUser'
         'Write-PortalUserItem'
     )

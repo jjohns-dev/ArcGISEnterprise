@@ -43,6 +43,7 @@ Please see releases for updates and features
 | Get-PortalGroupUserList | Portal | `[ROOT]/community/groups/[GROUPID]/userList` | Get users from group in Portal for ArcGIS |
 | Get-PortalIndexStatus | Portal | `[ADMIN]/system/indexer/status` | Get Portal index status |
 | Get-PortalItem | Portal | `[ROOT]/content/items/[ITEMID]` | Get Portal item |
+| Get-PortalItemData | Portal | `[ROOT]/content/items/[ITEMID]/data` | Get Portal item data |
 | Get-PortalJobStatus | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/status` | Get Portal job status |
 | Get-PortalLicense | Portal | `[ADMIN]/license` | Get Portal license |
 | Get-PortalMachines | Portal | `[ADMIN]/machines` | Get Portal machines |
@@ -106,6 +107,7 @@ Please see releases for updates and features
 | Test-PortalDataStore | Portal | `[ROOT]/portals/[PORTALID]/datastores/validate` | Validates Data Store connection |
 | Test-PortalFederation | Portal | `[ADMIN]/federation/servers/validate` | Validate Portal federation status |
 | Test-ServerHealth | Server | `/rest/info/healthCheck` | Validates ArcGIS Server health |
+| Update-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/update` | Updates Portal item (e.g., layer, etc.) |
 | Update-PortalUser | Portal | `[ROOT]/community/users/[USERNAME]/update` | Update Portal user properties |
 | Write-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/addItem` | Uploads a Portal item (file item) |
 
