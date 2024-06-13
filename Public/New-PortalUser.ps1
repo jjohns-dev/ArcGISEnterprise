@@ -38,7 +38,7 @@ function New-PortalUser {
     .NOTES
         Name:     New-PortalUser
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-05-30
+        Version:  0.1.1 | Last Edit: 2024-06-12
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/create-user/
@@ -51,11 +51,11 @@ function New-PortalUser {
         [ValidateNotNullOrEmpty()]
         [System.String] $UserName,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'First name')]
+        [Parameter(Mandatory = $false, HelpMessage = 'First name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $FirstName,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Last name')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Last name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $LastName,
 
@@ -108,14 +108,11 @@ function New-PortalUser {
             Method = 'POST'
             Body   = [Ordered] @{
                 username          = $UserName
-                firstname         = $FirstName
-                lastname          = $LastName
                 email             = $Email
                 role              = $Role
                 userLicenseTypeId = $UserType
                 provider          = if ($PSCmdlet.ParameterSetName -eq '_saml') { 'enterprise' } else { 'arcgis' }
                 idpUsername       = if ($PSCmdlet.ParameterSetName -eq '_saml') { $IDPUserName } else { '' }
-                description       = $Description
                 f                 = 'json'
                 token             = $Token
             }
@@ -124,6 +121,13 @@ function New-PortalUser {
                 # {'error': {'code': 500, 'message': 'Invalid token.', 'details': None}}
                 referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
             }
+        }
+
+        # ADD OPTIONAL PARAMETERS
+        switch ($PSBoundParameters.Keys) {
+            'FirstName' { $restParams.Body['firstname'] = $FirstName }
+            'LastName' { $restParams.Body['lastname'] = $LastName }
+            'Description' { $restParams.Body['description'] = $Description }
         }
 
         # ADD NON-REQUIRED PARAMETERS
