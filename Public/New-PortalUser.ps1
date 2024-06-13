@@ -113,6 +113,9 @@ function New-PortalUser {
                 userLicenseTypeId = $UserType
                 provider          = if ($PSCmdlet.ParameterSetName -eq '_saml') { 'enterprise' } else { 'arcgis' }
                 idpUsername       = if ($PSCmdlet.ParameterSetName -eq '_saml') { $IDPUserName } else { '' }
+                firstname         = $FirstName
+                lastname          = $LastName
+                description       = $Description
                 f                 = 'json'
                 token             = $Token
             }
@@ -121,13 +124,6 @@ function New-PortalUser {
                 # {'error': {'code': 500, 'message': 'Invalid token.', 'details': None}}
                 referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
             }
-        }
-
-        # ADD OPTIONAL PARAMETERS
-        switch ($PSBoundParameters.Keys) {
-            'FirstName' { $restParams.Body['firstname'] = $FirstName }
-            'LastName' { $restParams.Body['lastname'] = $LastName }
-            'Description' { $restParams.Body['description'] = $Description }
         }
 
         # ADD NON-REQUIRED PARAMETERS

@@ -7,14 +7,14 @@ Create new user
 
 ### _bltn (Default)
 ```
-New-PortalUser -UserName <String> -FirstName <String> -LastName <String> -Email <String> [-Role <String>]
+New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Email <String> [-Role <String>]
  -UserType <String> -Password <SecureString> [-Description <String>] -Context <Uri> -Token <String>
  [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ### _saml
 ```
-New-PortalUser -UserName <String> -FirstName <String> -LastName <String> -Email <String> [-Role <String>]
+New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Email <String> [-Role <String>]
  -UserType <String> -IDPUserName <String> [-Description <String>] -Context <Uri> -Token <String>
  [-SkipCertificateCheck] [<CommonParameters>]
 ```
@@ -55,7 +55,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -70,7 +70,7 @@ Type: String
 Parameter Sets: (All)
 Aliases:
 
-Required: True
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
@@ -224,7 +224,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     New-PortalUser
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-05-30
+Version:  0.1.1 | Last Edit: 2024-06-12
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/enterprise-administration/portal/create-user/
