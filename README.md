@@ -65,6 +65,7 @@ Please see releases for updates and features
 | Get-ServerPSA | Server | `[ADMIN]/security/psa` | Get Server PSA account |
 | Get-ServerService | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]` | Get service from admin endpoint |
 | Get-ServerServiceItemInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/iteminfo` | Get service item info from admin endpoint |
+| Get-ServerServiceLifecycleInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/lifecycleinfos` | Get service lifecycle info |
 | Get-ServerServicesDirectory | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Get service directory from admin endpoint |
 | Get-ServerSetting | Server | `/[SETTINGSURL]` | Get Server settings from admin endpoint |
 | Get-ServerToken | Server | `[ADMIN]/generateToken` | Generate token for ArcGIS Server |
