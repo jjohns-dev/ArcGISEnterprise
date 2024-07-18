@@ -7,7 +7,7 @@ ArcGIS Server and Portal for ArcGIS.
 
 Like all PowerShell functions and cmdlets, the functions in this module follow the `Verb` `-` `Noun` scheme.
 Each `Noun` will start with the ArcGIS Enterprise component the function should be executaged against.
-For example, to use `Get-PortalRole` pass a Portal for ArcGIS URI argument in the `-Context` parameter.
+For example, to use `Get-PortalRoleList` pass a Portal for ArcGIS URI argument in the `-Context` parameter.
 Or, as another example, pass an ArcGIS Server URI argument to the `-Context` parameter for `Set-ServerAllowedOrigins`
 to set/update the allowed origins property in ArcGIS Server.
 
@@ -50,7 +50,7 @@ Please see releases for updates and features
 | Get-PortalMachineStatus | Portal | `[ADMIN]/machines/status/[MACHINENAME]` | Get Portal machine status |
 | Get-PortalOAuthAppInfo | Portal | `[ADMIN]/security/oauth/getAppInfo` | Get OAuth App Info |
 | Get-PortalOAuthToken | Portal | `[ROOT]/oauth2/token` | Get Portal OAuth token |
-| Get-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/roles` | Get Portal for ArcGIS Role |
+| Get-PortalRoleList | Portal | `[ROOT]/portals/[PORTALID]/roles` | Get Portal for ArcGIS Role |
 | Get-PortalSecurityConfig | Portal | `[ADMIN]/security/config` | Get Portal security configuration |
 | Get-PortalSecurityPolicy | Portal | `[ROOT]/portals/[PORTALID]/securityPolicy` | Get Portal security policy |
 | Get-PortalSettings | Portal | `[ROOT]/portals/[PORTALID]` | Get Portal configuration or "self" |

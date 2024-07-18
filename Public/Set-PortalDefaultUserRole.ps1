@@ -62,7 +62,7 @@ function Set-PortalDefaultUserRole {
         )
 
         # GET PORTAL ROLES
-        $portalRoles = Get-PortalRole -Context $Context -Token $Token
+        $portalRoles = Get-PortalRoleList -Context $Context -Token $Token
 
         # FIND ROLE
         $inRole = switch ($Role) {
