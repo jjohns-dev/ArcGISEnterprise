@@ -1,11 +1,11 @@
-# Get-ServerAllowedOrigins
+# Get-ServerAllowedOriginList
 
 ## SYNOPSIS
 
 ## SYNTAX
 
 ```
-Get-ServerAllowedOrigins [-SOAP] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+Get-ServerAllowedOriginList [-SOAP] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
@@ -17,7 +17,7 @@ Get the allowed origins for ArcGIS Server
 ### EXAMPLE 1
 ```
 $params = @{ Context = 'https://arcgis.com/arcgis'; Token = $token }
-PS C:\> Get-ServerAllowedOrigins @params
+PS C:\> Get-ServerAllowedOriginList @params
 Gets the allowed origins for ArcGIS Server
 ```
 
@@ -93,12 +93,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.String.
 ## NOTES
-Name:     Get-ServerAllowedOrigins
+Name:     Get-ServerAllowedOriginList
 Author:   Justin Johns
-Version:  0.1.2 | Last Edit: 2023-05-19 \[0.1.2\]
-- 0.1.2 - Updated code to account for no allowed origins set
-- 0.1.1 - Added switch parameter for SOAP
-- 0.1.0 - Initial version
+Version:  0.1.3 | Last Edit: 2024-07-18
+- Version history is capture in repository commit history
 Comments: \<Comment(s)\>
 General notes
 

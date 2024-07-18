@@ -60,7 +60,7 @@ Please see releases for updates and features
 | Get-PortalUserGroupList | Portal | `[ROOT]/community/groups` | Search for groups owned by specified user. Additional options available |
 | Get-PortalUserItemList | Portal | `[ROOT]/search` | Search Portal. Additional options available |
 | Get-PortalUserList | Portal | `[ROOT]/portals/[PORTALID]/users` | Get list of all Portal users |
-| Get-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/soap/soaphandlerconfig` | Get allowed origins for Server |
+| Get-ServerAllowedOriginList | Server | `[ADMIN]/system/handlers/soap/soaphandlerconfig` | Get allowed origins for Server |
 | Get-ServerLicense | Server | `[ADMIN]/system/licenses` | Get Server license info |
 | Get-ServerPSA | Server | `[ADMIN]/security/psa` | Get Server PSA account |
 | Get-ServerService | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]` | Get service from admin endpoint |
