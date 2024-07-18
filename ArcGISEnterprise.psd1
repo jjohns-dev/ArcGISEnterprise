@@ -75,7 +75,7 @@
         'ConvertFrom-Epoch'
         'Edit-ServerHostedFeatureRecord'
         'Format-CsvHeader'
-        'Get-PortalAllowedOrigins'
+        'Get-PortalAllowedOriginList'
         'Get-PortalDataStoreServer'
         'Get-PortalDefaultUserSettings'
         'Get-PortalGroupUserList'
@@ -161,6 +161,7 @@
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
     AliasesToExport   = @(
+        'Get-PortalAllowedOrigins'
         'Get-PortalMachines'
         'Get-PortalRole'
         'Get-PortalSelf'
