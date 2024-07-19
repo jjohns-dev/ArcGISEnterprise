@@ -1,45 +1,29 @@
-# Get-ServerAllowedOrigins
+# Get-PortalAllowedOriginList
 
 ## SYNOPSIS
 
 ## SYNTAX
 
 ```
-Get-ServerAllowedOrigins [-SOAP] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
- [<CommonParameters>]
+Get-PortalAllowedOriginList [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get the allowed origins for ArcGIS Server
+Get the allowed origins configured for ArcGIS Portal
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
 $params = @{ Context = 'https://arcgis.com/arcgis'; Token = $token }
-PS C:\> Get-ServerAllowedOrigins @params
-Gets the allowed origins for ArcGIS Server
+PS C:\> Get-PortalAllowedOriginList @params
+Gets the allowed origins for ArcGIS Portal
 ```
 
 ## PARAMETERS
 
-### -SOAP
-Get SOAP Allowed Origins
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Context
-Portal context (e.g., https://arcgis.com/arcgis)
+Target Portal context
 
 ```yaml
 Type: Uri
@@ -93,12 +77,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.String.
 ## NOTES
-Name:     Get-ServerAllowedOrigins
+Name:     Get-PortalAllowedOriginList
 Author:   Justin Johns
-Version:  0.1.2 | Last Edit: 2023-05-19 \[0.1.2\]
-- 0.1.2 - Updated code to account for no allowed origins set
-- 0.1.1 - Added switch parameter for SOAP
-- 0.1.0 - Initial version
+Version:  0.1.2 | Last Edit: 2024-07-18
+- Version history is capture in repository commit history
 Comments: \<Comment(s)\>
 General notes
 

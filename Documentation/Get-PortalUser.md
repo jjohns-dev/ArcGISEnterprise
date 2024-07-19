@@ -6,7 +6,8 @@ Get Portal user
 ## SYNTAX
 
 ```
-Get-PortalUser [-Context] <Uri> [-Username] <String> [-Token] <String> [<CommonParameters>]
+Get-PortalUser [-Username] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -17,16 +18,16 @@ Get Portal user
 ### EXAMPLE 1
 ```
 Get-PortalUser -Context 'https://arcgis.com/arcgis' -Username 'joe' -Token $token
-Get user 'joe' from Portal
+Returns user object with username 'joe' from Portal
 ```
 
 ## PARAMETERS
 
-### -Context
-Portal context (e.g., https://arcgis.com/arcgis)
+### -Username
+Portal username
 
 ```yaml
-Type: Uri
+Type: String
 Parameter Sets: (All)
 Aliases:
 
@@ -37,11 +38,11 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Username
-Portal username
+### -Context
+Portal context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
-Type: String
+Type: Uri
 Parameter Sets: (All)
 Aliases:
 
@@ -63,6 +64,21 @@ Aliases:
 Required: True
 Position: 3
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SkipCertificateCheck
+Ignore missing or invalid certificate
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

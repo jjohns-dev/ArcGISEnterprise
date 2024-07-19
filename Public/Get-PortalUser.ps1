@@ -4,47 +4,60 @@ function Get-PortalUser {
         Get Portal user
     .DESCRIPTION
         Get Portal user
-    .PARAMETER Context
-        Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Username
         Portal username
+    .PARAMETER Context
+        Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
         Portal token
+    .PARAMETER SkipCertificateCheck
+        Ignore missing or invalid certificate
     .INPUTS
         None.
     .OUTPUTS
         System.Object.
     .EXAMPLE
         PS C:\> Get-PortalUser -Context 'https://arcgis.com/arcgis' -Username 'joe' -Token $token
-        Get user 'joe' from Portal
+        Returns user object with username 'joe' from Portal
     .NOTES
         General notes
         https://developers.arcgis.com/rest/users-groups-and-items/user.htm
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
-        [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
-        [System.Uri] $Context,
-
         [Parameter(Mandatory = $true, HelpMessage = 'Portal username')]
         [ValidatePattern('^[\w\.@-]+$')]
         [System.String] $Username,
 
-        [Parameter(Mandatory, HelpMessage = 'Portal token')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
+        [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
+        [System.Uri] $Context,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal token')]
         [ValidateScript({ $_ -match $token_regex })]
-        [System.String] $Token
+        [System.String] $Token,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
+        [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
+    Begin {
+        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+    }
     Process {
+        # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/community/users/{1}' -f $Context, $Username
             Method = 'POST'
-            Body   = @{
-                f     = 'json'
-                token = $Token
+            Body    = @{ f = 'json'; token = $Token }
+            Headers = @{
+                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
             }
         }
 
+        # ADD CERTIFICATE SKIP IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
+        # INVOKE REQUEST
         Invoke-RestMethod @restParams
     }
 }
