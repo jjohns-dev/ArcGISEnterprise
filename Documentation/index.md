@@ -46,6 +46,7 @@ Please see releases for updates and features
 | Get-PortalItemData | Portal | `[ROOT]/content/items/[ITEMID]/data` | Get Portal item data |
 | Get-PortalJobStatus | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/status` | Get Portal job status |
 | Get-PortalLicense | Portal | `[ADMIN]/license` | Get Portal license |
+| Get-PortalLog | Portal | `[ADMIN]/logs/query` | Get Portal logs |
 | Get-PortalMachineList | Portal | `[ADMIN]/machines` | Get Portal machines |
 | Get-PortalMachineStatus | Portal | `[ADMIN]/machines/status/[MACHINENAME]` | Get Portal machine status |
 | Get-PortalOAuthAppInfo | Portal | `[ADMIN]/security/oauth/getAppInfo` | Get OAuth App Info |
@@ -62,6 +63,7 @@ Please see releases for updates and features
 | Get-PortalUserList | Portal | `[ROOT]/portals/[PORTALID]/users` | Get list of all Portal users |
 | Get-ServerAllowedOriginList | Server | `[ADMIN]/system/handlers/soap/soaphandlerconfig` | Get allowed origins for Server |
 | Get-ServerLicense | Server | `[ADMIN]/system/licenses` | Get Server license info |
+| Get-ServerLog | Server | `[ADMIN]/logs/query` | Get Server logs |
 | Get-ServerPSA | Server | `[ADMIN]/security/psa` | Get Server PSA account |
 | Get-ServerService | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]` | Get service from admin endpoint |
 | Get-ServerServiceItemInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/iteminfo` | Get service item info from admin endpoint |
