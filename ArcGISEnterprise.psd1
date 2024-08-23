@@ -102,6 +102,7 @@
         'Get-ServerAllowedOriginList'
         'Get-ServerHostedFeatureService'
         'Get-ServerLicense'
+        'Get-ServerLog'
         'Get-ServerPSA'
         'Get-ServerService'
         'Get-ServerServiceFieldInfo'
