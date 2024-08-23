@@ -25,8 +25,8 @@ function Get-PortalLog {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-PortalLog @commonParams
-        Explanation of what the example does
+        PS C:\> Get-PortalLog @commonParams -EndTime (Get-Date).AddDays(-7)
+        Get all portal logs from the last 7 days
     .NOTES
         Name:     Get-PortalLog
         Author:   Justin Johns
