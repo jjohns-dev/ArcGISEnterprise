@@ -84,6 +84,7 @@
         'Get-PortalItemData'
         'Get-PortalJobStatus'
         'Get-PortalLicense'
+        'Get-PortalLog'
         'Get-PortalMachineList'
         'Get-PortalMachineStatus'
         'Get-PortalOAuthAppInfo'
