@@ -6,8 +6,8 @@ Get ArcGIS Server service field information
 ## SYNTAX
 
 ```
-Get-ServerServiceReport [-FolderName] <String[]> [-Context] <Uri> [[-Token] <String>]
- [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerServiceReport [-FolderName] <String[]> [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
