@@ -70,7 +70,7 @@ function Get-ServerServiceMetadata {
             else {
                 '{0}/rest/services/{1}/{2}' -f $Context, $ServiceName, $ServiceType
             }
-            Method  = 'GET'
+            Method  = 'POST'
             Body    = @{
                 f     = 'json'
                 token = $Token
