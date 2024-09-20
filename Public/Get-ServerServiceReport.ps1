@@ -1,4 +1,4 @@
-function Get-ServerServiceFieldInfo {
+function Get-ServerServiceReport {
     <#
     .SYNOPSIS
         Get ArcGIS Server service field information
@@ -17,13 +17,13 @@ function Get-ServerServiceFieldInfo {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas
+        PS C:\> Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -Folder Gas
         Returns an array of fields with accompanying service and layer properties
     .EXAMPLE
-        PS C:\> Get-ServerServiceFieldInfo -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
+        PS C:\> Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
         Returns an array of fields with length for "esriFieldTypeString" types
     .NOTES
-        Name:     Get-ServerServiceFieldInfo
+        Name:     Get-ServerServiceReport
         Author:   Justin Johns
         Version:  0.1.3 | Last Edit: 2024-03-20
         - 0.1.3 - (2024-03-20) Updated parameter name for consistency
@@ -35,6 +35,7 @@ function Get-ServerServiceFieldInfo {
         - The function only supports the following service types: MapServer, ImageServer, FeatureServer
     #>
     [CmdletBinding()]
+    [Alias('Get-ServerServiceFieldInfo')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target folder')]
         [ValidateNotNullOrEmpty()]
