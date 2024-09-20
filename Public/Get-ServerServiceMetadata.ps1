@@ -64,14 +64,14 @@ function Get-ServerServiceMetadata {
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = if ($PSBoundParameters.ContainsKey('Folder')) {
+            Uri     = if ($PSBoundParameters.ContainsKey('FolderName')) {
                 '{0}/rest/services/{1}/{2}/{3}' -f $Context, $FolderName, $ServiceName, $ServiceType
             }
             else {
                 '{0}/rest/services/{1}/{2}' -f $Context, $ServiceName, $ServiceType
             }
-            Method = 'GET'
-            Body   = @{
+            Method  = 'GET'
+            Body    = @{
                 f     = 'json'
                 token = $Token
             }
