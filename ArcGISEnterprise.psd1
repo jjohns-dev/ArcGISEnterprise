@@ -109,6 +109,7 @@
         'Get-ServerServiceItemInfo'
         'Get-ServerServiceLifecycleInfo'
         'Get-ServerServiceList'
+        'Get-ServerServiceMetadata'
         'Get-ServerServicesDirectory'
         'Get-ServerSetting'
         'Get-ServerToken'
