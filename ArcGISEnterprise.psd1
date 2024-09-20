@@ -107,6 +107,7 @@
         'Get-ServerPSA'
         'Get-ServerService'
         'Get-ServerServiceItemInfo'
+        'Get-ServerServiceLayerMetadata'
         'Get-ServerServiceLifecycleInfo'
         'Get-ServerServiceList'
         'Get-ServerServiceMetadata'
