@@ -25,11 +25,8 @@ function Get-ServerServiceReport {
     .NOTES
         Name:     Get-ServerServiceReport
         Author:   Justin Johns
-        Version:  0.1.3 | Last Edit: 2024-03-20
-        - 0.1.3 - (2024-03-20) Updated parameter name for consistency
-        - 0.1.2 - (2024-01-18) Added more properties to report
-        - 0.1.1 - (2024-01-03) Adjusted default behavior and removed parameters for targeting "esriFieldTypeString"
-        - 0.1.0 - Initial version
+        Version:  0.1.4 | Last Edit: 2024-09-23
+        - Version history is capture in repository commit history
         Comments: <Comment(s)>
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
         - The function only supports the following service types: MapServer, ImageServer, FeatureServer
@@ -42,7 +39,7 @@ function Get-ServerServiceReport {
         [Alias('Folder')]
         [System.String[]] $FolderName,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
@@ -56,51 +53,57 @@ function Get-ServerServiceReport {
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
-        # SET BASE URI
-        $baseUri = '{0}/rest/services' -f $Context
-
-        # SET REQUEST PARAMETERS
-        $restParams = @{ Method = 'GET'; Body = @{ f = 'json' } }
-
-        # ADD TOKEN IF PROVIDED
-        if ($PSBoundParameters.ContainsKey('Token')) { $restParams.Body['token'] = $Token }
-
-        # ADD SKIP CERTIFICATE CHECK IF PROVIDED
-        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-    }
-    Process {
-        # SET PARAMETERS FOR SERVICE INFO
-        $servicInfoParams = $PSBoundParameters
-        $servicInfoParams.Remove('FolderName') | Out-Null
+        # SET COMMON PARAMETERS
+        $cmnParms = $PSBoundParameters
+        $cmnParms.Remove('FolderName') | Out-Null
 
         # GET SERVICE INFO INCLUDING FOLDERS
-        $servicInfo = Get-ServerServiceList @servicInfoParams
+        $serviceInfo = Get-ServerServiceList @cmnParms
 
-        # EVALUATE EACH FOLDER
+        # EVALUATE EACH FOLDER ARGUMENT PROVIDED
         foreach ($fldr in $FolderName) {
-            # VALIDATE FOLDER EXISTS
-            if ($fldr -notin $servicInfo.folders) {
-                throw ('Folder [{0}] not found.' -f $fldr)
-            }
+            # VALIDATE THE FOLDER EXISTS
+            if ($fldr -notin $serviceInfo.folders) { Write-Error -Message ('Folder [{0}] not found.' -f $fldr) -ErrorAction Stop }
         }
-
+    }
+    Process {
         # EVALUATE EACH FOLDER
         foreach ($fldr in $FolderName) {
 
-            # RESET URI
-            $restParams['Uri'] = '{0}/{1}' -f $baseUri, $fldr
+            # OUTPUT VERBOSE
+            Write-Verbose -Message ('Evaluating folder [{0}]' -f $fldr)
 
             # GET SERVICES IN FOLDER
-            $folderData = Invoke-RestMethod @restParams
+            $serviceList = Get-ServerServiceList @cmnParms -FolderName $fldr
+
+            # OUTPUT VERBOSE SERVICES IN FOLDER
+            Write-Verbose -Message ("Services in folder:`n{0}" -f ($serviceList.services | Out-String))
 
             # LOOP ALL SERVICES IN FOLDER
-            foreach ($service in $folderData.services) {
+            foreach ($service in $serviceList.services) {
 
-                # RESET URI
-                $restParams['Uri'] = '{0}/{1}/{2}' -f $baseUri, $service.name, $service.type
+                # OUTPUT VERBOSE
+                Write-Verbose -Message ('Evaluating service [{0}]' -f $service.name)
+
+                # SET SERVICE INFO
+                $serviceParams = @{
+                    ServiceName = $service.name.split('/')[-1]
+                    FolderName  = $fldr # $service.name.split('/')[0]
+                    ServiceType = $service.type
+                }
 
                 # GET LAYERS IN SERVICE
-                $serviceData = Invoke-RestMethod @restParams
+                $serviceData = Get-ServerServiceMetadata @cmnParms @serviceParams
+
+                # CHECK FOR ERRORS -- should we build an error handler function (check for code and throw proper error)?
+                if ($serviceData.error) {
+                    if ($serviceData.error.code -eq 404) {
+                        Write-Error -Message $serviceData.error.message -Exception ([System.IO.FileNotFoundException]::new()) -ErrorAction Stop
+                    }
+                    else {
+                        Write-Error -Message ($serviceData.error | ConvertTo-Json) -ErrorAction Stop
+                    }
+                }
 
                 # ACCOUNT FOR SERVICES THAT DO NOT HAVE LAYERS BUT DO HAVE FIELDS
                 if ($null -EQ $serviceData.layers) {
@@ -134,11 +137,8 @@ function Get-ServerServiceReport {
                     # LOOP ALL LAYERS IN SERVICE
                     foreach ($layer in $serviceData.layers) {
 
-                        # RESET URI
-                        $restParams['Uri'] = '{0}/{1}/{2}/{3}' -f $baseUri, $service.name, $service.type, $layer.id
-
                         # GET LAYER DATA
-                        $layerData = Invoke-RestMethod @restParams
+                        $layerData = Get-ServerServiceLayerMetadata @cmnParms @serviceParams -LayerId $layer.id
 
                         # LOOP ALL FIELDS
                         foreach ($field in $layerData.fields) {
