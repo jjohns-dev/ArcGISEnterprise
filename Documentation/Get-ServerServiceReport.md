@@ -101,11 +101,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-ServerServiceReport
 Author:   Justin Johns
-Version:  0.1.3 | Last Edit: 2024-03-20
-- 0.1.3 - (2024-03-20) Updated parameter name for consistency
-- 0.1.2 - (2024-01-18) Added more properties to report
-- 0.1.1 - (2024-01-03) Adjusted default behavior and removed parameters for targeting "esriFieldTypeString"
-- 0.1.0 - Initial version
+Version:  0.1.4 | Last Edit: 2024-09-23
+- Version history is capture in repository commit history
 Comments: \<Comment(s)\>
 - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
 - The function only supports the following service types: MapServer, ImageServer, FeatureServer

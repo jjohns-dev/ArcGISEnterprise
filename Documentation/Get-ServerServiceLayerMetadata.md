@@ -7,7 +7,8 @@ Get ArcGIS Server service layer metadata
 
 ```
 Get-ServerServiceLayerMetadata [-LayerId] <Int32> [-ServiceName] <String> [-ServiceType] <String>
- [[-FolderName] <String>] [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck] [<CommonParameters>]
+ [[-FolderName] <String>] [-ReportData] [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -79,6 +80,21 @@ Aliases: Folder
 Required: False
 Position: 4
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReportData
+Return report data
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
