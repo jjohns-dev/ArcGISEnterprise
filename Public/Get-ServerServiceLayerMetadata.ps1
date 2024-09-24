@@ -30,7 +30,7 @@ function Get-ServerServiceLayerMetadata {
     .NOTES
         Name:     Get-ServerServiceLayerMetadata
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-20
+        Version:  0.1.0 | Last Edit: 2024-09-24
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
@@ -98,74 +98,88 @@ function Get-ServerServiceLayerMetadata {
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # ADD REPORT DATA IF REQUESTED
-        if ($PSBoundParameters.ContainsKey('ReportData')) {
-            # INVOKE REQUEST
-            $lm = Invoke-RestMethod @restParams
+        # INVOKE REQUEST
+        $layerMetadata = Invoke-RestMethod @restParams
 
-            # CHECK FOR ERRORS
-            if ($lm.error) {
-                Write-Error -Message $lm.error.message -ErrorAction Stop
+        # VALIDATE RESPONSE
+        if ($layerMetadata.error) {
+            Write-Error -Message $layerMetadata.error.message -ErrorAction Stop
+        }
+        else {
+            # CHECK FOR SCENARIO WHERE LAYER IS ATTACHMENT
+            # THIS IS DUE TO A POOR DESIGN CHOICE TO HAVE MULTIPLE PROPERTIES WITH THE SAME NAME BUT DIFFERENT CASING
+            # THE PROPERTIES ARE 'supportsValidateSql' AND 'supportsValidateSQL'
+            if ($layerMetadata.getType().FullName -EQ 'System.String') {
+                # CREATE CUSTOM HASHTABLE
+                $layerMetadata = $layerMetadata | ConvertFrom-Json -AsHashtable
+
+                # REMOVE DUPLICATE PROPERTY WITH DIFFERENT NAME CASING
+                $layerMetadata.Remove('supportsValidateSQL')
+
+                # CONVERT TO CUSTOM OBJECT
+                $layerMetadata = [PSCustomObject] $layerMetadata
             }
-            else {
+
+            # OUTPUT REPORT DATA IF REQUESTED
+            if ($PSBoundParameters.ContainsKey('ReportData')) {
                 # OUTPUT REPORT DATA
                 [PSCustomObject] @{
                     LayerName                        = if ($PSBoundParameters.ContainsKey('FolderName')) {
-                        '{0}/{1}/{2}' -f $FolderName, $ServiceName, $lm.name
+                        '{0}/{1}/{2}' -f $FolderName, $ServiceName, $layerMetadata.name
                     }
                     else {
-                        '{0}/{1}' -f $ServiceName, $lm.name
+                        '{0}/{1}' -f $ServiceName, $layerMetadata.name
                     }
-                    Id                               = $lm.id
+                    Id                               = $layerMetadata.id
                     ServiceType                      = $ServiceType
-                    LayerType                        = $lm.type
-                    ParentLayer                      = $lm.parentLayer
-                    DefaultVisibility                = $lm.defaultVisibility
-                    MinScale                         = $lm.minScale
-                    MaxScale                         = $lm.maxScale
-                    CanScaleSymbols                  = $lm.canScaleSymbols
-                    GeometryType                     = $lm.geometryType
-                    Description                      = $lm.description
-                    EditFieldsInfo                   = $lm.editFieldsInfo
-                    RelationshipNames                = $lm.relationships.name -join ', ' # {@{id=x; name=y, relatedTableId=z...}}
-                    SupportsAdvancedQueries          = $lm.supportsAdvancedQueries
-                    SupportsPagination               = $lm.advancedQueryCapabilities.supportsPagination
-                    SupportsQueryAttachments         = $lm.advancedQueryCapabilities.supportsQueryAttachments
-                    HasMetadata                      = $lm.hasMetadata
-                    XMin                             = $lm.extent.xmin
-                    YMin                             = $lm.extent.ymin
-                    XMax                             = $lm.extent.xmax
-                    YMax                             = $lm.extent.ymax
-                    WKId                             = $lm.extent.spatialReference.wkid
-                    RendererType                     = $lm.drawingInfo.renderer.type
-                    RendererField1                   = $lm.drawingInfo.renderer.field1
-                    RendererScaleSymbols             = $lm.drawingInfo.scaleSymbols
-                    RendererTransparency             = $lm.drawingInfo.transparency
-                    RendererLabelingInfo             = $lm.drawingInfo.labelingInfo
-                    HasM                             = $lm.hasM
-                    HasZ                             = $lm.hasZ
-                    AllowGeometryUpdates             = $lm.allowGeometryUpdates
-                    HasAttachments                   = $lm.hasAttachments
-                    SupportsApplyEditsWithGlobalIds  = $lm.supportsApplyEditsWithGlobalIds
-                    ObjectIdField                    = $lm.objectIdField
-                    GlobalIdField                    = $lm.globalIdField
-                    DisplayField                     = $lm.displayField
-                    TypeIdField                      = $lm.typeIdField
-                    SubtypeField                     = $lm.subtypeField
-                    IndexNames                       = $lm.indexes.name -join ', ' # {@{fields=x; isAscending=y...}}
-                    DatesInUnknownTimezone           = $lm.datesInUnknownTimeZone
-                    TimeZone                         = $lm.DateFieldsTimeReference.timeZone
-                    RespectsDaylightSaving           = $lm.DateFieldsTimeReference.respectsDaylightSaving
-                    StandardMaxRecordCount           = $lm.standardMaxRecordCount
-                    TileMaxRecordCount               = $lm.tileMaxRecordCount
-                    StandardMaxRecordCountNoGeometry = $lm.standardMaxRecordCountNoGeometry
-                    MaxRecordCountFactor             = $lm.maxRecordCountFactor
+                    LayerType                        = $layerMetadata.type
+                    ParentLayer                      = $layerMetadata.parentLayer
+                    DefaultVisibility                = $layerMetadata.defaultVisibility
+                    MinScale                         = $layerMetadata.minScale
+                    MaxScale                         = $layerMetadata.maxScale
+                    CanScaleSymbols                  = $layerMetadata.canScaleSymbols
+                    GeometryType                     = $layerMetadata.geometryType
+                    Description                      = $layerMetadata.description
+                    #EditFieldsInfo                   = $layerMetadata.editFieldsInfo # {@{editDateField=x; editorField=y; creationDateField=z; creatorField=a...}}
+                    RelationshipNames                = $layerMetadata.relationships.name -join ', ' # {@{id=x; name=y, relatedTableId=z...}}
+                    SupportsAdvancedQueries          = $layerMetadata.supportsAdvancedQueries
+                    SupportsPagination               = $layerMetadata.advancedQueryCapabilities.supportsPagination
+                    SupportsQueryAttachments         = $layerMetadata.advancedQueryCapabilities.supportsQueryAttachments
+                    HasMetadata                      = $layerMetadata.hasMetadata
+                    XMin                             = $layerMetadata.extent.xmin
+                    YMin                             = $layerMetadata.extent.ymin
+                    XMax                             = $layerMetadata.extent.xmax
+                    YMax                             = $layerMetadata.extent.ymax
+                    WKId                             = $layerMetadata.extent.spatialReference.wkid
+                    RendererType                     = $layerMetadata.drawingInfo.renderer.type
+                    RendererField1                   = $layerMetadata.drawingInfo.renderer.field1
+                    RendererScaleSymbols             = $layerMetadata.drawingInfo.scaleSymbols
+                    RendererTransparency             = $layerMetadata.drawingInfo.transparency
+                    RendererLabelingInfo             = $layerMetadata.drawingInfo.labelingInfo
+                    HasM                             = $layerMetadata.hasM
+                    HasZ                             = $layerMetadata.hasZ
+                    AllowGeometryUpdates             = $layerMetadata.allowGeometryUpdates
+                    HasAttachments                   = $layerMetadata.hasAttachments
+                    SupportsApplyEditsWithGlobalIds  = $layerMetadata.supportsApplyEditsWithGlobalIds
+                    ObjectIdField                    = $layerMetadata.objectIdField
+                    GlobalIdField                    = $layerMetadata.globalIdField
+                    DisplayField                     = $layerMetadata.displayField
+                    TypeIdField                      = $layerMetadata.typeIdField
+                    SubtypeField                     = $layerMetadata.subtypeField
+                    IndexNames                       = $layerMetadata.indexes.name -join ', ' # {@{fields=x; isAscending=y...}}
+                    DatesInUnknownTimezone           = $layerMetadata.datesInUnknownTimeZone
+                    TimeZone                         = $layerMetadata.DateFieldsTimeReference.timeZone
+                    RespectsDaylightSaving           = $layerMetadata.DateFieldsTimeReference.respectsDaylightSaving
+                    StandardMaxRecordCount           = $layerMetadata.standardMaxRecordCount
+                    TileMaxRecordCount               = $layerMetadata.tileMaxRecordCount
+                    StandardMaxRecordCountNoGeometry = $layerMetadata.standardMaxRecordCountNoGeometry
+                    MaxRecordCountFactor             = $layerMetadata.maxRecordCountFactor
                 }
             }
-        }
-        else {
-            # INVOKE REQUEST
-            Invoke-RestMethod @restParams
+            else {
+                # OUTPUT LAYER METADATA
+                $layerMetadata
+            }
         }
     }
 }
