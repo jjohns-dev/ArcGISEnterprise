@@ -12,6 +12,8 @@ function Get-ServerServiceLayerMetadata {
         Type of service (e.g., FeatureServer or MapServer)
     .PARAMETER FolderName
         Folder name in ArcGIS Server
+    .PARAMETER ReportData
+        Return report data
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -54,6 +56,9 @@ function Get-ServerServiceLayerMetadata {
         [Alias('Folder')]
         [System.String] $FolderName,
 
+        [Parameter(Mandatory = $false, HelpMessage = 'Return report data')]
+        [System.Management.Automation.SwitchParameter] $ReportData,
+
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -93,7 +98,74 @@ function Get-ServerServiceLayerMetadata {
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        # ADD REPORT DATA IF REQUESTED
+        if ($PSBoundParameters.ContainsKey('ReportData')) {
+            # INVOKE REQUEST
+            $lm = Invoke-RestMethod @restParams
+
+            # CHECK FOR ERRORS
+            if ($lm.error) {
+                Write-Error -Message $lm.error.message -ErrorAction Stop
+            }
+            else {
+                # OUTPUT REPORT DATA
+                [PSCustomObject] @{
+                    LayerName                        = if ($PSBoundParameters.ContainsKey('FolderName')) {
+                        '{0}/{1}/{2}' -f $FolderName, $ServiceName, $lm.name
+                    }
+                    else {
+                        '{0}/{1}' -f $ServiceName, $lm.name
+                    }
+                    Id                               = $lm.id
+                    ServiceType                      = $ServiceType
+                    LayerType                        = $lm.type
+                    ParentLayer                      = $lm.parentLayer
+                    DefaultVisibility                = $lm.defaultVisibility
+                    MinScale                         = $lm.minScale
+                    MaxScale                         = $lm.maxScale
+                    CanScaleSymbols                  = $lm.canScaleSymbols
+                    GeometryType                     = $lm.geometryType
+                    Description                      = $lm.description
+                    EditFieldsInfo                   = $lm.editFieldsInfo
+                    RelationshipNames                = $lm.relationships.name -join ', ' # {@{id=x; name=y, relatedTableId=z...}}
+                    SupportsAdvancedQueries          = $lm.supportsAdvancedQueries
+                    SupportsPagination               = $lm.advancedQueryCapabilities.supportsPagination
+                    SupportsQueryAttachments         = $lm.advancedQueryCapabilities.supportsQueryAttachments
+                    HasMetadata                      = $lm.hasMetadata
+                    XMin                             = $lm.extent.xmin
+                    YMin                             = $lm.extent.ymin
+                    XMax                             = $lm.extent.xmax
+                    YMax                             = $lm.extent.ymax
+                    WKId                             = $lm.extent.spatialReference.wkid
+                    RendererType                     = $lm.drawingInfo.renderer.type
+                    RendererField1                   = $lm.drawingInfo.renderer.field1
+                    RendererScaleSymbols             = $lm.drawingInfo.scaleSymbols
+                    RendererTransparency             = $lm.drawingInfo.transparency
+                    RendererLabelingInfo             = $lm.drawingInfo.labelingInfo
+                    HasM                             = $lm.hasM
+                    HasZ                             = $lm.hasZ
+                    AllowGeometryUpdates             = $lm.allowGeometryUpdates
+                    HasAttachments                   = $lm.hasAttachments
+                    SupportsApplyEditsWithGlobalIds  = $lm.supportsApplyEditsWithGlobalIds
+                    ObjectIdField                    = $lm.objectIdField
+                    GlobalIdField                    = $lm.globalIdField
+                    DisplayField                     = $lm.displayField
+                    TypeIdField                      = $lm.typeIdField
+                    SubtypeField                     = $lm.subtypeField
+                    IndexNames                       = $lm.indexes.name -join ', ' # {@{fields=x; isAscending=y...}}
+                    DatesInUnknownTimezone           = $lm.datesInUnknownTimeZone
+                    TimeZone                         = $lm.DateFieldsTimeReference.timeZone
+                    RespectsDaylightSaving           = $lm.DateFieldsTimeReference.respectsDaylightSaving
+                    StandardMaxRecordCount           = $lm.standardMaxRecordCount
+                    TileMaxRecordCount               = $lm.tileMaxRecordCount
+                    StandardMaxRecordCountNoGeometry = $lm.standardMaxRecordCountNoGeometry
+                    MaxRecordCountFactor             = $lm.maxRecordCountFactor
+                }
+            }
+        }
+        else {
+            # INVOKE REQUEST
+            Invoke-RestMethod @restParams
+        }
     }
 }
