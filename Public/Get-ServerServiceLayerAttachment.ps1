@@ -10,8 +10,6 @@ function Get-ServerServiceLayerAttachment {
         Service Layer ID
     .PARAMETER ServiceName
         Name of service
-    .PARAMETER ServiceType
-        Type of service (e.g., FeatureServer or MapServer)
     .PARAMETER FolderName
         Folder name in ArcGIS Server
     .PARAMETER Context
