@@ -37,6 +37,7 @@ Please see releases for updates and features
 | Clear-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Edit-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
 | Find-PortalItem | Portal | `[ROOT]/search` | Returns Portal item based on search criteria |
+| Find-ServerServiceLayerData | Server | `[ROOT]/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query service layer for data |
 | Get-PortalAllowedOriginList | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |
 | Get-PortalDataStoreServer | Portal | `[ROOT]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |
 | Get-PortalDefaultUserSettings | Portal | `[ROOT]/portals/[PORTALID]/userDefaultSettings` | Get default user settings from Portal |
@@ -68,6 +69,7 @@ Please see releases for updates and features
 | Get-ServerPSA | Server | `[ADMIN]/security/psa` | Get Server PSA account |
 | Get-ServerService | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]` | Get service from admin endpoint |
 | Get-ServerServiceItemInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/iteminfo` | Get service item info from admin endpoint |
+| Get-ServerServiceLayerAttachment | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]/[LAYERID]/queryAttachments` | Get layer attachments |
 | Get-ServerServiceLayerMetadata | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]/[LAYERID]` | Get service layer metadata |
 | Get-ServerServiceLifecycleInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/lifecycleinfos` | Get service lifecycle info |
 | Get-ServerServiceList | Server | `[ROOT]` and `[ADMIN]/services` | Get list of services in ArcGIS Server |
