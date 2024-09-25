@@ -37,6 +37,7 @@ Please see releases for updates and features
 | Clear-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Edit-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
 | Find-PortalItem | Portal | `[ROOT]/search` | Returns Portal item based on search criteria |
+| Find-ServerServiceLayerData | Server | `[ROOT]/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query service layer for data |
 | Get-PortalAllowedOriginList | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |
 | Get-PortalDataStoreServer | Portal | `[ROOT]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |
 | Get-PortalDefaultUserSettings | Portal | `[ROOT]/portals/[PORTALID]/userDefaultSettings` | Get default user settings from Portal |

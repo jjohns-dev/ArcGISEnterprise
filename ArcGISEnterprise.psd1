@@ -75,6 +75,7 @@
         'ConvertFrom-Epoch'
         'Edit-ServerHostedFeatureRecord'
         'Find-PortalItem'
+        'Find-ServerServiceLayerData'
         'Format-CsvHeader'
         'Get-PortalAllowedOriginList'
         'Get-PortalDataStoreServer'
