@@ -159,7 +159,7 @@ function Get-ServerServiceLayerMetadata {
                     HasM                             = $layerMetadata.hasM
                     HasZ                             = $layerMetadata.hasZ
                     AllowGeometryUpdates             = $layerMetadata.allowGeometryUpdates
-                    HasAttachments                   = $layerMetadata.hasAttachments
+                    HasAttachments                   = $layerMetadata.hasAttachments # PROPERTY OF INTEREST
                     SupportsApplyEditsWithGlobalIds  = $layerMetadata.supportsApplyEditsWithGlobalIds
                     ObjectIdField                    = $layerMetadata.objectIdField
                     GlobalIdField                    = $layerMetadata.globalIdField
