@@ -6,6 +6,8 @@ function Get-ServerServiceLayerAttachment {
         The result of this operation are attachments grouped by the source feature object Ids and global ids (if exist)
     .PARAMETER GlobalId
         Global ID
+    .PARAMETER ObjectId
+        Object ID
     .PARAMETER LayerId
         Service Layer ID
     .PARAMETER ServiceName
@@ -33,11 +35,15 @@ function Get-ServerServiceLayerAttachment {
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-attachments-feature-service-layer/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = '__gid')]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Global ID')]
+        [Parameter(Mandatory = $true, ParameterSetName = '__gid', HelpMessage = 'Global ID')]
         [ValidatePattern('^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$')]
         [System.String[]] $GlobalId,
+
+        [Parameter(Mandatory = $true, ParameterSetName = '__oid', HelpMessage = 'Object ID')]
+        [ValidateNotNullOrEmpty()]
+        [System.Int64[]] $ObjectId,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Service Layer ID')]
         [ValidateNotNullOrEmpty()]
@@ -80,8 +86,8 @@ function Get-ServerServiceLayerAttachment {
             Body    = @{
                 f                    = 'json'
                 token                = $Token
-                objectIds            = '' #2353852
-                globalIds            = $GlobalId -join ',' # '' # 96B099D7-C4FD-4B73-99E6-C7D6552F4E22
+                objectIds            = if ($PSCmdlet.ParameterSetName -EQ '__oid') { $ObjectId -join ',' } else { '' } # 2353852
+                globalIds            = if ($PSCmdlet.ParameterSetName -EQ '__gid') { $GlobalId -join ',' } else { '' } # 96B099D7-C4FD-4B73-99E6-C7D6552F4E22
                 definitionExpression = ''
                 attachmentTypes      = ''
                 resultOffset         = ''
@@ -115,6 +121,9 @@ function Get-ServerServiceLayerAttachment {
 
                 # CONVERT TO CUSTOM OBJECT
                 [PSCustomObject] $attachments
+            }
+            else {
+                $attachments
             }
         }
     }
