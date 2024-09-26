@@ -34,10 +34,10 @@ function Get-ServerServiceReport {
     [CmdletBinding()]
     [Alias('Get-ServerServiceFieldInfo')]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Target folder')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Target folder')]
         [ValidateNotNullOrEmpty()]
         [Alias('Folder')]
-        [System.String[]] $FolderName,
+        [System.String] $FolderName,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -55,114 +55,115 @@ function Get-ServerServiceReport {
 
         # SET COMMON PARAMETERS
         $cmnParms = $PSBoundParameters
-        $cmnParms.Remove('FolderName') | Out-Null
 
-        # GET SERVICE INFO INCLUDING FOLDERS
-        $serviceInfo = Get-ServerServiceList @cmnParms
+        # VALIDATE FOLDER PARAMETER
+        if ($PSBoundParameters.ContainsKey('FolderName')) {
+            # REMOVE FOLDER PARAMETER
+            $cmnParms.Remove('FolderName') | Out-Null
 
-        # EVALUATE EACH FOLDER ARGUMENT PROVIDED
-        foreach ($fldr in $FolderName) {
+            # GET SERVICE INFO INCLUDING FOLDERS
+            $serviceInfo = Get-ServerServiceList @cmnParms
+
             # VALIDATE THE FOLDER EXISTS
-            if ($fldr -notin $serviceInfo.folders) { Write-Error -Message ('Folder [{0}] not found.' -f $fldr) -ErrorAction Stop }
+            if ($FolderName -notin $serviceInfo.folders) {
+                # TERMINATE WITH ERROR
+                Write-Error -Message ('Folder [{0}] not found.' -f $FolderName) -Exception ([System.IO.FileNotFoundException]::new()) -ErrorAction Stop
+            }
+            else {
+                # ADD FOLDER BACK TO PARAMETERS
+                $cmnParms['FolderName'] = $FolderName
+            }
         }
     }
     Process {
-        # EVALUATE EACH FOLDER
-        foreach ($fldr in $FolderName) {
+        # GET SERVICES IN FOLDER
+        $serviceList = Get-ServerServiceList @cmnParms
+
+        # OUTPUT VERBOSE SERVICES IN FOLDER
+        Write-Verbose -Message ("Services:`n{0}" -f ($serviceList.services | Out-String))
+
+        # LOOP ALL SERVICES IN FOLDER
+        foreach ($service in $serviceList.services) {
 
             # OUTPUT VERBOSE
-            Write-Verbose -Message ('Evaluating folder [{0}]' -f $fldr)
+            Write-Verbose -Message ('Evaluating service [{0}]' -f $service.name)
 
-            # GET SERVICES IN FOLDER
-            $serviceList = Get-ServerServiceList @cmnParms -FolderName $fldr
+            # SET SERVICE INFO
+            $serviceParams = @{
+                ServiceName = $service.name.split('/')[-1]
+                ServiceType = $service.type
+            }
 
-            # OUTPUT VERBOSE SERVICES IN FOLDER
-            Write-Verbose -Message ("Services in folder:`n{0}" -f ($serviceList.services | Out-String))
+            # GET LAYERS IN SERVICE
+            $serviceData = Get-ServerServiceMetadata @cmnParms @serviceParams
 
-            # LOOP ALL SERVICES IN FOLDER
-            foreach ($service in $serviceList.services) {
-
-                # OUTPUT VERBOSE
-                Write-Verbose -Message ('Evaluating service [{0}]' -f $service.name)
-
-                # SET SERVICE INFO
-                $serviceParams = @{
-                    ServiceName = $service.name.split('/')[-1]
-                    FolderName  = $fldr # $service.name.split('/')[0]
-                    ServiceType = $service.type
+            # CHECK FOR ERRORS -- should we build an error handler function (check for code and throw proper error)?
+            if ($serviceData.error) {
+                if ($serviceData.error.code -eq 404) {
+                    Write-Error -Message $serviceData.error.message -Exception ([System.IO.FileNotFoundException]::new()) -ErrorAction Stop
                 }
+                else {
+                    Write-Error -Message ($serviceData.error | ConvertTo-Json) -ErrorAction Stop
+                }
+            }
 
-                # GET LAYERS IN SERVICE
-                $serviceData = Get-ServerServiceMetadata @cmnParms @serviceParams
+            # ACCOUNT FOR SERVICES THAT DO NOT HAVE LAYERS BUT DO HAVE FIELDS
+            if ($null -EQ $serviceData.layers) {
 
-                # CHECK FOR ERRORS -- should we build an error handler function (check for code and throw proper error)?
-                if ($serviceData.error) {
-                    if ($serviceData.error.code -eq 404) {
-                        Write-Error -Message $serviceData.error.message -Exception ([System.IO.FileNotFoundException]::new()) -ErrorAction Stop
-                    }
-                    else {
-                        Write-Error -Message ($serviceData.error | ConvertTo-Json) -ErrorAction Stop
+                # EVALUATE EACH FIELD
+                foreach ($field in $serviceData.fields) {
+
+                    # CREATE NEW FIELD OBJECT
+                    [PSCustomObject] @{
+                        #Folder                = $fldr
+                        ServiceName           = $service.name
+                        ServiceNameLength     = $service.name.Length
+                        ServiceType           = $service.type
+                        SupportsDynamicLayers = if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false }
+                        LayerId               = $null
+                        LayerName             = $null
+                        LayerType             = $null
+                        LayerHasSpecialChars  = $null
+                        LayerNameLength       = $null
+                        GeometryType          = $null
+                        UniqueSymbology       = $null
+                        FieldName             = $field.name
+                        FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
+                        FieldNameLength       = $field.name.length
+                        FieldType             = $field.type
+                        FieldLength           = if ($field.type -EQ 'esriFieldTypeString') { $field.length } else { $null }
                     }
                 }
+            }
+            else {
+                # LOOP ALL LAYERS IN SERVICE
+                foreach ($layer in $serviceData.layers) {
 
-                # ACCOUNT FOR SERVICES THAT DO NOT HAVE LAYERS BUT DO HAVE FIELDS
-                if ($null -EQ $serviceData.layers) {
+                    # GET LAYER DATA
+                    $layerData = Get-ServerServiceLayerMetadata @cmnParms @serviceParams -LayerId $layer.id
 
-                    # EVALUATE EACH FIELD
-                    foreach ($field in $serviceData.fields) {
+                    # LOOP ALL FIELDS
+                    foreach ($field in $layerData.fields) {
 
-                        # CREATE NEW FIELD OBJECT
+                        # CREATE CUSTOM OBJECT
                         [PSCustomObject] @{
                             #Folder                = $fldr
                             ServiceName           = $service.name
                             ServiceNameLength     = $service.name.Length
                             ServiceType           = $service.type
                             SupportsDynamicLayers = if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false }
-                            LayerId               = $null
-                            LayerName             = $null
-                            LayerType             = $null
-                            LayerHasSpecialChars  = $null
-                            LayerNameLength       = $null
-                            GeometryType          = $null
-                            UniqueSymbology       = $null
+                            LayerId               = $layer.id
+                            LayerName             = $layer.name
+                            LayerType             = $layerData.type
+                            LayerHasSpecialChars  = if ($layer.name -match '\W') { $true } else { $false }
+                            LayerNameLength       = $layer.name.Length
+                            GeometryType          = $layerData.geometryType
+                            UniqueSymbology       = $layerData.drawingInfo.renderer.uniqueValueInfos.Count
                             FieldName             = $field.name
                             FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
                             FieldNameLength       = $field.name.length
                             FieldType             = $field.type
                             FieldLength           = if ($field.type -EQ 'esriFieldTypeString') { $field.length } else { $null }
-                        }
-                    }
-                }
-                else {
-                    # LOOP ALL LAYERS IN SERVICE
-                    foreach ($layer in $serviceData.layers) {
-
-                        # GET LAYER DATA
-                        $layerData = Get-ServerServiceLayerMetadata @cmnParms @serviceParams -LayerId $layer.id
-
-                        # LOOP ALL FIELDS
-                        foreach ($field in $layerData.fields) {
-
-                            # CREATE CUSTOM OBJECT
-                            [PSCustomObject] @{
-                                #Folder                = $fldr
-                                ServiceName           = $service.name
-                                ServiceNameLength     = $service.name.Length
-                                ServiceType           = $service.type
-                                SupportsDynamicLayers = if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false }
-                                LayerId               = $layer.id
-                                LayerName             = $layer.name
-                                LayerType             = $layerData.type
-                                LayerHasSpecialChars  = if ($layer.name -match '\W') { $true } else { $false }
-                                LayerNameLength       = $layer.name.Length
-                                GeometryType          = $layerData.geometryType
-                                UniqueSymbology       = $layerData.drawingInfo.renderer.uniqueValueInfos.Count
-                                FieldName             = $field.name
-                                FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
-                                FieldNameLength       = $field.name.length
-                                FieldType             = $field.type
-                                FieldLength           = if ($field.type -EQ 'esriFieldTypeString') { $field.length } else { $null }
-                            }
                         }
                     }
                 }
