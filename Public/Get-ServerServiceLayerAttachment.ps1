@@ -14,6 +14,8 @@ function Get-ServerServiceLayerAttachment {
         Name of service
     .PARAMETER FolderName
         Folder name in ArcGIS Server
+    .PARAMETER ReportData
+        Return report data
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -58,6 +60,9 @@ function Get-ServerServiceLayerAttachment {
         [ValidateNotNullOrEmpty()]
         [Alias('Folder')]
         [System.String] $FolderName,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Return report data')]
+        [System.Management.Automation.SwitchParameter] $ReportData,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -120,9 +125,30 @@ function Get-ServerServiceLayerAttachment {
                 $attachments.Remove('globalid')
 
                 # CONVERT TO CUSTOM OBJECT
-                [PSCustomObject] $attachments
+                $attachments = [PSCustomObject] $attachments
+            }
+
+            # OUTPUT REPORT DATA IF REQUESTED
+            if ($PSBoundParameters.ContainsKey('ReportData')) {
+                # EVALUATE EACH ATTACHMENT
+                foreach ($atchmt in $attachments.attachmentGroups.attachmentInfos) {
+                    # OUTPUT REPORT DATA
+                    [PSCustomObject] @{
+                        FolderName   = if ($PSBoundParameters.ContainsKey('FolderName')) { $FolderName } else { '(root)' }
+                        ServiceName  = $ServiceName
+                        LayerId      = $LayerId
+                        #ObjectId     = if ($PSBoundParameters.ContainsKey('ObjectId')) { $ObjectId -join ', ' } else { $null }
+                        #GlobalId     = if ($PSBoundParameters.ContainsKey('GlobalId')) { $GlobalId -join ', ' } else { $null }
+                        AttachmentId = $atchmt.attachmentId
+                        Name         = $atchmt.name
+                        ContentType  = $atchmt.contentType
+                        Size         = $atchmt.size
+                        'Size(MB)'   = $atchmt.size / 1MB
+                    }
+                }
             }
             else {
+                # RETURN ATTACHMENTS
                 $attachments
             }
         }
