@@ -28,10 +28,21 @@ function Get-ServerServiceMetadata {
     .NOTES
         Name:     Get-ServerServiceMetadata
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-20
+        Version:  0.1.0 | Last Edit: 2024-09-26
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
+        Performance Testing:
+        Using custom properties instead of custom objects for output appears to be slightly faster, but only slightly.
+        Below is the code used to test performance. The cmdlet "Test-Performance" requires the SecurityTools modules.
+        Test-Performance -Runs 100 -ScriptBlock {
+            $params = @{
+                Context     = 'https://sampleserver6.arcgisonline.com/arcgis'
+                ServiceName = 'DamageAssessment'
+                ServiceType = 'FeatureServer'
+            }
+            Get-ServerServiceMetadata @params -ReportData | Out-Null
+        }
     #>
     [CmdletBinding()]
     Param(
@@ -98,7 +109,7 @@ function Get-ServerServiceMetadata {
                 Write-Error -Message $sm.error.message -ErrorAction Stop
             }
             else {
-                # OUTPUT REPORT DATA
+                <# # OUTPUT REPORT DATA
                 [PSCustomObject] @{
                     ServiceName                          = if ($PSBoundParameters.ContainsKey('FolderName')) {
                         '{0}/{1}' -f $FolderName, $ServiceName
@@ -133,15 +144,16 @@ function Get-ServerServiceMetadata {
                     Units                                = $sm.units
                     SupportsQueryDomains                 = $sm.supportsQueryDomains
                     LayerNames                           = $sm.layers.name -join ', ' # {@{id=x; name=y; parentLayerId=z...}}
+                    Layers                               = $sm.layers
                     TableNames                           = $sm.tables.name -join ', ' # {@{id=x; name=y}}
                     RelationshipNames                    = $sm.relationships.name -join ', ' # {@{id=x; name=y}}
                     EnableZDefaults                      = $sm.enableZDefaults
                     ReferenceScale                       = $sm.referenceScale
-                }
+                } #>
 
-                <# $props = @(
-                    @{ N = 'ServiceName'; E = { $service.name } }
-                    @{ N = ''; E = { $_ } }
+                # SET CUSTOM PROPERTIES
+                $props = @(
+                    @{ N = 'ServiceName'; E = { if ($PSBoundParameters.ContainsKey('FolderName')) {'{0}/{1}' -f $FolderName, $ServiceName} else {$ServiceName} } }
                     @{ N = 'ServiceType'; E = { $service.type } }
                     @{ N = 'HasVersionedData'; E = { $_.hasVersionedData } }
                     @{ N = 'SupportsDisconnectedEditing'; E = { $_.supportsDisconnectedEditing } }
@@ -169,11 +181,15 @@ function Get-ServerServiceMetadata {
                     @{ N = 'Units'; E = { $_.units } }
                     @{ N = 'SupportsQueryDomains'; E = { $_.supportsQueryDomains } }
                     @{ N = 'LayerNames'; E = { $_.layers.name -join ', ' } } # {@{id=x; name=y; parentLayerId=z...}}
+                    @{ N = 'Layers'; E = { $_.layers } }
                     @{ N = 'TableNames'; E = { $_.tables.name -join ', ' } } # {@{id=x; name=y}}
                     @{ N = 'RelationshipNames'; E = { $_.relationships.name -join ', ' } } # {@{id=x; name=y}}
                     @{ N = 'EnableZDefaults'; E = { $_.enableZDefaults } }
                     @{ N = 'ReferenceScale'; E = { $_.referenceScale } }
-                ) #>
+                )
+
+                # OUTPUT REPORT DATA
+                $sm | Select-Object -Property $props
             }
         }
         else {
