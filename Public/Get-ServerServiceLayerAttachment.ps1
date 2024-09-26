@@ -131,19 +131,23 @@ function Get-ServerServiceLayerAttachment {
             # OUTPUT REPORT DATA IF REQUESTED
             if ($PSBoundParameters.ContainsKey('ReportData')) {
                 # EVALUATE EACH ATTACHMENT
-                foreach ($atchmt in $attachments.attachmentGroups.attachmentInfos) {
+                foreach ($att in $attachments.attachmentGroups.attachmentInfos) {
                     # OUTPUT REPORT DATA
                     [PSCustomObject] @{
-                        FolderName   = if ($PSBoundParameters.ContainsKey('FolderName')) { $FolderName } else { '(root)' }
-                        ServiceName  = $ServiceName
+                        ServiceName  = if ($PSBoundParameters.ContainsKey('FolderName')) {
+                            '{0}/{1}' -f $FolderName, $ServiceName
+                        }
+                        else {
+                            '{0}' -f $ServiceName
+                        }
                         LayerId      = $LayerId
                         #ObjectId     = if ($PSBoundParameters.ContainsKey('ObjectId')) { $ObjectId -join ', ' } else { $null }
                         #GlobalId     = if ($PSBoundParameters.ContainsKey('GlobalId')) { $GlobalId -join ', ' } else { $null }
-                        AttachmentId = $atchmt.attachmentId
-                        Name         = $atchmt.name
-                        ContentType  = $atchmt.contentType
-                        Size         = $atchmt.size
-                        'Size(MB)'   = $atchmt.size / 1MB
+                        AttachmentId = $att.attachmentid
+                        Name         = $att.name
+                        ContentType  = $att.contentType
+                        Size         = $att.size
+                        'Size(MB)'   = $att.size / 1MB
                     }
                 }
             }
