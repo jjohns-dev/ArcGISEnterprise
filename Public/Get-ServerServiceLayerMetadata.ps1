@@ -30,7 +30,7 @@ function Get-ServerServiceLayerMetadata {
     .NOTES
         Name:     Get-ServerServiceLayerMetadata
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-24
+        Version:  0.1.0 | Last Edit: 2024-09-26
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
@@ -103,7 +103,7 @@ function Get-ServerServiceLayerMetadata {
 
         # VALIDATE RESPONSE
         if ($layerMetadata.error) {
-            Write-Error -Message $layerMetadata.error.message -ErrorAction Stop
+            Write-Error -Message $layerMetadata.error -ErrorAction Stop
         }
         else {
             # CHECK FOR SCENARIO WHERE LAYER IS ATTACHMENT
