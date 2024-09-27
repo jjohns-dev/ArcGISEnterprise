@@ -10,8 +10,6 @@ function Get-ServerServiceMetadata {
         Type of service (e.g., FeatureServer or MapServer)
     .PARAMETER FolderName
         Folder name in ArcGIS Server
-    .PARAMETER ReportData
-        Return report data
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -28,7 +26,7 @@ function Get-ServerServiceMetadata {
     .NOTES
         Name:     Get-ServerServiceMetadata
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-26
+        Version:  0.1.0 | Last Edit: 2024-09-27
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
@@ -59,9 +57,6 @@ function Get-ServerServiceMetadata {
         [ValidateNotNullOrEmpty()]
         [Alias('Folder')]
         [System.String] $FolderName,
-
-        [Parameter(Mandatory = $false, HelpMessage = 'Return report data')]
-        [System.Management.Automation.SwitchParameter] $ReportData,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -99,102 +94,20 @@ function Get-ServerServiceMetadata {
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # ADD REPORT DATA IF REQUESTED
-        if ($PSBoundParameters.ContainsKey('ReportData')) {
-            # INVOKE REQUEST
-            $sm = Invoke-RestMethod @restParams
+        # INVOKE REQUEST
+        $serviceMetadata = Invoke-RestMethod @restParams
 
-            # CHECK FOR ERRORS
-            if ($sm.error) {
-                Write-Error -Message $sm.error.message -ErrorAction Stop
-            }
-            else {
-                <# # OUTPUT REPORT DATA
-                [PSCustomObject] @{
-                    ServiceName                          = if ($PSBoundParameters.ContainsKey('FolderName')) {
-                        '{0}/{1}' -f $FolderName, $ServiceName
-                    }
-                    else {
-                        $ServiceName
-                    }
-                    ServiceType                          = $ServiceType
-                    HasVersionedData                     = $sm.hasVersionedData
-                    SupportsDisconnectedEditing          = $sm.supportsDisconnectedEditing
-                    SupportsQueryDataElements            = $sm.supportsQueryDataElements
-                    SupportsRelationshipsResource        = $sm.supportsRelationshipsResource
-                    SyncEnabled                          = $sm.syncEnabled
-                    SupportedExportFormats               = $sm.supportedExportFormats
-                    SupportedQueryFormats                = $sm.supportedQueryFormats
-                    MaxRecordCount                       = $sm.maxRecordCount
-                    Capabilities                         = $sm.capabilities
-                    Description                          = $sm.description
-                    SupportsSplit                        = $sm.advancedEditingCapabilities.supportsSplit
-                    SupportsReturnServiceEditsInSourceSR = $sm.advancedEditingCapabilities.supportsReturnServiceEditsInSourceSR
-                    SupportsAsyncApplyEdits              = $sm.advancedEditingCapabilities.supportsAsyncApplyEdits
-                    WKID                                 = $sm.spatialReference.wkid
-                    XYTolerance                          = $sm.spatialReference.xyTolerance
-                    ZTolerance                           = $sm.spatialReference.zTolerance
-                    MTolderance                          = $sm.spatialReference.mTolerance
-                    XMin                                 = $sm.initialExtent.xmin
-                    YMin                                 = $sm.initialExtent.ymin
-                    XMax                                 = $sm.initialExtent.xmax
-                    YMax                                 = $sm.initialExtent.ymax
-                    AllowGeometryUpdates                 = $sm.allowGeometryUpdates
-                    SupportsApplyEditsWithGlobalIds      = $sm.supportsApplyEditsWithGlobalIds
-                    Units                                = $sm.units
-                    SupportsQueryDomains                 = $sm.supportsQueryDomains
-                    LayerNames                           = $sm.layers.name -join ', ' # {@{id=x; name=y; parentLayerId=z...}}
-                    Layers                               = $sm.layers
-                    TableNames                           = $sm.tables.name -join ', ' # {@{id=x; name=y}}
-                    RelationshipNames                    = $sm.relationships.name -join ', ' # {@{id=x; name=y}}
-                    EnableZDefaults                      = $sm.enableZDefaults
-                    ReferenceScale                       = $sm.referenceScale
-                } #>
-
-                # SET CUSTOM PROPERTIES
-                $props = @(
-                    @{ N = 'ServiceName'; E = { if ($PSBoundParameters.ContainsKey('FolderName')) {'{0}/{1}' -f $FolderName, $ServiceName} else {$ServiceName} } }
-                    @{ N = 'ServiceType'; E = { $service.type } }
-                    @{ N = 'HasVersionedData'; E = { $_.hasVersionedData } }
-                    @{ N = 'SupportsDisconnectedEditing'; E = { $_.supportsDisconnectedEditing } }
-                    @{ N = 'SupportsQueryDataElements'; E = { $_.supportsQueryDataElements } }
-                    @{ N = 'SupportsRelationshipsResource'; E = { $_.supportsRelationshipsResource } }
-                    @{ N = 'SyncEnabled'; E = { $_.syncEnabled } }
-                    @{ N = 'SupportedExportFormats'; E = { $_.supportedExportFormats } }
-                    @{ N = 'SupportedQueryFormats'; E = { $_.supportedQueryFormats } }
-                    @{ N = 'MaxRecordCount'; E = { $_.maxRecordCount } }
-                    @{ N = 'Capabilities'; E = { $_.capabilities } }
-                    @{ N = 'Description'; E = { $_.description } }
-                    @{ N = 'SupportsSplit'; E = { $_.advancedEditingCapabilities.supportsSplit } }
-                    @{ N = 'SupportsReturnServiceEditsInSourceSR'; E = { $_.advancedEditingCapabilities.supportsReturnServiceEditsInSourceSR } }
-                    @{ N = 'SupportsAsyncApplyEdits'; E = { $_.advancedEditingCapabilities.supportsAsyncApplyEdits } }
-                    @{ N = 'WKID'; E = { $_.spatialReference.wkid } }
-                    @{ N = 'XYTolerance'; E = { $_.spatialReference.xyTolerance } }
-                    @{ N = 'ZTolerance'; E = { $_.spatialReference.zTolerance } }
-                    @{ N = 'MTolderance'; E = { $_.spatialReference.mTolerance } }
-                    @{ N = 'XMin'; E = { $_.initialExtent.xmin } }
-                    @{ N = 'YMin'; E = { $_.initialExtent.ymin } }
-                    @{ N = 'XMax'; E = { $_.initialExtent.xmax } }
-                    @{ N = 'YMax'; E = { $_.initialExtent.ymax } }
-                    @{ N = 'AllowGeometryUpdates'; E = { $_.allowGeometryUpdates } }
-                    @{ N = 'SupportsApplyEditsWithGlobalIds'; E = { $_.supportsApplyEditsWithGlobalIds } }
-                    @{ N = 'Units'; E = { $_.units } }
-                    @{ N = 'SupportsQueryDomains'; E = { $_.supportsQueryDomains } }
-                    @{ N = 'LayerNames'; E = { $_.layers.name -join ', ' } } # {@{id=x; name=y; parentLayerId=z...}}
-                    @{ N = 'Layers'; E = { $_.layers } }
-                    @{ N = 'TableNames'; E = { $_.tables.name -join ', ' } } # {@{id=x; name=y}}
-                    @{ N = 'RelationshipNames'; E = { $_.relationships.name -join ', ' } } # {@{id=x; name=y}}
-                    @{ N = 'EnableZDefaults'; E = { $_.enableZDefaults } }
-                    @{ N = 'ReferenceScale'; E = { $_.referenceScale } }
-                )
-
-                # OUTPUT REPORT DATA
-                $sm | Select-Object -Property $props
-            }
+        # VALIDATE RESPONSE - THE VALIDATION IS DUE TO ADDING ADDITIONAL PROPERTIES
+        if ($layerMetadata.error) {
+            Write-Error -Message $layerMetadata.error -ErrorAction Stop
         }
         else {
-            # INVOKE REQUEST
-            Invoke-RestMethod @restParams
+            # ADD NECESSARY PROPERTIES
+            $sName = if ($PSBoundParameters.ContainsKey('FolderName')) { '{0}/{1}' -f $FolderName, $ServiceName } else { $ServiceName }
+            Add-Member -InputObject $serviceMetadata -NotePropertyMembers @{ ServiceName = $sName; ServiceType = $ServiceType }
+
+            # OUTPUT LAYER METADATA
+            $serviceMetadata
         }
     }
 }

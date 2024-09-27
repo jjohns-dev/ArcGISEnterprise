@@ -77,6 +77,8 @@
         'Find-PortalItem'
         'Find-ServerServiceLayerData'
         'Format-CsvHeader'
+        'Format-ServerServiceLayerMetadata'
+        'Format-ServerServiceMetadata'
         'Get-PortalAllowedOriginList'
         'Get-PortalDataStoreServer'
         'Get-PortalDefaultUserSettings'

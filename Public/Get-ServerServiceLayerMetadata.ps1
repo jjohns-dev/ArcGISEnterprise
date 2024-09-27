@@ -101,7 +101,7 @@ function Get-ServerServiceLayerMetadata {
         # INVOKE REQUEST
         $layerMetadata = Invoke-RestMethod @restParams
 
-        # VALIDATE RESPONSE
+        # VALIDATE RESPONSE - THE VALIDATION IS DUE TO THE DESIGN ISSUE DESCRIBED BELOW
         if ($layerMetadata.error) {
             Write-Error -Message $layerMetadata.error -ErrorAction Stop
         }
@@ -119,64 +119,16 @@ function Get-ServerServiceLayerMetadata {
                 # CONVERT TO CUSTOM OBJECT
                 $layerMetadata = [PSCustomObject] $layerMetadata
             }
-
-            # OUTPUT REPORT DATA IF REQUESTED
-            if ($PSBoundParameters.ContainsKey('ReportData')) {
-                # OUTPUT REPORT DATA
-                [PSCustomObject] @{
-                    LayerName                        = if ($PSBoundParameters.ContainsKey('FolderName')) {
-                        '{0}/{1}/{2}' -f $FolderName, $ServiceName, $layerMetadata.name
-                    }
-                    else {
-                        '{0}/{1}' -f $ServiceName, $layerMetadata.name
-                    }
-                    Id                               = $layerMetadata.id
-                    ServiceType                      = $ServiceType
-                    LayerType                        = $layerMetadata.type
-                    ParentLayer                      = $layerMetadata.parentLayer
-                    DefaultVisibility                = $layerMetadata.defaultVisibility
-                    MinScale                         = $layerMetadata.minScale
-                    MaxScale                         = $layerMetadata.maxScale
-                    CanScaleSymbols                  = $layerMetadata.canScaleSymbols
-                    GeometryType                     = $layerMetadata.geometryType
-                    Description                      = $layerMetadata.description
-                    #EditFieldsInfo                   = $layerMetadata.editFieldsInfo # {@{editDateField=x; editorField=y; creationDateField=z; creatorField=a...}}
-                    RelationshipNames                = $layerMetadata.relationships.name -join ', ' # {@{id=x; name=y, relatedTableId=z...}}
-                    SupportsAdvancedQueries          = $layerMetadata.supportsAdvancedQueries
-                    SupportsPagination               = $layerMetadata.advancedQueryCapabilities.supportsPagination
-                    SupportsQueryAttachments         = $layerMetadata.advancedQueryCapabilities.supportsQueryAttachments
-                    HasMetadata                      = $layerMetadata.hasMetadata
-                    XMin                             = $layerMetadata.extent.xmin
-                    YMin                             = $layerMetadata.extent.ymin
-                    XMax                             = $layerMetadata.extent.xmax
-                    YMax                             = $layerMetadata.extent.ymax
-                    WKId                             = $layerMetadata.extent.spatialReference.wkid
-                    RendererType                     = $layerMetadata.drawingInfo.renderer.type
-                    RendererField1                   = $layerMetadata.drawingInfo.renderer.field1
-                    RendererScaleSymbols             = $layerMetadata.drawingInfo.scaleSymbols
-                    RendererTransparency             = $layerMetadata.drawingInfo.transparency
-                    RendererLabelingInfo             = $layerMetadata.drawingInfo.labelingInfo
-                    HasM                             = $layerMetadata.hasM
-                    HasZ                             = $layerMetadata.hasZ
-                    AllowGeometryUpdates             = $layerMetadata.allowGeometryUpdates
-                    HasAttachments                   = $layerMetadata.hasAttachments # PROPERTY OF INTEREST
-                    SupportsApplyEditsWithGlobalIds  = $layerMetadata.supportsApplyEditsWithGlobalIds
-                    ObjectIdField                    = $layerMetadata.objectIdField
-                    GlobalIdField                    = $layerMetadata.globalIdField
-                    DisplayField                     = $layerMetadata.displayField
-                    TypeIdField                      = $layerMetadata.typeIdField
-                    SubtypeField                     = $layerMetadata.subtypeField
-                    IndexNames                       = $layerMetadata.indexes.name -join ', ' # {@{fields=x; isAscending=y...}}
-                    DatesInUnknownTimezone           = $layerMetadata.datesInUnknownTimeZone
-                    TimeZone                         = $layerMetadata.DateFieldsTimeReference.timeZone
-                    RespectsDaylightSaving           = $layerMetadata.DateFieldsTimeReference.respectsDaylightSaving
-                    StandardMaxRecordCount           = $layerMetadata.standardMaxRecordCount
-                    TileMaxRecordCount               = $layerMetadata.tileMaxRecordCount
-                    StandardMaxRecordCountNoGeometry = $layerMetadata.standardMaxRecordCountNoGeometry
-                    MaxRecordCountFactor             = $layerMetadata.maxRecordCountFactor
-                }
-            }
             else {
+                # ADD NECESSARY PROPERTIES
+                if ($PSBoundParameters.ContainsKey('FolderName')) {
+                    $lName = '{0}/{1}/{2}' -f $FolderName, $ServiceName, $layerMetadata.name
+                }
+                else {
+                    $lName = '{0}/{1}' -f $ServiceName, $layerMetadata.name
+                }
+                Add-Member -InputObject $layerMetadata -NotePropertyMembers @{ LayerName = $lName; ServiceType = $ServiceType }
+
                 # OUTPUT LAYER METADATA
                 $layerMetadata
             }
