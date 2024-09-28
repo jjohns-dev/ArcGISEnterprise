@@ -41,7 +41,7 @@ function Get-ServerService {
                 ServiceName = 'DamageAssessment'
                 ServiceType = 'FeatureServer'
             }
-            Get-ServerService @params -ReportData | Out-Null
+            Get-ServerService @params | Out-Null
         }
     #>
     [CmdletBinding()]
