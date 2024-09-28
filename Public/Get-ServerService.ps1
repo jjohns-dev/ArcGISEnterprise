@@ -23,10 +23,10 @@ function Get-ServerService {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerServiceMetadata @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer'
+        PS C:\> Get-ServerService @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer'
         Returns service metadata for the 'Geology' FeatureServer in the 'Energy' folder
     .NOTES
-        Name:     Get-ServerServiceMetadata
+        Name:     Get-ServerService
         Author:   Justin Johns
         Version:  0.1.0 | Last Edit: 2024-09-27
         - Version history is capture in repository commit history
@@ -41,7 +41,7 @@ function Get-ServerService {
                 ServiceName = 'DamageAssessment'
                 ServiceType = 'FeatureServer'
             }
-            Get-ServerServiceMetadata @params -ReportData | Out-Null
+            Get-ServerService @params -ReportData | Out-Null
         }
 
         # SET REPORT PROPERTIES
@@ -158,22 +158,8 @@ function Get-ServerService {
     }
     Process {
         # SET REQUEST PARAMETERS
-        $restParams = @{ # need to test this
-            Uri     = switch ($PSBoundParameters.Keys) {
-                { $_ -contains 'Admin' -and $_ -contains 'FolderName' } {
-                    '{0}/admin/services/{1}/{2}.{3}' -f $Context, $FolderName, $ServiceName, $ServiceType
-                }
-                { $_ -contains 'Admin' -and -not $_ -contains 'FolderName' } {
-                    '{0}/admin/services/{1}.{2}' -f $Context, $ServiceName, $ServiceType
-                }
-                { $_ -contains 'FolderName' } {
-                    '{0}/rest/services/{1}/{2}/{3}' -f $Context, $FolderName, $ServiceName, $ServiceType
-                }
-                default {
-                    '{0}/rest/services/{1}/{2}' -f $Context, $ServiceName, $ServiceType
-                }
-            }
-            <# if ($PSBoundParameters.ContainsKey('Admin')) {
+        $restParams = @{
+            Uri     = if ($PSBoundParameters.ContainsKey('Admin')) {
                 if ($PSBoundParameters.ContainsKey('FolderName')) {
                     '{0}/admin/services/{1}/{2}.{3}' -f $Context, $FolderName, $ServiceName, $ServiceType
                 }
@@ -188,7 +174,7 @@ function Get-ServerService {
                 else {
                     '{0}/rest/services/{1}/{2}' -f $Context, $ServiceName, $ServiceType
                 }
-            } #>
+            }
             Method  = 'POST'
             Body    = @{
                 f     = 'json'
@@ -201,6 +187,9 @@ function Get-ServerService {
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
+        # OUTPUT VERBOSE
+        Write-Verbose -Message ('Requesting service [{0}]' -f $restParams.Uri)
 
         # INVOKE REQUEST
         Invoke-RestMethod @restParams

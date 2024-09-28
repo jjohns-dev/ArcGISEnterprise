@@ -95,7 +95,7 @@ function Get-ServerServiceReport {
             }
 
             # GET LAYERS IN SERVICE
-            $serviceData = Get-ServerServiceMetadata @cmnParms @serviceParams
+            $serviceData = Get-ServerService @cmnParms @serviceParams
 
             # CHECK FOR ERRORS -- should we build an error handler function (check for code and throw proper error)?
             if ($serviceData.error) {

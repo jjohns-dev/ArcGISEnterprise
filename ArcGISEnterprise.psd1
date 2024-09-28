@@ -114,7 +114,6 @@
         'Get-ServerServiceLayerAttachment'
         'Get-ServerServiceLifecycleInfo'
         'Get-ServerServiceList'
-        'Get-ServerServiceMetadata'
         'Get-ServerServiceReport'
         'Get-ServerServicesDirectory'
         'Get-ServerSetting'

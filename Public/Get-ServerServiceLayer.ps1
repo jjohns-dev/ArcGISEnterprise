@@ -222,15 +222,6 @@ function Get-ServerServiceLayer {
                 $layerMetadata = [PSCustomObject] $layerMetadata
             }
             else {
-                # ADD NECESSARY PROPERTIES
-                if ($PSBoundParameters.ContainsKey('FolderName')) {
-                    $lName = '{0}/{1}/{2}' -f $FolderName, $ServiceName, $layerMetadata.name
-                }
-                else {
-                    $lName = '{0}/{1}' -f $ServiceName, $layerMetadata.name
-                }
-                Add-Member -InputObject $layerMetadata -NotePropertyMembers @{ LayerName = $lName; ServiceType = $ServiceType }
-
                 # OUTPUT LAYER METADATA
                 $layerMetadata
             }
