@@ -154,7 +154,7 @@ Test-Performance -Runs 100 -ScriptBlock {
         ServiceName = 'DamageAssessment'
         ServiceType = 'FeatureServer'
     }
-    Get-ServerService @params -ReportData | Out-Null
+    Get-ServerService @params | Out-Null
 }
 
 ## RELATED LINKS
