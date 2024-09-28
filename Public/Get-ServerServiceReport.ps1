@@ -169,10 +169,14 @@ function Get-ServerServiceReport {
             @{ N = 'Size(MB)'; E = { $_.size / 1MB } }
         )
 
-        # CREATE SERVICE AND LAYER ARRAYS
-        $serviceArray = @()
-        $layerArray = @()
-        $attachArray = @()
+        # CREATE REPORT HASHTABLE
+        $report = @{
+            Context     = $Context
+            Folder      = $FolderName
+            Services    = @()
+            Layers      = @()
+            Attachments = @()
+        }
     }
     Process {
         # GET SERVICES IN FOLDER
@@ -249,7 +253,7 @@ function Get-ServerServiceReport {
             } #>
 
             # ADD SERVICE DATA TO ARRAY
-            $serviceArray += $serviceData | Select-Object -Property $reportPropsService
+            $report['Services'] += $serviceData | Select-Object -Property $reportPropsService
 
             # LOOK FOR LAYERS
             if ($null -NE $serviceData.layers) {
@@ -315,7 +319,7 @@ function Get-ServerServiceReport {
                     } #>
 
                     # ADD LAYER DATA TO ARRAY
-                    $layerArray += $layerData | Select-Object -Property $reportPropsLayer
+                    $report['Layers'] += $layerData | Select-Object -Property $reportPropsLayer
 
                     # GET ATTACHMENTS
                     if ($service.type -EQ 'FeatureServer' -and $layerData.HasAttachments -EQ $true) {
@@ -335,28 +339,37 @@ function Get-ServerServiceReport {
                             # SET SERVICE LAYER ATTACHMENT PARAMS
                             $layerParams['ObjectId'] = $data.features.attributes.objectid
 
+                            # OUTPUT VERBOSE
+                            $verVars = @(('{0}/{1}' -f $service.name, $layer.name), $layerParams['ObjectId'])
+                            Write-Verbose -Message ('Evaluating attachments for layer [{0}] and globalid [{1}]' -f $verVars)
+
                             # GET ATTACHMENTS
-                            $attachments = Get-ServerServiceLayerAttachment @cmnParams @layerParams -ReportData
+                            $attachments = Get-ServerServiceLayerAttachment @cmnParams @layerParams
 
-                            <# # CREATE CUSTOM OBJECT FOR ATTACHMENTS
-                            [PSCustomObject] @{
-                                ServiceName  = if ($PSBoundParameters.ContainsKey('FolderName')) {
-                                    '{0}/{1}' -f $FolderName, $ServiceName
-                                }
-                                else {
-                                    '{0}' -f $ServiceName
-                                }
-                                LayerId      = $LayerId
-                                #ObjectId     = if ($PSBoundParameters.ContainsKey('ObjectId')) { $ObjectId -join ', ' } else { $null }
-                                #GlobalId     = if ($PSBoundParameters.ContainsKey('GlobalId')) { $GlobalId -join ', ' } else { $null }
-                                AttachmentId = $att.attachmentid
-                                Name         = $att.name
-                                ContentType  = $att.contentType
-                                Size         = $att.size
-                                'Size(MB)'   = $att.size / 1MB
-                            } #>
+                            # EVALUATE EACH ATTACHMENT
+                            foreach ($att in $attachments.attachmentGroups.attachmentInfos) {
 
-                            $attachArray += $attachments | Select-Object -Property $reportPropsAttachment
+                                <# # CREATE CUSTOM OBJECT FOR ATTACHMENTS
+                                [PSCustomObject] @{
+                                    ServiceName  = if ($PSBoundParameters.ContainsKey('FolderName')) {
+                                        '{0}/{1}' -f $FolderName, $ServiceName
+                                    }
+                                    else {
+                                        '{0}' -f $ServiceName
+                                    }
+                                    LayerId      = $LayerId
+                                    #ObjectId     = if ($PSBoundParameters.ContainsKey('ObjectId')) { $ObjectId -join ', ' } else { $null }
+                                    #GlobalId     = if ($PSBoundParameters.ContainsKey('GlobalId')) { $GlobalId -join ', ' } else { $null }
+                                    AttachmentId = $att.attachmentid
+                                    Name         = $att.name
+                                    ContentType  = $att.contentType
+                                    Size         = $att.size
+                                    'Size(MB)'   = $att.size / 1MB
+                                } #>
+
+                                # ADD ATTACHMENTS TO ARRAY
+                                $report['Attachments'] += $att | Select-Object -Property $reportPropsAttachment
+                            }
                         }
                     }
                 }
@@ -365,12 +378,6 @@ function Get-ServerServiceReport {
     }
     End {
         # RETURN SERVIEC AND LAYER ARRAYS
-        [PSCustomObject] @{
-            Context     = $Context
-            Folder      = $FolderName
-            Services    = $serviceArray
-            Layers      = $layerArray
-            Attachments = $attachArray
-        }
+        [PSCustomObject] $report
     }
 }
