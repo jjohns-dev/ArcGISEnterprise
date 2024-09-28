@@ -14,8 +14,6 @@ function Get-ServerServiceLayerAttachment {
         Name of service
     .PARAMETER FolderName
         Folder name in ArcGIS Server
-    .PARAMETER ReportData
-        Return report data
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -60,9 +58,6 @@ function Get-ServerServiceLayerAttachment {
         [ValidateNotNullOrEmpty()]
         [Alias('Folder')]
         [System.String] $FolderName,
-
-        [Parameter(Mandatory = $false, HelpMessage = 'Return report data')]
-        [System.Management.Automation.SwitchParameter] $ReportData,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -126,30 +121,6 @@ function Get-ServerServiceLayerAttachment {
 
                 # CONVERT TO CUSTOM OBJECT
                 $attachments = [PSCustomObject] $attachments
-            }
-
-            # OUTPUT REPORT DATA IF REQUESTED
-            if ($PSBoundParameters.ContainsKey('ReportData')) {
-                # EVALUATE EACH ATTACHMENT
-                foreach ($att in $attachments.attachmentGroups.attachmentInfos) {
-                    # OUTPUT REPORT DATA
-                    [PSCustomObject] @{
-                        ServiceName  = if ($PSBoundParameters.ContainsKey('FolderName')) {
-                            '{0}/{1}' -f $FolderName, $ServiceName
-                        }
-                        else {
-                            '{0}' -f $ServiceName
-                        }
-                        LayerId      = $LayerId
-                        #ObjectId     = if ($PSBoundParameters.ContainsKey('ObjectId')) { $ObjectId -join ', ' } else { $null }
-                        #GlobalId     = if ($PSBoundParameters.ContainsKey('GlobalId')) { $GlobalId -join ', ' } else { $null }
-                        AttachmentId = $att.attachmentid
-                        Name         = $att.name
-                        ContentType  = $att.contentType
-                        Size         = $att.size
-                        'Size(MB)'   = $att.size / 1MB
-                    }
-                }
             }
             else {
                 # RETURN ATTACHMENTS
