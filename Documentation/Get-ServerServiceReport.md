@@ -1,30 +1,24 @@
-# Get-ServerServiceFieldReport
+# Get-ServerServiceReport
 
 ## SYNOPSIS
-Get ArcGIS Server service field information
+Get ArcGIS Server service and layer information
 
 ## SYNTAX
 
 ```
-Get-ServerServiceFieldReport [[-FolderName] <String>] [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck]
+Get-ServerServiceReport [[-FolderName] <String>] [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get ArcGIS Server service field information for fields belonging to services and service layers
+Get ArcGIS Server service and layer information and output in report format
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceFieldReport -Context https://myServer.arcgis.com/arcgis -Folder Gas
-Returns an array of fields with accompanying service and layer properties
-```
-
-### EXAMPLE 2
-```
-Get-ServerServiceFieldReport -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
-Returns an array of fields with length for "esriFieldTypeString" types
+Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -Folder Gas
+Returns an array of fields metadata for service and layer properties
 ```
 
 ## PARAMETERS
@@ -99,9 +93,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Get-ServerServiceFieldReport
+Name:     Get-ServerServiceReport
 Author:   Justin Johns
-Version:  0.1.4 | Last Edit: 2024-09-23
+Version:  0.1.0 | Last Edit: 2024-09-28
 - Version history is capture in repository commit history
 Comments: \<Comment(s)\>
 - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.

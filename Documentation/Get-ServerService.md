@@ -17,7 +17,7 @@ Get ArcGIS Server service metadata
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceMetadata @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer'
+Get-ServerService @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer'
 Returns service metadata for the 'Geology' FeatureServer in the 'Energy' folder
 ```
 
@@ -138,9 +138,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Get-ServerServiceMetadata
+Name:     Get-ServerService
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-09-27
+Version:  0.1.0 | Last Edit: 2024-09-28
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
@@ -154,7 +154,7 @@ Test-Performance -Runs 100 -ScriptBlock {
         ServiceName = 'DamageAssessment'
         ServiceType = 'FeatureServer'
     }
-    Get-ServerServiceMetadata @params -ReportData | Out-Null
+    Get-ServerService @params -ReportData | Out-Null
 }
 
 ## RELATED LINKS
