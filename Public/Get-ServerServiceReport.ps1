@@ -51,15 +51,15 @@ function Get-ServerServiceReport {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
         # SET COMMON PARAMETERS
-        $cmnParms = $PSBoundParameters
+        $cmnParams = $PSBoundParameters
 
         # VALIDATE FOLDER PARAMETER
         if ($PSBoundParameters.ContainsKey('FolderName')) {
             # REMOVE FOLDER PARAMETER
-            $cmnParms.Remove('FolderName') | Out-Null
+            $cmnParams.Remove('FolderName') | Out-Null
 
             # GET SERVICE INFO INCLUDING FOLDERS
-            $serviceInfo = Get-ServerServiceList @cmnParms
+            $serviceInfo = Get-ServerServiceList @cmnParams
 
             # VALIDATE THE FOLDER EXISTS
             if ($FolderName -notin $serviceInfo.folders) {
@@ -68,7 +68,7 @@ function Get-ServerServiceReport {
             }
             else {
                 # ADD FOLDER BACK TO PARAMETERS
-                $cmnParms['FolderName'] = $FolderName
+                $cmnParams['FolderName'] = $FolderName
             }
         }
 
@@ -158,13 +158,25 @@ function Get-ServerServiceReport {
             @{ N = 'MaxRecordCountFactor'; E = { $_.maxRecordCountFactor } }
         )
 
+        # SET REPORT ATTACHMENT PROPERTIES
+        $reportPropsAttachment = @(
+            @{ N = 'LayerName'; E = { '{0}/{1}' -f $service.name, $layer.name } } # 'ServiceName'? COMES FROM SERVICE AND LAYER LOOPS
+            @{ N = 'LayerId'; E = { $layer.id } } # COMES FROM LAYER LOOP
+            @{ N = 'AttachmentId'; E = { $_.attachmentid } }
+            @{ N = 'Name'; E = { $_.name } }
+            @{ N = 'ContentType'; E = { $_.contentType } }
+            @{ N = 'Size'; E = { $_.size } }
+            @{ N = 'Size(MB)'; E = { $_.size / 1MB } }
+        )
+
         # CREATE SERVICE AND LAYER ARRAYS
         $serviceArray = @()
         $layerArray = @()
+        $attachArray = @()
     }
     Process {
         # GET SERVICES IN FOLDER
-        $serviceList = Get-ServerServiceList @cmnParms
+        $serviceList = Get-ServerServiceList @cmnParams
 
         # OUTPUT VERBOSE SERVICES IN FOLDER
         Write-Verbose -Message ("Services:`n{0}" -f ($serviceList.services | Out-String))
@@ -182,7 +194,7 @@ function Get-ServerServiceReport {
             }
 
             # GET LAYERS IN SERVICE
-            $serviceData = Get-ServerService @cmnParms @serviceParams
+            $serviceData = Get-ServerService @cmnParams @serviceParams
 
             # CHECK FOR ERRORS -- should we build an error handler function (check for code and throw proper error)?
             if ($serviceData.error) {
@@ -246,7 +258,7 @@ function Get-ServerServiceReport {
                 foreach ($layer in $serviceData.layers) {
 
                     # GET LAYER DATA
-                    $layerData = Get-ServerServiceLayer @cmnParms @serviceParams -LayerId $layer.id
+                    $layerData = Get-ServerServiceLayer @cmnParams @serviceParams -LayerId $layer.id
 
                     <# # CREATE CUSTOM OJECT FOR LAYER DATA
                     [PSCustomObject] @{
@@ -304,6 +316,49 @@ function Get-ServerServiceReport {
 
                     # ADD LAYER DATA TO ARRAY
                     $layerArray += $layerData | Select-Object -Property $reportPropsLayer
+
+                    # GET ATTACHMENTS
+                    if ($service.type -EQ 'FeatureServer' -and $layerData.HasAttachments -EQ $true) {
+
+                        # SET SERVICE LAYER ATTACHMENT PARAMS
+                        $layerParams = @{
+                            ServiceName = $serviceParams.ServiceName
+                            LayerId     = $layer.id
+                        }
+
+                        # GET LAYER DATA
+                        $data = Find-ServerServiceLayerData @cmnParams @layerParams
+
+                        # EVALUATE FEATURES
+                        if ($data.features.attributes) {
+
+                            # SET SERVICE LAYER ATTACHMENT PARAMS
+                            $layerParams['ObjectId'] = $data.features.attributes.objectid
+
+                            # GET ATTACHMENTS
+                            $attachments = Get-ServerServiceLayerAttachment @cmnParams @layerParams -ReportData
+
+                            <# # CREATE CUSTOM OBJECT FOR ATTACHMENTS
+                            [PSCustomObject] @{
+                                ServiceName  = if ($PSBoundParameters.ContainsKey('FolderName')) {
+                                    '{0}/{1}' -f $FolderName, $ServiceName
+                                }
+                                else {
+                                    '{0}' -f $ServiceName
+                                }
+                                LayerId      = $LayerId
+                                #ObjectId     = if ($PSBoundParameters.ContainsKey('ObjectId')) { $ObjectId -join ', ' } else { $null }
+                                #GlobalId     = if ($PSBoundParameters.ContainsKey('GlobalId')) { $GlobalId -join ', ' } else { $null }
+                                AttachmentId = $att.attachmentid
+                                Name         = $att.name
+                                ContentType  = $att.contentType
+                                Size         = $att.size
+                                'Size(MB)'   = $att.size / 1MB
+                            } #>
+
+                            $attachArray += $attachments | Select-Object -Property $reportPropsAttachment
+                        }
+                    }
                 }
             }
         }
@@ -311,10 +366,11 @@ function Get-ServerServiceReport {
     End {
         # RETURN SERVIEC AND LAYER ARRAYS
         [PSCustomObject] @{
-            Context  = $Context
-            Folder   = $FolderName
-            Services = $serviceArray
-            Layers   = $layerArray
+            Context     = $Context
+            Folder      = $FolderName
+            Services    = $serviceArray
+            Layers      = $layerArray
+            Attachments = $attachArray
         }
     }
 }
