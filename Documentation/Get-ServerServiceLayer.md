@@ -1,27 +1,43 @@
-# Get-ServerServiceMetadata
+# Get-ServerServiceLayer
 
 ## SYNOPSIS
-Get ArcGIS Server service metadata
+Get ArcGIS Server service layer metadata
 
 ## SYNTAX
 
 ```
-Get-ServerServiceMetadata [-ServiceName] <String> [-ServiceType] <String> [[-FolderName] <String>]
- [-ReportData] [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerServiceLayer [-LayerId] <Int32> [-ServiceName] <String> [-ServiceType] <String>
+ [[-FolderName] <String>] [-ReportData] [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get ArcGIS Server service metadata
+Get ArcGIS Server service layer metadata
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceMetadata @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer'
-Returns service metadata for the 'Geology' FeatureServer in the 'Energy' folder
+Get-ServerServiceLayer @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer' -LayerId 0
+Returns service layer metadata for the first layer of the 'Geology' FeatureServer in the 'Energy' folder
 ```
 
 ## PARAMETERS
+
+### -LayerId
+Service Layer ID
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases: Layer
+
+Required: True
+Position: 1
+Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -ServiceName
 Name of service
@@ -32,7 +48,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -47,7 +63,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,7 +78,7 @@ Parameter Sets: (All)
 Aliases: Folder
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -92,7 +108,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -107,7 +123,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -138,9 +154,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Get-ServerServiceMetadata
+Name:     Get-ServerServiceLayer
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-09-20
+Version:  0.1.0 | Last Edit: 2024-09-26
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/

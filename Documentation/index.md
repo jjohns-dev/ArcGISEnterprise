@@ -70,7 +70,7 @@ Please see releases for updates and features
 | Get-ServerService | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]` | Get service from admin endpoint |
 | Get-ServerServiceItemInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/iteminfo` | Get service item info from admin endpoint |
 | Get-ServerServiceLayerAttachment | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]/[LAYERID]/queryAttachments` | Get layer attachments |
-| Get-ServerServiceLayerMetadata | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]/[LAYERID]` | Get service layer metadata |
+| Get-ServerServiceLayer | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]/[LAYERID]` | Get service layer metadata |
 | Get-ServerServiceLifecycleInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/lifecycleinfos` | Get service lifecycle info |
 | Get-ServerServiceList | Server | `[ROOT]` and `[ADMIN]/services` | Get list of services in ArcGIS Server |
 | Get-ServerServiceMetadata | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]` | Get service metadata |

@@ -8,13 +8,15 @@ Get ArcGIS service layer attachment(s)
 ### __gid (Default)
 ```
 Get-ServerServiceLayerAttachment -GlobalId <String[]> -LayerId <Int32> -ServiceName <String>
- [-FolderName <String>] -Context <Uri> [-Token <String>] [-SkipCertificateCheck] [<CommonParameters>]
+ [-FolderName <String>] [-ReportData] -Context <Uri> [-Token <String>] [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
 ### __oid
 ```
 Get-ServerServiceLayerAttachment -ObjectId <Int64[]> -LayerId <Int32> -ServiceName <String>
- [-FolderName <String>] -Context <Uri> [-Token <String>] [-SkipCertificateCheck] [<CommonParameters>]
+ [-FolderName <String>] [-ReportData] -Context <Uri> [-Token <String>] [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -101,6 +103,21 @@ Aliases: Folder
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ReportData
+Return report data
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

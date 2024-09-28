@@ -6,7 +6,7 @@ Get ArcGIS Server service field information
 ## SYNTAX
 
 ```
-Get-ServerServiceReport [-FolderName] <String[]> [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck]
+Get-ServerServiceReport [[-FolderName] <String>] [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
@@ -33,11 +33,11 @@ Returns an array of fields with length for "esriFieldTypeString" types
 Target folder
 
 ```yaml
-Type: String[]
+Type: String
 Parameter Sets: (All)
 Aliases: Folder
 
-Required: True
+Required: False
 Position: 1
 Default value: None
 Accept pipeline input: False

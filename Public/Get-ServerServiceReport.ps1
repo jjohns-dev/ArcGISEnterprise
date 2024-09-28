@@ -140,7 +140,7 @@ function Get-ServerServiceReport {
                 foreach ($layer in $serviceData.layers) {
 
                     # GET LAYER DATA
-                    $layerData = Get-ServerServiceLayerMetadata @cmnParms @serviceParams -LayerId $layer.id
+                    $layerData = Get-ServerServiceLayer @cmnParms @serviceParams -LayerId $layer.id
 
                     # LOOP ALL FIELDS
                     foreach ($field in $layerData.fields) {
