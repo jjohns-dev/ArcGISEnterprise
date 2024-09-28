@@ -114,7 +114,7 @@
         'Get-ServerServiceLayerAttachment'
         'Get-ServerServiceLifecycleInfo'
         'Get-ServerServiceList'
-        'Get-ServerServiceReport'
+        'Get-ServerServiceFieldReport'
         'Get-ServerServicesDirectory'
         'Get-ServerSetting'
         'Get-ServerToken'

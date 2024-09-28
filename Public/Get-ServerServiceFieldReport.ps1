@@ -1,4 +1,4 @@
-function Get-ServerServiceReport {
+function Get-ServerServiceFieldReport {
     <#
     .SYNOPSIS
         Get ArcGIS Server service field information
@@ -17,13 +17,13 @@ function Get-ServerServiceReport {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -Folder Gas
+        PS C:\> Get-ServerServiceFieldReport -Context https://myServer.arcgis.com/arcgis -Folder Gas
         Returns an array of fields with accompanying service and layer properties
     .EXAMPLE
-        PS C:\> Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
+        PS C:\> Get-ServerServiceFieldReport -Context https://myServer.arcgis.com/arcgis -Folder Gas, Traffic
         Returns an array of fields with length for "esriFieldTypeString" types
     .NOTES
-        Name:     Get-ServerServiceReport
+        Name:     Get-ServerServiceFieldReport
         Author:   Justin Johns
         Version:  0.1.4 | Last Edit: 2024-09-23
         - Version history is capture in repository commit history
