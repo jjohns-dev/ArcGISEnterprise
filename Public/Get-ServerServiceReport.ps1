@@ -6,6 +6,10 @@ function Get-ServerServiceReport {
         Get ArcGIS Server service and layer information and output in report format
     .PARAMETER FolderName
         Target folder
+    .PARAMETER IncludeFieldData
+        Include service and layer field metadata
+    .PARAMETER OnlyFieldData
+        Return only service and layer field metadata
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -18,7 +22,13 @@ function Get-ServerServiceReport {
         System.Object.
     .EXAMPLE
         PS C:\> Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -Folder Gas
-        Returns an array of fields metadata for service and layer properties
+        Returns an object with arrays for service, layer, and attachment properties for content in the "Gas" folder
+    .EXAMPLE
+        PS C:\> Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -IncludeFieldData
+        Returns an object with arrays for service, layer, attachment, and field properties
+    .EXAMPLE
+        PS C:\> Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -OnlyFieldData
+        Returns an object with array for only field properties
     .NOTES
         Name:     Get-ServerServiceReport
         Author:   Justin Johns
@@ -28,30 +38,91 @@ function Get-ServerServiceReport {
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
         - The function only supports the following service types: MapServer, ImageServer, FeatureServer
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = '__svc')]
     [Alias('Get-ServerServiceFieldInfo')]
     Param(
-        [Parameter(Mandatory = $false, HelpMessage = 'Target folder')]
+        [Parameter(Mandatory = $false, ParameterSetName = '__svc', HelpMessage = 'Target folder')]
+        [Parameter(ParameterSetName = '__ifd')]
+        [Parameter(ParameterSetName = '__fdo')]
         [ValidateNotNullOrEmpty()]
         [Alias('Folder')]
         [System.String] $FolderName,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
+        [Parameter(Mandatory = $false, ParameterSetName = '__ifd', HelpMessage = 'Include service and layer field metadata')]
+        [System.Management.Automation.SwitchParameter] $IncludeFieldData,
+
+        [Parameter(Mandatory = $false, ParameterSetName = '__fdo', HelpMessage = 'Return only service and layer field metadata')]
+        [System.Management.Automation.SwitchParameter] $OnlyFieldData,
+
+        [Parameter(Mandatory = $true, ParameterSetName = '__svc', HelpMessage = 'Target Server context')]
+        [Parameter(ParameterSetName = '__ifd')]
+        [Parameter(ParameterSetName = '__fdo')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Portal token')]
+        [Parameter(Mandatory = $false, ParameterSetName = '__svc', HelpMessage = 'Portal token')]
+        [Parameter(ParameterSetName = '__ifd')]
+        [Parameter(ParameterSetName = '__fdo')]
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
+        [Parameter(Mandatory = $false, ParameterSetName = '__svc', HelpMessage = 'Skip SSL certificate check')]
+        [Parameter(ParameterSetName = '__ifd')]
+        [Parameter(ParameterSetName = '__fdo')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
+        # OUTPUT VERBOSE
+        Write-Verbose -Message ('Parameter set: [{0}]' -f $PSCmdlet.ParameterSetName)
+        Write-Verbose -Message ("Parameters:`n[{0}]" -f ($PSBoundParameters | Out-String))
+
         # SET COMMON PARAMETERS
         $cmnParams = $PSBoundParameters
+
+        # SET PARAMETER SET SPECIFIC VALUES
+        switch ($PSCmdlet.ParameterSetName) {
+            '__svc' {
+                # CREATE REPORT HASHTABLE
+                $report = @{
+                    Context     = $Context
+                    Folder      = $FolderName
+                    Services    = @()
+                    Layers      = @()
+                    Attachments = @()
+                }
+            }
+            '__ifd' {
+                # REMOVE PARAMTER FROM COMMON PARAMETERS
+                $cmnParams.Remove('IncludeFieldData') | Out-Null
+
+                # CREATE REPORT HASHTABLE
+                $report = @{
+                    Context     = $Context
+                    Folder      = $FolderName
+                    Services    = @()
+                    Layers      = @()
+                    Attachments = @()
+                    Fields      = @()
+                }
+            }
+            '__fdo' {
+                # REMOVE PARAMTER FROM COMMON PARAMETERS
+                $cmnParams.Remove('OnlyFieldData') | Out-Null
+
+                # CREATE REPORT HASHTABLE
+                $report = @{
+                    Context     = $Context
+                    Folder      = $FolderName
+                    Fields      = @()
+                }
+            }
+        }
+
+        # REMOVE REPORT PARAMETERS
+        #if ($PSBoundParameters.ContainsKey('IncludeFieldData')) { $cmnParams.Remove('IncludeFieldData') | Out-Null }
+        #if ($PSBoundParameters.ContainsKey('OnlyFieldData')) { $cmnParams.Remove('OnlyFieldData') | Out-Null }
 
         # VALIDATE FOLDER PARAMETER
         if ($PSBoundParameters.ContainsKey('FolderName')) {
@@ -169,14 +240,45 @@ function Get-ServerServiceReport {
             @{ N = 'Size(MB)'; E = { $_.size / 1MB } }
         )
 
-        # CREATE REPORT HASHTABLE
-        $report = @{
-            Context     = $Context
-            Folder      = $FolderName
-            Services    = @()
-            Layers      = @()
-            Attachments = @()
-        }
+        # SET SERVICE FIELD PROPERTIES
+        $reportPropsServiceFields = @(
+            @{ N = 'ServiceName'; E = { $service.name } }
+            @{ N = 'ServiceNameLength'; E = { $service.name.Length } }
+            @{ N = 'ServiceType'; E = { $service.type } }
+            @{ N = 'SupportsDynamicLayers'; E = { if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false } } }
+            @{ N = 'LayerId'; E = { $null } }
+            @{ N = 'LayerName'; E = { $null } }
+            @{ N = 'LayerType'; E = { $null } }
+            @{ N = 'LayerHasSpecialChars'; E = { $null } }
+            @{ N = 'LayerNameLength'; E = { $null } }
+            @{ N = 'GeometryType'; E = { $null } }
+            @{ N = 'UniqueSymbology'; E = { $null } }
+            @{ N = 'FieldName'; E = { $_.name } }
+            @{ N = 'FieldHasSpecialChars'; E = { if ($_.name -match '\W') { $true } else { $false } } }
+            @{ N = 'FieldNameLength'; E = { $_.name.length } }
+            @{ N = 'FieldType'; E = { $_.type } }
+            @{ N = 'FieldLength'; E = { if ($_.type -EQ 'esriFieldTypeString') { $_.length } else { $null } } }
+        )
+
+        # SET LAYER FIELD PROPERTIES
+        $reportPropsLayerFields = @(
+            @{ N = 'ServiceName'; E = { $service.name } }
+            @{ N = 'ServiceNameLength'; E = { $service.name.Length } }
+            @{ N = 'ServiceType'; E = { $service.type } }
+            @{ N = 'SupportsDynamicLayers'; E = { if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false } } }
+            @{ N = 'LayerId'; E = { $layer.id } }
+            @{ N = 'LayerName'; E = { $layer.name } }
+            @{ N = 'LayerType'; E = { $layerData.type } }
+            @{ N = 'LayerHasSpecialChars'; E = { if ($layer.name -match '\W') { $true } else { $false } } }
+            @{ N = 'LayerNameLength'; E = { $layer.name.Length } }
+            @{ N = 'GeometryType'; E = { $layerData.geometryType } }
+            @{ N = 'UniqueSymbology'; E = { $layerData.drawingInfo.renderer.uniqueValueInfos.Count } }
+            @{ N = 'FieldName'; E = { $_.name } }
+            @{ N = 'FieldHasSpecialChars'; E = { if ($_.name -match '\W') { $true } else { $false } } }
+            @{ N = 'FieldNameLength'; E = { $_.name.length } }
+            @{ N = 'FieldType'; E = { $_.type } }
+            @{ N = 'FieldLength'; E = { if ($_.type -EQ 'esriFieldTypeString') { $_.length } else { $null } } }
+        )
     }
     Process {
         # GET SERVICES IN FOLDER
@@ -210,50 +312,89 @@ function Get-ServerServiceReport {
                 }
             }
 
-            <# # CREATE CUSTOM OBJECT FOR SERVER SERVICE
-            [PSCustomObject] @{
-                ServiceName                          = if ($PSBoundParameters.ContainsKey('FolderName')) {
-                    '{0}/{1}' -f $FolderName, $ServiceName
-                }
-                else {
-                    $ServiceName
-                }
-                ServiceType                          = $ServiceType
-                HasVersionedData                     = $sm.hasVersionedData
-                SupportsDisconnectedEditing          = $sm.supportsDisconnectedEditing
-                SupportsQueryDataElements            = $sm.supportsQueryDataElements
-                SupportsRelationshipsResource        = $sm.supportsRelationshipsResource
-                SyncEnabled                          = $sm.syncEnabled
-                SupportedExportFormats               = $sm.supportedExportFormats
-                SupportedQueryFormats                = $sm.supportedQueryFormats
-                MaxRecordCount                       = $sm.maxRecordCount
-                Capabilities                         = $sm.capabilities
-                Description                          = $sm.description
-                SupportsSplit                        = $sm.advancedEditingCapabilities.supportsSplit
-                SupportsReturnServiceEditsInSourceSR = $sm.advancedEditingCapabilities.supportsReturnServiceEditsInSourceSR
-                SupportsAsyncApplyEdits              = $sm.advancedEditingCapabilities.supportsAsyncApplyEdits
-                WKID                                 = $sm.spatialReference.wkid
-                XYTolerance                          = $sm.spatialReference.xyTolerance
-                ZTolerance                           = $sm.spatialReference.zTolerance
-                MTolderance                          = $sm.spatialReference.mTolerance
-                XMin                                 = $sm.initialExtent.xmin
-                YMin                                 = $sm.initialExtent.ymin
-                XMax                                 = $sm.initialExtent.xmax
-                YMax                                 = $sm.initialExtent.ymax
-                AllowGeometryUpdates                 = $sm.allowGeometryUpdates
-                SupportsApplyEditsWithGlobalIds      = $sm.supportsApplyEditsWithGlobalIds
-                Units                                = $sm.units
-                SupportsQueryDomains                 = $sm.supportsQueryDomains
-                LayerNames                           = $sm.layers.name -join ', ' # {@{id=x; name=y; parentLayerId=z...}}
-                Layers                               = $sm.layers
-                TableNames                           = $sm.tables.name -join ', ' # {@{id=x; name=y}}
-                RelationshipNames                    = $sm.relationships.name -join ', ' # {@{id=x; name=y}}
-                EnableZDefaults                      = $sm.enableZDefaults
-                ReferenceScale                       = $sm.referenceScale
-            } #>
+            # CHECK FOR FIELDS ONLY PARAMETER
+            if ($PSCmdlet.ParameterSetName -NE '__fdo') {
+                <# # CREATE CUSTOM OBJECT FOR SERVER SERVICE
+                [PSCustomObject] @{
+                    ServiceName                          = if ($PSBoundParameters.ContainsKey('FolderName')) {
+                        '{0}/{1}' -f $FolderName, $ServiceName
+                    }
+                    else {
+                        $ServiceName
+                    }
+                    ServiceType                          = $ServiceType
+                    HasVersionedData                     = $sm.hasVersionedData
+                    SupportsDisconnectedEditing          = $sm.supportsDisconnectedEditing
+                    SupportsQueryDataElements            = $sm.supportsQueryDataElements
+                    SupportsRelationshipsResource        = $sm.supportsRelationshipsResource
+                    SyncEnabled                          = $sm.syncEnabled
+                    SupportedExportFormats               = $sm.supportedExportFormats
+                    SupportedQueryFormats                = $sm.supportedQueryFormats
+                    MaxRecordCount                       = $sm.maxRecordCount
+                    Capabilities                         = $sm.capabilities
+                    Description                          = $sm.description
+                    SupportsSplit                        = $sm.advancedEditingCapabilities.supportsSplit
+                    SupportsReturnServiceEditsInSourceSR = $sm.advancedEditingCapabilities.supportsReturnServiceEditsInSourceSR
+                    SupportsAsyncApplyEdits              = $sm.advancedEditingCapabilities.supportsAsyncApplyEdits
+                    WKID                                 = $sm.spatialReference.wkid
+                    XYTolerance                          = $sm.spatialReference.xyTolerance
+                    ZTolerance                           = $sm.spatialReference.zTolerance
+                    MTolderance                          = $sm.spatialReference.mTolerance
+                    XMin                                 = $sm.initialExtent.xmin
+                    YMin                                 = $sm.initialExtent.ymin
+                    XMax                                 = $sm.initialExtent.xmax
+                    YMax                                 = $sm.initialExtent.ymax
+                    AllowGeometryUpdates                 = $sm.allowGeometryUpdates
+                    SupportsApplyEditsWithGlobalIds      = $sm.supportsApplyEditsWithGlobalIds
+                    Units                                = $sm.units
+                    SupportsQueryDomains                 = $sm.supportsQueryDomains
+                    LayerNames                           = $sm.layers.name -join ', ' # {@{id=x; name=y; parentLayerId=z...}}
+                    Layers                               = $sm.layers
+                    TableNames                           = $sm.tables.name -join ', ' # {@{id=x; name=y}}
+                    RelationshipNames                    = $sm.relationships.name -join ', ' # {@{id=x; name=y}}
+                    EnableZDefaults                      = $sm.enableZDefaults
+                    ReferenceScale                       = $sm.referenceScale
+                } #>
 
-            # ADD SERVICE DATA TO ARRAY
-            $report['Services'] += $serviceData | Select-Object -Property $reportPropsService
+                # ADD SERVICE DATA TO ARRAY
+                $report['Services'] += $serviceData | Select-Object -Property $reportPropsService
+            }
+
+            # CHECK FOR FIELD PARAMETERS
+            if ($PSCmdlet.ParameterSetName -IN @('__ifd', '__fdo')) {
+
+                # VALIDATE SERVICE FIELD PROPERTY
+                if ($null -NE $serviceData.fields) {
+
+                    # EVALUATE EACH FIELD
+                    foreach ($field in $serviceData.fields) {
+
+                        <# # CREATE NEW FIELD OBJECT
+                        [PSCustomObject] @{
+                            #Folder                = $fldr
+                            ServiceName           = $service.name
+                            ServiceNameLength     = $service.name.Length
+                            ServiceType           = $service.type
+                            SupportsDynamicLayers = if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false }
+                            LayerId               = $null
+                            LayerName             = $null
+                            LayerType             = $null
+                            LayerHasSpecialChars  = $null
+                            LayerNameLength       = $null
+                            GeometryType          = $null
+                            UniqueSymbology       = $null
+                            FieldName             = $field.name
+                            FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
+                            FieldNameLength       = $field.name.length
+                            FieldType             = $field.type
+                            FieldLength           = if ($field.type -EQ 'esriFieldTypeString') { $field.length } else { $null }
+                        } #>
+
+                        # ADD FIELD PROPERTIES TO REPORT
+                        $report['Fields'] += $field | Select-Object -Property $reportPropsServiceFields
+                    }
+                }
+            }
 
             # LOOK FOR LAYERS
             if ($null -NE $serviceData.layers) {
@@ -264,143 +405,178 @@ function Get-ServerServiceReport {
                     # GET LAYER DATA
                     $layerData = Get-ServerServiceLayer @cmnParams @serviceParams -LayerId $layer.id
 
-                    <# # CREATE CUSTOM OJECT FOR LAYER DATA
-                    [PSCustomObject] @{
-                        LayerName                        = if ($PSBoundParameters.ContainsKey('FolderName')) {
-                            '{0}/{1}/{2}' -f $FolderName, $ServiceName, $layerMetadata.name
+                    # CHECK FOR FIELD PARAMETERS
+                    if ($PSCmdlet.ParameterSetName -IN @('__ifd', '__fdo')) {
+
+                        # LOOP ALL FIELDS
+                        foreach ($field in $layerData.fields) {
+
+                            <# # CREATE CUSTOM OBJECT
+                            [PSCustomObject] @{
+                                #Folder                = $fldr
+                                ServiceName           = $service.name
+                                ServiceNameLength     = $service.name.Length
+                                ServiceType           = $service.type
+                                SupportsDynamicLayers = if ($serviceData.supportsDynamicLayers) { $serviceData.supportsDynamicLayers } else { $false }
+                                LayerId               = $layer.id
+                                LayerName             = $layer.name
+                                LayerType             = $layerData.type
+                                LayerHasSpecialChars  = if ($layer.name -match '\W') { $true } else { $false }
+                                LayerNameLength       = $layer.name.Length
+                                GeometryType          = $layerData.geometryType
+                                UniqueSymbology       = $layerData.drawingInfo.renderer.uniqueValueInfos.Count
+                                FieldName             = $field.name
+                                FieldHasSpecialChars  = if ($field.name -match '\W') { $true } else { $false }
+                                FieldNameLength       = $field.name.length
+                                FieldType             = $field.type
+                                FieldLength           = if ($field.type -EQ 'esriFieldTypeString') { $field.length } else { $null }
+                            } #>
+
+                            # ADD FIELD PROPERTIES TO REPORT
+                            $report['Fields'] += $field | Select-Object -Property $reportPropsLayerFields
                         }
-                        else {
-                            '{0}/{1}' -f $ServiceName, $layerMetadata.name
-                        }
-                        Id                               = $layerMetadata.id
-                        ServiceType                      = $ServiceType
-                        LayerType                        = $layerMetadata.type
-                        ParentLayer                      = $layerMetadata.parentLayer
-                        DefaultVisibility                = $layerMetadata.defaultVisibility
-                        MinScale                         = $layerMetadata.minScale
-                        MaxScale                         = $layerMetadata.maxScale
-                        CanScaleSymbols                  = $layerMetadata.canScaleSymbols
-                        GeometryType                     = $layerMetadata.geometryType
-                        Description                      = $layerMetadata.description
-                        #EditFieldsInfo                   = $layerMetadata.editFieldsInfo # {@{editDateField=x; editorField=y; creationDateField=z; creatorField=a...}}
-                        RelationshipNames                = $layerMetadata.relationships.name -join ', ' # {@{id=x; name=y, relatedTableId=z...}}
-                        SupportsAdvancedQueries          = $layerMetadata.supportsAdvancedQueries
-                        SupportsPagination               = $layerMetadata.advancedQueryCapabilities.supportsPagination
-                        SupportsQueryAttachments         = $layerMetadata.advancedQueryCapabilities.supportsQueryAttachments
-                        HasMetadata                      = $layerMetadata.hasMetadata
-                        XMin                             = $layerMetadata.extent.xmin
-                        YMin                             = $layerMetadata.extent.ymin
-                        XMax                             = $layerMetadata.extent.xmax
-                        YMax                             = $layerMetadata.extent.ymax
-                        WKId                             = $layerMetadata.extent.spatialReference.wkid
-                        RendererType                     = $layerMetadata.drawingInfo.renderer.type
-                        RendererField1                   = $layerMetadata.drawingInfo.renderer.field1
-                        RendererScaleSymbols             = $layerMetadata.drawingInfo.scaleSymbols
-                        RendererTransparency             = $layerMetadata.drawingInfo.transparency
-                        RendererLabelingInfo             = $layerMetadata.drawingInfo.labelingInfo
-                        HasM                             = $layerMetadata.hasM
-                        HasZ                             = $layerMetadata.hasZ
-                        AllowGeometryUpdates             = $layerMetadata.allowGeometryUpdates
-                        HasAttachments                   = $layerMetadata.hasAttachments # PROPERTY OF INTEREST
-                        SupportsApplyEditsWithGlobalIds  = $layerMetadata.supportsApplyEditsWithGlobalIds
-                        ObjectIdField                    = $layerMetadata.objectIdField
-                        GlobalIdField                    = $layerMetadata.globalIdField
-                        DisplayField                     = $layerMetadata.displayField
-                        TypeIdField                      = $layerMetadata.typeIdField
-                        SubtypeField                     = $layerMetadata.subtypeField
-                        IndexNames                       = $layerMetadata.indexes.name -join ', ' # {@{fields=x; isAscending=y...}}
-                        DatesInUnknownTimezone           = $layerMetadata.datesInUnknownTimeZone
-                        TimeZone                         = $layerMetadata.DateFieldsTimeReference.timeZone
-                        RespectsDaylightSaving           = $layerMetadata.DateFieldsTimeReference.respectsDaylightSaving
-                        StandardMaxRecordCount           = $layerMetadata.standardMaxRecordCount
-                        TileMaxRecordCount               = $layerMetadata.tileMaxRecordCount
-                        StandardMaxRecordCountNoGeometry = $layerMetadata.standardMaxRecordCountNoGeometry
-                        MaxRecordCountFactor             = $layerMetadata.maxRecordCountFactor
-                    } #>
+                    }
 
-                    # ADD LAYER DATA TO ARRAY
-                    $report['Layers'] += $layerData | Select-Object -Property $reportPropsLayer
-
-                    # GET ATTACHMENTS
-                    if ($service.type -EQ 'FeatureServer' -and $layerData.HasAttachments -EQ $true) {
-
-                        # SET SERVICE LAYER ATTACHMENT PARAMS
-                        $layerParams = @{
-                            ServiceName = $serviceParams.ServiceName
-                            LayerId     = $layer.id
-                        }
-
-                        # GET LAYER DATA
-                        $data = Find-ServerServiceLayerData @cmnParams @layerParams
-
-                        # EVALUATE FEATURES
-                        if ($data.features.attributes) {
-
-                            # SET LAYER NAME VAR
-                            $verLayer = '{0}/{1}' -f $service.name, $layer.name
-
-                            # CHECK FOR ID TYPE
-                            if ($data.features.attributes[0].GlobalID) {
-                                # SET SERVICE LAYER ATTACHMENT GLOBAL IDS
-                                $layerParams['GlobalId'] = $data.features.attributes.GlobalID | ForEach-Object -Process { $_.TrimStart('{').TrimEnd('}') }
-
-                                # OUTPUT VERBOSE
-                                Write-Warning -Message ('Evaluating attachments for layer [{0}] and globalid [{1}]' -f $verLayer, ($layerParams['GlobalId'] -join ', '))
-                            }
-                            elseif ($data.features.attributes[0].objectid) {
-                                # SET SERVICE LAYER ATTACHMENT OBJECT IDS
-                                $layerParams['ObjectId'] = $data.features.attributes.objectid
-
-                                # OUTPUT VERBOSE
-                                Write-Warning -Message ('Evaluating attachments for layer [{0}] and objectid [{1}]' -f $verLayer, ($layerParams['ObjectId'] -join ', '))
+                    # CHECK FOR FIELDS ONLY PARAMETER
+                    if ($PSCmdlet.ParameterSetName -NE '__fdo') {
+                        <# # CREATE CUSTOM OJECT FOR LAYER DATA
+                        [PSCustomObject] @{
+                            LayerName                        = if ($PSBoundParameters.ContainsKey('FolderName')) {
+                                '{0}/{1}/{2}' -f $FolderName, $ServiceName, $layerMetadata.name
                             }
                             else {
-                                # TERMINATE WITH ERROR
-                                Write-Warning -Message ('No objectid or GlobalID found in layer [{0}].' -f $verLayer)
+                                '{0}/{1}' -f $ServiceName, $layerMetadata.name
+                            }
+                            Id                               = $layerMetadata.id
+                            ServiceType                      = $ServiceType
+                            LayerType                        = $layerMetadata.type
+                            ParentLayer                      = $layerMetadata.parentLayer
+                            DefaultVisibility                = $layerMetadata.defaultVisibility
+                            MinScale                         = $layerMetadata.minScale
+                            MaxScale                         = $layerMetadata.maxScale
+                            CanScaleSymbols                  = $layerMetadata.canScaleSymbols
+                            GeometryType                     = $layerMetadata.geometryType
+                            Description                      = $layerMetadata.description
+                            #EditFieldsInfo                   = $layerMetadata.editFieldsInfo # {@{editDateField=x; editorField=y; creationDateField=z; creatorField=a...}}
+                            RelationshipNames                = $layerMetadata.relationships.name -join ', ' # {@{id=x; name=y, relatedTableId=z...}}
+                            SupportsAdvancedQueries          = $layerMetadata.supportsAdvancedQueries
+                            SupportsPagination               = $layerMetadata.advancedQueryCapabilities.supportsPagination
+                            SupportsQueryAttachments         = $layerMetadata.advancedQueryCapabilities.supportsQueryAttachments
+                            HasMetadata                      = $layerMetadata.hasMetadata
+                            XMin                             = $layerMetadata.extent.xmin
+                            YMin                             = $layerMetadata.extent.ymin
+                            XMax                             = $layerMetadata.extent.xmax
+                            YMax                             = $layerMetadata.extent.ymax
+                            WKId                             = $layerMetadata.extent.spatialReference.wkid
+                            RendererType                     = $layerMetadata.drawingInfo.renderer.type
+                            RendererField1                   = $layerMetadata.drawingInfo.renderer.field1
+                            RendererScaleSymbols             = $layerMetadata.drawingInfo.scaleSymbols
+                            RendererTransparency             = $layerMetadata.drawingInfo.transparency
+                            RendererLabelingInfo             = $layerMetadata.drawingInfo.labelingInfo
+                            HasM                             = $layerMetadata.hasM
+                            HasZ                             = $layerMetadata.hasZ
+                            AllowGeometryUpdates             = $layerMetadata.allowGeometryUpdates
+                            HasAttachments                   = $layerMetadata.hasAttachments # PROPERTY OF INTEREST
+                            SupportsApplyEditsWithGlobalIds  = $layerMetadata.supportsApplyEditsWithGlobalIds
+                            ObjectIdField                    = $layerMetadata.objectIdField
+                            GlobalIdField                    = $layerMetadata.globalIdField
+                            DisplayField                     = $layerMetadata.displayField
+                            TypeIdField                      = $layerMetadata.typeIdField
+                            SubtypeField                     = $layerMetadata.subtypeField
+                            IndexNames                       = $layerMetadata.indexes.name -join ', ' # {@{fields=x; isAscending=y...}}
+                            DatesInUnknownTimezone           = $layerMetadata.datesInUnknownTimeZone
+                            TimeZone                         = $layerMetadata.DateFieldsTimeReference.timeZone
+                            RespectsDaylightSaving           = $layerMetadata.DateFieldsTimeReference.respectsDaylightSaving
+                            StandardMaxRecordCount           = $layerMetadata.standardMaxRecordCount
+                            TileMaxRecordCount               = $layerMetadata.tileMaxRecordCount
+                            StandardMaxRecordCountNoGeometry = $layerMetadata.standardMaxRecordCountNoGeometry
+                            MaxRecordCountFactor             = $layerMetadata.maxRecordCountFactor
+                        } #>
+
+                        # ADD LAYER DATA TO ARRAY
+                        $report['Layers'] += $layerData | Select-Object -Property $reportPropsLayer
+
+                        # GET ATTACHMENTS
+                        if ($service.type -EQ 'FeatureServer' -and $layerData.HasAttachments -EQ $true) {
+
+                            # SET SERVICE LAYER ATTACHMENT PARAMS
+                            $layerParams = @{
+                                ServiceName = $serviceParams.ServiceName
+                                LayerId     = $layer.id
                             }
 
-                            # GET ATTACHMENTS
-                            $attachments = Get-ServerServiceLayerAttachment @cmnParams @layerParams
+                            # GET LAYER DATA
+                            $data = Find-ServerServiceLayerData @cmnParams @layerParams
 
-                            # EVALUATE EACH ATTACHMENT
-                            foreach ($att in $attachments.attachmentGroups.attachmentInfos) {
+                            # EVALUATE FEATURES
+                            if ($data.features.attributes) {
 
-                                <# # CREATE CUSTOM OBJECT FOR ATTACHMENTS
-                                [PSCustomObject] @{
-                                    ServiceName  = if ($PSBoundParameters.ContainsKey('FolderName')) {
-                                        '{0}/{1}' -f $FolderName, $ServiceName
-                                    }
-                                    else {
-                                        '{0}' -f $ServiceName
-                                    }
-                                    LayerId      = $LayerId
-                                    #ObjectId     = if ($PSBoundParameters.ContainsKey('ObjectId')) { $ObjectId -join ', ' } else { $null }
-                                    #GlobalId     = if ($PSBoundParameters.ContainsKey('GlobalId')) { $GlobalId -join ', ' } else { $null }
-                                    AttachmentId = $att.attachmentid
-                                    Name         = $att.name
-                                    ContentType  = $att.contentType
-                                    Size         = $att.size
-                                    'Size(MB)'   = $att.size / 1MB
-                                } #>
+                                # SET LAYER NAME VAR
+                                $verLayer = '{0}/{1}' -f $service.name, $layer.name
 
-                                # WHEN THE LAYER DATA INCLUDES AND ATTACHMENT USING OBJECT ID, IT RETURNS A PSCUSTOMOBJECT
-                                # HOWEVER, WHEN THE LAYER DATA INCLUDES AN ATTACHMENT USING GLOBAL ID, IT RETURNS AN ORDERED HASHTABLE
-                                if ($att.getType().FullName -EQ 'System.Management.Automation.OrderedHashtable') {
+                                # CHECK FOR ID TYPE
+                                if ($data.features.attributes[0].GlobalID) {
+                                    # SET SERVICE LAYER ATTACHMENT GLOBAL IDS
+                                    $layerParams['GlobalId'] = $data.features.attributes.GlobalID | ForEach-Object -Process { $_.TrimStart('{').TrimEnd('}') }
 
                                     # OUTPUT VERBOSE
-                                    Write-Verbose -Message ('Converting attribute from hashtable to custom object...')
-
-                                    # CONVERT TO CUSTOM OBJECT
-                                    $att = [PSCustomObject] $att
+                                    Write-Warning -Message ('Evaluating attachments for layer [{0}] and globalid [{1}]' -f $verLayer, ($layerParams['GlobalId'] -join ', '))
                                 }
-                                elseif ($att.getType().FullName -NE 'System.Management.Automation.PSCustomObject') {
+                                elseif ($data.features.attributes[0].objectid) {
+                                    # SET SERVICE LAYER ATTACHMENT OBJECT IDS
+                                    $layerParams['ObjectId'] = $data.features.attributes.objectid
 
-                                    # OUTPUT WARNING
-                                    Write-Warning -Message ('Attachment is not of a known type [{0}]' -f $att.getType().FullName)
+                                    # OUTPUT VERBOSE
+                                    Write-Warning -Message ('Evaluating attachments for layer [{0}] and objectid [{1}]' -f $verLayer, ($layerParams['ObjectId'] -join ', '))
+                                }
+                                else {
+                                    # TERMINATE WITH ERROR
+                                    Write-Warning -Message ('No objectid or GlobalID found in layer [{0}].' -f $verLayer)
                                 }
 
-                                # ADD ATTACHMENTS TO ARRAY
-                                $report['Attachments'] += $att | Select-Object -Property $reportPropsAttachment
+                                # GET ATTACHMENTS
+                                $attachments = Get-ServerServiceLayerAttachment @cmnParams @layerParams
+
+                                # EVALUATE EACH ATTACHMENT
+                                foreach ($att in $attachments.attachmentGroups.attachmentInfos) {
+
+                                    <# # CREATE CUSTOM OBJECT FOR ATTACHMENTS
+                                    [PSCustomObject] @{
+                                        ServiceName  = if ($PSBoundParameters.ContainsKey('FolderName')) {
+                                            '{0}/{1}' -f $FolderName, $ServiceName
+                                        }
+                                        else {
+                                            '{0}' -f $ServiceName
+                                        }
+                                        LayerId      = $LayerId
+                                        #ObjectId     = if ($PSBoundParameters.ContainsKey('ObjectId')) { $ObjectId -join ', ' } else { $null }
+                                        #GlobalId     = if ($PSBoundParameters.ContainsKey('GlobalId')) { $GlobalId -join ', ' } else { $null }
+                                        AttachmentId = $att.attachmentid
+                                        Name         = $att.name
+                                        ContentType  = $att.contentType
+                                        Size         = $att.size
+                                        'Size(MB)'   = $att.size / 1MB
+                                    } #>
+
+                                    # WHEN THE LAYER DATA INCLUDES AND ATTACHMENT USING OBJECT ID, IT RETURNS A PSCUSTOMOBJECT
+                                    # HOWEVER, WHEN THE LAYER DATA INCLUDES AN ATTACHMENT USING GLOBAL ID, IT RETURNS AN ORDERED HASHTABLE
+                                    if ($att.getType().FullName -EQ 'System.Management.Automation.OrderedHashtable') {
+
+                                        # OUTPUT VERBOSE
+                                        Write-Verbose -Message ('Converting attribute from hashtable to custom object...')
+
+                                        # CONVERT TO CUSTOM OBJECT
+                                        $att = [PSCustomObject] $att
+                                    }
+                                    elseif ($att.getType().FullName -NE 'System.Management.Automation.PSCustomObject') {
+
+                                        # OUTPUT WARNING
+                                        Write-Warning -Message ('Attachment is not of a known type [{0}]' -f $att.getType().FullName)
+                                    }
+
+                                    # ADD ATTACHMENTS TO ARRAY
+                                    $report['Attachments'] += $att | Select-Object -Property $reportPropsAttachment
+                                }
                             }
                         }
                     }
