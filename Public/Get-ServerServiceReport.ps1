@@ -118,10 +118,6 @@ function Get-ServerServiceReport {
             }
         }
 
-        # REMOVE REPORT PARAMETERS
-        #if ($PSBoundParameters.ContainsKey('IncludeFieldData')) { $cmnParams.Remove('IncludeFieldData') | Out-Null }
-        #if ($PSBoundParameters.ContainsKey('OnlyFieldData')) { $cmnParams.Remove('OnlyFieldData') | Out-Null }
-
         # VALIDATE FOLDER PARAMETER
         if ($PSBoundParameters.ContainsKey('FolderName')) {
             # REMOVE FOLDER PARAMETER
