@@ -39,36 +39,34 @@ function Get-ServerServiceReport {
         - The function only supports the following service types: MapServer, ImageServer, FeatureServer
     #>
     [CmdletBinding(DefaultParameterSetName = '__svc')]
-    [Alias('Get-ServerServiceFieldInfo')]
     Param(
-        [Parameter(Mandatory = $false, ParameterSetName = '__svc', HelpMessage = 'Target folder')]
-        [Parameter(ParameterSetName = '__ifd')]
-        [Parameter(ParameterSetName = '__fdo')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Target folder', ParameterSetName = '__svc')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Target folder', ParameterSetName = '__ifd')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Target folder', ParameterSetName = '__fdo')]
         [ValidateNotNullOrEmpty()]
-        [Alias('Folder')]
         [System.String] $FolderName,
 
-        [Parameter(Mandatory = $false, ParameterSetName = '__ifd', HelpMessage = 'Include service and layer field metadata')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Include service and layer field metadata', ParameterSetName = '__ifd')]
         [System.Management.Automation.SwitchParameter] $IncludeFieldData,
 
-        [Parameter(Mandatory = $false, ParameterSetName = '__fdo', HelpMessage = 'Return only service and layer field metadata')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Return only service and layer field metadata', ParameterSetName = '__fdo')]
         [System.Management.Automation.SwitchParameter] $OnlyFieldData,
 
-        [Parameter(Mandatory = $true, ParameterSetName = '__svc', HelpMessage = 'Target Server context')]
-        [Parameter(Mandatory = $true, ParameterSetName = '__ifd', HelpMessage = 'Target Server context')]
-        [Parameter(Mandatory = $true, ParameterSetName = '__fdo', HelpMessage = 'Target Server context')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Server context', ParameterSetName = '__svc')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Server context', ParameterSetName = '__ifd')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Server context', ParameterSetName = '__fdo')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
-        [Parameter(Mandatory = $false, ParameterSetName = '__svc', HelpMessage = 'Portal token')]
-        [Parameter(ParameterSetName = '__ifd')]
-        [Parameter(ParameterSetName = '__fdo')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal token', ParameterSetName = '__svc')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal token', ParameterSetName = '__ifd')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Portal token', ParameterSetName = '__fdo')]
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
-        [Parameter(Mandatory = $false, ParameterSetName = '__svc', HelpMessage = 'Skip SSL certificate check')]
-        [Parameter(ParameterSetName = '__ifd')]
-        [Parameter(ParameterSetName = '__fdo')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check', ParameterSetName = '__svc')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check', ParameterSetName = '__ifd')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check', ParameterSetName = '__fdo')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
