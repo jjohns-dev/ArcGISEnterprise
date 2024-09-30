@@ -26,7 +26,7 @@ function Find-ServerServiceLayerData {
     .NOTES
         Name:     Find-ServerServiceLayerData
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-25
+        Version:  0.1.0 | Last Edit: 2024-09-30
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/
@@ -74,7 +74,7 @@ function Find-ServerServiceLayerData {
             Body    = @{
                 f         = 'json'
                 token     = $Token
-                where     = 'objectid >= 0'
+                where     = '1=1' #'globalid >= 0' #'objectid >= 0'
                 outFields = '*'
             }
             Headers = @{

@@ -22,7 +22,7 @@ function Get-ServerServiceReport {
     .NOTES
         Name:     Get-ServerServiceReport
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-28
+        Version:  0.1.0 | Last Edit: 2024-09-30
         - Version history is capture in repository commit history
         Comments: <Comment(s)>
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
@@ -336,8 +336,19 @@ function Get-ServerServiceReport {
                         # EVALUATE FEATURES
                         if ($data.features.attributes) {
 
-                            # SET SERVICE LAYER ATTACHMENT PARAMS
-                            $layerParams['ObjectId'] = $data.features.attributes.objectid
+                            # CHECK FOR ID TYPE
+                            if ($data.features.attributes.objectid) {
+                                # SET SERVICE LAYER ATTACHMENT OBJECT IDS
+                                $layerParams['ObjectId'] = $data.features.attributes.objectid
+                            }
+                            elseif ($data.features.attributes.GlobalID) {
+                                # SET SERVICE LAYER ATTACHMENT GLOBAL IDS
+                                $layerParams['GlobalId'] = $data.features.attributes.GlobalID | ForEach-Object -Process { $_.TrimStart('{').TrimEnd('}') }
+                            }
+                            else {
+                                # TERMINATE WITH ERROR
+                                Write-Warning -Message ('No objectid or GlobalID found in layer [{0}].' -f ('{0}/{1}' -f $service.name, $layer.name))
+                            }
 
                             # OUTPUT VERBOSE
                             $verVars = @(('{0}/{1}' -f $service.name, $layer.name), $layerParams['ObjectId'])
