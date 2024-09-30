@@ -30,7 +30,7 @@ function Get-ServerServiceLayer {
     .NOTES
         Name:     Get-ServerServiceLayer
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-28
+        Version:  0.1.0 | Last Edit: 2024-09-30
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
@@ -113,11 +113,14 @@ function Get-ServerServiceLayer {
                 # CREATE CUSTOM HASHTABLE
                 $layerMetadata = $layerMetadata | ConvertFrom-Json -AsHashtable
 
+                # OUTPUT VERBOSE
+                Write-Verbose -Message ('Removing duplicate property [supportsValidateSQL]...')
+
                 # REMOVE DUPLICATE PROPERTY WITH DIFFERENT NAME CASING
                 $layerMetadata.Remove('supportsValidateSQL')
 
                 # CONVERT TO CUSTOM OBJECT
-                $layerMetadata = [PSCustomObject] $layerMetadata
+                [PSCustomObject] $layerMetadata
             }
             else {
                 # OUTPUT LAYER METADATA

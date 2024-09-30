@@ -30,7 +30,7 @@ function Get-ServerServiceLayerAttachment {
     .NOTES
         Name:     Get-ServerServiceLayerAttachment
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-25
+        Version:  0.1.0 | Last Edit: 2024-09-30
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-attachments-feature-service-layer/
@@ -75,6 +75,7 @@ function Get-ServerServiceLayerAttachment {
     }
     Process {
         # SET REQUEST PARAMETERS
+        # 'https://machine.domain.com/webadaptor/rest/services/light-inventory/FeatureServer/0/queryAttachments?objectIds=2,4&globalIds=&definitionExpression=&attachmentTypes=&resultOffset=&resultRecordCount=&f=pjson'
         $restParams = @{
             Uri     = if ($PSBoundParameters.ContainsKey('FolderName')) {
                 '{0}/rest/services/{1}/{2}/FeatureServer/{3}/queryAttachments' -f $Context, $FolderName, $ServiceName, $LayerId
@@ -116,11 +117,14 @@ function Get-ServerServiceLayerAttachment {
                 # CREATE CUSTOM HASHTABLE
                 $attachments = $attachments | ConvertFrom-Json -AsHashtable
 
+                # OUTPUT VERBOSE
+                Write-Verbose -Message ('Removing duplicate property [globalid]...')
+
                 # REMOVE DUPLICATE PROPERTY WITH DIFFERENT NAME CASING
                 $attachments.Remove('globalid')
 
                 # CONVERT TO CUSTOM OBJECT
-                $attachments = [PSCustomObject] $attachments
+                [PSCustomObject] $attachments
             }
             else {
                 # RETURN ATTACHMENTS
