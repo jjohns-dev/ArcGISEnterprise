@@ -21,13 +21,13 @@ function Get-ServerServiceReport {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -Folder Gas
+        PS C:\> Get-ServerServiceReport -Context https://arcgis.com/arcgis -Folder Gas
         Returns an object with arrays for service, layer, and attachment properties for content in the "Gas" folder
     .EXAMPLE
-        PS C:\> Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -IncludeFieldData
+        PS C:\> Get-ServerServiceReport -Context https://arcgis.com/arcgis -IncludeFieldData
         Returns an object with arrays for service, layer, attachment, and field properties
     .EXAMPLE
-        PS C:\> Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -OnlyFieldData
+        PS C:\> Get-ServerServiceReport -Context https://arcgis.com/arcgis -OnlyFieldData
         Returns an object with array for only field properties
     .NOTES
         Name:     Get-ServerServiceReport
@@ -55,8 +55,8 @@ function Get-ServerServiceReport {
         [System.Management.Automation.SwitchParameter] $OnlyFieldData,
 
         [Parameter(Mandatory = $true, ParameterSetName = '__svc', HelpMessage = 'Target Server context')]
-        [Parameter(ParameterSetName = '__ifd')]
-        [Parameter(ParameterSetName = '__fdo')]
+        [Parameter(Mandatory = $true, ParameterSetName = '__ifd', HelpMessage = 'Target Server context')]
+        [Parameter(Mandatory = $true, ParameterSetName = '__fdo', HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 

@@ -5,9 +5,22 @@ Get ArcGIS Server service and layer information
 
 ## SYNTAX
 
+### __svc (Default)
 ```
-Get-ServerServiceReport [[-FolderName] <String>] [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck]
+Get-ServerServiceReport [-FolderName <String>] -Context <Uri> [-Token <String>] [-SkipCertificateCheck]
  [<CommonParameters>]
+```
+
+### __fdo
+```
+Get-ServerServiceReport [-FolderName <String>] [-OnlyFieldData] -Context <Uri> [-Token <String>]
+ [-SkipCertificateCheck] [<CommonParameters>]
+```
+
+### __ifd
+```
+Get-ServerServiceReport [-FolderName <String>] [-IncludeFieldData] -Context <Uri> [-Token <String>]
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -17,8 +30,20 @@ Get ArcGIS Server service and layer information and output in report format
 
 ### EXAMPLE 1
 ```
-Get-ServerServiceReport -Context https://myServer.arcgis.com/arcgis -Folder Gas
-Returns an array of fields metadata for service and layer properties
+Get-ServerServiceReport -Context https://arcgis.com/arcgis -Folder Gas
+Returns an object with arrays for service, layer, and attachment properties for content in the "Gas" folder
+```
+
+### EXAMPLE 2
+```
+Get-ServerServiceReport -Context https://arcgis.com/arcgis -IncludeFieldData
+Returns an object with arrays for service, layer, attachment, and field properties
+```
+
+### EXAMPLE 3
+```
+Get-ServerServiceReport -Context https://arcgis.com/arcgis -OnlyFieldData
+Returns an object with array for only field properties
 ```
 
 ## PARAMETERS
@@ -32,8 +57,38 @@ Parameter Sets: (All)
 Aliases: Folder
 
 Required: False
-Position: 1
+Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -IncludeFieldData
+Include service and layer field metadata
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: __ifd
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -OnlyFieldData
+Return only service and layer field metadata
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: __fdo
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -47,7 +102,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,7 +117,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -95,7 +150,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-ServerServiceReport
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-09-28
+Version:  0.1.0 | Last Edit: 2024-09-30
 - Version history is capture in repository commit history
 Comments: \<Comment(s)\>
 - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
