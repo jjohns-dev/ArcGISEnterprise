@@ -514,17 +514,17 @@ function Get-ServerServiceReport {
                                     $layerParams['GlobalId'] = $data.features.attributes.GlobalID | ForEach-Object -Process { $_.TrimStart('{').TrimEnd('}') }
 
                                     # OUTPUT VERBOSE
-                                    Write-Warning -Message ('Evaluating attachments for layer [{0}] and globalid [{1}]' -f $verLayer, ($layerParams['GlobalId'] -join ', '))
+                                    Write-Verbose -Message ('Evaluating attachments for layer [{0}] and globalid [{1}]' -f $verLayer, ($layerParams['GlobalId'] -join ', '))
                                 }
                                 elseif ($data.features.attributes[0].objectid) {
                                     # SET SERVICE LAYER ATTACHMENT OBJECT IDS
                                     $layerParams['ObjectId'] = $data.features.attributes.objectid
 
                                     # OUTPUT VERBOSE
-                                    Write-Warning -Message ('Evaluating attachments for layer [{0}] and objectid [{1}]' -f $verLayer, ($layerParams['ObjectId'] -join ', '))
+                                    Write-Verbose -Message ('Evaluating attachments for layer [{0}] and objectid [{1}]' -f $verLayer, ($layerParams['ObjectId'] -join ', '))
                                 }
                                 else {
-                                    # TERMINATE WITH ERROR
+                                    # OUTPUT WARNING
                                     Write-Warning -Message ('No objectid or GlobalID found in layer [{0}].' -f $verLayer)
                                 }
 
