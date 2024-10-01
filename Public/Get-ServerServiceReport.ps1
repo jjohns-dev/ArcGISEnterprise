@@ -85,7 +85,7 @@ function Get-ServerServiceReport {
                 # CREATE REPORT HASHTABLE
                 $report = @{
                     Context     = $Context
-                    Folder      = $FolderName
+                    FolderName  = $FolderName
                     Services    = @()
                     Layers      = @()
                     Attachments = @()
@@ -98,7 +98,7 @@ function Get-ServerServiceReport {
                 # CREATE REPORT HASHTABLE
                 $report = @{
                     Context     = $Context
-                    Folder      = $FolderName
+                    FolderName  = $FolderName
                     Services    = @()
                     Layers      = @()
                     Attachments = @()
@@ -112,7 +112,7 @@ function Get-ServerServiceReport {
                 # CREATE REPORT HASHTABLE
                 $report = @{
                     Context     = $Context
-                    Folder      = $FolderName
+                    FolderName  = $FolderName
                     Fields      = @()
                 }
             }
@@ -135,6 +135,10 @@ function Get-ServerServiceReport {
                 # ADD FOLDER BACK TO PARAMETERS
                 $cmnParams['FolderName'] = $FolderName
             }
+        }
+        else {
+            # SET FOLDER NAME TO ROOT
+            $report['FolderName'] = '(root)'
         }
 
         # SET REPORT SERVICE PROPERTIES
