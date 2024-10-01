@@ -12,8 +12,6 @@ function Get-ServerServiceLayer {
         Type of service (e.g., FeatureServer or MapServer)
     .PARAMETER FolderName
         Folder name in ArcGIS Server
-    .PARAMETER ReportData
-        Return report data
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -55,9 +53,6 @@ function Get-ServerServiceLayer {
         [ValidateNotNullOrEmpty()]
         [Alias('Folder')]
         [System.String] $FolderName,
-
-        [Parameter(Mandatory = $false, HelpMessage = 'Return report data')]
-        [System.Management.Automation.SwitchParameter] $ReportData,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
