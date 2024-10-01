@@ -32,7 +32,7 @@ function Get-ServerServiceReport {
     .NOTES
         Name:     Get-ServerServiceReport
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-30
+        Version:  0.1.0 | Last Edit: 2024-10-01
         - Version history is capture in repository commit history
         Comments: <Comment(s)>
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
@@ -513,67 +513,72 @@ function Get-ServerServiceReport {
                                 $verLayer = '{0}/{1}' -f $service.name, $layer.name
 
                                 # CHECK FOR ID TYPE
-                                if ($data.features.attributes[0].GlobalID) {
-                                    # SET SERVICE LAYER ATTACHMENT GLOBAL IDS
-                                    $layerParams['GlobalId'] = $data.features.attributes.GlobalID | ForEach-Object -Process { $_.TrimStart('{').TrimEnd('}') }
-
-                                    # OUTPUT VERBOSE
-                                    Write-Verbose -Message ('Evaluating attachments for layer [{0}] and globalid [{1}]' -f $verLayer, ($layerParams['GlobalId'] -join ', '))
-                                }
-                                elseif ($data.features.attributes[0].objectid) {
+                                if ($data.features.attributes[0].objectid) {
                                     # SET SERVICE LAYER ATTACHMENT OBJECT IDS
                                     $layerParams['ObjectId'] = $data.features.attributes.objectid
 
                                     # OUTPUT VERBOSE
                                     Write-Verbose -Message ('Evaluating attachments for layer [{0}] and objectid [{1}]' -f $verLayer, ($layerParams['ObjectId'] -join ', '))
                                 }
+                                elseif ($data.features.attributes[0].GlobalID) {
+                                    # SET SERVICE LAYER ATTACHMENT GLOBAL IDS
+                                    $layerParams['GlobalId'] = $data.features.attributes.GlobalID | ForEach-Object -Process { $_.TrimStart('{').TrimEnd('}') }
+
+                                    # OUTPUT VERBOSE
+                                    Write-Verbose -Message ('Evaluating attachments for layer [{0}] and globalid [{1}]' -f $verLayer, ($layerParams['GlobalId'] -join ', '))
+                                }
                                 else {
                                     # OUTPUT WARNING
                                     Write-Warning -Message ('No objectid or GlobalID found in layer [{0}].' -f $verLayer)
                                 }
 
-                                # GET ATTACHMENTS
-                                $attachments = Get-ServerServiceLayerAttachment @cmnParams @layerParams
+                                try {
+                                    # GET ATTACHMENTS
+                                    $attachments = Get-ServerServiceLayerAttachment @cmnParams @layerParams
 
-                                # EVALUATE EACH ATTACHMENT
-                                foreach ($att in $attachments.attachmentGroups.attachmentInfos) {
+                                    # EVALUATE EACH ATTACHMENT
+                                    foreach ($att in $attachments.attachmentGroups.attachmentInfos) {
 
-                                    <# # CREATE CUSTOM OBJECT FOR ATTACHMENTS
-                                    [PSCustomObject] @{
-                                        ServiceName  = if ($PSBoundParameters.ContainsKey('FolderName')) {
-                                            '{0}/{1}' -f $FolderName, $ServiceName
+                                        <# # CREATE CUSTOM OBJECT FOR ATTACHMENTS
+                                        [PSCustomObject] @{
+                                            ServiceName  = if ($PSBoundParameters.ContainsKey('FolderName')) {
+                                                '{0}/{1}' -f $FolderName, $ServiceName
+                                            }
+                                            else {
+                                                '{0}' -f $ServiceName
+                                            }
+                                            LayerId      = $LayerId
+                                            #ObjectId     = if ($PSBoundParameters.ContainsKey('ObjectId')) { $ObjectId -join ', ' } else { $null }
+                                            #GlobalId     = if ($PSBoundParameters.ContainsKey('GlobalId')) { $GlobalId -join ', ' } else { $null }
+                                            AttachmentId = $att.attachmentid
+                                            Name         = $att.name
+                                            ContentType  = $att.contentType
+                                            Size         = $att.size
+                                            'Size(MB)'   = $att.size / 1MB
+                                        } #>
+
+                                        # WHEN THE LAYER DATA INCLUDES AND ATTACHMENT USING OBJECT ID, IT RETURNS A PSCUSTOMOBJECT
+                                        # HOWEVER, WHEN THE LAYER DATA INCLUDES AN ATTACHMENT USING GLOBAL ID, IT RETURNS AN ORDERED HASHTABLE
+                                        if ($att.getType().FullName -EQ 'System.Management.Automation.OrderedHashtable') {
+
+                                            # OUTPUT VERBOSE
+                                            Write-Verbose -Message ('Converting attribute from hashtable to custom object...')
+
+                                            # CONVERT TO CUSTOM OBJECT
+                                            $att = [PSCustomObject] $att
                                         }
-                                        else {
-                                            '{0}' -f $ServiceName
+                                        elseif ($att.getType().FullName -NE 'System.Management.Automation.PSCustomObject') {
+
+                                            # OUTPUT WARNING
+                                            Write-Warning -Message ('Attachment is not of a known type [{0}]' -f $att.getType().FullName)
                                         }
-                                        LayerId      = $LayerId
-                                        #ObjectId     = if ($PSBoundParameters.ContainsKey('ObjectId')) { $ObjectId -join ', ' } else { $null }
-                                        #GlobalId     = if ($PSBoundParameters.ContainsKey('GlobalId')) { $GlobalId -join ', ' } else { $null }
-                                        AttachmentId = $att.attachmentid
-                                        Name         = $att.name
-                                        ContentType  = $att.contentType
-                                        Size         = $att.size
-                                        'Size(MB)'   = $att.size / 1MB
-                                    } #>
 
-                                    # WHEN THE LAYER DATA INCLUDES AND ATTACHMENT USING OBJECT ID, IT RETURNS A PSCUSTOMOBJECT
-                                    # HOWEVER, WHEN THE LAYER DATA INCLUDES AN ATTACHMENT USING GLOBAL ID, IT RETURNS AN ORDERED HASHTABLE
-                                    if ($att.getType().FullName -EQ 'System.Management.Automation.OrderedHashtable') {
-
-                                        # OUTPUT VERBOSE
-                                        Write-Verbose -Message ('Converting attribute from hashtable to custom object...')
-
-                                        # CONVERT TO CUSTOM OBJECT
-                                        $att = [PSCustomObject] $att
+                                        # ADD ATTACHMENTS TO ARRAY
+                                        $report['Attachments'] += $att | Select-Object -Property $reportPropsAttachment
                                     }
-                                    elseif ($att.getType().FullName -NE 'System.Management.Automation.PSCustomObject') {
-
-                                        # OUTPUT WARNING
-                                        Write-Warning -Message ('Attachment is not of a known type [{0}]' -f $att.getType().FullName)
-                                    }
-
-                                    # ADD ATTACHMENTS TO ARRAY
-                                    $report['Attachments'] += $att | Select-Object -Property $reportPropsAttachment
+                                }
+                                catch {
+                                    Write-Error -Message $PSItem.Exception.Message -ErrorAction Continue # $_.ToString()
                                 }
                             }
                         }
