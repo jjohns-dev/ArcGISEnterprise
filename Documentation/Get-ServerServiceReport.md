@@ -54,7 +54,7 @@ Target folder
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: Folder
+Aliases:
 
 Required: False
 Position: Named
