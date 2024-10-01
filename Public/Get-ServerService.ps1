@@ -1,19 +1,21 @@
 function Get-ServerService {
     <#
     .SYNOPSIS
-        Get ArcGIS Server service
+        Get ArcGIS Server service metadata
     .DESCRIPTION
-        Get ArcGIS Service service
+        Get ArcGIS Server service metadata
     .PARAMETER ServiceName
         Name of service
     .PARAMETER ServiceType
         Type of service (e.g., FeatureServer or MapServer)
     .PARAMETER FolderName
         Folder name in ArcGIS Server
+    .PARAMETER Admin
+        Use admin endpoint
     .PARAMETER Context
-        Portal context (e.g., https://arcgis.com/arcgis)
+        Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
-        Portal token
+        Porta token
     .PARAMETER SkipCertificateCheck
         Ignore missing or invalid certificate
     .INPUTS
@@ -21,10 +23,26 @@ function Get-ServerService {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerService -Context 'https://arcgis.com/arcgis' -Token $token -ServiceName SampleWorldCities -ServiceType MapServer
-        Returns the service object for the SampleWorldCities service
+        PS C:\> Get-ServerService @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer'
+        Returns service metadata for the 'Geology' FeatureServer in the 'Energy' folder
     .NOTES
-        General notes
+        Name:     Get-ServerService
+        Author:   Justin Johns
+        Version:  0.1.0 | Last Edit: 2024-09-28
+        - Version history is capture in repository commit history
+        Comments:
+        https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
+        Performance Testing:
+        Using custom properties instead of custom objects for output appears to be slightly faster, but only slightly.
+        Below is the code used to test performance. The cmdlet "Test-Performance" requires the SecurityTools modules.
+        Test-Performance -Runs 100 -ScriptBlock {
+            $params = @{
+                Context     = 'https://sampleserver6.arcgisonline.com/arcgis'
+                ServiceName = 'DamageAssessment'
+                ServiceType = 'FeatureServer'
+            }
+            Get-ServerService @params | Out-Null
+        }
     #>
     [CmdletBinding()]
     Param(
@@ -42,7 +60,10 @@ function Get-ServerService {
         [Alias('Folder')]
         [System.String] $FolderName,
 
-        [Parameter(Mandatory = $true, Position = 0, HelpMessage = 'Target Portal context')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Use admin endpoint')]
+        [System.Management.Automation.SwitchParameter] $Admin,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
 
@@ -50,32 +71,48 @@ function Get-ServerService {
         [ValidateScript({ $_ -match $token_regex })]
         [System.String] $Token,
 
-        [Parameter(HelpMessage = 'Skip SSL certificate check')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
+    Begin {
+        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+    }
     Process {
-        # SET URI PATH
-        if ($PSBoundParameters.ContainsKey('FolderName')) {
-            $uri = '{0}/admin/services/{1}/{2}.{3}' -f $Context, $FolderName, $ServiceName, $ServiceType
-        }
-        else {
-            $uri = '{0}/admin/services/{1}.{2}' -f $Context, $ServiceName, $ServiceType
-        }
-
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = $uri
-            Method = 'GET'
-            Body   = @{ f = 'json' }
+            Uri     = if ($PSBoundParameters.ContainsKey('Admin')) {
+                if ($PSBoundParameters.ContainsKey('FolderName')) {
+                    '{0}/admin/services/{1}/{2}.{3}' -f $Context, $FolderName, $ServiceName, $ServiceType
+                }
+                else {
+                    '{0}/admin/services/{1}.{2}' -f $Context, $ServiceName, $ServiceType
+                }
+            }
+            else {
+                if ($PSBoundParameters.ContainsKey('FolderName')) {
+                    '{0}/rest/services/{1}/{2}/{3}' -f $Context, $FolderName, $ServiceName, $ServiceType
+                }
+                else {
+                    '{0}/rest/services/{1}/{2}' -f $Context, $ServiceName, $ServiceType
+                }
+            }
+            Method  = 'POST'
+            Body    = @{
+                f     = 'json'
+                token = $Token
+            }
+            Headers = @{
+                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
+            }
         }
-
-        # ADD TOKEN IF PROVIDED
-        if ($PSBoundParameters.ContainsKey('Token')) { $restParams.Body['token'] = $Token }
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # SEND REQUEST
+        # OUTPUT VERBOSE
+        Write-Verbose -Message ('Requesting service [{0}]' -f $restParams.Uri)
+
+        # INVOKE REQUEST
         Invoke-RestMethod @restParams
     }
 }

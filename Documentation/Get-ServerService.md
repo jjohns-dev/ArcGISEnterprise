@@ -1,24 +1,24 @@
 # Get-ServerService
 
 ## SYNOPSIS
-Get ArcGIS Server service
+Get ArcGIS Server service metadata
 
 ## SYNTAX
 
 ```
-Get-ServerService -ServiceName <String> -ServiceType <String> [-FolderName <String>] [-Context] <Uri>
- [-Token <String>] [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerService [-ServiceName] <String> [-ServiceType] <String> [[-FolderName] <String>] [-Admin]
+ [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Get ArcGIS Service service
+Get ArcGIS Server service metadata
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Get-ServerService -Context 'https://arcgis.com/arcgis' -Token $token -ServiceName SampleWorldCities -ServiceType MapServer
-Returns the service object for the SampleWorldCities service
+Get-ServerService @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer'
+Returns service metadata for the 'Geology' FeatureServer in the 'Energy' folder
 ```
 
 ## PARAMETERS
@@ -32,7 +32,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 1
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -47,7 +47,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: Named
+Position: 2
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,14 +62,29 @@ Parameter Sets: (All)
 Aliases: Folder
 
 Required: False
-Position: Named
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Admin
+Use admin endpoint
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
-Portal context (e.g., https://arcgis.com/arcgis)
+Server context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
 Type: Uri
@@ -77,14 +92,14 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
 ### -Token
-Portal token
+Porta token
 
 ```yaml
 Type: String
@@ -92,7 +107,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -123,6 +138,23 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-General notes
+Name:     Get-ServerService
+Author:   Justin Johns
+Version:  0.1.0 | Last Edit: 2024-09-28
+- Version history is capture in repository commit history
+Comments:
+https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
+Performance Testing:
+Using custom properties instead of custom objects for output appears to be slightly faster, but only slightly.
+Below is the code used to test performance.
+The cmdlet "Test-Performance" requires the SecurityTools modules.
+Test-Performance -Runs 100 -ScriptBlock {
+    $params = @{
+        Context     = 'https://sampleserver6.arcgisonline.com/arcgis'
+        ServiceName = 'DamageAssessment'
+        ServiceType = 'FeatureServer'
+    }
+    Get-ServerService @params | Out-Null
+}
 
 ## RELATED LINKS
