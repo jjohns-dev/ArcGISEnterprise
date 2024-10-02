@@ -175,7 +175,6 @@
         'Get-PortalUserGroup'
         'Get-SecurityPolicy'
         'Get-ServerAllowedOrigins'
-        'Get-ServerServiceInfo'
         'Test-PortalToken'
         'Update-PortalPSA'
         'Update-ServerPSA'
