@@ -580,7 +580,8 @@ function Get-ServerServiceReport {
                                         }
                                     }
                                     catch {
-                                        Write-Error -Message $PSItem.Exception.Message -ErrorAction Continue # $_.ToString()
+                                        # $_.ToString()
+                                        Write-Error -Message ('Error on line [{0}]: {1}' -f $_.InvocationInfo.ScriptLineNumber, $PSItem.Exception.Message) -ErrorAction Continue
                                     }
                                 }
                             }
