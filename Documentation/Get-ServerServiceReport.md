@@ -150,7 +150,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-ServerServiceReport
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-10-01
+Version:  0.1.1 | Last Edit: 2024-10-04
 - Version history is capture in repository commit history
 Comments: \<Comment(s)\>
 - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
