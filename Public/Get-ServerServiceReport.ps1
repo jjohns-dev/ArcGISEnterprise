@@ -32,7 +32,7 @@ function Get-ServerServiceReport {
     .NOTES
         Name:     Get-ServerServiceReport
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-10-01
+        Version:  0.1.1 | Last Edit: 2024-10-04
         - Version history is capture in repository commit history
         Comments: <Comment(s)>
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
@@ -303,11 +303,12 @@ function Get-ServerServiceReport {
             # CHECK FOR ERRORS -- should we build an error handler function (check for code and throw proper error)?
             if ($serviceData.error) {
                 if ($serviceData.error.code -eq 404) {
-                    # DON'T TERMINATE FOR MISSING SERVICES, JUST WRITE ERROR AND CONTINUE
-                    Write-Error -Message $serviceData.error.message -Exception ([System.IO.FileNotFoundException]::new())
+                    # DON'T TERMINATE FOR MISSING SERVICES. WRITE ERROR AND CONTINUE
+                    Write-Error -Message $serviceData.error.message -Exception ([System.IO.FileNotFoundException]::new()) -ErrorAction Continue
                 }
                 else {
-                    Write-Error -Message ($serviceData.error | ConvertTo-Json) -ErrorAction Stop
+                    # TERMINATE FOR ALL OTHER ERRORS
+                    Write-Error -Message ('Error on line [{0}]: {1}' -f $_.InvocationInfo.ScriptLineNumber, $serviceData.error) -ErrorAction Stop
                 }
             }
             else {
