@@ -105,6 +105,7 @@
         'Get-PortalUserList'
         'Get-ServerAllowedOriginList'
         'Get-ServerHostedFeatureService'
+        'Get-ServerItemLifecycleInfo'
         'Get-ServerLicense'
         'Get-ServerLog'
         'Get-ServerPSA'

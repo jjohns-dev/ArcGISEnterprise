@@ -64,6 +64,7 @@ Please see releases for updates and features
 | Get-PortalUserList | Portal | `[ROOT]/portals/[PORTALID]/users` | Get list of all Portal users |
 | Get-ServerAllowedOriginList | Server | `[ADMIN]/system/handlers/soap/soaphandlerconfig` | Get allowed origins for Server |
 | Get-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer` | Gets Hosted Feature Service |
+| Get-ServerItemLifecycleInfo | Server | `[ADMIN]/data/items/[DATAITEM]/[CHILDITEM]/lifecycleinfos` | Get lifecycle info for Server item |
 | Get-ServerLicense | Server | `[ADMIN]/system/licenses` | Get Server license info |
 | Get-ServerLog | Server | `[ADMIN]/logs/query` | Get Server logs |
 | Get-ServerPSA | Server | `[ADMIN]/security/psa` | Get Server PSA account |
