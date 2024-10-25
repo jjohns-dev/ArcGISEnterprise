@@ -109,6 +109,7 @@
         'Get-ServerLog'
         'Get-ServerPSA'
         'Get-ServerService'
+        'Get-ServerServiceExtractChange'
         'Get-ServerServiceItemInfo'
         'Get-ServerServiceLayer'
         'Get-ServerServiceLayerAttachment'
