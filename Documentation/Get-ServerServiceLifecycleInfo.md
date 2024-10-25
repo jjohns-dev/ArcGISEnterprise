@@ -69,7 +69,7 @@ Accept wildcard characters: False
 ```
 
 ### -Context
-Portal context (e.g., https://arcgis.com/arcgis)
+Server context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
 Type: Uri
