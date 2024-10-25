@@ -11,7 +11,7 @@ function Get-ServerServiceLifecycleInfo {
     .PARAMETER FolderName
         Folder name in ArcGIS Server
     .PARAMETER Context
-        Portal context (e.g., https://arcgis.com/arcgis)
+        Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
         Portal token
     .PARAMETER SkipCertificateCheck

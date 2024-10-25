@@ -64,11 +64,13 @@ Please see releases for updates and features
 | Get-PortalUserList | Portal | `[ROOT]/portals/[PORTALID]/users` | Get list of all Portal users |
 | Get-ServerAllowedOriginList | Server | `[ADMIN]/system/handlers/soap/soaphandlerconfig` | Get allowed origins for Server |
 | Get-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer` | Gets Hosted Feature Service |
+| Get-ServerItemLifecycleInfo | Server | `[ADMIN]/data/items/[DATAITEM]/[CHILDITEM]/lifecycleinfos` | Get lifecycle info for Server item |
 | Get-ServerLicense | Server | `[ADMIN]/system/licenses` | Get Server license info |
 | Get-ServerLog | Server | `[ADMIN]/logs/query` | Get Server logs |
 | Get-ServerPSA | Server | `[ADMIN]/security/psa` | Get Server PSA account |
 | Get-ServerService | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]` | Get service from admin endpoint |
 | Get-ServerService | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]` | Get service from rest endpoint |
+| Get-ServerServiceExtractChange | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/FeatureServer/extractChanges` | Submit a job to generate service changes payload |
 | Get-ServerServiceItemInfo | Server | `[ADMIN]/services/[FOLDERNAME]/[SERVICENAME].[SERVICETYPE]/iteminfo` | Get service item info from admin endpoint |
 | Get-ServerServiceLayer | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]/[LAYERID]` | Get service layer metadata |
 | Get-ServerServiceLayerAttachment | Server | `[ROOT]/[FOLDERNAME]/[SERVICENAME]/[SERVICETYPE]/[LAYERID]/queryAttachments` | Get layer attachments |
