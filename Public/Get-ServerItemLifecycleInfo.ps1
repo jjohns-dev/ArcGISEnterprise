@@ -5,7 +5,7 @@ function Get-ServerItemLifecycleInfo {
     .DESCRIPTION
         Get ArcGIS Service item lifecycle information
     .PARAMETER DataItem
-        Name of data item
+        Data item type
     .PARAMETER ChildItem
         Name of child item
     .PARAMETER Context
@@ -19,8 +19,8 @@ function Get-ServerItemLifecycleInfo {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerItemLifecycleInfo @cmnParams -
-        Returns the...
+        PS C:\> Get-ServerItemLifecycleInfo @cmnParams -DataItem 'enterpriseDatabases' -ChildItem 'AGSDataStore'
+        Returns the lifecycle info for 'AGSDataStore' child item of type 'enterpriseDatabases'
     .NOTES
         Name:     Get-ServerItemLifecycleInfo
         Author:   Justin Johns
@@ -32,9 +32,8 @@ function Get-ServerItemLifecycleInfo {
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Data item name')]
-        [ValidateNotNullOrEmpty()]
-        [ValidateSet('enterpriseDatabases', 'folder', 'egdb', 'bigDataFileShare', 'cloudstore', 'rasterStore')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Data item type')]
+        [ValidateSet('enterpriseDatabases', 'fileShares', 'nosqlDatabases', 'bigDataFileShares', 'cloudStores', 'rasterStores')]
         [System.String] $DataItem,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Child item name')]
