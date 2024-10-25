@@ -8,6 +8,8 @@ function Get-ServerServiceExtractChange {
         Name of service
     .PARAMETER FolderName
         Folder name in ArcGIS Server (defaults to "Hosted")
+    .PARAMETER IdsOnly
+        Returns IDs only
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
