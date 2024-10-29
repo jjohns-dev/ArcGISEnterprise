@@ -76,6 +76,7 @@
         'Edit-ServerHostedFeatureRecord'
         'Find-PortalItem'
         'Find-ServerServiceLayerData'
+        'Format-ChangeSet'
         'Format-CsvHeader'
         'Format-ServerServiceLayerMetadata'
         'Format-ServerServiceMetadata'
