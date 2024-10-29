@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.6.2'
+    ModuleVersion     = '0.6.3'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -76,6 +76,7 @@
         'Edit-ServerHostedFeatureRecord'
         'Find-PortalItem'
         'Find-ServerServiceLayerData'
+        'Format-ChangeSet'
         'Format-CsvHeader'
         'Format-ServerServiceLayerMetadata'
         'Format-ServerServiceMetadata'
