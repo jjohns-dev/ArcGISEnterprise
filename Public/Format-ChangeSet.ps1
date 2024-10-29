@@ -36,10 +36,9 @@ function Format-ChangeSet {
 
         # CREATE REPORT OBJECT ARRAYS
         $report = @{
-            features           = @()
-            attachments        = @()
-            deletedFeatures    = @()
-            deletedAttachments = @()
+            features    = @()
+            attachments = @()
+            deleted     = @()
         }
     }
     Process {
@@ -94,7 +93,7 @@ function Format-ChangeSet {
                 # PROCESS FEATURE DELETIONS
                 foreach ($delete in $feature.deleteIds) {
                     # CREATE CUSTOM OBJECT AND ADD TO ARRAY
-                    $report.deletedFeatures += [PSCustomObject] @{ serviceName = $ServiceName; deletedFeatures = $delete }
+                    $report.deleted += [PSCustomObject] @{ serviceName = $ServiceName; itemType = 'feature'; id = $delete }
                 }
             }
 
@@ -139,7 +138,7 @@ function Format-ChangeSet {
                 # PROCESS ATTACHMENT DELETIONS
                 foreach ($delete in $attachment.deleteIds) {
                     # CREATE CUSTOM OBJECT AND ADD TO ARRAY
-                    $report.deletedAttachments += [PSCustomObject] @{ serviceName = $ServiceName; deletedAttachments = $delete }
+                    $report.deleted += [PSCustomObject] @{ serviceName = $ServiceName; itemType = 'attachment'; id = $delete }
                 }
             }
         }
