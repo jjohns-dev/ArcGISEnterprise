@@ -18,7 +18,7 @@ function Format-ChangeSet {
     .NOTES
         Name:     Format-ChangeSet
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-10-29
+        Version:  0.1.1 | Last Edit: 2024-10-30
         Comments: <Comment(s)>
     #>
     [CmdletBinding()]
@@ -40,6 +40,19 @@ function Format-ChangeSet {
             attachments = @()
             deleted     = @()
         }
+
+        # SET DESIRED FEATURE PROPERTIES
+        $featProps = @(
+            'serviceName'
+            'editId'
+            'changeType'
+            'last_edited_user'
+            'created_user'
+            'globalid'
+            'last_edited_date'
+            'created_date'
+            'objectid'
+        )
     }
     Process {
         # PROCESS EDITS
@@ -55,8 +68,8 @@ function Format-ChangeSet {
                             serviceName = $ServiceName
                             editId      = $edit.id
                             changeType  = 'update'
-                            x           = if ($update.geometry.x) { $update.geometry.x } else { $null }
-                            y           = if ($update.geometry.y) { $update.geometry.y } else { $null }
+                            #x           = if ($update.geometry.x) { $update.geometry.x } else { $null }
+                            #y           = if ($update.geometry.y) { $update.geometry.y } else { $null }
                         }
 
                         # CONVERT DATE PROPERTIES
@@ -64,7 +77,7 @@ function Format-ChangeSet {
                         $attributesObject.created_date = (ConvertFrom-Epoch -Milliseconds $attributesObject.created_date).ToString()
 
                         # ADD ATTRIBUTE TO ARRAY
-                        $report.features += $attributesObject
+                        $report.features += $attributesObject | Select-Object -Property $featProps
                     }
                 }
 
@@ -77,8 +90,8 @@ function Format-ChangeSet {
                             serviceName = $ServiceName
                             editId      = $edit.id
                             changeType  = 'add'
-                            x           = if ($update.geometry.x) { $update.geometry.x } else { $null }
-                            y           = if ($update.geometry.y) { $update.geometry.y } else { $null }
+                            #x           = if ($update.geometry.x) { $update.geometry.x } else { $null }
+                            #y           = if ($update.geometry.y) { $update.geometry.y } else { $null }
                         }
 
                         # CONVERT DATE PROPERTIES
@@ -86,7 +99,7 @@ function Format-ChangeSet {
                         $attributesObject.created_date = (ConvertFrom-Epoch -Milliseconds $attributesObject.created_date).ToString()
 
                         # ADD ATTRIBUTE TO ARRAY
-                        $report.features += $attributesObject
+                        $report.features += $attributesObject | Select-Object -Property $featProps
                     }
                 }
 
