@@ -77,7 +77,7 @@ function Format-ChangeSet {
                         $attributesObject.created_date = (ConvertFrom-Epoch -Milliseconds $attributesObject.created_date).ToString()
 
                         # ADD ATTRIBUTE TO ARRAY
-                        $report.features | Select-Object -Property $featProps += $attributesObject
+                        $report.features += $attributesObject | Select-Object -Property $featProps
                     }
                 }
 
@@ -99,7 +99,7 @@ function Format-ChangeSet {
                         $attributesObject.created_date = (ConvertFrom-Epoch -Milliseconds $attributesObject.created_date).ToString()
 
                         # ADD ATTRIBUTE TO ARRAY
-                        $report.features | Select-Object -Property $featProps += $attributesObject
+                        $report.features += $attributesObject | Select-Object -Property $featProps
                     }
                 }
 
