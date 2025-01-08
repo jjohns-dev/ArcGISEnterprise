@@ -136,6 +136,7 @@
         'New-TableSchemaObject'
         'Publish-PortalCsvItemAsTable'
         'Publish-PortalDataStoreLayer'
+        'Remove-PortalCategorySchema'
         'Remove-PortalItem'
         'Remove-PortalRole'
         'Remove-PortalUser'

@@ -93,6 +93,7 @@ Please see releases for updates and features
 | New-ServerHostedFeatureTable | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/addToDefinition` | Creates table as a layer in Hosted Feature Service |
 | Publish-PortalCsvItemAsTable | Portal | `[ROOT]/content/users/[USERNAME]/publish` | Publish CSV item (Portal item) as Hosted Table. Additional options available |
 | Publish-PortalDataStoreLayer | Portal | `[ROOT]portals/[PORTALID]/datastores/allDatasets/publishLayers` | Publish on map layer and one feature layer from dataset in DataStore |
+| Remove-PortalCategorySchema | Portal | `[ROOT]/portals/[PORTALID]/deleteCategorySchema` | Removes the category schema set for the organization |
 | Remove-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/delete` | Deletes Portal item (e.g., Hosted Feature Service) |
 | Remove-PortalRole | Portal | `[ROOT]/portals/[PORTALID]/roles/[ROLEID]/delete` | Remove Role in Portal for ArcGIS |
 | Remove-PortalUser | Portal | `[ROOT]/sharing/rest/portals/[PORTALID]/removeUsers` | Deletes Portal user |
