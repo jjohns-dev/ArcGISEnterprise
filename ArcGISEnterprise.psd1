@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.6.4'
+    ModuleVersion     = '0.6.5'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -81,6 +81,7 @@
         'Format-ServerServiceLayerMetadata'
         'Format-ServerServiceMetadata'
         'Get-PortalAllowedOriginList'
+        'Get-PortalCategorySchema'
         'Get-PortalDataStoreServer'
         'Get-PortalDefaultUserSettings'
         'Get-PortalGroupUserList'
