@@ -146,6 +146,7 @@
         'Remove-ServerServiceLayer'
         'Revoke-PortalUserItemAccess'
         'Set-PortalAllowedOrigins'
+        'Set-PortalCategorySchema'
         'Set-PortalDefaultUserLicenseType'
         'Set-PortalDefaultUserRole'
         'Set-PortalProxyHosts'
