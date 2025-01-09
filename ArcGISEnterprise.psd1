@@ -85,6 +85,7 @@
         'Get-PortalCategorySchema'
         'Get-PortalDataStoreServer'
         'Get-PortalDefaultUserSettings'
+        'Get-PortalGroupExportJobStatus'
         'Get-PortalGroupUserList'
         'Get-PortalIndexStatus'
         'Get-PortalItem'
