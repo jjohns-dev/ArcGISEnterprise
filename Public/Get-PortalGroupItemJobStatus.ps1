@@ -1,4 +1,4 @@
-function Get-PortalGroupExportJobStatus {
+function Get-PortalGroupItemJobStatus {
     <#
     .SYNOPSIS
         Get job status for Portal Group export job
@@ -21,10 +21,10 @@ function Get-PortalGroupExportJobStatus {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-PortalGroupExportJobStatus @cmnParams -ItemId 0123456789ABCDEF
+        PS C:\> Get-PortalGroupItemJobStatus @cmnParams -ItemId 0123456789ABCDEF
         Returns the job status information for the Portal Group export job with the ID 0123456789ABCDEF
     .NOTES
-        Name:     Get-PortalGroupExportJobStatus
+        Name:     Get-PortalGroupItemJobStatus
         Author:   Justin Johns
         Version:  0.1.0 | Last Edit: 2025-01-09
         - Version history is capture in repository commit history
