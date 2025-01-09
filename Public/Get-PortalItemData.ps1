@@ -51,14 +51,9 @@ function Get-PortalItemData {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/content/items/{1}/data' -f $Context, $ItemId
-            Method = 'POST'
-            Body   = @{
-                f     = 'json'
-                token = $Token
-            }
-            Headers = @{
-                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
-            }
+            Method  = 'POST'
+            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
+            Body   = @{ f = 'json'; token = $Token }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED
