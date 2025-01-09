@@ -44,7 +44,7 @@ function Write-PortalUserItem {
         [System.String] $UserName,
 
         [Parameter(Mandatory = $true, HelpMessage = 'File path')]
-        [ValidateScript({Test-Path -Path $_ -PathType Leaf -Include '*.xlsx', '*.csv'})]
+        [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
         [System.String] $FilePath,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Item description')]
@@ -101,6 +101,13 @@ function Write-PortalUserItem {
             '.pdf'  = 'PDF'
             '.zip'  = 'File Geodatabase' # ZIP CAN BE MULTIPLE TYPES
             '.pptx' = 'Microsoft Powerpoint'
+            '.epk'  = 'Export Package'
+        }
+
+        # VALIDATE FILE TYPE
+        if (-Not $fileTypeHash.ContainsKey($file.Extension)) {
+            # TERMINATE WITH ERROR
+            Write-Error ('File type "{0}" is not supported.' -f $file.Extension) -ErrorAction Stop
         }
     }
     Process {
