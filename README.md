@@ -36,6 +36,7 @@ Please see releases for updates and features
 | Add-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/addFeatures` | Appends data to table in Hosted Feature Service |
 | Clear-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Edit-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
+| Export-PortalGroupItem | Portal | `[ROOT]/community/groups/[GROUPID]/export` | Exports all exportable content from a Portal group |
 | Find-PortalItem | Portal | `[ROOT]/search` | Returns Portal item based on search criteria |
 | Find-ServerServiceLayerData | Server | `[ROOT]/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query service layer for data |
 | Get-PortalAllowedOriginList | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |

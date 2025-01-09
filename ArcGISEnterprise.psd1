@@ -74,6 +74,7 @@
         'ConvertFrom-ArcGISLog'
         'ConvertFrom-Epoch'
         'Edit-ServerHostedFeatureRecord'
+        'Export-PortalGroupItem'
         'Find-PortalItem'
         'Find-ServerServiceLayerData'
         'Format-ChangeSet'
