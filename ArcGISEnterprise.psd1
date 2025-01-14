@@ -125,6 +125,7 @@
         'Get-ServerSetting'
         'Get-ServerToken'
         'Grant-PortalUserItemAccess'
+        'Import-PortalGroupItem' # DOESN'T WORK YET
         'Invoke-PortalItemAnalysis'
         'Invoke-ServerHostedFeatureQuery'
         'Move-PortalUserItem'
