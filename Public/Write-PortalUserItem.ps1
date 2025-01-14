@@ -14,6 +14,8 @@ function Write-PortalUserItem {
         Item snippet (summary)
     .PARAMETER Tag
         Item tag
+    .PARAMETER TypeKeyword
+        Item type keyword
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -30,7 +32,7 @@ function Write-PortalUserItem {
     .NOTES
         Name:     Write-PortalUserItem
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-14
+        Version:  0.1.1 | Last Edit: 2025-01-14
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/add-item.htm
@@ -58,6 +60,10 @@ function Write-PortalUserItem {
         [Parameter(Mandatory = $false, HelpMessage = 'Item tag(s)')]
         [ValidateNotNullOrEmpty()]
         [System.String[]] $Tag,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Type keyword(s)')]
+        [ValidateNotNullOrEmpty()]
+        [System.String[]] $TypeKeyword,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -116,16 +122,17 @@ function Write-PortalUserItem {
             Uri    = '{0}/sharing/rest/content/users/{1}/addItem' -f $Context, $UserName
             Method = 'POST'
             Form   = @{
-                f           = 'json'
-                token       = $Token
+                f            = 'json'
+                token        = $Token
                 #multipart = $true
-                title       = Split-Path -Path $FilePath -LeafBase
-                filename    = Split-Path -Path $FilePath -Leaf
-                type        = $fileTypeHash[($file.Extension)]
-                file        = $file
-                description = $Description
-                tags        = $Tag -join ', '
-                snippet     = $Snippet
+                title        = Split-Path -Path $FilePath -LeafBase
+                filename     = Split-Path -Path $FilePath -Leaf
+                type         = $fileTypeHash[($file.Extension)]
+                file         = $file
+                description  = $Description
+                typeKeywords = $TypeKeyword -join ', '
+                tags         = $Tag -join ', '
+                snippet      = $Snippet
             }
         }
 
