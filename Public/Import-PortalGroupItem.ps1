@@ -63,6 +63,7 @@ function Import-PortalGroupItem {
                 f                          = 'json'
                 token                      = $Token
                 async                      = $true
+                #previewOnly                = $true
                 itemId                     = $ItemId
                 #itemIdList                 = '2b28061dc08d4834be808500ac2bd967'
                 overwriteExistingItems     = $false
