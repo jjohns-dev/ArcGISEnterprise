@@ -6,6 +6,8 @@ function Get-PortalItemData {
         Get all data for a Portal item including layers and layer data
     .PARAMETER ItemId
         Portal item ID
+    .PARAMETER AsFile
+        Request data as application/octet-stream
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -22,7 +24,7 @@ function Get-PortalItemData {
     .NOTES
         Name:     Get-PortalItemData
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-06-04
+        Version:  0.1.1 | Last Edit: 2025-01-14
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/item-data/
@@ -32,6 +34,9 @@ function Get-PortalItemData {
         [Parameter(Mandatory = $true, HelpMessage = 'Portal item ID')]
         [ValidatePattern('[a-f0-9]{32}')]
         [System.String] $ItemId,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Request data as application/octet-stream')]
+        [System.Management.Automation.SwitchParameter] $AsFile,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -50,16 +55,26 @@ function Get-PortalItemData {
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/sharing/rest/content/items/{1}/data' -f $Context, $ItemId
+            Uri     = '{0}/sharing/rest/content/items/{1}/data' -f $Context, $ItemId
             Method  = 'POST'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
-            Body   = @{ f = 'json'; token = $Token }
+            Body    = @{ token = $Token }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        # ADD FILE REQUEST IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('AsFile')) {
+            # INVOKE REQUEST AS WEB REQUEST
+            Invoke-WebRequest @restParams
+        }
+        else {
+            # REQUEST FORMAT AS JSON
+            $restParams['Body'].Add('f', 'json')
+
+            # INVOKE REQUEST
+            Invoke-RestMethod @restParams
+        }
     }
 }
