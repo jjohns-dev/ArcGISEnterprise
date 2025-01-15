@@ -12,8 +12,8 @@ function Import-PortalGroupItem {
         Overwrite existing items
     .PARAMETER KeepPackageAfterImport
         Keep package after import
-    .PARAMETER Synchronous
-        Execute job synchronously
+    .PARAMETER Async
+        Execute job asynchronously
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -26,7 +26,7 @@ function Import-PortalGroupItem {
         System.Object.
     .EXAMPLE
         PS C:\> Import-PortalGroupItem -GroupId 'ad46a0e1a74742aeb4314250c3ea90e4' -ItemId '2b28061dc08d4834be808500ac2bd967' @commonParams
-        Starts and asynchronous job to import of all content from item with ID '2b28061dc08d4834be808500ac2bd967' to group ID 'ad46a0e1a74742aeb4314250c3ea90e4'
+        Starts a job to import of all content from item with ID '2b28061dc08d4834be808500ac2bd967' to group ID 'ad46a0e1a74742aeb4314250c3ea90e4'
     .NOTES
         Name:     Import-PortalGroupItem
         Author:   Justin Johns
@@ -51,8 +51,8 @@ function Import-PortalGroupItem {
         [Parameter(Mandatory = $false, HelpMessage = 'Keep package after import')]
         [System.Management.Automation.SwitchParameter] $KeepPackageAfterImport,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Execute job synchronously')]
-        [System.Management.Automation.SwitchParameter] $Synchronous,
+        [Parameter(Mandatory = $false, HelpMessage = 'Execute job asynchronously')]
+        [System.Management.Automation.SwitchParameter] $Async,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -77,7 +77,7 @@ function Import-PortalGroupItem {
             Body    = @{
                 f                          = 'json'
                 token                      = $Token
-                async                      = $true
+                async                      = $false
                 #previewOnly                = $true
                 itemId                     = $ItemId
                 #itemIdList                 = '2b28061dc08d4834be808500ac2bd967'
@@ -86,11 +86,11 @@ function Import-PortalGroupItem {
             }
         }
 
+        # REMOVE ASYNC IF SYNCHRONOUS REQUEST
+        if ($PSBoundParameters.ContainsKey('Async')) { $restParams['Body']['async'] = $true }
+
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-
-        # REMOVE ASYNC IF SYNCHRONOUS REQUEST
-        if ($PSBoundParameters.ContainsKey('Synchronous')) { $restParams['Body']['async'] = $false }
 
         # INVOKE REQUEST
         Invoke-RestMethod @restParams
