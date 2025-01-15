@@ -12,6 +12,8 @@ function Import-PortalGroupItem {
         Overwrite existing items
     .PARAMETER KeepPackageAfterImport
         Keep package after import
+    .PARAMETER Synchronous
+        Execute job synchronously
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -28,7 +30,7 @@ function Import-PortalGroupItem {
     .NOTES
         Name:     Import-PortalGroupItem
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-14
+        Version:  0.1.0 | Last Edit: 2025-01-15
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/import-group/
@@ -48,6 +50,9 @@ function Import-PortalGroupItem {
 
         [Parameter(Mandatory = $false, HelpMessage = 'Keep package after import')]
         [System.Management.Automation.SwitchParameter] $KeepPackageAfterImport,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Execute job synchronously')]
+        [System.Management.Automation.SwitchParameter] $Synchronous,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -83,6 +88,9 @@ function Import-PortalGroupItem {
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
+        # REMOVE ASYNC IF SYNCHRONOUS REQUEST
+        if ($PSBoundParameters.ContainsKey('Synchronous')) { $restParams['Body']['async'] = $false }
 
         # INVOKE REQUEST
         Invoke-RestMethod @restParams
