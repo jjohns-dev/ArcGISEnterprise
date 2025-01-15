@@ -8,6 +8,10 @@ function Import-PortalGroupItem {
         Portal Group ID
     .PARAMETER ItemId
         Portal item ID
+    .PARAMETER OverwriteExistingItems
+        Overwrite existing items
+    .PARAMETER KeepPackageAfterImport
+        Keep package after import
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -39,6 +43,12 @@ function Import-PortalGroupItem {
         [ValidatePattern('[a-f0-9]{32}')]
         [System.String] $ItemId,
 
+        [Parameter(Mandatory = $false, HelpMessage = 'Overwrite existing items')]
+        [System.Management.Automation.SwitchParameter] $OverwriteExistingItems,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Keep package after import')]
+        [System.Management.Automation.SwitchParameter] $KeepPackageAfterImport,
+
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -66,8 +76,8 @@ function Import-PortalGroupItem {
                 #previewOnly                = $true
                 itemId                     = $ItemId
                 #itemIdList                 = '2b28061dc08d4834be808500ac2bd967'
-                overwriteExistingItems     = $false
-                keepPackageItemAfterImport = $true
+                overwriteExistingItems     = if ($PSBoundParameters.ContainsKey('OverwriteExistingItems')) { $true } else { $false }
+                keepPackageItemAfterImport = if ($PSBoundParameters.ContainsKey('KeepPackageAfterImport')) { $true } else { $false }
             }
         }
 
