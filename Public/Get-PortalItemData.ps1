@@ -3,7 +3,9 @@ function Get-PortalItemData {
     .SYNOPSIS
         Get Portal item data
     .DESCRIPTION
-        Get all data for a Portal item including layers and layer data
+        Get all data for a Portal item including layers and layer data. This will also retrieve
+        a file item that has been uploaded to Portal and return it as a web request with the
+        content as the file data stream.
     .PARAMETER ItemId
         Portal item ID
     .PARAMETER AsFile
@@ -19,8 +21,13 @@ function Get-PortalItemData {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-PortalItemData -ItemId 'fdc51cd9e3ac4f4aa8444949caf5e816' @cmnParams
+        PS C:\> Get-PortalItemData @cmnParams -ItemId 'fdc51cd9e3ac4f4aa8444949caf5e816'
         Returns all the item data including layers and laery data
+    .EXAMPLE
+        PS C:\> $itemData = Get-PortalItemData @cmnParams -ItemId 'aaaea82adc734de2a8af89e7a408576f' -AsFile
+        PS C:\> Set-Content -Path 'C:\temp\Group.epk' -Value $itemData.Content -AsByteStream
+        The first command returns a web request with content-type 'application/octet-stream' from the Portal item 'Group.epk'.
+        The second command writes the data stream to a file.
     .NOTES
         Name:     Get-PortalItemData
         Author:   Justin Johns
