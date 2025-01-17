@@ -88,7 +88,7 @@ function Add-ServerUsageReport {
                     #to         = [System.DateTimeOffset]::new((Get-Date -Date '2025-01-16 15:00:00')).ToUnixTimeMilliseconds()
                     #aggregationInterval = 30 # IN MINUTES
                     queries    = @( $Dimension )
-                    metadata   = 'Usage report for "Make_Me_Cry" service'
+                    metadata   = $Metadata
                 } | ConvertTo-Json -Depth 4
             }
         }
