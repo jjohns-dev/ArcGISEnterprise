@@ -102,6 +102,7 @@ Please see releases for updates and features
 | Remove-ServerFolder | Server | `[ADMIN]/services/[FOLDERNAME]/deleteFolder` | Deletes folder in ArcGIS Server and all services in folder |
 | Remove-ServerService | Server | `[ADMIN]/services/deleteServices` | Deletes ArcGIS Server Service |
 | Remove-ServerServiceLayer | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
+| Remove-ServerUsageReport | Server | `[ADMIN]/usagereports/[REPORTNAME]/delete` | Deletes a Server usage report |
 | Revoke-PortalUserItemAccess | Portal | `[ROOT]/content/users/[USERNAME]/unshareItems` | Unshare Portal item |
 | Set-PortalAllowedOrigins | Portal | `[ROOT]/portals/[PORTALID]/update` | Set the allowed origins property for Portal |
 | Set-PortalDefaultUserLicenseType | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User License Type in Portal |

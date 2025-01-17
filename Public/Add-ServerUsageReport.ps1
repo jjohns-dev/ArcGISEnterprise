@@ -25,7 +25,7 @@ function Add-ServerUsageReport {
     .EXAMPLE
         PS C:\> $dim = [PSCustomObject] @{
             resourceURIs = @('services/Hosted/make_me_cry.FeatureServer')
-            metrics      = @('RequestCount', 'RequestsFailed', 'RequestAvgResponseTime', 'RequestMaxResponseTime')
+            metrics      = @('RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime')
         }
         PS C:\> Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -Dimension $dim -Metadata 'Usage report for "Make_Me_Cry" service' @commonParams
         The first command creates a dimension object for the report. The second command creates a new usage report for the 'Make_Me_Cry' service.

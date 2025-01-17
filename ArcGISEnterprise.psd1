@@ -145,6 +145,7 @@
         'Remove-ServerFolder'
         'Remove-ServerService'
         'Remove-ServerServiceLayer'
+        'Remove-ServerUsageReport'
         'Revoke-PortalUserItemAccess'
         'Set-PortalAllowedOrigins'
         'Set-PortalDefaultUserLicenseType'
