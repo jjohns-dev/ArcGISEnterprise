@@ -122,6 +122,7 @@
         'Get-ServerServicesDirectory'
         'Get-ServerSetting'
         'Get-ServerToken'
+        'Get-ServerUsageReport'
         'Get-ServerUsageReportData'
         'Grant-PortalUserItemAccess'
         'Invoke-PortalItemAnalysis'
