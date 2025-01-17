@@ -71,9 +71,6 @@ function Add-ServerUsageReport {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
-
-        # OUTPUT VERBOSE
-        Write-Verbose -Message ('Report Dimension: {0}' -f ($Dimension | ConvertTo-Json -Depth 4))
     }
     Process {
         # SET REQUEST PARAMETERS
@@ -92,9 +89,12 @@ function Add-ServerUsageReport {
                     #aggregationInterval = 30 # IN MINUTES
                     queries    = @( $Dimension )
                     metadata   = 'Usage report for "Make_Me_Cry" service'
-                } | ConvertTo-Json -Depth 4 -AsArray
+                } | ConvertTo-Json -Depth 4
             }
         }
+
+        # OUTPUT VERBOSE
+        Write-Verbose -Message ('Usage report JSON: {0}' -f $restParams.Body.usagereport)
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
