@@ -100,6 +100,6 @@ function Add-ServerUsageReport {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        #Invoke-RestMethod @restParams
+        Invoke-RestMethod @restParams
     }
 }
