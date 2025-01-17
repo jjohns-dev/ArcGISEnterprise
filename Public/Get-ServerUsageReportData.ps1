@@ -6,10 +6,10 @@ function Get-ServerUsageReportData {
         This operation aggregates and filters server usage statistics for the entire ArcGIS Server site.
     .PARAMETER ReportName
         Name of the report to retrieve
-    .PARAMETER MachineName
-        Machine name
     .PARAMETER ReportFormat
         Report format
+    .PARAMETER MachineName
+        Machine name
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -37,13 +37,13 @@ function Get-ServerUsageReportData {
         [ValidateNotNullOrEmpty()]
         [System.String] $ReportName,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Machine name')]
-        [ValidateNotNullOrEmpty()]
-        [System.String[]] $MachineName = '*',
-
         [Parameter(Mandatory = $false, HelpMessage = 'Report format')]
         [ValidateSet('json', 'csv', 'html')]
         [System.String] $ReportFormat = 'json',
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Machine name')]
+        [ValidateNotNullOrEmpty()]
+        [System.String[]] $MachineName = '*',
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
