@@ -21,8 +21,8 @@ function Get-ServerUsageReportData {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-ServerUsageReportData -ReportName 'Make_Me_Cry' @commonParams
-        Retrieves the usage data for the 'Make_Me_Cry' report.
+        PS C:\> Get-ServerUsageReportData -ReportName 'Make_Me_Cry' -ReportFormat CSV @commonParams
+        Retrieves the usage data for the 'Make_Me_Cry' report and returns it as CSV.
     .NOTES
         Name:     Get-ServerUsageReportData
         Author:   Justin Johns

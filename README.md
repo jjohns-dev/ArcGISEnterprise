@@ -34,6 +34,7 @@ Please see releases for updates and features
 | Add-PortalOAuthRedirectURI | Portal | `[ADMIN]/security/oauth/updateAppInfo` | Add redirect URI to Portal OAuth app |
 | Add-PortalUserToGroup | Portal | `[ROOT]/community/groups/[GROUPID]/addUsers` | Add Portal user to Portal group |
 | Add-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/addFeatures` | Appends data to table in Hosted Feature Service |
+| ADD-ServerUsageReport | Server | `[ADMIN]/usagereports/add` | Adds a new usage report |
 | Clear-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Edit-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
 | Find-PortalItem | Portal | `[ROOT]/search` | Returns Portal item based on search criteria |
@@ -79,6 +80,7 @@ Please see releases for updates and features
 | Get-ServerServicesDirectory | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Get service directory from admin endpoint |
 | Get-ServerSetting | Server | `/[SETTINGSURL]` | Get Server settings from admin endpoint |
 | Get-ServerToken | Server | `[ADMIN]/generateToken` | Generate token for ArcGIS Server |
+| Get-ServerUsageReportData | Server | `[ADMIN]/usagereports/[REPORTNAME]/data` | Gets the report data for a usage report |
 | Grant-PortalUserItemAccess | Portal | `[ROOT]/content/users/[USERNAME]/shareItems` | Share Portal item |
 | Invoke-PortalItemAnalysis | Portal | `[ROOT]/content/features/analyze` | Analyze file prior to publishing |
 | Invoke-ServerHostedFeatureQuery | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query feature service layer. Additional options available |
