@@ -8,6 +8,8 @@ function Get-ServerUsageReportData {
         Name of the report to retrieve
     .PARAMETER MachineName
         Machine name
+    .PARAMETER ReportFormat
+        Report format
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -39,6 +41,10 @@ function Get-ServerUsageReportData {
         [ValidateNotNullOrEmpty()]
         [System.String[]] $MachineName = '*',
 
+        [Parameter(Mandatory = $false, HelpMessage = 'Report format')]
+        [ValidateSet('json', 'csv', 'html')]
+        [System.String] $ReportFormat = 'json',
+
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -60,7 +66,7 @@ function Get-ServerUsageReportData {
             Method  = 'POST'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
             Body    = @{
-                f      = 'json'
+                f      = $ReportFormat
                 token  = $Token
                 filter = @{
                     machines = if ($MachineName -is [System.Array]) { @( $MachineName ) } else { $MachineName }
