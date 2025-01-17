@@ -112,9 +112,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Export-PortalGroupItem
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2025-01-14
+Version:  0.1.0 | Last Edit: 2025-01-15
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/users-groups-and-items/export-group-content/
+https://www.esri.com/arcgis-blog/products/arcgis-enterprise/administration/moving-content-across-tiered-arcgis-enterprise-environments/
 
 ## RELATED LINKS
