@@ -12,6 +12,8 @@ function Add-ServerUsageReport {
         Report dimension
     .PARAMETER Metadata
         Report metadata
+    .PARAMETER AggregationInterval
+        Aggregation interval
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -58,6 +60,10 @@ function Add-ServerUsageReport {
         [ValidateNotNullOrEmpty()]
         [System.String] $Metadata,
 
+        [Parameter(Mandatory = $false, HelpMessage = 'Aggregation interval')]
+        [ValidateNotNullOrEmpty()]
+        [System.Int32] $AggregationInterval,
+
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -89,9 +95,15 @@ function Add-ServerUsageReport {
                     #aggregationInterval = 30 # IN MINUTES
                     queries    = @( $Dimension )
                     metadata   = $Metadata
-                } | ConvertTo-Json -Depth 4
+                }# | ConvertTo-Json -Depth 4
             }
         }
+
+        # ADD AGGREGATION INTERVAL IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('AggregationInterval')) { $restParams['Body'].usagereport.Add('aggregationInterval', $AggregationInterval) }
+
+        # CONVERT USAGE REPORT TO JSON
+        $restParams['Body'].usagereport = $restParams['Body'].usagereport | ConvertTo-Json -Depth 4
 
         # OUTPUT VERBOSE
         Write-Verbose -Message ('Usage report JSON: {0}' -f $restParams.Body.usagereport)
