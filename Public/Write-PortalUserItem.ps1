@@ -8,12 +8,16 @@ function Write-PortalUserItem {
         Username
     .PARAMETER FilePath
         File (item) path
+    .PARAMETER Title
+        Item title
     .PARAMETER Description
         Item description
     .PARAMETER Snippet
         Item snippet (summary)
     .PARAMETER Tag
         Item tag
+    .PARAMETER TypeKeyword
+        Item type keyword
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -30,7 +34,7 @@ function Write-PortalUserItem {
     .NOTES
         Name:     Write-PortalUserItem
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-14
+        Version:  0.1.2 | Last Edit: 2025-01-14
         - 0.1.0 - Initial version
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/add-item.htm
@@ -44,8 +48,12 @@ function Write-PortalUserItem {
         [System.String] $UserName,
 
         [Parameter(Mandatory = $true, HelpMessage = 'File path')]
-        [ValidateScript({Test-Path -Path $_ -PathType Leaf -Include '*.xlsx', '*.csv'})]
+        [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
         [System.String] $FilePath,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Item title')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $Title,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Item description')]
         [ValidateNotNullOrEmpty()]
@@ -58,6 +66,10 @@ function Write-PortalUserItem {
         [Parameter(Mandatory = $false, HelpMessage = 'Item tag(s)')]
         [ValidateNotNullOrEmpty()]
         [System.String[]] $Tag,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Type keyword(s)')]
+        [ValidateNotNullOrEmpty()]
+        [System.String[]] $TypeKeyword,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -101,6 +113,13 @@ function Write-PortalUserItem {
             '.pdf'  = 'PDF'
             '.zip'  = 'File Geodatabase' # ZIP CAN BE MULTIPLE TYPES
             '.pptx' = 'Microsoft Powerpoint'
+            '.epk'  = 'Export Package'
+        }
+
+        # VALIDATE FILE TYPE
+        if (-Not $fileTypeHash.ContainsKey($file.Extension)) {
+            # TERMINATE WITH ERROR
+            Write-Error ('File type "{0}" is not supported.' -f $file.Extension) -ErrorAction Stop
         }
     }
     Process {
@@ -109,16 +128,17 @@ function Write-PortalUserItem {
             Uri    = '{0}/sharing/rest/content/users/{1}/addItem' -f $Context, $UserName
             Method = 'POST'
             Form   = @{
-                f           = 'json'
-                token       = $Token
+                f            = 'json'
+                token        = $Token
                 #multipart = $true
-                title       = Split-Path -Path $FilePath -LeafBase
-                filename    = Split-Path -Path $FilePath -Leaf
-                type        = $fileTypeHash[($file.Extension)]
-                file        = $file
-                description = $Description
-                tags        = $Tag -join ', '
-                snippet     = $Snippet
+                title        = if ($PSBoundParameters.ContainsKey('Title')) { $Title } else { Split-Path -Path $FilePath -LeafBase }
+                filename     = Split-Path -Path $FilePath -Leaf
+                type         = $fileTypeHash[($file.Extension)]
+                file         = $file
+                description  = $Description
+                typeKeywords = $TypeKeyword -join ', '
+                tags         = $Tag -join ', '
+                snippet      = $Snippet
             }
         }
 

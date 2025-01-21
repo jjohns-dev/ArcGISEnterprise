@@ -6,9 +6,9 @@ Upload file item to Portal for ArcGIS
 ## SYNTAX
 
 ```
-Write-PortalUserItem [[-UserName] <String>] [-FilePath] <String> [[-Description] <String>]
- [[-Snippet] <String>] [[-Tag] <String[]>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
- [<CommonParameters>]
+Write-PortalUserItem [[-UserName] <String>] [-FilePath] <String> [[-Title] <String>] [[-Description] <String>]
+ [[-Snippet] <String>] [[-Tag] <String[]>] [[-TypeKeyword] <String[]>] [-Context] <Uri> [-Token] <String>
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -54,6 +54,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Title
+Item title
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Description
 Item description
 
@@ -63,7 +78,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -78,7 +93,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -93,7 +108,22 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TypeKeyword
+Item type keyword
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -108,7 +138,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 6
+Position: 8
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -123,7 +153,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 7
+Position: 9
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -156,7 +186,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Write-PortalUserItem
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-14
+Version:  0.1.2 | Last Edit: 2025-01-14
 - 0.1.0 - Initial version
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/users-groups-and-items/add-item.htm

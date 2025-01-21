@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.6.4'
+    ModuleVersion     = '0.6.6'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -75,6 +75,7 @@
         'ConvertFrom-ArcGISLog'
         'ConvertFrom-Epoch'
         'Edit-ServerHostedFeatureRecord'
+        'Export-PortalGroupItem'
         'Find-PortalItem'
         'Find-ServerServiceLayerData'
         'Format-ChangeSet'
@@ -82,8 +83,10 @@
         'Format-ServerServiceLayerMetadata'
         'Format-ServerServiceMetadata'
         'Get-PortalAllowedOriginList'
+        'Get-PortalCategorySchema'
         'Get-PortalDataStoreServer'
         'Get-PortalDefaultUserSettings'
+        'Get-PortalGroupItemJobStatus'
         'Get-PortalGroupUserList'
         'Get-PortalIndexStatus'
         'Get-PortalItem'
@@ -125,6 +128,7 @@
         'Get-ServerUsageReport'
         'Get-ServerUsageReportData'
         'Grant-PortalUserItemAccess'
+        'Import-PortalGroupItem' # DOESN'T WORK YET
         'Invoke-PortalItemAnalysis'
         'Invoke-ServerHostedFeatureQuery'
         'Move-PortalUserItem'
@@ -138,6 +142,7 @@
         'New-TableSchemaObject'
         'Publish-PortalCsvItemAsTable'
         'Publish-PortalDataStoreLayer'
+        'Remove-PortalCategorySchema'
         'Remove-PortalItem'
         'Remove-PortalRole'
         'Remove-PortalUser'
@@ -149,6 +154,7 @@
         'Remove-ServerUsageReport'
         'Revoke-PortalUserItemAccess'
         'Set-PortalAllowedOrigins'
+        'Set-PortalCategorySchema'
         'Set-PortalDefaultUserLicenseType'
         'Set-PortalDefaultUserRole'
         'Set-PortalProxyHosts'
