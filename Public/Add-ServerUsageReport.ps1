@@ -35,6 +35,9 @@ function Add-ServerUsageReport {
         }
         PS C:\> Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -Dimension $dim -Metadata 'Usage report for "Make_Me_Cry" service' @commonParams
         The first command creates a dimension object for the report. The second command creates a new usage report for the 'Make_Me_Cry' service.
+    .EXAMPLE
+        PS C:\> Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -ResourceURI 'services/Hosted/make_me_cry.FeatureServer' -Metrics 'RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime' -Metadata 'Usage report for "Make_Me_Cry" service' @commonParams
+        Creates a new usage report for the 'Make_Me_Cry' service.
     .NOTES
         Name:     Add-ServerUsageReport
         Author:   Justin Johns
