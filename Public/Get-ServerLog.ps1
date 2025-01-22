@@ -72,8 +72,9 @@ function Get-ServerLog {
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/admin/logs/query' -f $Context
-            Method = 'POST'
+            Uri     = '{0}/admin/logs/query' -f $Context
+            Method  = 'POST'
+            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
             Body    = @{
                 level      = $Level
                 filterType = 'json'
@@ -81,18 +82,16 @@ function Get-ServerLog {
                     codes      = @()
                     processIds = @()
                     requestIds = @()
-                    component  = @() # Values: ADMIN|REST|SERVER|SOAP|DATA STORE
-                    services   = @()
-                    machines   = @()
+                    #component  = @() # Values: ADMIN|REST|SERVER|SOAP|DATA STORE
+                    server     = '*' #@()
+                    services   = '*' #@()
+                    machines   = '*' #@()
                 }
                 startTime  = if ($PSBoundParameters.ContainsKey('StartTime')) { [System.DateTimeOffset]::new($StartTime).ToUnixTimeMilliseconds() }
                 endTime    = if ($PSBoundParameters.ContainsKey('EndTime')) { [System.DateTimeOffset]::new($EndTime).ToUnixTimeMilliseconds() }
                 pageSize   = $PageSize # Default is 1000, max is 10,000
                 f          = 'json'
                 token      = $Token
-            }
-            Headers = @{
-                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
             }
         }
 
@@ -103,7 +102,7 @@ function Get-ServerLog {
         $restParams['Body']['filter'] = $restParams['Body']['filter'] | ConvertTo-Json -Depth 4 -Compress
 
         # OUTPUT VERBOSE
-        Write-Verbose -Message ('Request Body: {0}' -f $restParams['Body']['filter'])
+        Write-Verbose -Message ('Request Body: {0}' -f ($restParams['Body'] | Out-String))
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
