@@ -9,9 +9,9 @@ function Add-ServerUsageReport {
     .PARAMETER Since
         Report time frame
     .PARAMETER ResourceURI
-        Resource URI
-    .PARAMETER Metrics
-        Metrics
+        Resource URI(s)
+    .PARAMETER Metric
+        Desired metric(s)
     .PARAMETER Dimension
         Report dimension
     .PARAMETER Metadata
@@ -72,7 +72,7 @@ function Add-ServerUsageReport {
             'RequestMaxWaitTime',
             'RequestMinWaitTime'
         )]
-        [System.String[]] $Metrics,
+        [System.String[]] $Metric,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Report dimension', ParameterSetName = '__dmsn')]
         [ValidateScript({
@@ -105,10 +105,13 @@ function Add-ServerUsageReport {
 
         # CREATE DIMENSION OBJECT
         if ($PSCmdlet.ParameterSetName -eq '__smpl') {
-            $Dimension = [PSCustomObject] @{
-                resourceURIs = if ($ResourceURI -is [System.Array]) { $ResourceURI } else { @($ResourceURI) }
-                metrics      = if ($Metrics -is [System.Array]) { $Metrics } else { @($Metrics) }
+            $dim = [PSCustomObject] @{
+                resourceURIs = @( $ResourceURI ) #if ($ResourceURI -is [System.Array]) { $ResourceURI } else { @( $ResourceURI ) }
+                metrics      = @( $Metric ) #if ($Metric -is [System.Array]) { $Metric } else { @( $Metric ) }
             }
+        }
+        else {
+            $dim = $Dimension
         }
     }
     Process {
@@ -126,7 +129,7 @@ function Add-ServerUsageReport {
                     #from       = [System.DateTimeOffset]::new((Get-Date -Date '2025-01-16 14:00:00')).ToUnixTimeMilliseconds()
                     #to         = [System.DateTimeOffset]::new((Get-Date -Date '2025-01-16 15:00:00')).ToUnixTimeMilliseconds()
                     #aggregationInterval = 30 # IN MINUTES
-                    queries    = @( $Dimension )
+                    queries    = @( $dim )
                     metadata   = $Metadata
                 }
             }
