@@ -8,6 +8,10 @@ function Add-ServerUsageReport {
         Report name
     .PARAMETER Since
         Report time frame
+    .PARAMETER ResourceURI
+        Resource URI(s)
+    .PARAMETER Metric
+        Desired metric(s)
     .PARAMETER Dimension
         Report dimension
     .PARAMETER Metadata
@@ -31,15 +35,18 @@ function Add-ServerUsageReport {
         }
         PS C:\> Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -Dimension $dim -Metadata 'Usage report for "Make_Me_Cry" service' @commonParams
         The first command creates a dimension object for the report. The second command creates a new usage report for the 'Make_Me_Cry' service.
+    .EXAMPLE
+        PS C:\> Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -ResourceURI 'services/Hosted/make_me_cry.FeatureServer' -Metrics 'RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime' -Metadata 'Usage report for "Make_Me_Cry" service' @commonParams
+        Creates a new usage report for the 'Make_Me_Cry' service.
     .NOTES
         Name:     Add-ServerUsageReport
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-17
+        Version:  0.1.1 | Last Edit: 2025-01-21
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/createusagereport/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = '__smpl')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Report name')]
         [ValidateNotNullOrEmpty()]
@@ -49,7 +56,25 @@ function Add-ServerUsageReport {
         [ValidateSet('LAST_DAY', 'LAST_WEEK', 'LAST_MONTH'<# , 'CUSTOM' #>)]
         [System.String] $Since,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Report dimension')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Resource URI', ParameterSetName = '__smpl')]
+        [ValidateNotNullOrEmpty()]
+        [System.String[]] $ResourceURI,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Metrics', ParameterSetName = '__smpl')]
+        [ValidateSet(
+            'RequestCount',
+            'RequestsFailed',
+            'RequestsTimedOut', # NOT APPLICABLE TO HOSTED FEATURE SERVICES
+            'RequestAvgResponseTime',
+            'RequestMaxResponseTime',
+            'ServiceRunningInstancesMax', # NOT APPLICABLE TO HOSTED FEATURE SERVICES
+            'RequestAvgWaitTime',
+            'RequestMaxWaitTime',
+            'RequestMinWaitTime'
+        )]
+        [System.String[]] $Metric,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Report dimension', ParameterSetName = '__dmsn')]
         [ValidateScript({
             $_.psobject.Properties.Name -contains 'resourceURIs' -and $_.resourceURIs -is [System.Array] -and `
             $_.psobject.Properties.Name -contains 'metrics' -and $_.metrics -is [System.Array]
@@ -77,6 +102,17 @@ function Add-ServerUsageReport {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # CREATE DIMENSION OBJECT
+        if ($PSCmdlet.ParameterSetName -eq '__smpl') {
+            $dim = [PSCustomObject] @{
+                resourceURIs = @( $ResourceURI ) #if ($ResourceURI -is [System.Array]) { $ResourceURI } else { @( $ResourceURI ) }
+                metrics      = @( $Metric ) #if ($Metric -is [System.Array]) { $Metric } else { @( $Metric ) }
+            }
+        }
+        else {
+            $dim = $Dimension
+        }
     }
     Process {
         # SET REQUEST PARAMETERS
@@ -93,9 +129,9 @@ function Add-ServerUsageReport {
                     #from       = [System.DateTimeOffset]::new((Get-Date -Date '2025-01-16 14:00:00')).ToUnixTimeMilliseconds()
                     #to         = [System.DateTimeOffset]::new((Get-Date -Date '2025-01-16 15:00:00')).ToUnixTimeMilliseconds()
                     #aggregationInterval = 30 # IN MINUTES
-                    queries    = @( $Dimension )
+                    queries    = @( $dim )
                     metadata   = $Metadata
-                }# | ConvertTo-Json -Depth 4
+                }
             }
         }
 

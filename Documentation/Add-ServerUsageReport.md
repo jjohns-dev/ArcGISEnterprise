@@ -5,10 +5,17 @@ Creates a new usage report
 
 ## SYNTAX
 
+### __smpl (Default)
 ```
-Add-ServerUsageReport [-ReportName] <String> [-Since] <String> [-Dimension] <Object> [[-Metadata] <String>]
- [[-AggregationInterval] <Int32>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+Add-ServerUsageReport -ReportName <String> -Since <String> -ResourceURI <String[]> -Metric <String[]>
+ [-Metadata <String>] [-AggregationInterval <Int32>] -Context <Uri> -Token <String> [-SkipCertificateCheck]
  [<CommonParameters>]
+```
+
+### __dmsn
+```
+Add-ServerUsageReport -ReportName <String> -Since <String> -Dimension <Object> [-Metadata <String>]
+ [-AggregationInterval <Int32>] -Context <Uri> -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -26,6 +33,12 @@ PS C:\> Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -Dimen
 The first command creates a dimension object for the report. The second command creates a new usage report for the 'Make_Me_Cry' service.
 ```
 
+### EXAMPLE 2
+```
+Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -ResourceURI 'services/Hosted/make_me_cry.FeatureServer' -Metrics 'RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime' -Metadata 'Usage report for "Make_Me_Cry" service' @commonParams
+Creates a new usage report for the 'Make_Me_Cry' service.
+```
+
 ## PARAMETERS
 
 ### -ReportName
@@ -37,7 +50,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -52,7 +65,37 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -ResourceURI
+Resource URI(s)
+
+```yaml
+Type: String[]
+Parameter Sets: __smpl
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Metric
+Desired metric(s)
+
+```yaml
+Type: String[]
+Parameter Sets: __smpl
+Aliases:
+
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -63,11 +106,11 @@ Report dimension
 
 ```yaml
 Type: Object
-Parameter Sets: (All)
+Parameter Sets: __dmsn
 Aliases:
 
 Required: True
-Position: 3
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -82,7 +125,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -97,7 +140,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: Named
 Default value: 0
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -112,7 +155,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 6
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -127,7 +170,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 7
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -160,7 +203,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Add-ServerUsageReport
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2025-01-17
+Version:  0.1.1 | Last Edit: 2025-01-21
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/enterprise-administration/server/createusagereport/

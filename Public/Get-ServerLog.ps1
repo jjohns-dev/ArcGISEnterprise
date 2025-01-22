@@ -10,6 +10,10 @@ function Get-ServerLog {
         The most recent time to query
     .PARAMETER EndTime
         The oldest time to include in the result set
+    .PARAMETER Code
+        Log code
+    .PARAMETER PageSize
+        Number of log entries in response
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -26,7 +30,7 @@ function Get-ServerLog {
     .NOTES
         Name:     Get-ServerLog @commonParams
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-08-23
+        Version:  0.1.1 | Last Edit: 2025-01-22
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/logsquery.htm
@@ -42,6 +46,14 @@ function Get-ServerLog {
 
         [Parameter(Mandatory = $false, HelpMessage = 'The oldest time to include in the result set')]
         [System.DateTime] $EndTime,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Log code')]
+        [ValidateRange(0, 169999)]
+        [System.Int32[]] $Code,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Number of log entries in response')]
+        [ValidateRange(1000, 10000)]
+        [System.Int32] $PageSize = 1000,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -65,7 +77,6 @@ function Get-ServerLog {
             Body    = @{
                 level      = $Level
                 filterType = 'json'
-                #filter     = '{"codes":[""],"processIds":[""],"requestIds":[""],"component":[""],"services":[""],"machines":[""]}'
                 filter     = @{
                     codes      = @()
                     processIds = @()
@@ -73,10 +84,10 @@ function Get-ServerLog {
                     component  = @() # Values: ADMIN|REST|SERVER|SOAP|DATA STORE
                     services   = @()
                     machines   = @()
-                } | ConvertTo-Json -Compress
+                }
                 startTime  = if ($PSBoundParameters.ContainsKey('StartTime')) { [System.DateTimeOffset]::new($StartTime).ToUnixTimeMilliseconds() }
                 endTime    = if ($PSBoundParameters.ContainsKey('EndTime')) { [System.DateTimeOffset]::new($EndTime).ToUnixTimeMilliseconds() }
-                pageSize   = '1000' # Default is 1000
+                pageSize   = $PageSize # Default is 1000, max is 10,000
                 f          = 'json'
                 token      = $Token
             }
@@ -85,11 +96,17 @@ function Get-ServerLog {
             }
         }
 
-        # ADD CERTIFICATE SKIP IF PROVIDED
-        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+        # ADD CODES IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('Code')) { $restParams['Body']['filter'].codes = @( $Code ) }
+
+        # CONVERT FILTER TO JSON
+        $restParams['Body']['filter'] = $restParams['Body']['filter'] | ConvertTo-Json -Depth 4 -Compress
 
         # OUTPUT VERBOSE
-        Write-Verbose -Message ('Request Body: {0}' -f ($restParams['Body']['filter'] | Out-String))
+        Write-Verbose -Message ('Request Body: {0}' -f $restParams['Body']['filter'])
+
+        # ADD CERTIFICATE SKIP IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
         Invoke-RestMethod @restParams
