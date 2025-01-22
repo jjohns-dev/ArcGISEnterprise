@@ -6,8 +6,8 @@ Get ArcGIS Server logs
 ## SYNTAX
 
 ```
-Get-ServerLog [[-Level] <String>] [[-StartTime] <DateTime>] [[-EndTime] <DateTime>] [-Context] <Uri>
- [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerLog [[-Level] <String>] [[-StartTime] <DateTime>] [[-EndTime] <DateTime>] [[-Code] <Int32[]>]
+ [[-PageSize] <Int32>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -68,6 +68,36 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Code
+Log code
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PageSize
+Number of log entries in response
+
+```yaml
+Type: Int32
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: 1000
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
 Server context (e.g., https://arcgis.com/arcgis)
 
@@ -77,7 +107,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -92,7 +122,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 5
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -125,7 +155,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-ServerLog @commonParams
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-08-23
+Version:  0.1.1 | Last Edit: 2025-01-22
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/enterprise-administration/server/logsquery.htm
