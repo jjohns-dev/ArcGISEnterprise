@@ -7,7 +7,7 @@ Creates a new usage report
 
 ### __smpl (Default)
 ```
-Add-ServerUsageReport -ReportName <String> -Since <String> -ResourceURI <String[]> -Metrics <String[]>
+Add-ServerUsageReport -ReportName <String> -Since <String> -ResourceURI <String[]> -Metric <String[]>
  [-Metadata <String>] [-AggregationInterval <Int32>] -Context <Uri> -Token <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
@@ -72,7 +72,7 @@ Accept wildcard characters: False
 ```
 
 ### -ResourceURI
-Resource URI
+Resource URI(s)
 
 ```yaml
 Type: String[]
@@ -86,8 +86,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Metrics
-Metrics
+### -Metric
+Desired metric(s)
 
 ```yaml
 Type: String[]
