@@ -1,0 +1,133 @@
+function Find-ServerGeocodeAddress {
+    <#
+    .SYNOPSIS
+        GeoCode a list of locations
+    .DESCRIPTION
+        Geocode an entire list of addresses in one request. Geocoding many addresses at once is also known as batch or bulk geocoding.
+    .PARAMETER ServiceName
+        Geocode Server Service Name
+    .PARAMETER FolderName
+        Folder name in ArcGIS Server
+    .PARAMETER SingleLine
+        Single-line location to be geocoded
+    .PARAMETER Address
+        Multi-line address object
+    .PARAMETER Context
+        Server context (e.g., https://arcgis.com/arcgis)
+    .PARAMETER Token
+        Porta token
+    .PARAMETER SkipCertificateCheck
+        Ignore missing or invalid certificate
+    .INPUTS
+        None.
+    .OUTPUTS
+        System.Object.
+    .EXAMPLE
+        PS C:\> Find-ServerGeocodeAddress @cmnParams -SingleLine '380 New York St, Redlands, CA 92373', '1600 Amphitheatre Pkwy, Mountain View, CA 94043'
+        Returns geocoded addresses with accuracy and location information
+    .NOTES
+        Name:     Find-ServerGeocodeAddress
+        Author:   Justin Johns
+        Version:  0.1.0 | Last Edit: 2025-01-23
+        - Version history is capture in repository commit history
+        Comments:
+        https://developers.arcgis.com/rest/geocode/geocode-addresses/
+    #>
+    [CmdletBinding(DefaultParameterSetName = '__sl')]
+    Param(
+        [Parameter(Mandatory = $true, HelpMessage = 'Geocode Server Service Name')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $ServiceName,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $FolderName,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Single-line location to be geocoded', ParameterSetName = '__sl')]
+        [ValidateNotNullOrEmpty()]
+        [System.String[]] $SingleLine,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Multi-line address object', ParameterSetName = '__ml')]
+        [ValidateNotNullOrEmpty()]
+        [System.Object[]] $Address,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
+        [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
+        [System.Uri] $Context,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Portal token')]
+        [ValidateScript({ $_ -match $token_regex })]
+        [System.String] $Token,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
+        [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
+    )
+    Begin {
+        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # CREATE WRAPPER
+        $addressList = @{ records = @() }
+
+        # CHECK PARAMETER SET
+        switch ($PSCmdlet.ParameterSetName) {
+            '__sl' {
+                # EVALUATE EACH ADDRESS
+                for ($i = 0; $i -lt $SingleLine.Count; $i++) {
+                    # CREATE CUSTOM RECORD OBJECT AND ADD IT TO THE WRAPPER
+                    $addressList.records += @{ attributes = @{ OBJECTID = ($i + 1); SingleLine = $SingleLine[$i] } }
+                }
+            }
+            '__ml' {
+                # EVALUATE EACH ADDRESS
+                for ($i = 0; $i -lt $Address.Count; $i++) {
+                    # CREATE CUSTOM RECORD OBJECT
+                    $add = @{ attributes = @{ OBJECTID = ($i + 1) } }
+
+                    # EVALUATE EACH OBJECT PROPERTY
+                    foreach ($prop in $Address[$i].PSObject.Properties) {
+                        # ADD PROPERTIES TO CUSTOM RECORD
+                        $add.attributes[$prop.Name] = $prop.Value
+                    }
+
+                    # ADD IT TO THE WRAPPER
+                    $addressList.records += $add
+                }
+            }
+        }
+
+        # CONVERT WRAPPER TO JSON
+        $addressList = $addressList | ConvertTo-Json -Depth 3
+
+        # OUTPUT VERBOSE WRAPPER
+        Write-Verbose -Message $addressList
+
+        # SET URI
+        $uri = if ($PSBoundParameters.ContainsKey('FolderName')) {
+            # SET URI WITH FOLDER
+            '{0}/rest/services/{1}/{2}/GeocodeServer/geocodeAddresses' -f $Context, $FolderName, $ServiceName
+        }
+        else {
+            # SET URI WITHOUT FOLDER
+            '{0}/rest/services/{1}/GeocodeServer/geocodeAddresses' -f $Context, $ServiceName
+        }
+    }
+    Process {
+        # SET REQUEST PARAMETERS
+        $restParams = @{
+            Uri    = $uri
+            Method  = 'POST'
+            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority}
+            Body    = @{
+                f         = 'json'
+                token     = $Token
+                addresses = $addressList
+            }
+        }
+
+        # ADD CERTIFICATE SKIP IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+
+        # INVOKE REQUEST
+        Invoke-RestMethod @restParams
+    }
+}
