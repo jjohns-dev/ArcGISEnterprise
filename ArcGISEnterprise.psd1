@@ -79,6 +79,7 @@
         'Find-PortalItem'
         'Find-ServerAddressCandidate'
         'Find-ServerGeocodeAddress'
+        'Find-ServerReverseGeocode'
         'Find-ServerServiceLayerData'
         'Format-ChangeSet'
         'Format-CsvHeader'
