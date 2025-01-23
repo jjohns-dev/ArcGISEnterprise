@@ -43,7 +43,7 @@ function Find-ServerGeocodeAddress {
 
         [Parameter(Mandatory = $true, HelpMessage = 'Multi-line address object', ParameterSetName = '__ml')]
         [ValidateNotNullOrEmpty()]
-        [System.Object] $Address,
+        [System.Object[]] $Address,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
