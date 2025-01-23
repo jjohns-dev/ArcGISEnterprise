@@ -6,6 +6,8 @@ function Find-ServerReverseGeocode {
         The reverseGeocode operation determines the address at a particular x,y location.
     .PARAMETER ServiceName
         Geocode Server Service Name
+    .PARAMETER FolderName
+        Folder name in ArcGIS Server
     .PARAMETER Location
         The point from which to search for the closest address
     .PARAMETER Context
@@ -35,6 +37,10 @@ function Find-ServerReverseGeocode {
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
 
+        [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $FolderName,
+
         [Parameter(Mandatory = $true, HelpMessage = 'The point from which to search for the closest address')]
         [ValidateScript({ $_.psobject.Properties.Name -contains 'x' -and $_.psobject.Properties.Name -contains 'y' })]
         [ValidateScript({ $_.x -is [System.Double] -and $_.y -is [System.Double] })]
@@ -53,11 +59,21 @@ function Find-ServerReverseGeocode {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # SET URI
+        $uri = if ($PSBoundParameters.ContainsKey('FolderName')) {
+            # SET URI WITH FOLDER
+            '{0}/rest/services/{1}/{2}/GeocodeServer/reverseGeocode' -f $Context, $FolderName, $ServiceName
+        }
+        else {
+            # SET URI WITHOUT FOLDER
+            '{0}/rest/services/{1}/GeocodeServer/reverseGeocode' -f $Context, $ServiceName
+        }
     }
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/rest/services/{1}/GeocodeServer/reverseGeocode' -f $Context, $ServiceName
+            Uri    = $uri
             Method  = 'POST'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority}
             Body    = @{

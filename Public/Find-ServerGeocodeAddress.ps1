@@ -6,6 +6,8 @@ function Find-ServerGeocodeAddress {
         Geocode an entire list of addresses in one request. Geocoding many addresses at once is also known as batch or bulk geocoding.
     .PARAMETER ServiceName
         Geocode Server Service Name
+    .PARAMETER FolderName
+        Folder name in ArcGIS Server
     .PARAMETER SingleLine
         Single-line location to be geocoded
     .PARAMETER Address
@@ -36,6 +38,10 @@ function Find-ServerGeocodeAddress {
         [Parameter(Mandatory = $true, HelpMessage = 'Geocode Server Service Name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $FolderName,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Single-line location to be geocoded', ParameterSetName = '__sl')]
         [ValidateNotNullOrEmpty()]
@@ -94,11 +100,21 @@ function Find-ServerGeocodeAddress {
 
         # OUTPUT VERBOSE WRAPPER
         Write-Verbose -Message $addressList
+
+        # SET URI
+        $uri = if ($PSBoundParameters.ContainsKey('FolderName')) {
+            # SET URI WITH FOLDER
+            '{0}/rest/services/{1}/{2}/GeocodeServer/geocodeAddresses' -f $Context, $FolderName, $ServiceName
+        }
+        else {
+            # SET URI WITHOUT FOLDER
+            '{0}/rest/services/{1}/GeocodeServer/geocodeAddresses' -f $Context, $ServiceName
+        }
     }
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/rest/services/{1}/GeocodeServer/geocodeAddresses' -f $Context, $ServiceName
+            Uri    = $uri
             Method  = 'POST'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority}
             Body    = @{

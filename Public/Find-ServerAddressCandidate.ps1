@@ -6,6 +6,8 @@ function Find-ServerAddressCandidate {
         Geocodes one location per request. The input address can be combined into a single input field or divided among multiple parameters.
     .PARAMETER ServiceName
         Geocode Server Service Name
+    .PARAMETER FolderName
+        Folder name in ArcGIS Server
     .PARAMETER SingleLine
         Location to be geocoded
     .PARAMETER Context
@@ -35,6 +37,10 @@ function Find-ServerAddressCandidate {
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
 
+        [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $FolderName,
+
         [Parameter(Mandatory = $true, HelpMessage = 'Location to be geocoded')]
         [ValidateNotNullOrEmpty()]
         [System.String] $SingleLine,
@@ -52,11 +58,21 @@ function Find-ServerAddressCandidate {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # SET URI
+        $uri = if ($PSBoundParameters.ContainsKey('FolderName')) {
+            # SET URI WITH FOLDER
+            '{0}/rest/services/{1}/{2}/GeocodeServer/findAddressCandidates' -f $Context, $FolderName, $ServiceName
+        }
+        else {
+            # SET URI WITHOUT FOLDER
+            '{0}/rest/services/{1}/GeocodeServer/findAddressCandidates' -f $Context, $ServiceName
+        }
     }
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/rest/services/{1}/GeocodeServer/findAddressCandidates' -f $Context, $ServiceName
+            Uri    = $uri
             Method  = 'POST'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority}
             Body    = @{
