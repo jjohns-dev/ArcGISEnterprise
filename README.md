@@ -39,6 +39,7 @@ Please see releases for updates and features
 | Edit-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
 | Export-PortalGroupItem | Portal | `[ROOT]/community/groups/[GROUPID]/export` | Exports all exportable content from a Portal group |
 | Find-PortalItem | Portal | `[ROOT]/search` | Returns Portal item based on search criteria |
+| Find-ServerAddressCandidate | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/findAddressCandidates` | GeoCode single address |
 | Find-ServerServiceLayerData | Server | `[ROOT]/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query service layer for data |
 | Get-PortalAllowedOriginList | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |
 | Get-PortalCategorySchema | Portal | `[ROOT]/portals/[PORTALID]/categorySchema` | Get Portal category schema |
