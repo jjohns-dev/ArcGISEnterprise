@@ -7,14 +7,14 @@ GeoCode a list of locations
 
 ### __sl (Default)
 ```
-Find-ServerGeocodeAddress -ServiceName <String> -SingleLine <String[]> -Context <Uri> -Token <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+Find-ServerGeocodeAddress -ServiceName <String> [-FolderName <String>] -SingleLine <String[]> -Context <Uri>
+ -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ### __ml
 ```
-Find-ServerGeocodeAddress -ServiceName <String> -Address <Object[]> -Context <Uri> -Token <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+Find-ServerGeocodeAddress -ServiceName <String> [-FolderName <String>] -Address <Object[]> -Context <Uri>
+ -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -40,6 +40,21 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FolderName
+Folder name in ArcGIS Server
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False

@@ -6,8 +6,8 @@ GeoCode a location
 ## SYNTAX
 
 ```
-Find-ServerAddressCandidate [-ServiceName] <String> [-SingleLine] <String> [-Context] <Uri> [-Token] <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+Find-ServerAddressCandidate [-ServiceName] <String> [[-FolderName] <String>] [-SingleLine] <String>
+ [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -39,6 +39,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -FolderName
+Folder name in ArcGIS Server
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -SingleLine
 Location to be geocoded
 
@@ -48,7 +63,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -63,7 +78,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -78,7 +93,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
