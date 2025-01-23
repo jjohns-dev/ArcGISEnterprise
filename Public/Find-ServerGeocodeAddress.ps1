@@ -27,7 +27,7 @@ function Find-ServerGeocodeAddress {
         Version:  0.1.0 | Last Edit: 2025-01-23
         - Version history is capture in repository commit history
         Comments:
-        https://developers.arcgis.com/rest/geocode/find-address-candidates/
+        https://developers.arcgis.com/rest/geocode/geocode-addresses/
     #>
     [CmdletBinding()]
     Param(
