@@ -7,7 +7,9 @@ function Find-ServerGeocodeAddress {
     .PARAMETER ServiceName
         Geocode Server Service Name
     .PARAMETER SingleLine
-        Location to be geocoded
+        Single-line location to be geocoded
+    .PARAMETER Address
+        Multi-line address object
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -29,15 +31,19 @@ function Find-ServerGeocodeAddress {
         Comments:
         https://developers.arcgis.com/rest/geocode/geocode-addresses/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = '__sl')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Geocode Server Service Name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Location to be geocoded')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Single-line location to be geocoded', ParameterSetName = '__sl')]
         [ValidateNotNullOrEmpty()]
         [System.String[]] $SingleLine,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Multi-line address object', ParameterSetName = '__ml')]
+        [ValidateNotNullOrEmpty()]
+        [System.Object] $Address,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -56,10 +62,31 @@ function Find-ServerGeocodeAddress {
         # CREATE WRAPPER
         $addressList = @{ records = @() }
 
-        # EVALUATE EACH ADDRESS
-        for ($i = 0; $i -lt $SingleLine.Count; $i++) {
-            # CREATE CUSTOM RECORD OBJECT AND ADD IT TO THE WRAPPER
-            $addressList.records += @{ attributes = @{ OBJECTID = ($i + 1); SingleLine = $SingleLine[$i] } }
+        # CHECK PARAMETER SET
+        switch ($PSCmdlet.ParameterSetName) {
+            '__sl' {
+                # EVALUATE EACH ADDRESS
+                for ($i = 0; $i -lt $SingleLine.Count; $i++) {
+                    # CREATE CUSTOM RECORD OBJECT AND ADD IT TO THE WRAPPER
+                    $addressList.records += @{ attributes = @{ OBJECTID = ($i + 1); SingleLine = $SingleLine[$i] } }
+                }
+            }
+            '__ml' {
+                # EVALUATE EACH ADDRESS
+                for ($i = 0; $i -lt $Address.Count; $i++) {
+                    # CREATE CUSTOM RECORD OBJECT
+                    $add = @{ attributes = @{ OBJECTID = ($i + 1) } }
+
+                    # EVALUATE EACH OBJECT PROPERTY
+                    foreach ($prop in $Address[$i].PSObject.Properties) {
+                        # ADD PROPERTIES TO CUSTOM RECORD
+                        $add.attributes[$prop.Name] = $prop.Value
+                    }
+
+                    # ADD IT TO THE WRAPPER
+                    $addressList.records += $add
+                }
+            }
         }
 
         # CONVERT WRAPPER TO JSON
