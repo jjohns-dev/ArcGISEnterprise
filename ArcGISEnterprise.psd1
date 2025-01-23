@@ -78,6 +78,7 @@
         'Export-PortalGroupItem'
         'Find-PortalItem'
         'Find-ServerAddressCandidate'
+        'Find-ServerGeocodeAddress'
         'Find-ServerServiceLayerData'
         'Format-ChangeSet'
         'Format-CsvHeader'

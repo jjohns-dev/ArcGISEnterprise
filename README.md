@@ -40,6 +40,7 @@ Please see releases for updates and features
 | Export-PortalGroupItem | Portal | `[ROOT]/community/groups/[GROUPID]/export` | Exports all exportable content from a Portal group |
 | Find-PortalItem | Portal | `[ROOT]/search` | Returns Portal item based on search criteria |
 | Find-ServerAddressCandidate | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/findAddressCandidates` | GeoCode single address |
+| Find-ServerGeocodeAddress | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/geocodeAddresses` | GeoCode list of addresses |
 | Find-ServerServiceLayerData | Server | `[ROOT]/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query service layer for data |
 | Get-PortalAllowedOriginList | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |
 | Get-PortalCategorySchema | Portal | `[ROOT]/portals/[PORTALID]/categorySchema` | Get Portal category schema |
