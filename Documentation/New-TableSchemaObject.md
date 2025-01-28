@@ -15,6 +15,11 @@ New-TableSchemaObject -Type <String> -Name <String> -Alias <String> [-Length <In
 New-TableSchemaObject [-OID] [<CommonParameters>]
 ```
 
+### _gid
+```
+New-TableSchemaObject [-GID] [<CommonParameters>]
+```
+
 ## DESCRIPTION
 Create a new table schema object for a Hosted Feature Service table
 
@@ -103,6 +108,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -GID
+Internal GlobalID property
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: _gid
+Aliases:
+
+Required: True
+Position: Named
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### CommonParameters
 This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
 
@@ -115,9 +135,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     New-TableSchemaObject
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-19
-- 0.1.0 - Initial version
-Comments: \<Comment(s)\>
-General notes
+Version:  0.1.1 | Last Edit: 2025-01-28
+- Version history is capture in repository commit history
+Comments:
 
 ## RELATED LINKS
