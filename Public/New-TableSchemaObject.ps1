@@ -82,8 +82,8 @@ function New-TableSchemaObject {
                 '_gid' { 38 }
                 '_typ' { if ($PSBoundParameters.ContainsKey('Length')) { $Length } else { $null } } }
             type     = switch ($PSCmdlet.ParameterSetName) {
-                '_oid' { $TableFieldTypes.oid.sqlType }
-                '_gid' { $TableFieldTypes.gid.sqlType }
+                '_oid' { $TableFieldTypes.oid.type }
+                '_gid' { $TableFieldTypes.gid.type }
                 '_typ' { $TableFieldTypes[$Type].type }
             }
             name         = switch ($PSCmdlet.ParameterSetName) { '_oid' { 'objectid' }; '_gid' { 'globalid' }; '_typ' { $Name } }
