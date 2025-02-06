@@ -5,17 +5,18 @@ Creates a new usage report
 
 ## SYNTAX
 
-### __smpl (Default)
+### __cnnd (Default)
 ```
 Add-ServerUsageReport -ReportName <String> -Since <String> -ResourceURI <String[]> -Metric <String[]>
  [-Metadata <String>] [-AggregationInterval <Int32>] -Context <Uri> -Token <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
-### __dmsn
+### __cstm
 ```
-Add-ServerUsageReport -ReportName <String> -Since <String> -Dimension <Object> [-Metadata <String>]
- [-AggregationInterval <Int32>] -Context <Uri> -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
+Add-ServerUsageReport -ReportName <String> -From <DateTime> -To <DateTime> -ResourceURI <String[]>
+ -Metric <String[]> [-Metadata <String>] [-AggregationInterval <Int32>] -Context <Uri> -Token <String>
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -25,18 +26,30 @@ Add a new report to the usage reports in ArcGIS Server.
 
 ### EXAMPLE 1
 ```
-$dim = [PSCustomObject] @{
-    resourceURIs = @('services/Hosted/make_me_cry.FeatureServer')
-    metrics      = @('RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime')
+$reportParams = @{
+    ReportName  = 'Make_Me_Cry'
+    Since       = 'LAST_DAY'
+    ResourceURI = 'services/Hosted/make_me_cry.FeatureServer'
+    Metric      = @('RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime')
+    Metadata    = 'Usage report for "Make_Me_Cry" service'
 }
-PS C:\> Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -Dimension $dim -Metadata 'Usage report for "Make_Me_Cry" service' @commonParams
-The first command creates a dimension object for the report. The second command creates a new usage report for the 'Make_Me_Cry' service.
+PS C:\> Add-ServerUsageReport @commonParams @reportParams
+Creates a new usage report for the 'Make_Me_Cry' service.
 ```
 
 ### EXAMPLE 2
 ```
-Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -ResourceURI 'services/Hosted/make_me_cry.FeatureServer' -Metrics 'RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime' -Metadata 'Usage report for "Make_Me_Cry" service' @commonParams
-Creates a new usage report for the 'Make_Me_Cry' service.
+$reportParams = @{
+    ReportName          = 'Make_Me_Cry'
+    From                = Get-Date -Date '2024-12-11'
+    To                  = Get-Date -Date '2025-02-04'
+    AggregationInterval = 60
+    ResourceURI         = 'services/Hosted/make_me_cry.FeatureServer'
+    Metric              = @('RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime')
+    Metadata            = 'Usage report for "Make_Me_Cry" service'
+}
+PS C:\> Add-ServerUsageReport @cmnParams @reportParams
+Creates a new usage report for the 'Make_Me_Cry' service with 1 hour aggregation interval from Dec 11 to Feb 4.
 ```
 
 ## PARAMETERS
@@ -61,7 +74,37 @@ Report time frame
 
 ```yaml
 Type: String
-Parameter Sets: (All)
+Parameter Sets: __cnnd
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -From
+Start time
+
+```yaml
+Type: DateTime
+Parameter Sets: __cstm
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -To
+End time
+
+```yaml
+Type: DateTime
+Parameter Sets: __cstm
 Aliases:
 
 Required: True
@@ -76,7 +119,7 @@ Resource URI(s)
 
 ```yaml
 Type: String[]
-Parameter Sets: __smpl
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -91,22 +134,7 @@ Desired metric(s)
 
 ```yaml
 Type: String[]
-Parameter Sets: __smpl
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Dimension
-Report dimension
-
-```yaml
-Type: Object
-Parameter Sets: __dmsn
+Parameter Sets: (All)
 Aliases:
 
 Required: True
@@ -132,7 +160,7 @@ Accept wildcard characters: False
 ```
 
 ### -AggregationInterval
-Aggregation interval
+Aggregation interval in minutes
 
 ```yaml
 Type: Int32
@@ -203,7 +231,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Add-ServerUsageReport
 Author:   Justin Johns
-Version:  0.1.1 | Last Edit: 2025-01-21
+Version:  0.1.2 | Last Edit: 2025-02-06
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/enterprise-administration/server/createusagereport/
