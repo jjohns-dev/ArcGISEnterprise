@@ -8,16 +8,18 @@ function Add-ServerUsageReport {
         Report name
     .PARAMETER Since
         Report time frame
+    .PARAMETER From
+        Start time
+    .PARAMETER To
+        End time
     .PARAMETER ResourceURI
         Resource URI(s)
     .PARAMETER Metric
         Desired metric(s)
-    .PARAMETER Dimension
-        Report dimension
     .PARAMETER Metadata
         Report metadata
     .PARAMETER AggregationInterval
-        Aggregation interval
+        Aggregation interval in minutes
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -29,38 +31,58 @@ function Add-ServerUsageReport {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> $dim = [PSCustomObject] @{
-            resourceURIs = @('services/Hosted/make_me_cry.FeatureServer')
-            metrics      = @('RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime')
+        PS C:\> $reportParams = @{
+            ReportName  = 'Make_Me_Cry'
+            Since       = 'LAST_DAY'
+            ResourceURI = 'services/Hosted/make_me_cry.FeatureServer'
+            Metric      = @('RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime')
+            Metadata    = 'Usage report for "Make_Me_Cry" service'
         }
-        PS C:\> Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -Dimension $dim -Metadata 'Usage report for "Make_Me_Cry" service' @commonParams
-        The first command creates a dimension object for the report. The second command creates a new usage report for the 'Make_Me_Cry' service.
-    .EXAMPLE
-        PS C:\> Add-ServerUsageReport -ReportName 'Make_Me_Cry' -Since 'LAST_DAY' -ResourceURI 'services/Hosted/make_me_cry.FeatureServer' -Metrics 'RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime' -Metadata 'Usage report for "Make_Me_Cry" service' @commonParams
+        PS C:\> Add-ServerUsageReport @commonParams @reportParams
         Creates a new usage report for the 'Make_Me_Cry' service.
+    .EXAMPLE
+        PS C:\> $reportParams = @{
+            ReportName          = 'Make_Me_Cry'
+            From                = Get-Date -Date '2024-12-11'
+            To                  = Get-Date -Date '2025-02-04'
+            AggregationInterval = 60
+            ResourceURI         = 'services/Hosted/make_me_cry.FeatureServer'
+            Metric              = @('RequestCount', 'RequestsFailed', 'RequestsTimedOut', 'RequestAvgResponseTime', 'RequestMaxResponseTime')
+            Metadata            = 'Usage report for "Make_Me_Cry" service'
+        }
+        PS C:\> Add-ServerUsageReport @cmnParams @reportParams
+        Creates a new usage report for the 'Make_Me_Cry' service with 1 hour aggregation interval from Dec 11 to Feb 4.
     .NOTES
         Name:     Add-ServerUsageReport
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-01-21
+        Version:  0.1.2 | Last Edit: 2025-02-06
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/createusagereport/
     #>
-    [CmdletBinding(DefaultParameterSetName = '__smpl')]
+    [CmdletBinding(DefaultParameterSetName = '__cnnd')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Report name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $ReportName,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Report time frame')]
-        [ValidateSet('LAST_DAY', 'LAST_WEEK', 'LAST_MONTH'<# , 'CUSTOM' #>)]
+        [Parameter(Mandatory = $true, HelpMessage = 'Report time frame', ParameterSetName = '__cnnd')]
+        [ValidateSet('LAST_DAY', 'LAST_WEEK', 'LAST_MONTH')] #, 'CUSTOM'
         [System.String] $Since,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Resource URI', ParameterSetName = '__smpl')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Start time', ParameterSetName = '__cstm')]
+        [ValidateNotNullOrEmpty()]
+        [System.DateTime] $From,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'End time', ParameterSetName = '__cstm')]
+        [ValidateNotNullOrEmpty()]
+        [System.DateTime] $To,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Resource URI')]
         [ValidateNotNullOrEmpty()]
         [System.String[]] $ResourceURI,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Metrics', ParameterSetName = '__smpl')]
+        [Parameter(Mandatory = $true, HelpMessage = 'Metrics')]
         [ValidateSet(
             'RequestCount',
             'RequestsFailed',
@@ -74,20 +96,13 @@ function Add-ServerUsageReport {
         )]
         [System.String[]] $Metric,
 
-        [Parameter(Mandatory = $true, HelpMessage = 'Report dimension', ParameterSetName = '__dmsn')]
-        [ValidateScript({
-            $_.psobject.Properties.Name -contains 'resourceURIs' -and $_.resourceURIs -is [System.Array] -and `
-            $_.psobject.Properties.Name -contains 'metrics' -and $_.metrics -is [System.Array]
-        })]
-        [System.Object] $Dimension,
-
         [Parameter(Mandatory = $false, HelpMessage = 'Report metadata')]
         [ValidateNotNullOrEmpty()]
         [System.String] $Metadata,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Aggregation interval')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Aggregation interval in minutes')]
         [ValidateNotNullOrEmpty()]
-        [System.Int32] $AggregationInterval,
+        [System.Int32] $AggregationInterval, # DEFAULT IS 30
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -102,17 +117,6 @@ function Add-ServerUsageReport {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
-
-        # CREATE DIMENSION OBJECT
-        if ($PSCmdlet.ParameterSetName -eq '__smpl') {
-            $dim = [PSCustomObject] @{
-                resourceURIs = @( $ResourceURI ) #if ($ResourceURI -is [System.Array]) { $ResourceURI } else { @( $ResourceURI ) }
-                metrics      = @( $Metric ) #if ($Metric -is [System.Array]) { $Metric } else { @( $Metric ) }
-            }
-        }
-        else {
-            $dim = $Dimension
-        }
     }
     Process {
         # SET REQUEST PARAMETERS
@@ -125,14 +129,22 @@ function Add-ServerUsageReport {
                 token       = $Token
                 usagereport = @{
                     reportname = $ReportName
-                    since      = $Since
-                    #from       = [System.DateTimeOffset]::new((Get-Date -Date '2025-01-16 14:00:00')).ToUnixTimeMilliseconds()
-                    #to         = [System.DateTimeOffset]::new((Get-Date -Date '2025-01-16 15:00:00')).ToUnixTimeMilliseconds()
-                    #aggregationInterval = 30 # IN MINUTES
-                    queries    = @( $dim )
+                    since      = if ($PSCmdlet.ParameterSetName -eq '__cstm') { 'CUSTOM' } else { $Since }
                     metadata   = $Metadata
+                    queries    = @(
+                        [PSCustomObject] @{
+                            resourceURIs = @( $ResourceURI ) #if ($ResourceURI -is [System.Array]) { $ResourceURI } else { @( $ResourceURI ) }
+                            metrics      = @( $Metric ) #if ($Metric -is [System.Array]) { $Metric } else { @( $Metric ) }
+                        }
+                    )
                 }
             }
+        }
+
+        # ADD CUSTOM TIME FRAME IF PROVIDED
+        if ($PSCmdlet.ParameterSetName -eq '__cstm') {
+            $restParams['Body'].usagereport.Add('from', [System.DateTimeOffset]::new($From).ToUnixTimeMilliseconds())
+            $restParams['Body'].usagereport.Add('to', [System.DateTimeOffset]::new($To).ToUnixTimeMilliseconds())
         }
 
         # ADD AGGREGATION INTERVAL IF PROVIDED
