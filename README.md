@@ -33,7 +33,7 @@ Please see releases for updates and features
 | -------- | --------- | ------------ | ----------- |
 | Add-PortalOAuthRedirectURI | Portal | `[ADMIN]/security/oauth/updateAppInfo` | Add redirect URI to Portal OAuth app |
 | Add-PortalUserToGroup | Portal | `[ROOT]/community/groups/[GROUPID]/addUsers` | Add Portal user to Portal group |
-| Add-ServerHostedFeatureRecord | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/addFeatures` | Appends data to table in Hosted Feature Service |
+| Add-ServerFeature | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/addFeatures` | Appends data to table in Hosted Feature Service |
 | ADD-ServerUsageReport | Server | `[ADMIN]/usagereports/add` | Adds a new usage report |
 | Clear-ServerHostedFeatureService | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | Edit-ServerFeature | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
