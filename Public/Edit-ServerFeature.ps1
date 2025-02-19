@@ -49,20 +49,21 @@ function Edit-ServerFeature {
     #>
     [CmdletBinding(DefaultParameterSetName = '_add')]
     Param(
-        [Parameter(Mandatory = $true, ParameterSetName = '_add', HelpMessage = 'Record/feature to add')]
+        [Parameter(Mandatory = $true, ParameterSetName = '_add', HelpMessage = 'Feature to add')]
         [ValidateScript({ $_.psobject.Properties.Name -contains 'attributes' })] # FEATURE MAY ALSO CONTAIN "geometry"
         [ValidateNotNullOrEmpty()]
         [System.Object[]] $Add,
 
-        [Parameter(Mandatory = $true, ParameterSetName = '_upd', HelpMessage = 'Record/feature to update')]
+        [Parameter(Mandatory = $true, ParameterSetName = '_upd', HelpMessage = 'Feature to update')]
         [ValidateScript({ $_.psobject.Members.Name -contains 'attributes' })]
         [System.Object[]] $Update,
 
-        [Parameter(Mandatory = $true, ParameterSetName = '_doi', HelpMessage = 'ObjectId of record/feature to delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = '_doi', HelpMessage = 'ObjectId of feature to delete')]
         [ValidateNotNullOrEmpty()]
+        [Alias('Delete')]
         [System.Int32[]] $DeleteObjectId,
 
-        [Parameter(Mandatory = $true, ParameterSetName = '_dgi', HelpMessage = 'ObjectId of record/feature to delete')]
+        [Parameter(Mandatory = $true, ParameterSetName = '_dgi', HelpMessage = 'ObjectId of feature to delete')]
         [ValidateNotNullOrEmpty()]
         [ValidatePattern('^\{[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}\}$')] # {1A9F8368-F9BB-428B-BB03-F45724362DB5}
         [System.String[]] $DeleteGlobalId, # GlobalId DOES NOT APPEAR TO WORK AS DOCUMENTED
@@ -107,7 +108,7 @@ function Edit-ServerFeature {
         }
 
         # CHECK FOR ADDS, UPDATES, OR DELETES
-        if ($PSBoundParameters.ContainsKey('Record')) {
+        if ($PSBoundParameters.ContainsKey('Add')) {
             $restParams.Body['adds'] = $Add | ConvertTo-Json -Depth 10 -Compress -AsArray
         }
         elseif ($PSBoundParameters.ContainsKey('Update')) {
