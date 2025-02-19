@@ -29,15 +29,20 @@ function Edit-ServerFeature {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Edit-ServerFeature @cmnParams -Add
-        Explanation of what the example does
+        PS C:\> $feature = @{ attributes = @{ countyname = 'Fairfax'; countyid = 596; us_county_fips = 59; stateid = 39; us_state_fips = 51; us_full_fips = 51059 } }
+        PS C:\> Edit-ServerFeature @cmnParams -Add $feature
+        Adds a new feature to the Feature Service
+    .EXAMPLE
+        PS C:\> $feature = @{ attributes = @{ PointName = 'test'; Field2 = 'test2' }; geometry = @{ x = -77.306373; y = 38.855747; spatialReference = @{ wkid = 4326 } } }
+        PS C:\> Edit-ServerFeature @cmnParams -Add $feature
+        Adds a new feature with geometry to the Feature Service
     .EXAMPLE
         PS C:\> Edit-ServerFeature @cmnParams -DeleteObjectId @(1, 2, 3)
         Deletes features with IDs 1, 2, and 3
     .NOTES
         Name:     Edit-ServerFeature
         Author:   Justin Johns
-        Version:  0.2.0 | Last Edit: 2025-02-18
+        Version:  0.2.0 | Last Edit: 2025-02-19
         - See commit history for version changes
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/services-reference/enterprise/apply-edits-feature-service-layer-.htm
