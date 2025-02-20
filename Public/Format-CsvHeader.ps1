@@ -18,7 +18,7 @@ function Format-CsvHeader {
     .NOTES
         Name:     Format-CsvHeader
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-05-15
+        Version:  0.1.1 | Last Edit: 2025-01-20
         Comments: <Comment(s)>
     #>
     [CmdletBinding()]
@@ -37,6 +37,10 @@ function Format-CsvHeader {
         # GET FILE CONTENT
         $content = Get-Content -Path $Path -TotalCount 1
         #$content = [System.Collections.Generic.List[System.Object]]::new((Get-Content -Path $file.FullName))
+
+        # REMOVE DOUBLE QUOTES
+        $content = $content.Replace('"', '') # THIS MAY REMOVE TOO MUCH. IF SO, USE NEXT LINE
+        #$content = $content.TrimStart('"').Replace('","', ',').TrimEnd('"')
 
         # GET CSV DATA HEADERS - USING "Get-Member" REORDERS THE HEADERS BOO!!!
         $headers = $content.Split(',')
