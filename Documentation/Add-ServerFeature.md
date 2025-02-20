@@ -1,17 +1,24 @@
 # Add-ServerFeature
 
 ## SYNOPSIS
-Add record to Portal Hosted Feature Service
+Add feature to Feature Service
 
 ## SYNTAX
 
+### __rcd
 ```
-Add-ServerFeature [-Record] <Object[]> [-ServiceName] <String> [[-LayerId] <Int32>]
- [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+Add-ServerFeature -Record <Object[]> -ServiceName <String> [-LayerId <Int32>] [-FolderName <String>]
+ -Context <Uri> -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
+```
+
+### __ftr
+```
+Add-ServerFeature -Feature <Object[]> -ServiceName <String> [-LayerId <Int32>] [-FolderName <String>]
+ -Context <Uri> -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Add records/data to a Portal Hosted Feature Service
+Add feature to a Feature Service
 
 ## EXAMPLES
 
@@ -24,15 +31,30 @@ Add records to a Hosted Feature Service named "dashboard"
 ## PARAMETERS
 
 ### -Record
-Record or data to add to the Portal Hosted Feature Service
+Feature record or attributes to add
 
 ```yaml
 Type: Object[]
-Parameter Sets: (All)
+Parameter Sets: __rcd
 Aliases:
 
 Required: True
-Position: 1
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Feature
+Feature to add to the Feature Service
+
+```yaml
+Type: Object[]
+Parameter Sets: __ftr
+Aliases:
+
+Required: True
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -47,7 +69,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 2
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,8 +84,23 @@ Parameter Sets: (All)
 Aliases: Layer
 
 Required: False
-Position: 3
+Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FolderName
+Server Service Folder Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Hosted
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -77,7 +114,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -92,7 +129,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 5
+Position: Named
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -125,9 +162,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Add-ServerFeature
 Author:   Justin Johns
-Version:  0.1.1 | Last Edit: 2023-03-17
-- 0.1.1 - Added formatting of record to freatures
-- 0.1.0 - Initial version
+Version:  0.1.2 | Last Edit: 2024-02-19
+- See commit history for version changes
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
 

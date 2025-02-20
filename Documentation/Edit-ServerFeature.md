@@ -1,49 +1,68 @@
 # Edit-ServerFeature
 
 ## SYNOPSIS
-Edit Hoste Feature Service
+Edit Feature Service
 
 ## SYNTAX
 
-### _adds (Default)
+### _add (Default)
 ```
-Edit-ServerFeature -Record <Object[]> -ServiceName <String> [-LayerId <Int32>] -Context <Uri>
- -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
-```
-
-### _updates
-```
-Edit-ServerFeature -Update <Object[]> -ServiceName <String> [-LayerId <Int32>] -Context <Uri>
- -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
+Edit-ServerFeature -Add <Object[]> -ServiceName <String> [-LayerId <Int32>] [-FolderName <String>]
+ -Context <Uri> -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
-### _deletes
+### _upd
 ```
-Edit-ServerFeature -Delete <Int32[]> -ServiceName <String> [-LayerId <Int32>] -Context <Uri>
- -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
+Edit-ServerFeature -Update <Object[]> -ServiceName <String> [-LayerId <Int32>] [-FolderName <String>]
+ -Context <Uri> -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
+```
+
+### _doi
+```
+Edit-ServerFeature -DeleteObjectId <Int32[]> -ServiceName <String> [-LayerId <Int32>] [-FolderName <String>]
+ -Context <Uri> -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
+```
+
+### _dgi
+```
+Edit-ServerFeature -DeleteGlobalId <String[]> -ServiceName <String> [-LayerId <Int32>] [-FolderName <String>]
+ -Context <Uri> -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Edit Hoste Feature Service using the /applyEdits endpoint.
-This allows for
-adding, updating, or deleting records/features.
+Edit Feature Service using the /applyEdits endpoint.
+This allows for adding, updating, or deleting features.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Edit-ServerFeature
-Explanation of what the example does
+$feature = @{ attributes = @{ countyname = 'Fairfax'; countyid = 596; us_county_fips = 59; stateid = 39; us_state_fips = 51; us_full_fips = 51059 } }
+PS C:\> Edit-ServerFeature @cmnParams -Add $feature
+Adds a new feature to the Feature Service
+```
+
+### EXAMPLE 2
+```
+$feature = @{ attributes = @{ PointName = 'test'; Field2 = 'test2' }; geometry = @{ x = -77.306373; y = 38.855747; spatialReference = @{ wkid = 4326 } } }
+PS C:\> Edit-ServerFeature @cmnParams -Add $feature
+Adds a new feature with geometry to the Feature Service
+```
+
+### EXAMPLE 3
+```
+Edit-ServerFeature @cmnParams -DeleteObjectId @(1, 2, 3)
+Deletes features with IDs 1, 2, and 3
 ```
 
 ## PARAMETERS
 
-### -Record
-Record or data to add to the Portal Hosted Feature Service
+### -Add
+Feature to add to the Feature Service
 
 ```yaml
 Type: Object[]
-Parameter Sets: _adds
+Parameter Sets: _add
 Aliases:
 
 Required: True
@@ -54,11 +73,11 @@ Accept wildcard characters: False
 ```
 
 ### -Update
-Record/feature to update
+Feature to update
 
 ```yaml
 Type: Object[]
-Parameter Sets: _updates
+Parameter Sets: _upd
 Aliases:
 
 Required: True
@@ -68,12 +87,27 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Delete
-ObjectId of record/feature to delete
+### -DeleteObjectId
+ObjectId of feature to delete
 
 ```yaml
 Type: Int32[]
-Parameter Sets: _deletes
+Parameter Sets: _doi
+Aliases: Delete
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -DeleteGlobalId
+GlobalId of feature to delete
+
+```yaml
+Type: String[]
+Parameter Sets: _dgi
 Aliases:
 
 Required: True
@@ -109,6 +143,21 @@ Aliases: Layer
 Required: False
 Position: Named
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FolderName
+Server Service Folder Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: Named
+Default value: Hosted
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -170,9 +219,8 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Edit-ServerFeature
 Author:   Justin Johns
-Version:  0.1.1 | Last Edit: 2024-03-17
-- 0.1.1 - Added formatting of record to freatures
-- 0.1.0 - Initial version
+Version:  0.2.0 | Last Edit: 2025-02-19
+- See commit history for version changes
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/services-reference/enterprise/apply-edits-feature-service-layer-.htm
 
