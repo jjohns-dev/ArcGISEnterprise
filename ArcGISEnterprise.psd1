@@ -74,6 +74,7 @@
         'Clear-ServerHostedFeatureService'
         'ConvertFrom-ArcGISLog'
         'ConvertFrom-Epoch'
+        'ConvertFrom-GeoJson'
         'Edit-ServerFeature'
         'Export-PortalGroupItem'
         'Find-PortalItem'

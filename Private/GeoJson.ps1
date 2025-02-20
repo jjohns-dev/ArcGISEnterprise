@@ -1,6 +1,6 @@
 # ==============================================================================
 # Filename: GeoJson.ps1
-# Version:  0.1.0 | Updated: 2025-02-18
+# Version:  0.1.0 | Updated: 2025-02-20
 # Author:   Justin Johns (original author linked in notes)
 # ==============================================================================
 
@@ -144,7 +144,7 @@ function Get-ShallowClone {
     return $target
 }
 
-function Convert-GeoJsonToArcGIS {
+<#function ConvertFrom-GeoJson {
     [CmdletBinding()]
     param (
         [System.Object] $GeoJson, # original was System.Collections.Hashtable
@@ -182,7 +182,7 @@ function Convert-GeoJsonToArcGIS {
         'Feature' {
             Write-Verbose -Message ('Geometry is [{0}]' -f $GeoJson.geometry.type)
             if ($GeoJson.geometry) {
-                $result.geometry = Convert-GeoJsonToArcGIS $GeoJson.geometry $IDAttribute
+                $result.geometry = ConvertFrom-GeoJson $GeoJson.geometry $IDAttribute
             }
             $result.attributes = if ($GeoJson.properties) { Get-ShallowClone $GeoJson.properties } else { @{} }
             if ($GeoJson.id) {
@@ -192,29 +192,29 @@ function Convert-GeoJsonToArcGIS {
         'FeatureCollection' {
             $result = @()
             for ($i = 0; $i -lt $GeoJson.features.Length; $i++) {
-                $result += Convert-GeoJsonToArcGIS $GeoJson.features[$i] $IDAttribute
+                $result += ConvertFrom-GeoJson $GeoJson.features[$i] $IDAttribute
             }
         }
         'GeometryCollection' {
             $result = @()
             for ($i = 0; $i -lt $GeoJson.geometries.Length; $i++) {
-                $result += Convert-GeoJsonToArcGIS $GeoJson.geometries[$i] $IDAttribute
+                $result += ConvertFrom-GeoJson $GeoJson.geometries[$i] $IDAttribute
             }
         }
     }
     return [PSCustomObject] $result
-}
+} #>
 
 <# -- Example usage
 $geojson = @{
     type = 'Point'
     coordinates = @(102.0, 0.5)
 }
-$result = Convert-GeoJsonToArcGIS -GeoJson $geojson
+$result = ConvertFrom-GeoJson -GeoJson $geojson
 Write-Output $result
 
-$z = Convert-GeoJsonToArcGIS -GeoJson $county
-$z = Convert-GeoJsonToArcGIS -GeoJson $county.features[1]
+$z = ConvertFrom-GeoJson -GeoJson $county
+$z = ConvertFrom-GeoJson -GeoJson $county.features[1]
 
 $z
 #>
