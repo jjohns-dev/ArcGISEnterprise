@@ -98,6 +98,8 @@ function ConvertFrom-GeoJson {
                 }
             }
         }
+
+        # RETURN CONVERTED OBJECT
         return [PSCustomObject] $result
     }
 }

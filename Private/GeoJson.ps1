@@ -11,6 +11,11 @@
     Version History: (see commit history)
     General Notes:
     https://unpkg.com/@esri/arcgis-to-geojson-utils@1.2.0/dist/arcgis-to-geojson.js
+
+    Other Helpful Links:
+    - https://esri.github.io/geometry-api-java/doc/Polygon.html
+    - https://developers.arcgis.com/rest/services-reference/enterprise/geometry-objects/
+    - https://developers.arcgis.com/rest/services-reference/enterprise/areas-and-lengths/
 ============================================================================= #>
 
 function Test-PointsEqual {
