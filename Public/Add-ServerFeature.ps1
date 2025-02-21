@@ -1,15 +1,19 @@
-function Add-ServerHostedFeatureRecord {
+function Add-ServerFeature {
     <#
     .SYNOPSIS
-        Add record to Portal Hosted Feature Service
+        Add feature to Feature Service
     .DESCRIPTION
-        Add records/data to a Portal Hosted Feature Service
+        Add feature to a Feature Service
     .PARAMETER Record
-        Record or data to add to the Portal Hosted Feature Service
+        Feature record or attributes to add
+    .PARAMETER Feature
+        Feature to add to the Feature Service
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
     .PARAMETER LayerId
         Service Layer ID
+    .PARAMETER FolderName
+        Server Service Folder Name
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -21,23 +25,27 @@ function Add-ServerHostedFeatureRecord {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Add-ServerHostedFeatureRecord @commonParams -Record $rec -ServiceName "dashboard"
+        PS C:\> Add-ServerFeature @commonParams -Record $rec -ServiceName "dashboard"
         Add records to a Hosted Feature Service named "dashboard"
     .NOTES
-        Name:     Add-ServerHostedFeatureRecord
+        Name:     Add-ServerFeature
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2023-03-17
-        - 0.1.1 - Added formatting of record to freatures
-        - 0.1.0 - Initial version
+        Version:  0.1.2 | Last Edit: 2024-02-19
+        - See commit history for version changes
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
     #>
     [CmdletBinding()]
+    [Alias('Add-ServerHostedFeatureRecord')]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Record or feature to add')]
-        #[ValidateScript({ $_.psobject.Members.Name -contains 'attributes' })]
+        [Parameter(Mandatory = $true, HelpMessage = 'Feature record or attributes to add', ParameterSetName = '__rcd')]
         [ValidateNotNullOrEmpty()]
         [System.Object[]] $Record,
+
+        [Parameter(Mandatory = $true, HelpMessage = 'Feature to add', ParameterSetName = '__ftr')]
+        [ValidateScript({ $_.psobject.Properties.Name -contains 'attributes' })] # FEATURE MAY ALSO CONTAIN "geometry"
+        [ValidateNotNullOrEmpty()]
+        [System.Object[]] $Feature,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]
@@ -47,6 +55,10 @@ function Add-ServerHostedFeatureRecord {
         [ValidateNotNullOrEmpty()]
         [Alias('Layer')]
         [System.Int32] $LayerId = 0,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $FolderName = 'Hosted',
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -61,21 +73,29 @@ function Add-ServerHostedFeatureRecord {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
-
-        # SET COLLECTION FOR FEATURE RECORDS
-        $features = [System.Collections.Generic.List[System.Object]]::new()
     }
     Process {
-        # ADD RECORD TO COLLECTION
-        # REMOVED DECLARATION AS PSCUSTOMOBJECT AS IT WILL CONVERT TO JSON ANYWAY
-        foreach ($i in $Record) { $features.Add((@{ attributes = $i })) }
+        # VALIDATE PARAMETER SET
+        switch ($PSCmdlet.ParameterSetName) {
+            '__rcd' {
+                # SET COLLECTION FOR FEATURE RECORDS
+                $features = [System.Collections.Generic.List[System.Object]]::new()
+
+                # ADD RECORD TO COLLECTION
+                foreach ($i in $Record) { $features.Add((@{ attributes = $i })) }
+            }
+            '__ftr' {
+                # SET FEATURE COLLECTION
+                $features = $Feature
+            }
+        }
 
         # SET PARAMETERS FOR ADDING DATA
         $restParams = @{
-            Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/addFeatures' -f $Context, $ServiceName, $LayerId
+            Uri    = '{0}/rest/services/{1}/{2}/FeatureServer/{3}/addFeatures' -f $Context, $FolderName, $ServiceName, $LayerId
             Method = 'POST'
             Body   = @{
-                features = $features | ConvertTo-Json -Depth 5 -Compress -AsArray
+                features = $features | ConvertTo-Json -Depth 6 -Compress -AsArray
                 f        = 'json'
                 token    = $Token
             }

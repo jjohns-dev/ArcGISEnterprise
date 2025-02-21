@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.7.3'
+    ModuleVersion     = '0.7.4'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -69,12 +69,12 @@
     FunctionsToExport = @(
         'Add-PortalOAuthRedirectURI'
         'Add-PortalUserToGroup'
-        'Add-ServerHostedFeatureRecord'
+        'Add-ServerFeature'
         'Add-ServerUsageReport'
-        'Clear-ServerHostedFeatureService'
         'ConvertFrom-ArcGISLog'
         'ConvertFrom-Epoch'
-        'Edit-ServerHostedFeatureRecord'
+        'ConvertFrom-GeoJson'
+        'Edit-ServerFeature'
         'Export-PortalGroupItem'
         'Find-PortalItem'
         'Find-ServerAddressCandidate'
@@ -131,7 +131,7 @@
         'Get-ServerUsageReport'
         'Get-ServerUsageReportData'
         'Grant-PortalUserItemAccess'
-        'Import-PortalGroupItem' # DOESN'T WORK YET
+        'Import-PortalGroupItem'
         'Invoke-PortalItemAnalysis'
         'Invoke-ServerHostedFeatureQuery'
         'Move-PortalUserItem'
@@ -153,6 +153,7 @@
         'Remove-PortalUserGroup'
         'Remove-ServerFolder'
         'Remove-ServerService'
+        'Remove-ServerServiceFeature'
         'Remove-ServerServiceLayer'
         'Remove-ServerUsageReport'
         'Revoke-PortalUserItemAccess'
@@ -184,6 +185,8 @@
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
     AliasesToExport   = @(
+        'Add-ServerHostedFeatureRecord'
+        'Clear-ServerHostedFeatureService'
         'Get-PortalAllowedOrigins'
         'Get-PortalMachines'
         'Get-PortalRole'

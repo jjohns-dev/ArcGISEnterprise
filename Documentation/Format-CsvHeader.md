@@ -64,7 +64,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Format-CsvHeader
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-05-15
+Version:  0.1.1 | Last Edit: 2025-01-20
 Comments: \<Comment(s)\>
 
 ## RELATED LINKS
