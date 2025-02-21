@@ -1,24 +1,33 @@
 # Remove-ServerServiceFeature
 
 ## SYNOPSIS
-Clear Portal Hosted Feature Service
+Remove ArcGIS Server Feature Service feature
 
 ## SYNTAX
 
 ```
-Remove-ServerServiceFeature [-ServiceName] <String> [-LayerId] <Int32> [-Context] <Uri> [-Token] <String>
- [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
+Remove-ServerServiceFeature [-ServiceName] <String> [-LayerId] <Int32> [[-ObjectId] <Int32[]>]
+ [[-Where] <String>] [[-FolderName] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Clear or purge all items from a table in a Hosted Feature Service Layer
+This operation deletes features in a feature layer or table.
+The operation is performed on a feature service layer resource.
+If no object IDs or where clause is provided, all features in the layer or table will be deleted.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
 Remove-ServerServiceFeature @commonParams -ServiceName dashboard -LayerId 0
-Clear or purge all data from the "dashboard" Hosted Feature Service layer ID 0
+Delete all data from the "dashboard" Hosted Feature Service layer ID 0
+```
+
+### EXAMPLE 2
+```
+Remove-ServerServiceFeature @commonParams -ServiceName dashboard -LayerId 0 -ObjectId @(1, 2, 3)
+Delete features with IDs 1, 2, and 3 from the "dashboard" Hosted Feature Service layer ID 0
 ```
 
 ## PARAMETERS
@@ -53,6 +62,51 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -ObjectId
+Object IDs of the layer or table to be deleted
+
+```yaml
+Type: Int32[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Where
+Where clause for the query filter
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: Objectid >= 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -FolderName
+Server Service Folder Name
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 5
+Default value: Hosted
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
 Portal context (e.g., https://arcgis.com/arcgis)
 
@@ -62,7 +116,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -77,7 +131,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -141,10 +195,9 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Remove-ServerServiceFeature
 Author:   Justin Johns
-Version:  0.1.1 | Last Edit: 2024-03-12
-- 0.1.1 - Update function name and parameter name
-- 0.1.0 - Initial version
+Version:  0.2.0 | Last Edit: 2025-02-21
+- see commit history for version changes
 Comments: \<Comment(s)\>
-General notes
+- https://developers.arcgis.com/rest/services-reference/enterprise/delete-features/
 
 ## RELATED LINKS
