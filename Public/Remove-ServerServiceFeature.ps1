@@ -4,6 +4,7 @@ function Remove-ServerServiceFeature {
         Remove ArcGIS Server Feature Service feature
     .DESCRIPTION
         This operation deletes features in a feature layer or table. The operation is performed on a feature service layer resource.
+        If no object IDs or where clause is provided, all features in the layer or table will be deleted.
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
     .PARAMETER LayerId
@@ -26,7 +27,10 @@ function Remove-ServerServiceFeature {
         System.Object.
     .EXAMPLE
         PS C:\> Remove-ServerServiceFeature @commonParams -ServiceName dashboard -LayerId 0
-        Clear or purge all data from the "dashboard" Hosted Feature Service layer ID 0
+        Delete all data from the "dashboard" Hosted Feature Service layer ID 0
+    .EXAMPLE
+        PS C:\> Remove-ServerServiceFeature @commonParams -ServiceName dashboard -LayerId 0 -ObjectId @(1, 2, 3)
+        Delete features with IDs 1, 2, and 3 from the "dashboard" Hosted Feature Service layer ID 0
     .NOTES
         Name:     Remove-ServerServiceFeature
         Author:   Justin Johns
@@ -78,21 +82,24 @@ function Remove-ServerServiceFeature {
         $restParams = @{
             Uri    = '{0}/rest/services/{1}/{2}/FeatureServer/{3}/deleteFeatures' -f $Context, $FolderName, $ServiceName, $LayerId
             Method = 'POST'
-            Body   = @{ f = 'json'; token = $Token }
+            Body   = @{
+                f     = 'json'
+                token = $Token
+                where = $Where
+            }
         }
 
-        # ADD QUERY PARAMETERS
-        if ($PSBoundParameters.ContainsKey('ObjectId')) { $restParams['Body']['objectIds'] = $ObjectId }
-        if ($PSBoundParameters.ContainsKey('Where')) { $restParams['Body']['where'] = $Where }
+        # ADD OBJECT IDS IF PROVIDED
+        if ($PSBoundParameters.ContainsKey('ObjectId')) { $restParams['Body']['objectIds'] = $ObjectId -join ', ' }
 
         # OUTPUT VERBOSE
-        Write-Verbose -Message ('Endpoint URI: [{0}]' -f $restParams['Uri'])
+        Write-Verbose -Message ('Query parameters: [{0}]' -f ($restParams['Body'] | ConvertTo-Json -Compress -Depth 4))
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # SHOULD PROCESS
-        if ($PSCmdlet.ShouldProcess($ServiceName, ('Purge all records from service layer ID [{0}]' -f $LayerId))) {
+        if ($PSCmdlet.ShouldProcess($ServiceName, ('Purge records from service layer ID [{0}]' -f $LayerId))) {
 
             Write-Verbose -Message 'Invoking REST API endpoint "deleteFeatures"'
 
