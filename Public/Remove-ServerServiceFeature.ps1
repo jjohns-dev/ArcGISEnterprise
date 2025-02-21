@@ -1,13 +1,19 @@
-function Clear-ServerHostedFeatureService {
+function Remove-ServerServiceFeature {
     <#
     .SYNOPSIS
-        Clear Portal Hosted Feature Service
+        Remove ArcGIS Server Feature Service feature
     .DESCRIPTION
-        Clear or purge all items from a table in a Hosted Feature Service Layer
+        This operation deletes features in a feature layer or table. The operation is performed on a feature service layer resource.
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
     .PARAMETER LayerId
         Service Layer ID
+    .PARAMETER ObjectId
+        Object IDs of the layer or table to be deleted
+    .PARAMETER Where
+        Where clause for the query filter
+    .PARAMETER FolderName
+        Server Service Folder Name
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -19,18 +25,18 @@ function Clear-ServerHostedFeatureService {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Clear-ServerHostedFeatureService @commonParams -ServiceName dashboard -LayerId 0
+        PS C:\> Remove-ServerServiceFeature @commonParams -ServiceName dashboard -LayerId 0
         Clear or purge all data from the "dashboard" Hosted Feature Service layer ID 0
     .NOTES
-        Name:     Clear-ServerHostedFeatureService
+        Name:     Remove-ServerServiceFeature
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-03-12
-        - 0.1.1 - Update function name and parameter name
-        - 0.1.0 - Initial version
+        Version:  0.2.0 | Last Edit: 2025-02-21
+        - see commit history for version changes
         Comments: <Comment(s)>
-        General notes
+        - https://developers.arcgis.com/rest/services-reference/enterprise/delete-features/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [Alias('Clear-ServerHostedFeatureService')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]
@@ -40,6 +46,18 @@ function Clear-ServerHostedFeatureService {
         [ValidateNotNullOrEmpty()]
         [Alias('Layer')]
         [System.Int32] $LayerId,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Object IDs of the layer or table to be deleted')]
+        [ValidateNotNullOrEmpty()]
+        [System.Int32[]] $ObjectId,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Where clause for the query filter')]
+        [ValidatePattern('^[\w\*=]+$')]
+        [System.String] $Where = 'objectid >= 0',
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $FolderName = 'Hosted',
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -58,15 +76,16 @@ function Clear-ServerHostedFeatureService {
     Process {
         # SET TRUNCATE PARAMETERS
         $restParams = @{
-            Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/deleteFeatures' -f $Context, $ServiceName, $LayerId
+            Uri    = '{0}/rest/services/{1}/{2}/FeatureServer/{3}/deleteFeatures' -f $Context, $FolderName, $ServiceName, $LayerId
             Method = 'POST'
-            Body   = @{
-                where = 'objectid >= 0'
-                f     = 'json'
-                token = $Token
-            }
+            Body   = @{ f = 'json'; token = $Token }
         }
 
+        # ADD QUERY PARAMETERS
+        if ($PSBoundParameters.ContainsKey('ObjectId')) { $restParams['Body']['objectIds'] = $ObjectId }
+        if ($PSBoundParameters.ContainsKey('Where')) { $restParams['Body']['where'] = $Where }
+
+        # OUTPUT VERBOSE
         Write-Verbose -Message ('Endpoint URI: [{0}]' -f $restParams['Uri'])
 
         # ADD CERTIFICATE SKIP IF PROVIDED
