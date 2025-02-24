@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.7.4'
+    ModuleVersion     = '0.7.5'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -80,7 +80,6 @@
         'Find-ServerAddressCandidate'
         'Find-ServerGeocodeAddress'
         'Find-ServerReverseGeocode'
-        'Find-ServerServiceLayerData'
         'Format-ChangeSet'
         'Format-CsvHeader'
         'Format-ServerServiceLayerMetadata'
@@ -122,6 +121,7 @@
         'Get-ServerServiceItemInfo'
         'Get-ServerServiceLayer'
         'Get-ServerServiceLayerAttachment'
+        'Get-ServerServiceLayerData'
         'Get-ServerServiceLifecycleInfo'
         'Get-ServerServiceList'
         'Get-ServerServiceReport'
@@ -187,6 +187,7 @@
     AliasesToExport   = @(
         'Add-ServerHostedFeatureRecord'
         'Clear-ServerHostedFeatureService'
+        'Find-ServerServiceLayerData'
         'Get-PortalAllowedOrigins'
         'Get-PortalMachines'
         'Get-PortalRole'

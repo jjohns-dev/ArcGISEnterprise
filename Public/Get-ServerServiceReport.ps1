@@ -512,7 +512,7 @@ function Get-ServerServiceReport {
                                 }
 
                                 # GET LAYER DATA
-                                $data = Find-ServerServiceLayerData @cmnParams @layerParams
+                                $data = Get-ServerServiceLayerData @cmnParams @layerParams
 
                                 # EVALUATE FEATURES
                                 if ($data.features.attributes) {

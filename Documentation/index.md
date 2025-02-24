@@ -41,7 +41,7 @@ Please see releases for updates and features
 | Find-ServerAddressCandidate | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/findAddressCandidates` | GeoCode single address |
 | Find-ServerGeocodeAddress | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/geocodeAddresses` | GeoCode list of addresses |
 | Find-ServerReverseGeocode | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/reverseGeocode` | Reverse GeoCode lookup |
-| Find-ServerServiceLayerData | Server | `[ROOT]/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query service layer for data |
+| Get-ServerServiceLayerData | Server | `[ROOT]/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query service layer for data |
 | Get-PortalAllowedOriginList | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |
 | Get-PortalCategorySchema | Portal | `[ROOT]/portals/[PORTALID]/categorySchema` | Get Portal category schema |
 | Get-PortalDataStoreServer | Portal | `[ROOT]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |

@@ -1,4 +1,4 @@
-# Find-ServerServiceLayerData
+# Get-ServerServiceLayerData
 
 ## SYNOPSIS
 Find data in an ArcGIS Server service layer
@@ -6,7 +6,7 @@ Find data in an ArcGIS Server service layer
 ## SYNTAX
 
 ```
-Find-ServerServiceLayerData [-LayerId] <Int32> [-ServiceName] <String> [[-FolderName] <String>]
+Get-ServerServiceLayerData [-LayerId] <Int32> [-ServiceName] <String> [[-FolderName] <String>]
  [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
@@ -18,7 +18,7 @@ This queries all data and returns all fields.
 
 ### EXAMPLE 1
 ```
-Find-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -LayerId 0
+Get-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -LayerId 0
 Returns data for the first layer of the 'Geology' service
 ```
 
@@ -124,7 +124,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Find-ServerServiceLayerData
+Name:     Get-ServerServiceLayerData
 Author:   Justin Johns
 Version:  0.1.0 | Last Edit: 2024-09-30
 - Version history is capture in repository commit history

@@ -1,4 +1,4 @@
-function Find-ServerServiceLayerData {
+function Get-ServerServiceLayerData {
     <#
     .SYNOPSIS
         Find data in an ArcGIS Server service layer
@@ -23,10 +23,10 @@ function Find-ServerServiceLayerData {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Find-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -LayerId 0
-        Returns data for the first layer of the 'Geology' service
+        PS C:\> Get-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -LayerId 0
+        Returns all data for the first layer of the 'Geology' service
     .NOTES
-        Name:     Find-ServerServiceLayerData
+        Name:     Get-ServerServiceLayerData
         Author:   Justin Johns
         Version:  0.1.1 | Last Edit: 2025-02-24
         - Version history is capture in repository commit history
@@ -34,6 +34,7 @@ function Find-ServerServiceLayerData {
         https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/
     #>
     [CmdletBinding()]
+    [Alias('Find-ServerServiceLayerData')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service Layer ID')]
         [ValidateNotNullOrEmpty()]
