@@ -56,7 +56,7 @@ function Remove-ServerServiceFeature {
         [System.Int32[]] $ObjectId,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Where clause for the query filter')]
-        [ValidatePattern('^[\w\*=]+$')]
+        [ValidatePattern('^[\w\*\s=<>]+$')]
         [System.String] $Where = 'objectid >= 0',
 
         [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
