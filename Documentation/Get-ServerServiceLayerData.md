@@ -6,8 +6,8 @@ Find data in an ArcGIS Server service layer
 ## SYNTAX
 
 ```
-Get-ServerServiceLayerData [-LayerId] <Int32> [-ServiceName] <String> [[-FolderName] <String>]
- [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerServiceLayerData [-LayerId] <Int32> [-ServiceName] <String> [[-Where] <String>]
+ [[-FolderName] <String>] [-Context] <Uri> [[-Token] <String>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -19,7 +19,7 @@ This queries all data and returns all fields.
 ### EXAMPLE 1
 ```
 Get-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -LayerId 0
-Returns data for the first layer of the 'Geology' service
+Returns all data for the first layer of the 'Geology' service
 ```
 
 ## PARAMETERS
@@ -54,6 +54,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Where
+Where clause for the query filter
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: Objectid >= 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -FolderName
 Folder name in ArcGIS Server
 
@@ -63,7 +78,7 @@ Parameter Sets: (All)
 Aliases: Folder
 
 Required: False
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -78,7 +93,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -93,7 +108,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 5
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -126,7 +141,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-ServerServiceLayerData
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-09-30
+Version:  0.1.1 | Last Edit: 2025-02-24
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/
