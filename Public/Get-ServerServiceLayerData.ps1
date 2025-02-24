@@ -1,4 +1,4 @@
-function Find-ServerServiceLayerData {
+function Get-ServerServiceLayerData {
     <#
     .SYNOPSIS
         Find data in an ArcGIS Server service layer
@@ -8,6 +8,8 @@ function Find-ServerServiceLayerData {
         Service Layer ID
     .PARAMETER ServiceName
         Name of service
+    .PARAMETER Where
+        Where clause for the query filter
     .PARAMETER FolderName
         Folder name in ArcGIS Server
     .PARAMETER Context
@@ -21,17 +23,18 @@ function Find-ServerServiceLayerData {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Find-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -LayerId 0
-        Returns data for the first layer of the 'Geology' service
+        PS C:\> Get-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -LayerId 0
+        Returns all data for the first layer of the 'Geology' service
     .NOTES
-        Name:     Find-ServerServiceLayerData
+        Name:     Get-ServerServiceLayerData
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-30
+        Version:  0.1.1 | Last Edit: 2025-02-24
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/
     #>
     [CmdletBinding()]
+    [Alias('Find-ServerServiceLayerData')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service Layer ID')]
         [ValidateNotNullOrEmpty()]
@@ -41,6 +44,10 @@ function Find-ServerServiceLayerData {
         [Parameter(Mandatory = $true, HelpMessage = 'Service name')]
         [ValidateNotNullOrEmpty()]
         [System.String] $ServiceName,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Where clause for the query filter')]
+        [ValidatePattern('^[\w\*\s=<>]+$')]
+        [System.String] $Where = 'objectid >= 0', #'globalid >= 0' '1=1'
 
         [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
         [ValidateNotNullOrEmpty()]
@@ -71,16 +78,17 @@ function Find-ServerServiceLayerData {
                 '{0}/rest/services/{1}/FeatureServer/{2}/query' -f $Context, $ServiceName, $LayerId
             }
             Method  = 'POST'
+            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
             Body    = @{
                 f         = 'json'
                 token     = $Token
-                where     = '1=1' #'globalid >= 0' #'objectid >= 0'
+                where     = $Where
                 outFields = '*'
             }
-            Headers = @{
-                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
-            }
         }
+
+        # OUTPUT VERBOSE
+        Write-Verbose -Message ('Query parameters: [{0}]' -f ($restParams['Body'] | ConvertTo-Json -Compress))
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
