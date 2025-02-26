@@ -9,7 +9,7 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.7.5'
+    ModuleVersion     = '0.7.6'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -73,7 +73,6 @@
         'Add-ServerUsageReport'
         'ConvertFrom-ArcGISLog'
         'ConvertFrom-Epoch'
-        'ConvertFrom-GeoJson'
         'Edit-ServerFeature'
         'Export-PortalGroupItem'
         'Find-PortalItem'
