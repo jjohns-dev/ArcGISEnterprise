@@ -26,7 +26,7 @@ function Clear-ServerFeatureLayer {
     .NOTES
         Name:     Clear-ServerFeatureLayer
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-02-20
+        Version:  0.1.0 | Last Edit: 2025-03-06
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/online/truncate-feature-layer-.htm
