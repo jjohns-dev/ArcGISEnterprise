@@ -8,6 +8,8 @@ function Clear-ServerFeatureLayer {
         Portal Hosted Feature Service Name
     .PARAMETER LayerId
         Service Layer ID
+    .PARAMETER FolderName
+        Server Service Folder Name
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -24,10 +26,10 @@ function Clear-ServerFeatureLayer {
     .NOTES
         Name:     Clear-ServerFeatureLayer
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-02-20
+        Version:  0.1.0 | Last Edit: 2025-03-06
         - Version history is capture in repository commit history
         Comments:
-        https://developers.arcgis.com/rest/services-reference/online/truncate-feature-layer-.htm
+        https://developers.arcgis.com/rest/services-reference/enterprise/fs-truncate/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
@@ -38,6 +40,10 @@ function Clear-ServerFeatureLayer {
         [Parameter(Mandatory = $true, HelpMessage = 'Layer index')]
         [ValidateNotNullOrEmpty()]
         [System.Int32] $LayerId,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $FolderName,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -56,15 +62,24 @@ function Clear-ServerFeatureLayer {
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/admin/services/{1}/FeatureServer/{2}/truncate' -f $Context, $ServiceName, $LayerId
+            Uri    = if ($PSBoundParameters.ContainsKey('FolderName')) {
+                '{0}/rest/admin/services/{1}/{2}/FeatureServer/{3}/truncate' -f $Context, $FolderName, $ServiceName, $LayerId
+            }
+            else {
+                '{0}/rest/admin/services/{1}/FeatureServer/{2}/truncate' -f $Context, $ServiceName, $LayerId
+            }
             Method  = 'POST'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
             Body    = @{
                 f              = 'json'
                 token          = $Token
                 attachmentOnly = $false
+                #async          = $true
             }
         }
+
+        # OUTPUT VERBOSE
+        Write-Verbose -Message ('Uri: {0}' -f $restParams['Uri'])
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

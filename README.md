@@ -35,6 +35,7 @@ Please see releases for updates and features
 | Add-PortalUserToGroup | Portal | `[ROOT]/community/groups/[GROUPID]/addUsers` | Add Portal user to Portal group |
 | Add-ServerFeature | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/addFeatures` | Appends data to table in Hosted Feature Service |
 | Add-ServerUsageReport | Server | `[ADMIN]/usagereports/add` | Adds a new usage report |
+| Clear-ServerFeatureLayer | Server | `[RADMIN]/services/[FOLDERNAME]/[SERVICENAME/FeatureServer/[LAYERID]/truncate` | Truncate feater service layer |
 | Edit-ServerFeature | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/applyEdits` | Adds, updates, or deletes features/records from a table layer |
 | Export-PortalGroupItem | Portal | `[ROOT]/community/groups/[GROUPID]/export` | Exports all exportable content from a Portal group |
 | Find-PortalItem | Portal | `[ROOT]/search` | Returns Portal item based on search criteria |
