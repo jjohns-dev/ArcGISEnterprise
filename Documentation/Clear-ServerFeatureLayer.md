@@ -17,8 +17,8 @@ The truncate operation supports deleting all features or attachments in a hosted
 
 ### EXAMPLE 1
 ```
-Clear-ServerFeatureLayer
-Explanation of what the example does
+Clear-ServerFeatureLayer @cmnParams -ServiceName myCoolService -LayerId 0 -FolderName Hosted
+Truncates all features and attachments in the service layer.
 ```
 
 ## PARAMETERS
@@ -160,5 +160,10 @@ Version:  0.1.0 | Last Edit: 2025-03-06
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/fs-truncate/
+
+We have discovered through testing that if the hosted feature service is
+renamed, the new name is only updated in Portal, not ArcGIS Server.
+Therefore, the "ServiceName" parameter should be the original name of the
+service, not the current name.
 
 ## RELATED LINKS

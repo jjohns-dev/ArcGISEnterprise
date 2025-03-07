@@ -21,8 +21,8 @@ function Clear-ServerFeatureLayer {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Clear-ServerFeatureLayer
-        Explanation of what the example does
+        PS C:\> Clear-ServerFeatureLayer @cmnParams -ServiceName myCoolService -LayerId 0 -FolderName Hosted
+        Truncates all features and attachments in the service layer.
     .NOTES
         Name:     Clear-ServerFeatureLayer
         Author:   Justin Johns
@@ -30,6 +30,11 @@ function Clear-ServerFeatureLayer {
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/fs-truncate/
+
+        We have discovered through testing that if the hosted feature service is
+        renamed, the new name is only updated in Portal, not ArcGIS Server.
+        Therefore, the "ServiceName" parameter should be the original name of the
+        service, not the current name.
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
