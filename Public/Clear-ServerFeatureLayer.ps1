@@ -21,8 +21,8 @@ function Clear-ServerFeatureLayer {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Clear-ServerFeatureLayer
-        Explanation of what the example does
+        PS C:\> Clear-ServerFeatureLayer @cmnParams -ServiceName myCoolService -LayerId 0 -FolderName Hosted
+        Truncates all features and attachments in the service layer.
     .NOTES
         Name:     Clear-ServerFeatureLayer
         Author:   Justin Johns
