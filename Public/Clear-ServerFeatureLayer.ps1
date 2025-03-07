@@ -30,6 +30,11 @@ function Clear-ServerFeatureLayer {
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/fs-truncate/
+
+        We have discovered through testing that if the hosted feature service is
+        renamed, the new name is only updated in Portal, not ArcGIS Server.
+        Therefore, the "ServiceName" parameter should be the original name of the
+        service, not the current name.
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
