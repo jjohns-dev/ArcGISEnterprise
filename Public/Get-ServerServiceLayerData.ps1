@@ -28,7 +28,7 @@ function Get-ServerServiceLayerData {
     .NOTES
         Name:     Get-ServerServiceLayerData
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-02-24
+        Version:  0.1.2 | Last Edit: 2025-03-20
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/
@@ -46,7 +46,7 @@ function Get-ServerServiceLayerData {
         [System.String] $ServiceName,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Where clause for the query filter')]
-        [ValidatePattern('^[\w\*\s=<>]+$')]
+        [ValidatePattern('^[\w\*\s=<>''-]+$')]
         [System.String] $Where = 'objectid >= 0', #'globalid >= 0' '1=1'
 
         [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
