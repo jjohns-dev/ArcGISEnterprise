@@ -36,7 +36,6 @@ function Add-ServerFeature {
         https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
     #>
     [CmdletBinding()]
-    [Alias('Add-ServerHostedFeatureRecord')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Feature record or attributes to add', ParameterSetName = '__rcd')]
         [ValidateNotNullOrEmpty()]
