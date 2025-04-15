@@ -8,6 +8,8 @@ function Set-ServerServicesDirectory {
         Callback functions enabled
     .PARAMETER ServicesDirectoryEnabled
         Services directory enabled
+    .PARAMETER Origin
+        Origin to be allowed
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -36,6 +38,10 @@ function Set-ServerServicesDirectory {
 
         [Parameter(Mandatory = $false, HelpMessage = 'Services directory enabled')]
         [System.Boolean] $ServicesDirectoryEnabled,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Origin to be allowed')]
+        [ValidatePattern('^(https?://.+[^/]|\*)$')]
+        [System.String[]] $Origin,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -75,6 +81,9 @@ function Set-ServerServicesDirectory {
         }
         if ($PSBoundParameters.ContainsKey('CallbackFunctionsEnabled')) {
             $config['callbackFunctionsEnabled'] = $CallbackFunctionsEnabled.ToString().ToLower()
+        }
+        if ($PSBoundParameters.ContainsKey('Origin')) {
+            $config['allowedOrigins'] = $Origin -join ','
         }
 
         # ADD TOKEN AND FORMAT FOR JSON
