@@ -7,7 +7,8 @@ Set ArcGIS Server services directory
 
 ```
 Set-ServerServicesDirectory [[-CallbackFunctionsEnabled] <Boolean>] [[-ServicesDirectoryEnabled] <Boolean>]
- [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
+ [[-Origin] <String[]>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [-WhatIf] [-Confirm]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -53,6 +54,21 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -Origin
+Origin to be allowed
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
 Server context (e.g., https://arcgis.com/arcgis)
 
@@ -62,7 +78,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -77,7 +93,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 5
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
