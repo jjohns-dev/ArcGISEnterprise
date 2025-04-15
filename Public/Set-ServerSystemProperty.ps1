@@ -32,7 +32,7 @@ function Set-ServerSystemProperty {
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Web Context URL')]
-        [ValidateNotNullOrEmpty()]
+        [ValidateScript({ $_ -match '^https?://' })]
         [System.String] $WebContextURL,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Feature service XSS filter')]
