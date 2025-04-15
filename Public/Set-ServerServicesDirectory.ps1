@@ -59,6 +59,10 @@ function Set-ServerServicesDirectory {
     }
     Process {
         # GET SERVICES DIRECTORY DATA
+        # DURING TESTING WE DISCOVERED THAT UPDATING THE SERVICES DIRECTORY HAS SEVERAL INCONSISTENCIES
+        # WITH THE API DOCUMENTATION. ONE IS THAT ALL PROPERTIES MUST BE UPDATED TOGETHER AND THAT AN
+        # INDIVIDUAL PROPERTY CANNOT BE UPDATED INDEPENDANTLY. ANOTHER IS THAT THE 'servicesDirEnabled'
+        # PROPERTY IS STORED AS 'enabled' BUT MUST BE UPDATED AS 'servicesDirEnabled'.
         $config = Get-ServerServicesDirectory -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
 
         # VALIDATE PREVIOUS CALL WAS SUCCESSFUL
