@@ -169,6 +169,7 @@
         'Set-PortalUserProfileEditing'
         'Set-ServerAllowedOrigins'
         'Set-ServerPSAPassword'
+        'Set-ServerServicesDirectory'
         'Set-ServerSystemProperty'
         'Test-PortalDataStore'
         'Test-PortalFederation'
