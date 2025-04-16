@@ -105,11 +105,11 @@ function Set-ServerServicesDirectory {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # SET CHANGED PROPERTIES
-        $changedProps = $config | ConvertTo-Json | ConvertFrom-Json -AsHashtable
-        $changedProps.Remove('f'); $changedProps.Remove('token'); $changedProps = $changedProps | ConvertTo-Json -Compress
+        $properties = $config | ConvertTo-Json | ConvertFrom-Json -AsHashtable
+        $properties.Remove('f'); $properties.Remove('token'); $properties = $properties | ConvertTo-Json -Compress
 
         # SHOULD PROCESS
-        if ($PSCmdlet.ShouldProcess($changedProps, 'Change Server services directory property')) {
+        if ($PSCmdlet.ShouldProcess($properties, 'Change Server services directory property')) {
 
             # INVOKE REQUEST
             Invoke-RestMethod @restParams
