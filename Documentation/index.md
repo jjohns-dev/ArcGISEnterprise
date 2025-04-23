@@ -62,6 +62,7 @@ Please see releases for updates and features
 | Get-PortalSecurityConfig | Portal | `[ADMIN]/security/config` | Get Portal security configuration |
 | Get-PortalSecurityPolicy | Portal | `[ROOT]/portals/[PORTALID]/securityPolicy` | Get Portal security policy |
 | Get-PortalSettings | Portal | `[ROOT]/portals/[PORTALID]` | Get Portal configuration or "self" |
+| Get-PortalSystemProperty | Portal | `[ADMIN]/system/properties` | Gets Portal system properties |
 | Get-PortalToken | Portal | `[ROOT]/generateToken` | Generate token for ArcGIS Portal |
 | Get-PortalUser | Portal | `[ROOT]/community/users/[USERNAME]` | Get Portal user |
 | Get-PortalUserFolderList | Portal | `[ROOT]/content/users/[USERNAME]` | Gets list of folders owned by user in Portal |
@@ -122,6 +123,7 @@ Please see releases for updates and features
 | Set-PortalProxyHosts | Portal | `[ADMIN]/security/config/update` | Set Portal security configuration |
 | Set-PortalPublicSharing | Portal | `[ROOT]/portals/[PORTALID]/update` | Set the Public Sharing setting of Portal for ArcGIS |
 | Set-PortalRolePrivilege | Portal | `[ROOT]/portals/[PORTALID]` | Set privilege for Portal for ArcGIS Role |
+| Set-PortalSystemProperty | Portal | `[ADMIN]/system/properties/update` | Sets Portal system properties |
 | Set-PortalUserPassword | Portal | `[ROOT]/community/users/[USERNAME]/update` | Set password for Portal user |
 | Set-PortalUserProfileEditing | Portal | `[ROOT]/portals/[PORTALID]/update` | Set the User Profile Editing setting of Portal for ArcGIS |
 | Set-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Set ArcGIS Server allowed origins |
