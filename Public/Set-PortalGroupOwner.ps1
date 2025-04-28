@@ -3,7 +3,8 @@ function Set-PortalGroupOwner {
     .SYNOPSIS
         Reassign a Portal group to another user
     .DESCRIPTION
-        The Reassign Group operation (POST only) allows the administrator of an organization to reassign a group to another member of the organization.
+        The Reassign Group operation (POST only) allows the administrator of an organization to reassign a
+        group to another member of the organization.
     .PARAMETER GroupID
         Portal Group ID
     .PARAMETER UserName
@@ -53,14 +54,7 @@ function Set-PortalGroupOwner {
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
-        <# # VALIDATE GROUP ID
-        $group = Get-PortalUserGroupList
-
-        # GET USER FROM USERNAME
-        $user = Get-PortalUser -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
-
-        # VALIDATE USER
-        if (-Not $user) { Write-Error -Message ('User with name [{0}] not found' -f $UserName) -ErrorAction Stop } #>
+        # PROBABLY NO NEED TO VALIDATE THE GROUP ID OR USERNAME AS THE API WILL RESPOND WITH AN ERROR IF INVALID
     }
     Process {
         # SET REQUEST PARAMETERS
