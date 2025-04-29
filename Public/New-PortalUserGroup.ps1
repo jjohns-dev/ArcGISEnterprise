@@ -27,9 +27,15 @@ function New-PortalUserGroup {
     .PARAMETER LeavingDisallowed
         Set leaving to disallowed
     .PARAMETER HiddenMembers
-        Set members to hidden
+        Set members to hidden (applies only to ArcGIS Online organizations)
     .PARAMETER MembershipAccess
         Group membership access
+    .PARAMETER TypeKeyword
+        Type keyword
+    .PARAMETER Phone
+        Group contact information (limit 50 characters)
+    .PARAMETER Thumbnail
+        Path to the thumbnail image to be used for the group
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -46,10 +52,11 @@ function New-PortalUserGroup {
     .NOTES
         Name:     New-PortalUserGroup
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-22
-        - 0.1.0 - Initial version
+        Version:  0.1.1 | Last Edit: 2025-04-29
+        - Version history is captured in repository commit history
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/create-group.htm
+        https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#group-parameters
     #>
     [CmdletBinding()]
     Param(
@@ -95,12 +102,24 @@ function New-PortalUserGroup {
         [Parameter(Mandatory = $false, HelpMessage = 'Set leaving to disallowed')]
         [System.Management.Automation.SwitchParameter] $LeavingDisallowed,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Set members to hidden')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Set members to hidden (applies only to ArcGIS Online organizations)')]
         [System.Management.Automation.SwitchParameter] $HiddenMembers,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Group membership access')]
         [ValidateSet('org', 'collaboration', 'none')]
         [System.String] $MembershipAccess = 'org',
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Type keyword')]
+        [ValidateNotNullOrEmpty()]
+        [System.String[]] $TypeKeyword,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Group contact information (limit 50 characters)')]
+        [ValidatePattern('^[\w\s-:/,.]{1,50}$')]
+        [System.String] $Phone,
+
+        [Parameter(Mandatory = $false, HelpMessage = 'Path to the thumbnail image to be used for the group')]
+        [ValidateNotNullOrEmpty()]
+        [System.String] $Thumbnail, # thumbnail=subfolder/thumbnail.jpg
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -138,6 +157,9 @@ function New-PortalUserGroup {
                 hiddenMembers     = if ($PSBoundParameters.ContainsKey('HiddenMembers')) { $true } else { $false }
                 membershipAccess  = $MembershipAccess
                 autoJoin          = $false
+                typeKeywords      = $TypeKeyword -join ','
+                phone             = $Phone
+                thumbnail         = $Thumbnail
             }
         }
 
