@@ -9,7 +9,8 @@ Create new Portal user group
 New-PortalUserGroup [-Title] <String> [[-Access] <String>] [[-Description] <String>] [[-Snippet] <String>]
  [[-Tag] <String[]>] [[-SortField] <String>] [[-SortOrder] <String>] [-IsViewOnly]
  [[-IsInvitationOnly] <Boolean>] [[-Capability] <String>] [-LeavingDisallowed] [-HiddenMembers]
- [[-MembershipAccess] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+ [[-MembershipAccess] <String>] [[-TypeKeyword] <String[]>] [[-Phone] <String>] [[-Thumbnail] <String>]
+ [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -191,7 +192,7 @@ Accept wildcard characters: False
 ```
 
 ### -HiddenMembers
-Set members to hidden
+Set members to hidden (applies only to ArcGIS Online organizations)
 
 ```yaml
 Type: SwitchParameter
@@ -220,6 +221,51 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -TypeKeyword
+Type keyword
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 11
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Phone
+Group contact information (limit 50 characters)
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 12
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Thumbnail
+Path to the thumbnail image to be used for the group
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 13
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ### -Context
 Server context (e.g., https://arcgis.com/arcgis)
 
@@ -229,7 +275,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 11
+Position: 14
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -244,7 +290,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 12
+Position: 15
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -277,9 +323,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     New-PortalUserGroup
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-22
-- 0.1.0 - Initial version
+Version:  0.1.1 | Last Edit: 2025-04-29
+- Version history is captured in repository commit history
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/users-groups-and-items/create-group.htm
+https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#group-parameters
 
 ## RELATED LINKS
