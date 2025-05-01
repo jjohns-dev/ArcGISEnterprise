@@ -151,6 +151,7 @@
         'Remove-PortalItem'
         'Remove-PortalRole'
         'Remove-PortalUser'
+        'Remove-PortalUserFolder'
         'Remove-PortalUserFromGroup'
         'Remove-PortalUserGroup'
         'Remove-ServerFolder'
