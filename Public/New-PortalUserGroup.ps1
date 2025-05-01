@@ -52,7 +52,7 @@ function New-PortalUserGroup {
     .NOTES
         Name:     New-PortalUserGroup
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-04-29
+        Version:  0.1.2 | Last Edit: 2025-05-01
         - Version history is captured in repository commit history
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/create-group.htm
@@ -97,7 +97,7 @@ function New-PortalUserGroup {
 
         [Parameter(Mandatory = $false, HelpMessage = 'Group capability')]
         [ValidateSet('updateItemControl', 'distributed')]
-        [System.String] $Capability = 'updateItemControl',
+        [System.String[]] $Capability = 'updateItemControl',
 
         [Parameter(Mandatory = $false, HelpMessage = 'Set leaving to disallowed')]
         [System.Management.Automation.SwitchParameter] $LeavingDisallowed,
@@ -152,7 +152,7 @@ function New-PortalUserGroup {
                 sortOrder         = $SortOrder
                 isViewOnly        = if ($PSBoundParameters.ContainsKey('IsViewOnly')) { $true } else { $false }
                 isInvitationOnly  = $IsInvitationOnly
-                capabilities      = $Capability
+                capabilities      = $Capability -join ','
                 leavingDisallowed = if ($PSBoundParameters.ContainsKey('LeavingDisallowed')) { $true } else { $false }
                 hiddenMembers     = if ($PSBoundParameters.ContainsKey('HiddenMembers')) { $true } else { $false }
                 membershipAccess  = $MembershipAccess
