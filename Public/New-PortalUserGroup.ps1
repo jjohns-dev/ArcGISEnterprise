@@ -83,11 +83,11 @@ function New-PortalUserGroup {
 
         [Parameter(Mandatory = $false, HelpMessage = 'Group sort field')]
         [ValidateSet('title', 'owner', 'avgrating', 'numviews', 'created', 'modified')]
-        [System.String] $SortField = 'title',
+        [System.String] $SortField,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Group sort order')]
         [ValidateSet('asc', 'desc')]
-        [System.String] $SortOrder = 'desc',
+        [System.String] $SortOrder,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Set group to view only')]
         [System.Management.Automation.SwitchParameter] $IsViewOnly,
@@ -97,7 +97,7 @@ function New-PortalUserGroup {
 
         [Parameter(Mandatory = $false, HelpMessage = 'Group capability')]
         [ValidateSet('updateItemControl', 'distributed')]
-        [System.String[]] $Capability = 'updateItemControl',
+        [System.String[]] $Capability,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Set leaving to disallowed')]
         [System.Management.Automation.SwitchParameter] $LeavingDisallowed,
@@ -107,7 +107,7 @@ function New-PortalUserGroup {
 
         [Parameter(Mandatory = $false, HelpMessage = 'Group membership access')]
         [ValidateSet('org', 'collaboration', 'none')]
-        [System.String] $MembershipAccess = 'org',
+        [System.String] $MembershipAccess,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Type keyword')]
         [ValidateNotNullOrEmpty()]
