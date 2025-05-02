@@ -8,7 +8,7 @@ Create new Portal user group
 ```
 New-PortalUserGroup [-Title] <String> [[-Access] <String>] [[-Description] <String>] [[-Snippet] <String>]
  [[-Tag] <String[]>] [[-SortField] <String>] [[-SortOrder] <String>] [-IsViewOnly]
- [[-IsInvitationOnly] <Boolean>] [[-Capability] <String>] [-LeavingDisallowed] [-HiddenMembers]
+ [[-IsInvitationOnly] <Boolean>] [[-Capability] <String[]>] [-LeavingDisallowed] [-HiddenMembers]
  [[-MembershipAccess] <String>] [[-TypeKeyword] <String[]>] [[-Phone] <String>] [[-Thumbnail] <String>]
  [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
@@ -111,7 +111,7 @@ Aliases:
 
 Required: False
 Position: 6
-Default value: Title
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -126,7 +126,7 @@ Aliases:
 
 Required: False
 Position: 7
-Default value: Desc
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -165,13 +165,13 @@ Accept wildcard characters: False
 Group capability
 
 ```yaml
-Type: String
+Type: String[]
 Parameter Sets: (All)
 Aliases:
 
 Required: False
 Position: 9
-Default value: UpdateItemControl
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -323,7 +323,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     New-PortalUserGroup
 Author:   Justin Johns
-Version:  0.1.1 | Last Edit: 2025-04-29
+Version:  0.1.2 | Last Edit: 2025-05-01
 - Version history is captured in repository commit history
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/users-groups-and-items/create-group.htm
