@@ -105,9 +105,10 @@ function New-PortalUserGroup {
         [Parameter(Mandatory = $false, HelpMessage = 'Set members to hidden (applies only to ArcGIS Online organizations)')]
         [System.Management.Automation.SwitchParameter] $HiddenMembers,
 
+        # THIS IS SET TO 'org' BY DEFAULT AFTER REVIEWING THE API DOCS AND PURPOSE OF USER GROUPS IN ENTERPRISE
         [Parameter(Mandatory = $false, HelpMessage = 'Group membership access')]
         [ValidateSet('org', 'collaboration', 'none')]
-        [System.String] $MembershipAccess,
+        [System.String] $MembershipAccess = 'org',
 
         [Parameter(Mandatory = $false, HelpMessage = 'Type keyword')]
         [ValidateNotNullOrEmpty()]
