@@ -76,17 +76,17 @@ function Get-PortalGroupContent {
         # CHECK FOR ERRORS
         if ($rest.error) {
             # RETURN ANY ERRORS
-            $rest
+            Write-Error -Message ($rest | ConvertTo-Json -Compress -Depth 6) -ErrorAction Stop
         }
         else {
-            # ADD USER TO ARRAY
+            # ADD ITEMS TO ARRAY
             foreach ($i in $rest.items) { $itemList.Add($i) | Out-Null }
 
             # SET REMAINING ITEMS
             $remainingItems = $rest.total - 100
             Write-Verbose -Message ('Total Items: {0}' -f $rest.total)
 
-            # GET REMAINING USERS
+            # GET REMAINING ITEMS
             if ($remainingItems -GT 0) {
 
                 do {
@@ -102,13 +102,13 @@ function Get-PortalGroupContent {
                     # ADD USER TO ARRAY
                     foreach ($i in $rest.items) { $itemList.Add($i) | Out-Null }
 
-                    # DECREMENT REMAINING USERS
+                    # DECREMENT REMAINING ITEMS
                     $remainingItems -= 100
                 }
                 while ($remainingItems -GT 0)
             }
 
-            # RETURN USERS
+            # RETURN ITEMS
             $itemList
         }
     }
