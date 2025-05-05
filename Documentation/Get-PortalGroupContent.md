@@ -6,7 +6,7 @@ Get group content for Portal for ArcGIS group
 ## SYNTAX
 
 ```
-Get-PortalGroupContent [-GroupId] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+Get-PortalGroupContent [-GroupID] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
@@ -22,13 +22,13 @@ This resource is only available to the group owner and users.
 
 ### EXAMPLE 1
 ```
-Get-PortalGroupContent @cmnParams -GroupId 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+Get-PortalGroupContent @cmnParams -GroupID 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
 Gets the content for the group with ID 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6' from Portal for ArcGIS
 ```
 
 ## PARAMETERS
 
-### -GroupId
+### -GroupID
 Group ID
 
 ```yaml
