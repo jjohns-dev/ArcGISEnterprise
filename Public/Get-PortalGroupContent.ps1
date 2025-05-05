@@ -6,7 +6,7 @@ function Get-PortalGroupContent {
         A group's content resource provides access to the group's shared items. Group items are stored by reference
         and are not physically stored in a group. Rather, they are stored as links to the original item in the Item
         resource. This resource is only available to the group owner and users.
-    .PARAMETER GroupId
+    .PARAMETER GroupID
         Group ID
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
@@ -19,7 +19,7 @@ function Get-PortalGroupContent {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-PortalGroupContent @cmnParams -GroupId 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
+        PS C:\> Get-PortalGroupContent @cmnParams -GroupID 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
         Gets the content for the group with ID 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6' from Portal for ArcGIS
     .NOTES
         Name:     Get-PortalGroupContent
@@ -34,7 +34,7 @@ function Get-PortalGroupContent {
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]
-        [System.String] $GroupId,
+        [System.String] $GroupID,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
