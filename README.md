@@ -46,6 +46,7 @@ Please see releases for updates and features
 | Get-PortalCategorySchema | Portal | `[ROOT]/portals/[PORTALID]/categorySchema` | Get Portal category schema |
 | Get-PortalDataStoreServer | Portal | `[ROOT]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |
 | Get-PortalDefaultUserSettings | Portal | `[ROOT]/portals/[PORTALID]/userDefaultSettings` | Get default user settings from Portal |
+| Get-PortalGroup | Portal | `[ROOT]/community/groups/[GROUPID]` | Returns Portal user group |
 | Get-PortalGroupContent | Portal | `[ROOT]/content/groups/[GROUPID]` | Get Portal group content (items) |
 | Get-PortalGroupItemJobStatus | Portal | `[ROOT]/portals/[PORTALID]/jobs/[JOBID]` | Get job status for Portal Group export job |
 | Get-PortalGroupUserList | Portal | `[ROOT]/community/groups/[GROUPID]/userList` | Get users from group in Portal for ArcGIS |
