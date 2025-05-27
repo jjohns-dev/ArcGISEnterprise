@@ -12,7 +12,7 @@
     # Major = multiple new functions for new set of functionality
     # Minor = new individual functions
     # Build = bug fixes, minor changes, etc.
-    ModuleVersion     = '1.3.0'
+    ModuleVersion     = '1.4.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -165,18 +165,15 @@
         'Remove-ServerServiceLayer'
         'Remove-ServerUsageReport'
         'Revoke-PortalUserItemAccess'
-        'Set-PortalAllowedOrigins'
         'Set-PortalCategorySchema'
         'Set-PortalDefaultUserLicenseType'
         'Set-PortalDefaultUserRole'
         'Set-PortalGroupOwner'
-        'Set-PortalMaxTokenExpiration'
         'Set-PortalProxyHosts'
-        'Set-PortalPublicSharing'
         'Set-PortalRolePrivilege'
+        'Set-PortalSetting'
         'Set-PortalSystemProperty'
         'Set-PortalUserPassword'
-        'Set-PortalUserProfileEditing'
         'Set-ServerAllowedOrigins'
         'Set-ServerPSAPassword'
         'Set-ServerServicesDirectory'
