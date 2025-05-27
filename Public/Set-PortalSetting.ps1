@@ -43,6 +43,11 @@ function Set-PortalSetting {
         - Version history is captured in repository commit history
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/update.htm
+        This function replaced functionality from the following old, deprecated functions:
+        - Set-PortalMaxTokenExpiration
+        - Set-PortalAllowedOrigins
+        - Set-PortalPublicSharing
+        - Set-PortalUserProfileEditing
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
@@ -99,10 +104,10 @@ function Set-PortalSetting {
 
         # SWITCH ON PARAMETERS
         switch ($PSBoundParameters.Keys) {
-            'MaxTokenExpiration' { $restParams['Body']['maxTokenExpirationMinutes'] = $MaxTokenExpiration } # Set-PortalMaxTokenExpiration
-            'Origin' { $restParams['Body']['allowedOrigins'] = ($Origin -join ',') } # Set-PortalAllowedOrigins
-            'SharePublicly' { $restParams['Body']['canSharePublic'] = $SharePublicly } # Set-PortalPublicSharing
-            'DisableEditing' { $restParams['Body']['updateUserProfileDisabled'] = $DisableEditing } # Set-PortalUserProfileEditing
+            'MaxTokenExpiration' { $restParams['Body']['maxTokenExpirationMinutes'] = $MaxTokenExpiration }
+            'Origin' { $restParams['Body']['allowedOrigins'] = ($Origin -join ',') }
+            'SharePublicly' { $restParams['Body']['canSharePublic'] = $SharePublicly }
+            'DisableEditing' { $restParams['Body']['updateUserProfileDisabled'] = $DisableEditing }
         }
 
         # ADD SKIP CERTIFICATE CHECK IF PROVIDED
