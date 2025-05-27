@@ -46,7 +46,7 @@ function Set-PortalSetting {
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
-        [Parameter(Mandatory, HelpMessage = 'Share Portal items publicly')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Share Portal items publicly')]
         [System.Boolean] $DisableEditing,
 
         [Parameter(Mandatory = $false, HelpMessage = 'The maximum validity in minutes of tokens issued for users.')]
@@ -77,6 +77,16 @@ function Set-PortalSetting {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # VALIDATE AT LEAST ONE PARAMETER IS PROVIDED
+        if (
+            $PSBoundParameters.Keys -notcontains 'MaxTokenExpiration' -and
+            $PSBoundParameters.Keys -notcontains 'Origin' -and
+            $PSBoundParameters.Keys -notcontains 'SharePublicly' -and
+            $PSBoundParameters.Keys -notcontains 'DisableEditing'
+        ) {
+            Write-Error -Message 'At least one parameter must be provided to update Portal settings.' -ErrorAction Stop
+        }
     }
     Process {
         # SET QUERY PARAMETERS
@@ -89,29 +99,26 @@ function Set-PortalSetting {
 
         # SWITCH ON PARAMETERS
         switch ($PSBoundParameters.Keys) {
-            'MaxTokenExpiration' { # Set-PortalMaxTokenExpiration
-                $restParams['Body']['maxTokenExpirationMinutes'] = $MaxTokenExpiration
-                $shouldProcessMessage = 'Update Portal max token expiration to [{0}] minutes.' -f $MaxTokenExpiration
-            }
-            'Origin' { # Set-PortalAllowedOrigins
-                $restParams['Body']['allowedOrigins'] = ($Origin -join ',')
-                $shouldProcessMessage = 'Set Portal allowed origins to: [{0}].' -f ($Origin -join ', ')
-            }
-            'SharePublicly' { # Set-PortalPublicSharing
-                $restParams['Body']['canSharePublic'] = $SharePublicly
-                $shouldProcessMessage = 'Set public sharing to [{0}].' -f $SharePublicly
-            }
-            'DisableEditing' { # Set-PortalUserProfileEditing
-                $restParams['Body']['updateUserProfileDisabled'] = $DisableEditing
-                $shouldProcessMessage = 'Set Portal user profile editing disabled to [{0}].' -f $DisableEditing
-            }
+            'MaxTokenExpiration' { $restParams['Body']['maxTokenExpirationMinutes'] = $MaxTokenExpiration } # Set-PortalMaxTokenExpiration
+            'Origin' { $restParams['Body']['allowedOrigins'] = ($Origin -join ',') } # Set-PortalAllowedOrigins
+            'SharePublicly' { $restParams['Body']['canSharePublic'] = $SharePublicly } # Set-PortalPublicSharing
+            'DisableEditing' { $restParams['Body']['updateUserProfileDisabled'] = $DisableEditing } # Set-PortalUserProfileEditing
         }
 
         # ADD SKIP CERTIFICATE CHECK IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
+        # CLONE PARAMETERS FOR SHOULD PROCESS MESSAGE
+        $apiParams = $restParams['Body'] | ConvertTo-Json | ConvertFrom-Json -AsHashtable
+
+        # REMOVE COMMON PARAMETERS
+        $apiParams.Remove('f'); $apiParams.Remove('token')
+
+        # CONVERT TO JSON STRING
+        $apiParams = $apiParams | ConvertTo-Json -Compress
+
         # SHOULD PROCESS
-        if ($PSCmdlet.ShouldProcess($PortalId, ($shouldProcessMessage))) {
+        if ($PSCmdlet.ShouldProcess($PortalId, ('Set Portal sharing API settings: [{0}]' -f $apiParams))) {
             # INVOKE REQUEST
             Invoke-RestMethod @restParams
         }
