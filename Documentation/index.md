@@ -124,6 +124,7 @@ Please see releases for updates and features
 | Set-PortalDefaultUserLicenseType | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User License Type in Portal |
 | Set-PortalDefaultUserRole | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User Role in Portal |
 | Set-PortalGroupOwner | Portal | `[ROOT]/community/groups/[GROUPID]/reassign` | Reassign Portal group ownership to new user |
+| Set-PortalMaxTokenExpiration | Portal | `[ROOT]/portals/[PORTALID]/update` | Set maximum token expiration limit |
 | Set-PortalProxyHosts | Portal | `[ADMIN]/security/config/update` | Set Portal security configuration |
 | Set-PortalPublicSharing | Portal | `[ROOT]/portals/[PORTALID]/update` | Set the Public Sharing setting of Portal for ArcGIS |
 | Set-PortalRolePrivilege | Portal | `[ROOT]/portals/[PORTALID]` | Set privilege for Portal for ArcGIS Role |
