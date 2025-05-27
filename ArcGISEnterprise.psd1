@@ -9,7 +9,10 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '1.2.0'
+    # Major = multiple new functions for new set of functionality
+    # Minor = new individual functions
+    # Build = bug fixes, minor changes, etc.
+    ModuleVersion     = '1.3.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -167,6 +170,7 @@
         'Set-PortalDefaultUserLicenseType'
         'Set-PortalDefaultUserRole'
         'Set-PortalGroupOwner'
+        'Set-PortalMaxTokenExpiration'
         'Set-PortalProxyHosts'
         'Set-PortalPublicSharing'
         'Set-PortalRolePrivilege'
