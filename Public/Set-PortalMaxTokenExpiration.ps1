@@ -29,7 +29,7 @@ function Set-PortalMaxTokenExpiration {
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/update.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'The maximum validity in minutes of tokens issued for users.')]
         [ValidateNotNullOrEmpty()]
@@ -69,7 +69,10 @@ function Set-PortalMaxTokenExpiration {
         # ADD SKIP CERTIFICATE CHECK IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # INVOKE QUERY
-        Invoke-RestMethod @restParams
+        # SHOULD PROCESS
+        if ($PSCmdlet.ShouldProcess($Expiration, ('Update Portal max token expiration in minutes.'))) {
+            # INVOKE REQUEST
+            Invoke-RestMethod @restParams
+        }
     }
 }
