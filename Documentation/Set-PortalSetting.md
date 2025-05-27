@@ -1,29 +1,63 @@
-# Set-PortalMaxTokenExpiration
+# Set-PortalSetting
 
 ## SYNOPSIS
-Set the maximum validity in minutes of both OAuth and nonOAuth tokens issued for users of the organization.
+Set Portal setting.
 
 ## SYNTAX
 
 ```
-Set-PortalMaxTokenExpiration [-Expiration] <Int32> [[-PortalId] <String>] [-Context] <Uri> [-Token] <String>
- [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
+Set-PortalSetting [[-DisableEditing] <Boolean>] [[-MaxTokenExpiration] <Int32>] [[-Origin] <String[]>]
+ [[-SharePublicly] <Boolean>] [[-PortalId] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+ [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Set the maximum validity in minutes of both OAuth and nonOAuth tokens issued for users of the organization.
+Set or configure setting in Portal for ArcGIS sharing REST API.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Set-PortalMaxTokenExpiration @cmnParams -Expiration 1440
+Set-PortalSetting @cmnParams -MaxTokenExpiration 1440
 Set the maximum validity in minutes of both OAuth and nonOAuth tokens issued for users of the organization to 1440 minutes (24 hours).
+```
+
+### EXAMPLE 2
+```
+Set-PortalSetting @cmnParams -Origin 'https://arcgis.com', 'https://test.com'
+Sets the allowed origins property to 'https://arcgis.com,https://test.com'
+```
+
+### EXAMPLE 3
+```
+Set-PortalSetting @cmnParams -SharePublicly $false
+Disables the public sharing of Portal content
+```
+
+### EXAMPLE 4
+```
+Set-PortalSetting @cmnParams -DisableEditing $true
+Disables Portal User Profile editing
 ```
 
 ## PARAMETERS
 
-### -Expiration
+### -DisableEditing
+Disable Portal User Profile Editing
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -MaxTokenExpiration
 The maximum validity in minutes of both OAuth and nonOAuth tokens issued for users of the organization.
 
 ```yaml
@@ -31,9 +65,39 @@ Type: Int32
 Parameter Sets: (All)
 Aliases:
 
-Required: True
-Position: 1
+Required: False
+Position: 2
 Default value: 0
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Origin
+Origin to be allowed for Portal
+
+```yaml
+Type: String[]
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 3
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -SharePublicly
+Share objects publicly
+
+```yaml
+Type: Boolean
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 4
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -47,7 +111,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: 2
+Position: 5
 Default value: 0123456789ABCDEF
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -62,7 +126,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 6
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -77,7 +141,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 7
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -139,11 +203,16 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Set-PortalMaxTokenExpiration
+Name:     Set-PortalSetting
 Author:   Justin Johns
 Version:  0.1.0 | Last Edit: 2025-05-27
 - Version history is captured in repository commit history
 Comments:
 https://developers.arcgis.com/rest/users-groups-and-items/update.htm
+This function replaced functionality from the following old, deprecated functions:
+- Set-PortalMaxTokenExpiration
+- Set-PortalAllowedOrigins
+- Set-PortalPublicSharing
+- Set-PortalUserProfileEditing
 
 ## RELATED LINKS
