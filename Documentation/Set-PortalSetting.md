@@ -1,4 +1,4 @@
-# Set-PortalSetting
+# Update-PortalOrganizationInformation
 
 ## SYNOPSIS
 Set Portal setting.
@@ -6,7 +6,7 @@ Set Portal setting.
 ## SYNTAX
 
 ```
-Set-PortalSetting [[-DisableEditing] <Boolean>] [[-MaxTokenExpiration] <Int32>] [[-Origin] <String[]>]
+Update-PortalOrganizationInformation [[-DisableEditing] <Boolean>] [[-MaxTokenExpiration] <Int32>] [[-Origin] <String[]>]
  [[-SharePublicly] <Boolean>] [[-PortalId] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
  [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
@@ -18,25 +18,25 @@ Set or configure setting in Portal for ArcGIS sharing REST API.
 
 ### EXAMPLE 1
 ```
-Set-PortalSetting @cmnParams -MaxTokenExpiration 1440
+Update-PortalOrganizationInformation @cmnParams -MaxTokenExpiration 1440
 Set the maximum validity in minutes of both OAuth and nonOAuth tokens issued for users of the organization to 1440 minutes (24 hours).
 ```
 
 ### EXAMPLE 2
 ```
-Set-PortalSetting @cmnParams -Origin 'https://arcgis.com', 'https://test.com'
+Update-PortalOrganizationInformation @cmnParams -Origin 'https://arcgis.com', 'https://test.com'
 Sets the allowed origins property to 'https://arcgis.com,https://test.com'
 ```
 
 ### EXAMPLE 3
 ```
-Set-PortalSetting @cmnParams -SharePublicly $false
+Update-PortalOrganizationInformation @cmnParams -SharePublicly $false
 Disables the public sharing of Portal content
 ```
 
 ### EXAMPLE 4
 ```
-Set-PortalSetting @cmnParams -DisableEditing $true
+Update-PortalOrganizationInformation @cmnParams -DisableEditing $true
 Disables Portal User Profile editing
 ```
 
@@ -203,7 +203,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Set-PortalSetting
+Name:     Update-PortalOrganizationInformation
 Author:   Justin Johns
 Version:  0.1.0 | Last Edit: 2025-05-27
 - Version history is captured in repository commit history

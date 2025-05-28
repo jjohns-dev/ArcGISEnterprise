@@ -125,7 +125,7 @@ Please see releases for updates and features
 | Set-PortalGroupOwner | Portal | `[ROOT]/community/groups/[GROUPID]/reassign` | Reassign Portal group ownership to new user |
 | Set-PortalProxyHosts | Portal | `[ADMIN]/security/config/update` | Set Portal security configuration |
 | Set-PortalRolePrivilege | Portal | `[ROOT]/portals/[PORTALID]` | Set privilege for Portal for ArcGIS Role |
-| Set-PortalSetting | Portal | `[ROOT]/portals/[PORTALID]/update` | Set or update Portal sharing REST API settings |
+| Update-PortalOrganizationInformation | Portal | `[ROOT]/portals/[PORTALID]/update` | Set or update Portal sharing REST API settings |
 | Set-PortalSystemProperty | Portal | `[ADMIN]/system/properties/update` | Sets Portal system properties |
 | Set-PortalUserPassword | Portal | `[ROOT]/community/users/[USERNAME]/update` | Set password for Portal user |
 | Set-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Set ArcGIS Server allowed origins |

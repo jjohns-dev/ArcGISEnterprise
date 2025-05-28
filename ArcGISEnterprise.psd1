@@ -171,7 +171,6 @@
         'Set-PortalGroupOwner'
         'Set-PortalProxyHosts'
         'Set-PortalRolePrivilege'
-        'Set-PortalSetting'
         'Set-PortalSystemProperty'
         'Set-PortalUserPassword'
         'Set-ServerAllowedOrigins'
@@ -183,6 +182,7 @@
         'Test-PortalHealth'
         'Test-ServerHealth'
         'Update-PortalItem'
+        'Update-PortalOrganizationInformation'
         'Update-PortalUser'
         'Write-PortalUserItem'
     )
@@ -204,6 +204,7 @@
         'Get-SecurityPolicy'
         'Get-ServerAllowedOrigins'
         'Test-PortalToken'
+        'Update-PortalOrgInfo'
         'Update-PortalPSA'
         'Update-ServerPSA'
     )

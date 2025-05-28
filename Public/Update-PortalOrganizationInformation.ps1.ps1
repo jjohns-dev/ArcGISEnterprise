@@ -1,4 +1,4 @@
-function Set-PortalSetting {
+function Update-PortalOrganizationInformation {
     <#
     .SYNOPSIS
         Set Portal setting.
@@ -25,19 +25,19 @@ function Set-PortalSetting {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Set-PortalSetting @cmnParams -MaxTokenExpiration 1440
+        PS C:\> Update-PortalOrganizationInformation @cmnParams -MaxTokenExpiration 1440
         Set the maximum validity in minutes of both OAuth and nonOAuth tokens issued for users of the organization to 1440 minutes (24 hours).
     .EXAMPLE
-        PS C:\> Set-PortalSetting @cmnParams -Origin 'https://arcgis.com', 'https://test.com'
+        PS C:\> Update-PortalOrganizationInformation @cmnParams -Origin 'https://arcgis.com', 'https://test.com'
         Sets the allowed origins property to 'https://arcgis.com,https://test.com'
     .EXAMPLE
-        PS C:\> Set-PortalSetting @cmnParams -SharePublicly $false
+        PS C:\> Update-PortalOrganizationInformation @cmnParams -SharePublicly $false
         Disables the public sharing of Portal content
     .EXAMPLE
-        PS C:\> Set-PortalSetting @cmnParams -DisableEditing $true
+        PS C:\> Update-PortalOrganizationInformation @cmnParams -DisableEditing $true
         Disables Portal User Profile editing
     .NOTES
-        Name:     Set-PortalSetting
+        Name:     Update-PortalOrganizationInformation
         Author:   Justin Johns
         Version:  0.1.0 | Last Edit: 2025-05-27
         - Version history is captured in repository commit history
@@ -50,6 +50,7 @@ function Set-PortalSetting {
         - Set-PortalUserProfileEditing
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [Alias('Update-PortalOrgInfo')]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Share Portal items publicly')]
         [System.Boolean] $DisableEditing,
