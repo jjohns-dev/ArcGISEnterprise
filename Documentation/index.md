@@ -125,7 +125,6 @@ Please see releases for updates and features
 | Set-PortalGroupOwner | Portal | `[ROOT]/community/groups/[GROUPID]/reassign` | Reassign Portal group ownership to new user |
 | Set-PortalProxyHosts | Portal | `[ADMIN]/security/config/update` | Set Portal security configuration |
 | Set-PortalRolePrivilege | Portal | `[ROOT]/portals/[PORTALID]` | Set privilege for Portal for ArcGIS Role |
-| Update-PortalOrganizationInformation | Portal | `[ROOT]/portals/[PORTALID]/update` | Set or update Portal sharing REST API settings |
 | Set-PortalSystemProperty | Portal | `[ADMIN]/system/properties/update` | Sets Portal system properties |
 | Set-PortalUserPassword | Portal | `[ROOT]/community/users/[USERNAME]/update` | Set password for Portal user |
 | Set-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Set ArcGIS Server allowed origins |
@@ -136,6 +135,7 @@ Please see releases for updates and features
 | Test-PortalFederation | Portal | `[ADMIN]/federation/servers/validate` | Validate Portal federation status |
 | Test-ServerHealth | Server | `/rest/info/healthCheck` | Validates ArcGIS Server health |
 | Update-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/update` | Updates Portal item (e.g., layer, etc.) |
+| Update-PortalOrganizationInformation | Portal | `[ROOT]/portals/[PORTALID]/update` | Set or update Portal sharing REST API settings |
 | Update-PortalUser | Portal | `[ROOT]/community/users/[USERNAME]/update` | Update Portal user properties |
 | Write-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/addItem` | Uploads a Portal item (file item) |
 

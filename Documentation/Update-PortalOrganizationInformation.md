@@ -6,9 +6,9 @@ Set Portal setting.
 ## SYNTAX
 
 ```
-Update-PortalOrganizationInformation [[-DisableEditing] <Boolean>] [[-MaxTokenExpiration] <Int32>] [[-Origin] <String[]>]
- [[-SharePublicly] <Boolean>] [[-PortalId] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
- [-WhatIf] [-Confirm] [<CommonParameters>]
+Update-PortalOrganizationInformation [[-DisableEditing] <Boolean>] [[-MaxTokenExpiration] <Int32>]
+ [[-Origin] <String[]>] [[-SharePublicly] <Boolean>] [[-PortalId] <String>] [-Context] <Uri> [-Token] <String>
+ [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
