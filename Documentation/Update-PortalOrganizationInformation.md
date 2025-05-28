@@ -30,14 +30,8 @@ Sets the allowed origins property to 'https://arcgis.com,https://test.com'
 
 ### EXAMPLE 3
 ```
-Update-PortalOrganizationInformation @cmnParams -SharePublicly $false
-Disables the public sharing of Portal content
-```
-
-### EXAMPLE 4
-```
-Update-PortalOrganizationInformation @cmnParams -DisableEditing $true
-Disables Portal User Profile editing
+Update-PortalOrganizationInformation @cmnParams -SharePublicly $false -DisableEditing $true
+Disables the public sharing of Portal content and Portal User Profile editing
 ```
 
 ## PARAMETERS
@@ -205,7 +199,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Update-PortalOrganizationInformation
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2025-05-27
+Version:  0.1.0 | Last Edit: 2025-05-28
 - Version history is captured in repository commit history
 Comments:
 https://developers.arcgis.com/rest/users-groups-and-items/update.htm
