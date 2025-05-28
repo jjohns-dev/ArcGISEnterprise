@@ -119,18 +119,14 @@ Please see releases for updates and features
 | Remove-ServerServiceLayer | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
 | Remove-ServerUsageReport | Server | `[ADMIN]/usagereports/[REPORTNAME]/delete` | Deletes a Server usage report |
 | Revoke-PortalUserItemAccess | Portal | `[ROOT]/content/users/[USERNAME]/unshareItems` | Unshare Portal item |
-| Set-PortalAllowedOrigins | Portal | `[ROOT]/portals/[PORTALID]/update` | Set the allowed origins property for Portal |
 | Set-PortalCategorySchema | Portal | `[ROOT]/portals/[PORTALID]/assignCategorySchema` | Write ArcGIS Portal category schema to Enterprise |
 | Set-PortalDefaultUserLicenseType | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User License Type in Portal |
 | Set-PortalDefaultUserRole | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User Role in Portal |
 | Set-PortalGroupOwner | Portal | `[ROOT]/community/groups/[GROUPID]/reassign` | Reassign Portal group ownership to new user |
-| Set-PortalMaxTokenExpiration | Portal | `[ROOT]/portals/[PORTALID]/update` | Set maximum token expiration limit |
 | Set-PortalProxyHosts | Portal | `[ADMIN]/security/config/update` | Set Portal security configuration |
-| Set-PortalPublicSharing | Portal | `[ROOT]/portals/[PORTALID]/update` | Set the Public Sharing setting of Portal for ArcGIS |
 | Set-PortalRolePrivilege | Portal | `[ROOT]/portals/[PORTALID]` | Set privilege for Portal for ArcGIS Role |
 | Set-PortalSystemProperty | Portal | `[ADMIN]/system/properties/update` | Sets Portal system properties |
 | Set-PortalUserPassword | Portal | `[ROOT]/community/users/[USERNAME]/update` | Set password for Portal user |
-| Set-PortalUserProfileEditing | Portal | `[ROOT]/portals/[PORTALID]/update` | Set the User Profile Editing setting of Portal for ArcGIS |
 | Set-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Set ArcGIS Server allowed origins |
 | Set-ServerPSAPassword | Server | `[ADMIN]/security/psa/update` | Set ArcGIS Server PSA Account |
 | Set-ServerSystemProperty | Server | `[ADMIN]/system/properties/update` | Set Server systems properties |
@@ -139,6 +135,7 @@ Please see releases for updates and features
 | Test-PortalFederation | Portal | `[ADMIN]/federation/servers/validate` | Validate Portal federation status |
 | Test-ServerHealth | Server | `/rest/info/healthCheck` | Validates ArcGIS Server health |
 | Update-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/update` | Updates Portal item (e.g., layer, etc.) |
+| Update-PortalOrganizationInformation | Portal | `[ROOT]/portals/[PORTALID]/update` | Set or update Portal sharing REST API settings |
 | Update-PortalUser | Portal | `[ROOT]/community/users/[USERNAME]/update` | Update Portal user properties |
 | Write-PortalUserItem | Portal | `[ROOT]/content/users/[USERNAME]/addItem` | Uploads a Portal item (file item) |
 
