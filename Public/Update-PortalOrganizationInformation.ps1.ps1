@@ -31,15 +31,12 @@ function Update-PortalOrganizationInformation {
         PS C:\> Update-PortalOrganizationInformation @cmnParams -Origin 'https://arcgis.com', 'https://test.com'
         Sets the allowed origins property to 'https://arcgis.com,https://test.com'
     .EXAMPLE
-        PS C:\> Update-PortalOrganizationInformation @cmnParams -SharePublicly $false
-        Disables the public sharing of Portal content
-    .EXAMPLE
-        PS C:\> Update-PortalOrganizationInformation @cmnParams -DisableEditing $true
-        Disables Portal User Profile editing
+        PS C:\> Update-PortalOrganizationInformation @cmnParams -SharePublicly $false -DisableEditing $true
+        Disables the public sharing of Portal content and Portal User Profile editing
     .NOTES
         Name:     Update-PortalOrganizationInformation
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-05-27
+        Version:  0.1.0 | Last Edit: 2025-05-28
         - Version history is captured in repository commit history
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/update.htm
