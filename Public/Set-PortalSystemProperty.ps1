@@ -28,7 +28,7 @@ function Set-PortalSystemProperty {
     .NOTES
         Name:     Set-PortalSystemProperty
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-04-23
+        Version:  0.1.1 | Last Edit: 2025-06-12
         - Version history is captured in repository commit history
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/update-system-properties/
@@ -75,15 +75,9 @@ function Set-PortalSystemProperty {
     }
     Process {
         # VALIDATE REQUEST BY PARAMETER
-        if ($PSBoundParameters.ContainsKey('EnableRSS')) {
-            $properties['enableRssService'] = $EnableRSS.toString().ToLower()
-        }
-        if ($PSBoundParameters.ContainsKey('EnableKML')) {
-            $properties['enableKmlService'] = $EnableKML.toString().ToLower()
-        }
-        if ($PSBoundParameters.ContainsKey('EnablePrintService')) {
-            $properties['enablePrintService'] = $EnablePrintService.toString().ToLower()
-        }
+        if ($PSBoundParameters.ContainsKey('EnableRSS')) { $properties['enableRssService'] = $EnableRSS }
+        if ($PSBoundParameters.ContainsKey('EnableKML')) { $properties['enableKmlService'] = $EnableKML }
+        if ($PSBoundParameters.ContainsKey('EnablePrintService')) { $properties['enablePrintService'] = $EnablePrintService }
 
         # CONVERT PROPERTIES TO JSON
         $properties = $properties | ConvertTo-Json -Compress
