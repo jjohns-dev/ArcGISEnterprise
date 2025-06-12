@@ -75,6 +75,7 @@ function Set-PortalSystemProperty {
     }
     Process {
         # VALIDATE REQUEST BY PARAMETER
+        # THESE VALUES MUST BE BOOLEAN, NOT STRING, WHICH IS INCONSISTENT BUT REQUIRED. SEE SALESFORECE CASE 03789231.
         if ($PSBoundParameters.ContainsKey('EnableRSS')) { $properties['enableRssService'] = $EnableRSS }
         if ($PSBoundParameters.ContainsKey('EnableKML')) { $properties['enableKmlService'] = $EnableKML }
         if ($PSBoundParameters.ContainsKey('EnablePrintService')) { $properties['enablePrintService'] = $EnablePrintService }
