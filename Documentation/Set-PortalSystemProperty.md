@@ -160,7 +160,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Set-PortalSystemProperty
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2025-04-23
+Version:  0.1.1 | Last Edit: 2025-06-12
 - Version history is captured in repository commit history
 Comments:
 https://developers.arcgis.com/rest/enterprise-administration/portal/update-system-properties/
