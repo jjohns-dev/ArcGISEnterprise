@@ -60,6 +60,8 @@ Please see releases for updates and features
 | Get-PortalMachineStatus | Portal | `[ADMIN]/machines/status/[MACHINENAME]` | Get Portal machine status |
 | Get-PortalOAuthAppInfo | Portal | `[ADMIN]/security/oauth/getAppInfo` | Get OAuth App Info |
 | Get-PortalOAuthToken | Portal | `[ROOT]/oauth2/token` | Get Portal OAuth token |
+| Get-PortalOIDC | Portal | `[ROOT]/portals/[PORTALID]/oidc/[CONFIGID]` | Get Portal OIDC configuration |
+| Get-PortalOIDCList | Portal | `[ROOT]/portals/[PORTALID]/oidc` | Get list of Portal OIDC configurations |
 | Get-PortalRoleList | Portal | `[ROOT]/portals/[PORTALID]/roles` | Get Portal for ArcGIS Role |
 | Get-PortalSecurityConfig | Portal | `[ADMIN]/security/config` | Get Portal security configuration |
 | Get-PortalSecurityPolicy | Portal | `[ROOT]/portals/[PORTALID]/securityPolicy` | Get Portal security policy |
