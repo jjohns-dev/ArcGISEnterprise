@@ -9,10 +9,10 @@
     RootModule        = 'ArcGISEnterprise.psm1'
 
     # Version number of this module.
-    # Major = multiple new functions for new set of functionality
+    # Major = major changes or multiple new functions for new set of functionality
     # Minor = new individual functions
     # Build = bug fixes, minor changes, etc.
-    ModuleVersion     = '1.4.1'
+    ModuleVersion     = '1.5.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -105,6 +105,8 @@
         'Get-PortalMachineStatus'
         'Get-PortalOAuthAppInfo'
         'Get-PortalOAuthToken'
+        'Get-PortalOIDC'
+        'Get-PortalOIDCList'
         'Get-PortalRoleList'
         'Get-PortalSecurityConfig'
         'Get-PortalSecurityPolicy'
