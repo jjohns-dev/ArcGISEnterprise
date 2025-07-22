@@ -95,8 +95,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalDefaultUserSettings
 Author:   Phillip Glodowski, Justin Johns
-Version:  0.1.0 | Last Edit: 2023-11-06
-- 0.1.0 - Initial version
+Version:  0.1.1 | Last Edit: 2025-07-22
 Comments: \<Comment(s)\>
 General notes
 https://developers.arcgis.com/rest/users-groups-and-items/user-default-settings.htm

@@ -95,7 +95,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalGroupUserList
 Author:   Justin Johns
-Version:  0.1.2 | Last Edit: 2024-05-28
+Version:  0.1.3 | Last Edit: 2025-07-22
 - Version history is capture in repository commit history
 Comments: \<Comment(s)\>
 General notes

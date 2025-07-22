@@ -80,10 +80,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalSettings
 Author:   Phillip Glodowski, Justin Johns
-Version:  0.3.0 | Last Edit: 2023-11-07
-- 0.3.0 - Renamed to Get-PortalSettings
-- 0.2.0 - Renamed to Get-PortalSelf
-- 0.1.0 - Initial version (Test-PortalToken)
+Version:  0.3.1 | Last Edit: 2025-07-22
 Comments: \<Comment(s)\>
 General notes
 https://developers.arcgis.com/rest/users-groups-and-items/portal.htm

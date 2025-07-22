@@ -95,9 +95,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalUserGroupList
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2023-03-20
-- 0.1.1 - Added automatic retrieval of paginated data
-- 0.1.0 - Initial version
+Version:  0.1.1 | Last Edit: 2025-07-22
 Comments: \<Comment(s)\>
 https://developers.arcgis.com/rest/users-groups-and-items/group-search.htm
 
