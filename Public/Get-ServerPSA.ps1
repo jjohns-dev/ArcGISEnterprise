@@ -20,7 +20,8 @@ function Get-ServerPSA {
         PS C:\> Get-ServerPSA -Context 'https://arcgis.com/arcgis' -Token $token
         Get PSA user from Server
     .NOTES
-        General notes
+        General notes:
+        https://developers.arcgis.com/rest/enterprise-administration/server/psa/
     #>
     [CmdletBinding()]
     Param(
@@ -42,12 +43,9 @@ function Get-ServerPSA {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri     = '{0}/admin/security/psa' -f $Context
-            Method  = 'POST'
+            Method  = 'GET'
             Headers = @{ Referer = $Referer }
-            Body    = @{
-                f     = 'json'
-                token = $Token
-            }
+            Body    = @{ f = 'json'; token = $Token }
         }
 
         # ADD SKIP CERTIFICATE CHECK
