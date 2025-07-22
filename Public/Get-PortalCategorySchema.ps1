@@ -22,7 +22,7 @@ function Get-PortalCategorySchema {
     .NOTES
         Name:     Get-PortalCategorySchema
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-08
+        Version:  0.1.1 | Last Edit: 2025-07-22
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/category-schema/
@@ -51,11 +51,8 @@ function Get-PortalCategorySchema {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri     = '{0}/sharing/rest/portals/{1}/categorySchema' -f $Context, $PortalId
-            Method  = 'POST'
-            Body    = @{
-                f     = 'json'
-                token = $Token
-            }
+            Method  = 'GET'
+            Body    = @{ f = 'json'; token = $Token }
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
         }
 

@@ -24,8 +24,7 @@ function Get-PortalDataStoreServer {
     .NOTES
         Name:     Get-PortalDataStoreServer
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-21
-        - 0.1.0 - Initial version
+        Version:  0.1.1 | Last Edit: 2025-07-22
         Comments: <Comment(s)>
         General notes
     #>
@@ -57,7 +56,7 @@ function Get-PortalDataStoreServer {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/portals/{1}/datastores/getServers' -f $Context, $PortalId
-            Method = 'POST'
+            Method = 'GET'
             Body   = @{
                 f           = 'json'
                 token       = $Token

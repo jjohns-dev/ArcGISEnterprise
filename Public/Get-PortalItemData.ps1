@@ -31,7 +31,7 @@ function Get-PortalItemData {
     .NOTES
         Name:     Get-PortalItemData
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-01-14
+        Version:  0.1.2 | Last Edit: 2025-07-22
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/item-data/
@@ -63,7 +63,7 @@ function Get-PortalItemData {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri     = '{0}/sharing/rest/content/items/{1}/data' -f $Context, $ItemId
-            Method  = 'POST'
+            Method  = 'GET'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
             Body    = @{ token = $Token }
         }
