@@ -24,7 +24,7 @@ function Get-PortalOIDC {
     .NOTES
         Name:     Get-PortalOIDC
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-07-21
+        Version:  0.1.1 | Last Edit: 2025-07-22
         - Version history is captured in repository commit history
         Comments:
         <Link_To_API_Documentation>
@@ -57,7 +57,7 @@ function Get-PortalOIDC {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri     = '{0}/sharing/rest/portals/{1}/oidc/{2}' -f $Context, $PortalId, $ConfigId
-            Method  = 'POST'
+            Method  = 'GET'
             Body    = @{ f = 'json'; token = $Token }
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
         }
