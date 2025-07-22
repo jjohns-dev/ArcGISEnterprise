@@ -140,9 +140,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-ServerService
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-09-28
+Version:  0.1.1 | Last Edit: 2025-07-22
 - Version history is capture in repository commit history
 Comments:
+https://developers.arcgis.com/rest/enterprise-administration/server/service/
 https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
 Performance Testing:
 Using custom properties instead of custom objects for output appears to be slightly faster, but only slightly.

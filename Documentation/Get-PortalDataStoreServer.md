@@ -110,8 +110,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalDataStoreServer
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-21
-- 0.1.0 - Initial version
+Version:  0.1.1 | Last Edit: 2025-07-22
 Comments: \<Comment(s)\>
 General notes
 

@@ -93,6 +93,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-General notes
+General notes:
+https://developers.arcgis.com/rest/enterprise-administration/server/psa/
 
 ## RELATED LINKS

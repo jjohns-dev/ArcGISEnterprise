@@ -47,11 +47,9 @@ function Get-PortalUser {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/community/users/{1}' -f $Context, $Username
-            Method = 'POST'
+            Method = 'GET'
             Body    = @{ f = 'json'; token = $Token }
-            Headers = @{
-                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
-            }
+            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED

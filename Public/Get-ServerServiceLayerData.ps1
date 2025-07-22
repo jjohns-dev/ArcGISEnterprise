@@ -28,7 +28,7 @@ function Get-ServerServiceLayerData {
     .NOTES
         Name:     Get-ServerServiceLayerData
         Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2025-03-20
+        Version:  0.1.3 | Last Edit: 2025-07-22
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/
@@ -77,7 +77,7 @@ function Get-ServerServiceLayerData {
             else {
                 '{0}/rest/services/{1}/FeatureServer/{2}/query' -f $Context, $ServiceName, $LayerId
             }
-            Method  = 'POST'
+            Method  = 'GET'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
             Body    = @{
                 f         = 'json'

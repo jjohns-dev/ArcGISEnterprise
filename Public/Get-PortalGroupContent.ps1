@@ -24,7 +24,7 @@ function Get-PortalGroupContent {
     .NOTES
         Name:     Get-PortalGroupContent
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-05-02
+        Version:  0.1.1 | Last Edit: 2025-07-22
         - Version history is captured in repository commit history
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/group-content/
@@ -57,7 +57,7 @@ function Get-PortalGroupContent {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/content/groups/{1}' -f $Context, $GroupID
-            Method = 'POST'
+            Method = 'GET'
             Body   = @{
                 f     = 'json'
                 token = $Token

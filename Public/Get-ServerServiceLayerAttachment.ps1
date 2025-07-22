@@ -30,7 +30,7 @@ function Get-ServerServiceLayerAttachment {
     .NOTES
         Name:     Get-ServerServiceLayerAttachment
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-30
+        Version:  0.1.1 | Last Edit: 2025-07-22
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-attachments-feature-service-layer/
@@ -83,7 +83,7 @@ function Get-ServerServiceLayerAttachment {
             else {
                 '{0}/rest/services/{1}/FeatureServer/{2}/queryAttachments' -f $Context, $ServiceName, $LayerId
             }
-            Method  = 'POST'
+            Method  = 'GET'
             Body    = @{
                 f                    = 'json'
                 token                = $Token

@@ -26,7 +26,7 @@ function Get-PortalGroup {
     .NOTES
         Name:     Get-PortalGroup
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-05-08
+        Version:  0.1.1 | Last Edit: 2025-07-22
         - Version history is captured in repository commit history
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/group/
@@ -55,7 +55,7 @@ function Get-PortalGroup {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/community/groups/{1}' -f $Context, $GroupID
-            Method = 'POST'
+            Method = 'GET'
             Body   = @{ f = 'json'; token = $Token }
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
         }

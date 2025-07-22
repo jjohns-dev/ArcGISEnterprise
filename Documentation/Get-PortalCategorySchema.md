@@ -95,7 +95,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-PortalCategorySchema
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2025-01-08
+Version:  0.1.1 | Last Edit: 2025-07-22
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/users-groups-and-items/category-schema/

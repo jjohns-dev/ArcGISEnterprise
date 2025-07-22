@@ -22,8 +22,7 @@ function Get-PortalDefaultUserSettings {
     .NOTES
         Name:     Get-PortalDefaultUserSettings
         Author:   Phillip Glodowski, Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-11-06
-        - 0.1.0 - Initial version
+        Version:  0.1.1 | Last Edit: 2025-07-22
         Comments: <Comment(s)>
         General notes
         https://developers.arcgis.com/rest/users-groups-and-items/user-default-settings.htm
@@ -53,7 +52,7 @@ function Get-PortalDefaultUserSettings {
         $restParams = @{
             Uri    = ('{0}/sharing/rest/portals/{1}/userDefaultSettings' -f $Context, $PortalId)
             # USING "GET" METHOD RETURNS RAW HTML FOR SOME REASON. "POST" APPEARS TO BE REQUIRED
-            Method = 'POST'
+            Method = 'GET'
             Body   = @{ Token = $Token; f = 'json' }
         }
 

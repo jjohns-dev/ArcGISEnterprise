@@ -26,7 +26,7 @@ function Get-ServerUsageReportData {
     .NOTES
         Name:     Get-ServerUsageReportData
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-17
+        Version:  0.1.1 | Last Edit: 2025-07-22
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/queryreportdata/
@@ -63,7 +63,7 @@ function Get-ServerUsageReportData {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri     = '{0}/admin/usagereports/{1}/data' -f $Context, $ReportName
-            Method  = 'POST'
+            Method  = 'GET'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
             Body    = @{
                 f      = $ReportFormat

@@ -28,7 +28,7 @@ function Get-ServerServiceLayer {
     .NOTES
         Name:     Get-ServerServiceLayer
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-09-30
+        Version:  0.1.1 | Last Edit: 2025-07-22
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
@@ -77,14 +77,9 @@ function Get-ServerServiceLayer {
             else {
                 '{0}/rest/services/{1}/{2}/{3}' -f $Context, $ServiceName, $ServiceType, $LayerId
             }
-            Method  = 'POST'
-            Body    = @{
-                f     = 'json'
-                token = $Token
-            }
-            Headers = @{
-                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
-            }
+            Method  = 'GET'
+            Body    = @{ f = 'json'; token = $Token }
+            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
         }
 
         # OUTPUT VERBOSE

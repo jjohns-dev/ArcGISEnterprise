@@ -22,7 +22,7 @@ function Get-PortalGroupUserList {
     .NOTES
         Name:     Get-PortalGroupUserList
         Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-05-28
+        Version:  0.1.3 | Last Edit: 2025-07-22
         - Version history is capture in repository commit history
         Comments: <Comment(s)>
         General notes
@@ -55,7 +55,7 @@ function Get-PortalGroupUserList {
         # SET PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/community/groups/{1}/userList' -f $Context, $GroupID
-            Method = 'POST'
+            Method = 'GET'
             Body   = @{ f = 'json'; token = $Token; num = 100 } # DEFAULT 25
         }
 

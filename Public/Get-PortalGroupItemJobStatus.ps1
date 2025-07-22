@@ -26,7 +26,7 @@ function Get-PortalGroupItemJobStatus {
     .NOTES
         Name:     Get-PortalGroupItemJobStatus
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-09
+        Version:  0.1.1 | Last Edit: 2025-07-22
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/export-group-content/
@@ -63,7 +63,7 @@ function Get-PortalGroupItemJobStatus {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri     = '{0}/sharing/rest/portals/{1}/jobs/{2}' -f $Context, $PortalId, $JobId
-            Method  = 'POST'
+            Method  = 'GET'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
             Body    = @{ f = 'json'; token = $Token }
         }

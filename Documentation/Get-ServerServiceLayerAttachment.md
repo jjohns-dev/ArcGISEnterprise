@@ -162,7 +162,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 Name:     Get-ServerServiceLayerAttachment
 Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-09-30
+Version:  0.1.1 | Last Edit: 2025-07-22
 - Version history is capture in repository commit history
 Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/query-attachments-feature-service-layer/
