@@ -22,11 +22,7 @@ function Get-PortalUserList {
     .NOTES
         Name:     Get-PortalUserList
         Author:   Justin Johns
-        Version:  0.1.3 | Last Edit: 2023-03-20
-        - 0.1.3 - Added error handling
-        - 0.1.2 - Changed array to generic list
-        - 0.1.1 - Makes multiple requests to get all users if more than 100
-        - 0.1.0 - Initial version
+        Version:  0.1.4 | Last Edit: 2025-07-22
         Comments: <Comment(s)>
         General notes
         https://developers.arcgis.com/rest/users-groups-and-items/users.htm
@@ -58,7 +54,7 @@ function Get-PortalUserList {
         # SET PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/portals/{1}/users' -f $Context, $PortalId
-            Method = 'POST'
+            Method = 'GET'
             Body   = @{ f = 'json'; token = $Token; num = 100 }
         }
 

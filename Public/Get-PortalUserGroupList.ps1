@@ -22,9 +22,7 @@ function Get-PortalUserGroupList {
     .NOTES
         Name:     Get-PortalUserGroupList
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-03-20
-        - 0.1.1 - Added automatic retrieval of paginated data
-        - 0.1.0 - Initial version
+        Version:  0.1.1 | Last Edit: 2025-07-22
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/group-search.htm
     #>
@@ -72,7 +70,7 @@ function Get-PortalUserGroupList {
         # SET PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/community/groups' -f $Context
-            Method = 'POST'
+            Method = 'GET'
             Body   = @{
                 f     = 'json'
                 token = $Token

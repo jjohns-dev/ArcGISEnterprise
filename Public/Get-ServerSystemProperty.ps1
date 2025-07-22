@@ -20,7 +20,7 @@ function Get-ServerSystemProperty {
     .NOTES
         Name:     Get-ServerSystemProperty
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-04-15
+        Version:  0.1.1 | Last Edit: 2025-07-22
         - Version history is captured in repository commit history
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/serverproperties/
@@ -45,7 +45,7 @@ function Get-ServerSystemProperty {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/admin/system/properties' -f $Context
-            Method = 'POST'
+            Method = 'GET'
             Body   = @{ f = 'json'; token = $Token }
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
         }

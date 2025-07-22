@@ -30,7 +30,7 @@ function Get-ServerLog {
     .NOTES
         Name:     Get-ServerLog @commonParams
         Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-01-22
+        Version:  0.1.2 | Last Edit: 2025-07-22
         - Version history is capture in repository commit history
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/logsquery.htm
@@ -73,7 +73,7 @@ function Get-ServerLog {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri     = '{0}/admin/logs/query' -f $Context
-            Method  = 'POST'
+            Method  = 'GET'
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
             Body    = @{
                 level      = $Level

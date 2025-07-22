@@ -46,11 +46,8 @@ function Get-PortalSecurityPolicy {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/portals/{1}/securityPolicy' -f $Context, $PortalId
-            Method = 'POST'
-            Body   = @{
-                f     = 'json'
-                token = $Token
-            }
+            Method = 'GET'
+            Body   = @{ f = 'json'; token = $Token }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED

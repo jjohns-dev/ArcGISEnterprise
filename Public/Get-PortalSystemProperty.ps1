@@ -21,7 +21,7 @@ function Get-PortalSystemProperty {
     .NOTES
         Name:     Get-PortalSystemProperty
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-04-23
+        Version:  0.1.1 | Last Edit: 2025-07-22
         - Version history is captured in repository commit history
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/system-properties/
@@ -46,7 +46,7 @@ function Get-PortalSystemProperty {
         # SET REQUEST PARAMETERS
         $restParams = @{
             Uri    = '{0}/portaladmin/system/properties' -f $Context
-            Method = 'POST'
+            Method = 'GET'
             Body   = @{ f = 'json'; token = $Token }
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
         }

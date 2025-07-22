@@ -24,11 +24,7 @@ function Get-PortalUserItemList {
     .NOTES
         Name:     Get-PortalUserItemList
         Author:   Justin Johns
-        Version:  0.1.3 | Last Edit: 2024-03-29
-        - 0.1.3 - (2024-03-29) Updates to filter query for type
-        - 0.1.2 - (2024-03-21) Made UserName parameter optional and added parameter for item type
-        - 0.1.1 - (2023-13-20) Added automatic retrieval of paged results
-        - 0.1.0 - Initial version
+        Version:  0.1.4 | Last Edit: 2025-07-22
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/search.htm
     #>
@@ -81,7 +77,7 @@ function Get-PortalUserItemList {
         # SET PARAMETERS
         $restParams = @{
             Uri    = '{0}/sharing/rest/search' -f $Context
-            Method = 'POST'
+            Method = 'GET'
             Body   = @{
                 f      = 'json'
                 token  = $Token
