@@ -15,7 +15,7 @@ function Set-PortalItemOwner {
     .PARAMETER TargetUserName
         Username of new item owner
     .PARAMETER TargetFolderName
-        Name of the folder to move the item to (default to new folder with date). Use '/' for root folder.
+        Name of the folder to move the item to (default to new folder with date). Use '/' for root folder. Creates new folder if it does not exist.
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
