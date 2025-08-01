@@ -15,7 +15,7 @@ function Set-PortalItemOwner {
     .PARAMETER TargetUserName
         Username of new item owner
     .PARAMETER TargetFolderName
-        Name of the folder to move the item to (optional, defaults to root folder)
+        Name of the folder to move the item to (default to new folder with date). Use '/' for root folder.
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -23,7 +23,7 @@ function Set-PortalItemOwner {
     .PARAMETER SkipCertificateCheck
         Ignore missing or invalid certificate
     .INPUTS
-        None.
+        System.String.
     .OUTPUTS
         System.Object.
     .EXAMPLE
@@ -40,7 +40,7 @@ function Set-PortalItemOwner {
     #>
     [CmdletBinding()]
     Param(
-        [Parameter(Mandatory = $true, HelpMessage = 'Portal item ID')]
+        [Parameter(Mandatory = $true, ValueFromPipeline = $true, HelpMessage = 'Portal item ID')]
         [ValidatePattern('[a-f0-9]{32}')]
         [System.String[]] $ItemId,
 
@@ -52,7 +52,7 @@ function Set-PortalItemOwner {
         [ValidateNotNullOrEmpty()]
         [System.String] $TargetUserName,
 
-        [Parameter(Mandatory = $false, HelpMessage = 'Username of new item owner')]
+        [Parameter(Mandatory = $false, HelpMessage = 'Name of the folder to move item to')]
         [ValidateNotNullOrEmpty()]
         [System.String] $TargetFolderName,
 
@@ -78,7 +78,7 @@ function Set-PortalItemOwner {
             Body    = @{
                 f                = 'json'
                 token            = $Token
-                items            = @($ItemId)
+                items            = $ItemId -join ','
                 targetUsername   = $TargetUserName
                 #targetFoldername = if ($PSBoundParameters.ContainsKey('TargetFolderName')) { $TargetFolderName } else { '/' }
                 targetFoldername = if ($PSBoundParameters.ContainsKey('TargetFolderName')) { $TargetFolderName }
