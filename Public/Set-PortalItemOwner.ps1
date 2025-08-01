@@ -38,7 +38,7 @@ function Set-PortalItemOwner {
         https://developers.arcgis.com/rest/users-groups-and-items/reassign-items/
         (old) https://developers.arcgis.com/rest/users-groups-and-items/reassign-item/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, HelpMessage = 'Portal item ID')]
         [ValidatePattern('[a-f0-9]{32}')]
@@ -89,7 +89,11 @@ function Set-PortalItemOwner {
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        # SHOULD PROCESS
+        if ($PSCmdlet.ShouldProcess($ItemId, ('Change item owner to [{0}]' -f $TargetUserName))) {
+
+            # INVOKE REQUEST
+            Invoke-RestMethod @restParams
+        }
     }
 }
