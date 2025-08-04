@@ -125,6 +125,7 @@ Please see releases for updates and features
 | Set-PortalDefaultUserLicenseType | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User License Type in Portal |
 | Set-PortalDefaultUserRole | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User Role in Portal |
 | Set-PortalGroupOwner | Portal | `[ROOT]/community/groups/[GROUPID]/reassign` | Reassign Portal group ownership to new user |
+| Set-PortalItemOwner | Portal | `[ROOT]/content/users/[USERNAME]/reassignItems` | Change Portal item owner |
 | Set-PortalProxyHosts | Portal | `[ADMIN]/security/config/update` | Set Portal security configuration |
 | Set-PortalRolePrivilege | Portal | `[ROOT]/portals/[PORTALID]` | Set privilege for Portal for ArcGIS Role |
 | Set-PortalSystemProperty | Portal | `[ADMIN]/system/properties/update` | Sets Portal system properties |
