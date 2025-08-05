@@ -20,6 +20,8 @@ function New-PortalUser {
         Password
     .PARAMETER IDPUserName
         IDP Username
+    .PARAMETER Provider
+        IDP Provider (e.g., oidc-<provider_id> for OIDC)
     .PARAMETER Description
         Description
     .PARAMETER Context
@@ -35,6 +37,10 @@ function New-PortalUser {
     .EXAMPLE
         PS C:\> New-PortalUser -UserName joedoe -FirstName Joe -LastName Doe -Email joedoe@domain.com -UserType viewerUT -Password (Read-Host -AsSecureString)
         Creates a new user with username joedoe
+    .EXAMPLE
+        PS C:\> $oidc = Get-PortalOIDCList @cmnParams
+        PS C:\> New-PortalUser -UserName joedoe -FirstName Joe -LastName Doe -Email joedoe@domain.com -IDPUserName joedoe -Provider $oidc[0].id @cmnParams
+        Creates a new user with username joedoe using OIDC authentication from the first OIDC provider in the list
     .NOTES
         Name:     New-PortalUser
         Author:   Justin Johns
@@ -81,7 +87,12 @@ function New-PortalUser {
         [System.String] $Provider = 'arcgis', #>
 
         [Parameter(Mandatory = $true, ParameterSetName = '_saml', HelpMessage = 'IDP Username')]
+        [Parameter(Mandatory = $true, ParameterSetName = '_oidc', HelpMessage = 'IDP Username')]
         [System.String] $IDPUserName,
+
+        [Parameter(Mandatory = $true, ParameterSetName = '_oidc', HelpMessage = 'IDP Provider')]
+        [ValidatePattern('^oidc_\w+$')]
+        [System.String] $Provider,
 
         [Parameter(Mandatory = $false, HelpMessage = 'User description')]
         [ValidateNotNullOrEmpty()]
@@ -100,6 +111,13 @@ function New-PortalUser {
     )
     Begin {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+
+        # SET PROVIDER
+        $Provider = switch ($PSCmdlet.ParameterSetName) {
+            '_bltn' { 'arcgis' }
+            '_saml' { 'enterprise' }
+            default { $Provider }
+        }
     }
     Process {
         # SET REQUEST PARAMETERS
@@ -111,8 +129,8 @@ function New-PortalUser {
                 email             = $Email
                 role              = $Role
                 userLicenseTypeId = $UserType
-                provider          = if ($PSCmdlet.ParameterSetName -eq '_saml') { 'enterprise' } else { 'arcgis' }
-                idpUsername       = if ($PSCmdlet.ParameterSetName -eq '_saml') { $IDPUserName } else { '' }
+                provider          = $Provider
+                idpUsername       = if ($PSCmdlet.ParameterSetName -ne '_bltn') { $IDPUserName } else { '' }
                 firstname         = $FirstName
                 lastname          = $LastName
                 description       = $Description
