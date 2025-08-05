@@ -12,6 +12,13 @@ New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Em
  [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
+### _oidc
+```
+New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Email <String> [-Role <String>]
+ -UserType <String> -IDPUserName <String> -Provider <String> [-Description <String>] -Context <Uri>
+ -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
+```
+
 ### _saml
 ```
 New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Email <String> [-Role <String>]
@@ -28,6 +35,13 @@ Create new Portal user
 ```
 New-PortalUser -UserName joedoe -FirstName Joe -LastName Doe -Email joedoe@domain.com -UserType viewerUT -Password (Read-Host -AsSecureString)
 Creates a new user with username joedoe
+```
+
+### EXAMPLE 2
+```
+$oidc = Get-PortalOIDCList @cmnParams
+PS C:\> New-PortalUser -UserName joedoe -FirstName Joe -LastName Doe -Email joedoe@domain.com -IDPUserName joedoe -Provider $oidc[0].id @cmnParams
+Creates a new user with username joedoe using OIDC authentication from the first OIDC provider in the list
 ```
 
 ## PARAMETERS
@@ -142,7 +156,22 @@ IDP Username
 
 ```yaml
 Type: String
-Parameter Sets: _saml
+Parameter Sets: _oidc, _saml
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Provider
+IDP Provider (e.g., oidc-\<provider_id\> for OIDC)
+
+```yaml
+Type: String
+Parameter Sets: _oidc
 Aliases:
 
 Required: True
