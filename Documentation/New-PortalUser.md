@@ -9,14 +9,21 @@ Create new user
 ```
 New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Email <String> [-Role <String>]
  -UserType <String> -Password <SecureString> [-Description <String>] -Context <Uri> -Token <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+ [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
+```
+
+### _oidc
+```
+New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Email <String> [-Role <String>]
+ -UserType <String> -IDPUserName <String> -Provider <String> [-Description <String>] -Context <Uri>
+ -Token <String> [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### _saml
 ```
 New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Email <String> [-Role <String>]
  -UserType <String> -IDPUserName <String> [-Description <String>] -Context <Uri> -Token <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+ [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,6 +35,13 @@ Create new Portal user
 ```
 New-PortalUser -UserName joedoe -FirstName Joe -LastName Doe -Email joedoe@domain.com -UserType viewerUT -Password (Read-Host -AsSecureString)
 Creates a new user with username joedoe
+```
+
+### EXAMPLE 2
+```
+$oidc = Get-PortalOIDCList @cmnParams
+PS C:\> New-PortalUser -UserName joedoe -FirstName Joe -LastName Doe -Email joedoe@domain.com -IDPUserName joedoe -Provider $oidc[0].id @cmnParams
+Creates a new user with username joedoe using OIDC authentication from the first OIDC provider in the list
 ```
 
 ## PARAMETERS
@@ -142,7 +156,22 @@ IDP Username
 
 ```yaml
 Type: String
-Parameter Sets: _saml
+Parameter Sets: _oidc, _saml
+Aliases:
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Provider
+IDP Provider (e.g., oidc_\<provider_id\> for OIDC)
+
+```yaml
+Type: String
+Parameter Sets: _oidc
 Aliases:
 
 Required: True
@@ -208,6 +237,37 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
