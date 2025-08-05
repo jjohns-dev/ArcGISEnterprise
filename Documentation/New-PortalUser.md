@@ -9,21 +9,21 @@ Create new user
 ```
 New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Email <String> [-Role <String>]
  -UserType <String> -Password <SecureString> [-Description <String>] -Context <Uri> -Token <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+ [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### _oidc
 ```
 New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Email <String> [-Role <String>]
  -UserType <String> -IDPUserName <String> -Provider <String> [-Description <String>] -Context <Uri>
- -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
+ -Token <String> [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ### _saml
 ```
 New-PortalUser -UserName <String> [-FirstName <String>] [-LastName <String>] -Email <String> [-Role <String>]
  -UserType <String> -IDPUserName <String> [-Description <String>] -Context <Uri> -Token <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+ [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -167,7 +167,7 @@ Accept wildcard characters: False
 ```
 
 ### -Provider
-IDP Provider (e.g., oidc-\<provider_id\> for OIDC)
+IDP Provider (e.g., oidc_\<provider_id\> for OIDC)
 
 ```yaml
 Type: String
@@ -237,6 +237,37 @@ Aliases:
 Required: False
 Position: Named
 Default value: False
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -WhatIf
+Shows what would happen if the cmdlet runs.
+The cmdlet is not run.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: wi
+
+Required: False
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -Confirm
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: (All)
+Aliases: cf
+
+Required: False
+Position: Named
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

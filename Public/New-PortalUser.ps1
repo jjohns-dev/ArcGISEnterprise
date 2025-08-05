@@ -21,7 +21,7 @@ function New-PortalUser {
     .PARAMETER IDPUserName
         IDP Username
     .PARAMETER Provider
-        IDP Provider (e.g., oidc-<provider_id> for OIDC)
+        IDP Provider (e.g., oidc_<provider_id> for OIDC)
     .PARAMETER Description
         Description
     .PARAMETER Context
@@ -51,7 +51,7 @@ function New-PortalUser {
         https://community.esri.com/t5/arcgis-rest-apis-and-services-questions/invalid-token-for-portaladmin-security-users/td-p/303096
         https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions_advanced_methods
     #>
-    [CmdletBinding(DefaultParameterSetName = '_bltn')]
+    [CmdletBinding(DefaultParameterSetName = '_bltn', SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
@@ -163,8 +163,12 @@ function New-PortalUser {
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        # SHOULD PROCESS
+        if ($PSCmdlet.ShouldProcess($UserName, ('Create new user with provider [{0}]' -f $Provider))) {
+
+            # INVOKE REQUEST
+            Invoke-RestMethod @restParams
+        }
     }
     Clean {
         # REMOVE SECRETS
