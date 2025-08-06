@@ -9,7 +9,7 @@ function Get-PortalItem {
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
-        Porta token
+        Portal token
     .PARAMETER SkipCertificateCheck
         Ignore missing or invalid certificate
     .INPUTS
