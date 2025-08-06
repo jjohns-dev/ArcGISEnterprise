@@ -54,7 +54,7 @@ Accept wildcard characters: False
 ```
 
 ### -Token
-Porta token
+Portal token
 
 ```yaml
 Type: String
