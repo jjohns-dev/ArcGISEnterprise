@@ -1,4 +1,4 @@
-# Get-PortalItemGroups
+# Get-PortalItemGroupList
 
 ## SYNOPSIS
 Get Portal item groups
@@ -6,7 +6,7 @@ Get Portal item groups
 ## SYNTAX
 
 ```
-Get-PortalItemGroups [-ItemId] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+Get-PortalItemGroupList [-ItemId] <String> [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
  [<CommonParameters>]
 ```
 
@@ -17,7 +17,7 @@ Get Portal user item groups
 
 ### EXAMPLE 1
 ```
-Get-PortalItemGroups -ItemId 0e68d8058b744d1c95f709d2ae975232 @commonParams
+Get-PortalItemGroupList -ItemId 0e68d8058b744d1c95f709d2ae975232 @commonParams
 Returns an array of Portal item groups based on membership type (admin, member, other)
 for the item with ID 0e68d8058b744d1c95f709d2ae975232
 ```
@@ -94,7 +94,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Get-PortalItemGroups
+Name:     Get-PortalItemGroupList
 Author:   Brandon Trampf
 Version:  0.1.0 | Last Edit: 2025-08-06
 Comments:
