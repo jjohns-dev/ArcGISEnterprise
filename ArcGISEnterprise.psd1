@@ -12,7 +12,7 @@
     # Major = major changes or multiple new functions for new set of functionality
     # Minor = new individual functions
     # Build = bug fixes, minor changes, etc.
-    ModuleVersion     = '1.6.1'
+    ModuleVersion     = '1.7.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -98,6 +98,7 @@
         'Get-PortalIndexStatus'
         'Get-PortalItem'
         'Get-PortalItemData'
+        'Get-PortalItemGroupList'
         'Get-PortalJobStatus'
         'Get-PortalLicense'
         'Get-PortalLog'
