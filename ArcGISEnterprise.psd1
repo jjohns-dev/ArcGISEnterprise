@@ -12,7 +12,7 @@
     # Major = major changes or multiple new functions for new set of functionality
     # Minor = new individual functions
     # Build = bug fixes, minor changes, etc.
-    ModuleVersion     = '1.7.0'
+    ModuleVersion     = '1.8.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -81,6 +81,7 @@
         'Export-PortalGroupItem'
         'Find-PortalItem'
         'Find-ServerAddressCandidate'
+        'Find-ServerDataItem'
         'Find-ServerGeocodeAddress'
         'Find-ServerReverseGeocode'
         'Format-ChangeSet'
@@ -185,6 +186,7 @@
         'Test-PortalFederation'
         'Test-PortalHealth'
         'Test-ServerHealth'
+        'Unregister-ServerDataItem'
         'Update-PortalItem'
         'Update-PortalOrganizationInformation'
         'Update-PortalUser'
