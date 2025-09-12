@@ -40,6 +40,7 @@ Please see releases for updates and features
 | Export-PortalGroupItem | Portal | `[ROOT]/community/groups/[GROUPID]/export` | Exports all exportable content from a Portal group |
 | Find-PortalItem | Portal | `[ROOT]/search` | Returns Portal item based on search criteria |
 | Find-ServerAddressCandidate | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/findAddressCandidates` | GeoCode single address |
+| Find-ServerDataItem | Server | `[ADMIN]/data/findItems` | Find data items registered to the Server's data store |
 | Find-ServerGeocodeAddress | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/geocodeAddresses` | GeoCode list of addresses |
 | Find-ServerReverseGeocode | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/reverseGeocode` | Reverse GeoCode lookup |
 | Get-PortalAllowedOriginList | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |
@@ -137,6 +138,7 @@ Please see releases for updates and features
 | Test-PortalDataStore | Portal | `[ROOT]/sharing/rest/portals/[PORTALID]/datastores/validate` | Validates connection between Data Store and ArcGIS Server |
 | Test-PortalFederation | Portal | `[ADMIN]/federation/servers/validate` | Validate Portal federation status |
 | Test-ServerHealth | Server | `/rest/info/healthCheck` | Validates ArcGIS Server health |
+| Unregister-ServerDataItem | Server | `[ADMIN]/data/unregisterItem` | Unregister data item registered to the Server's data store |
 | Update-PortalItem | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/update` | Updates Portal item (e.g., layer, etc.) |
 | Update-PortalOrganizationInformation | Portal | `[ROOT]/portals/[PORTALID]/update` | Set or update Portal sharing REST API settings |
 | Update-PortalUser | Portal | `[ROOT]/community/users/[USERNAME]/update` | Update Portal user properties |
