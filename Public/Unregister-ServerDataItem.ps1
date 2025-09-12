@@ -27,7 +27,7 @@ function Unregister-ServerDataItem {
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/unregisterdataitem/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'The item path for the data item')]
         [ValidatePattern('^[\w/]+$')]
@@ -64,7 +64,11 @@ function Unregister-ServerDataItem {
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
-        # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        # SHOULD PROCESS
+        if ($PSCmdlet.ShouldProcess($ItemPath, 'Unregister data item from Server data store')) {
+
+            # INVOKE REQUEST
+            Invoke-RestMethod @restParams
+        }
     }
 }
