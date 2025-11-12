@@ -1,9 +1,9 @@
-function Get-PortalItemGroupList {
+function Get-PortalLivingAtlasUpdate {
     <#
     .SYNOPSIS
-        Get Portal item groups
+        Get Portal Living Atlas Catalog updates
     .DESCRIPTION
-        Get Portal user item groups
+        Get Portal Living Atlas Catalog updates
     .PARAMETER PortalId
         Portal application ID
     .PARAMETER Context
