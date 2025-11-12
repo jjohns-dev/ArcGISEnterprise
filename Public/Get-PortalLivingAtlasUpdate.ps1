@@ -4,8 +4,8 @@ function Get-PortalItemGroupList {
         Get Portal item groups
     .DESCRIPTION
         Get Portal user item groups
-    .PARAMETER ItemId
-        Portal item ID
+    .PARAMETER PortalId
+        Portal application ID
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -25,7 +25,7 @@ function Get-PortalItemGroupList {
         Author:   Brandon Trampf
         Version:  0.1.0 | Last Edit: 2025-11-12
         Comments:
-        https://developers.arcgis.com/rest/users-groups-and-items/check-for-updates.htm
+        https://developers.arcgis.com/rest/users-groups-and-items/check-for-updates/
     #>
     [CmdletBinding()]
     Param(
