@@ -54,9 +54,11 @@ Please see releases for updates and features
 | Get-PortalIndexStatus | Portal | `[ADMIN]/system/indexer/status` | Get Portal index status |
 | Get-PortalItem | Portal | `[ROOT]/content/items/[ITEMID]` | Get Portal item |
 | Get-PortalItemData | Portal | `[ROOT]/content/items/[ITEMID]/data` | Get Portal item data |
+| Get-PortalItemGroupList | Portal | `[ROOT]/content/items/[ITEMID]/groups` | Get Portal item group list |
 | Get-PortalJobStatus | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/status` | Get Portal job status |
 | Get-PortalLicense | Portal | `[ADMIN]/license` | Get Portal license |
 | Get-PortalLog | Portal | `[ADMIN]/logs/query` | Get Portal logs |
+| Get-PortalLivingAtlasUpdate | Portal | `[ROOT]/portals/[PORTALID]/livingatlascatalog/checkForUpdates` | Get Portal Living Atlas Catalog Updates |
 | Get-PortalMachineList | Portal | `[ADMIN]/machines` | Get Portal machines |
 | Get-PortalMachineStatus | Portal | `[ADMIN]/machines/status/[MACHINENAME]` | Get Portal machine status |
 | Get-PortalOAuthAppInfo | Portal | `[ADMIN]/security/oauth/getAppInfo` | Get OAuth App Info |
