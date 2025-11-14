@@ -11,7 +11,7 @@ function Get-ServerToken {
     .PARAMETER Referer
         Referer
     .PARAMETER Client
-        Client
+        Client. Value must be one of: requestip, referer, ip
     .PARAMETER Expiration
         Token expiration time in minutes
     .PARAMETER Admin
@@ -26,6 +26,10 @@ function Get-ServerToken {
         PS C:\> Get-ServerToken -URL https://mydomain.com/arcgis -Credential $creds
         Generate token for mydomain.com
     .NOTES
+        Name:     Get-ServerToken
+        Author:   Justin Johns
+        Version:  0.1.1 | Last Edit: 2025-11-14
+
         -- SERVER ENDPONITS --
         https://myDomain.com/arcgis/admin/login
         https://myDomain.com/arcgis/admin/generateToken
@@ -47,6 +51,7 @@ function Get-ServerToken {
         [System.String] $Referer = 'referer',
 
         [Parameter(HelpMessage = 'Client')]
+        [ValidatePattern('^(?:requestip|referer|ip)$')]
         [System.String] $Client = 'requestip',
 
         [Parameter(HelpMessage = 'Token expiration time in minutes')]

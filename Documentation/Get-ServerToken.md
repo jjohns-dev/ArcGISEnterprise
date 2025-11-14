@@ -69,7 +69,8 @@ Accept wildcard characters: False
 ```
 
 ### -Client
-Client
+Client.
+Value must be one of: requestip, referer, ip
 
 ```yaml
 Type: String
@@ -138,6 +139,10 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
+Name:     Get-ServerToken
+Author:   Justin Johns
+Version:  0.1.1 | Last Edit: 2025-11-14
+
 -- SERVER ENDPONITS --
 https://myDomain.com/arcgis/admin/login
 https://myDomain.com/arcgis/admin/generateToken
