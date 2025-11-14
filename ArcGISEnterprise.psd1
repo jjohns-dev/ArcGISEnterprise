@@ -12,7 +12,7 @@
     # Major = major changes or multiple new functions for new set of functionality
     # Minor = new individual functions
     # Build = bug fixes, minor changes, etc.
-    ModuleVersion     = '1.9.0'
+    ModuleVersion     = '1.10.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -88,6 +88,8 @@
         'Format-CsvHeader'
         'Format-ServerServiceLayerMetadata'
         'Format-ServerServiceMetadata'
+        'Get-GeoEventServerMonitorStatus'
+        'Get-GeoEventServerStatus'
         'Get-PortalAllowedOriginList'
         'Get-PortalCategorySchema'
         'Get-PortalDataStoreServer'
