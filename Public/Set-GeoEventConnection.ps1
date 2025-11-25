@@ -1,19 +1,17 @@
 function Set-GeoEventConnection {
     <#
     .SYNOPSIS
-        Short description
+        Set default GeoEvent connection parameters
     .DESCRIPTION
-        Long description
+        Set default GeoEvent connection parameters for subsequent cmdlet calls.
     .PARAMETER Context
         GeoEvent context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
         Enterprise token
-    .PARAMETER SkipCertificateCheck
-        Ignore missing or invalid certificate
     .INPUTS
         None.
     .OUTPUTS
-        System.Object.
+        None.
     .EXAMPLE
         PS C:\> Set-GeoEventConnection
         Sets the default GeoEvent connection parameters for subsequent cmdlet calls.

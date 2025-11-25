@@ -1,19 +1,17 @@
 function Set-ServerConnection {
     <#
     .SYNOPSIS
-        Short description
+        Set default ArcGIS Server connection parameters
     .DESCRIPTION
-        Long description
+        Set default ArcGIS Server connection parameters for subsequent cmdlet calls.
     .PARAMETER Context
         ArcGIS Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
         Enterprise token
-    .PARAMETER SkipCertificateCheck
-        Ignore missing or invalid certificate
     .INPUTS
         None.
     .OUTPUTS
-        System.Object.
+        None.
     .EXAMPLE
         PS C:\> Set-ServerConnection
         Sets the default ArcGIS Server connection parameters for subsequent cmdlet calls.

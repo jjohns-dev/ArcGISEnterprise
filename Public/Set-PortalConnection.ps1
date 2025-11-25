@@ -1,19 +1,17 @@
 function Set-PortalConnection {
     <#
     .SYNOPSIS
-        Short description
+        Set default Portal for ArcGIS connection parameters
     .DESCRIPTION
-        Long description
+        Set default Portal for ArcGIS connection parameters for subsequent cmdlet calls.
     .PARAMETER Context
         Portal for ArcGIS context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
         Enterprise token
-    .PARAMETER SkipCertificateCheck
-        Ignore missing or invalid certificate
     .INPUTS
         None.
     .OUTPUTS
-        System.Object.
+        None.
     .EXAMPLE
         PS C:\> Set-PortalConnection
         Sets the default Portal for ArcGIS connection parameters for subsequent cmdlet calls.

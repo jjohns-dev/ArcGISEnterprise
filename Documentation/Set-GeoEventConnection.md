@@ -1,7 +1,7 @@
 # Set-GeoEventConnection
 
 ## SYNOPSIS
-Short description
+Set default GeoEvent connection parameters
 
 ## SYNTAX
 
@@ -10,7 +10,7 @@ Set-GeoEventConnection [-Context] <Uri> [-Token] <String> [-WhatIf] [-Confirm] [
 ```
 
 ## DESCRIPTION
-Long description
+Set default GeoEvent connection parameters for subsequent cmdlet calls.
 
 ## EXAMPLES
 
@@ -91,7 +91,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### None.
 ## OUTPUTS
 
-### System.Object.
+### None.
 ## NOTES
 Name:     Set-GeoEventConnection
 Author:   Justin Johns

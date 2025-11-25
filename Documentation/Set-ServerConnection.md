@@ -1,7 +1,7 @@
 # Set-ServerConnection
 
 ## SYNOPSIS
-Short description
+Set default ArcGIS Server connection parameters
 
 ## SYNTAX
 
@@ -10,7 +10,7 @@ Set-ServerConnection [-Context] <Uri> [-Token] <String> [-WhatIf] [-Confirm] [<C
 ```
 
 ## DESCRIPTION
-Long description
+Set default ArcGIS Server connection parameters for subsequent cmdlet calls.
 
 ## EXAMPLES
 
@@ -91,7 +91,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ### None.
 ## OUTPUTS
 
-### System.Object.
+### None.
 ## NOTES
 Name:     Set-ServerConnection
 Author:   Justin Johns
