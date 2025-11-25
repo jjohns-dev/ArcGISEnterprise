@@ -24,7 +24,7 @@ function Set-GeoEventConnection {
         - Version history is captured in repository commit history
         Comments:
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target ArcGIS GeoEvent context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -38,8 +38,11 @@ function Set-GeoEventConnection {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
     }
     Process {
-        # SET DEFAULT PARAMETERS
-        $PSDefaultParameterValues['*-GeoEventServer*:Token'] = $Token
-        $PSDefaultParameterValues['*-GeoEventServer*:Context'] = $Context
+        # SHOULD PROCESS
+        if ($PSCmdlet.ShouldProcess($Context, 'Create default connection')) {
+            # SET DEFAULT PARAMETERS
+            $PSDefaultParameterValues['*-GeoEventServer*:Token'] = $Token
+            $PSDefaultParameterValues['*-GeoEventServer*:Context'] = $Context
+        }
     }
 }

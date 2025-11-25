@@ -24,7 +24,7 @@ function Set-PortalConnection {
         - Version history is captured in repository commit history
         Comments:
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal for ArcGIS context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -38,8 +38,11 @@ function Set-PortalConnection {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
     }
     Process {
-        # SET DEFAULT PARAMETERS
-        $PSDefaultParameterValues['*-Portal*:Token'] = $Token
-        $PSDefaultParameterValues['*-Portal*:Context'] = $Context
+        # SHOULD PROCESS
+        if ($PSCmdlet.ShouldProcess($Context, 'Create default connection')) {
+            # SET DEFAULT PARAMETERS
+            $PSDefaultParameterValues['*-Portal*:Token'] = $Token
+            $PSDefaultParameterValues['*-Portal*:Context'] = $Context
+        }
     }
 }
