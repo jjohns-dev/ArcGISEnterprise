@@ -16,7 +16,7 @@ Retrieves a list of GeoEvent Server Monitoring objects
 
 ### EXAMPLE 1
 ```
-PS C:\> $GeoEventContext = 'https://arcgis.com/geoevent'
+$GeoEventContext = 'https://arcgis.com/geoevent'
 PS C:\> $ServerContext = 'https://arcgis.com/arcgis'
 PS C:\> $token = Get-ServerToken -Credentials (Get-Credential) -Context $ServerContext -Referer $GeoEventContext -Client 'referer'
 PS C:\> Get-GeoEventServerMonitorStatus -Context $GeoEventContext -Token $token.token

@@ -26,6 +26,7 @@ Please see releases for updates and features
 | Server | ROOT | `/rest/services` |
 | Server | RADMIN | `/rest/admin` |
 | Server | ADMIN | `/admin` |
+| GeoEvent | ADMIN | `/admin` |
 
 ### API Endpoints
 
@@ -43,6 +44,8 @@ Please see releases for updates and features
 | Find-ServerDataItem | Server | `[ADMIN]/data/findItems` | Find data items registered to the Server's data store |
 | Find-ServerGeocodeAddress | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/geocodeAddresses` | GeoCode list of addresses |
 | Find-ServerReverseGeocode | Server | `[ROOT]/[SERVICENAME]/GeocodeServer/reverseGeocode` | Reverse GeoCode lookup |
+| Get-GeoEventServerMonitorStatus | GeoEvent | `[ADMIN]/monitoring` | Gets GeoEvent Server monitoring status |
+| Get-GeoEventServerStatus | GeoEvent | `[ADMIN]/health/status` | Gets GeoEvent Server health status |
 | Get-PortalAllowedOriginList | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |
 | Get-PortalCategorySchema | Portal | `[ROOT]/portals/[PORTALID]/categorySchema` | Get Portal category schema |
 | Get-PortalDataStoreServer | Portal | `[ROOT]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |
