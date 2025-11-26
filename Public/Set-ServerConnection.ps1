@@ -18,7 +18,7 @@ function Set-ServerConnection {
     .NOTES
         Name:     Set-ServerConnection
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-11-25
+        Version:  0.1.0 | Last Edit: 2025-11-26
         - Version history is captured in repository commit history
         Comments:
     #>
@@ -41,6 +41,9 @@ function Set-ServerConnection {
             # SET DEFAULT PARAMETERS
             $PSDefaultParameterValues['*-Server*:Token'] = $Token
             $PSDefaultParameterValues['*-Server*:Context'] = $Context
+
+            # OUTPUT SUCCESS MESSAGE
+            if ($LASTEXITCODE -eq 0) { Write-Verbose -Message ('Server connection set to: {0}' -f $Context) }
         }
     }
 }

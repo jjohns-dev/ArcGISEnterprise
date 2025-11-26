@@ -18,7 +18,7 @@ function Set-GeoEventConnection {
     .NOTES
         Name:     Set-GeoEventConnection
         Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-11-25
+        Version:  0.1.0 | Last Edit: 2025-11-26
         - Version history is captured in repository commit history
         Comments:
     #>
@@ -41,6 +41,9 @@ function Set-GeoEventConnection {
             # SET DEFAULT PARAMETERS
             $PSDefaultParameterValues['*-GeoEventServer*:Token'] = $Token
             $PSDefaultParameterValues['*-GeoEventServer*:Context'] = $Context
+
+            # OUTPUT SUCCESS MESSAGE
+            if ($LASTEXITCODE -eq 0) { Write-Verbose -Message ('GeoEvent connection set to: {0}' -f $Context) }
         }
     }
 }
