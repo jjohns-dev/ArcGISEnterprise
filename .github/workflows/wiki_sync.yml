@@ -6,7 +6,7 @@ on:
     paths: 
       - documentation/**
     branches:
-      - main
+      - documentation-sync-github-action
 
 jobs:
   validate:
