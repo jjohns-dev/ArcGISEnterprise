@@ -14,7 +14,7 @@ on:
       - ".github/workflows/wiki_sync.yml"
 
 jobs:
-  validate:
+  sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -53,7 +53,7 @@ jobs:
                 }
 
       - name: Push content to wiki
-        working-directory: /wiki
+        working-directory: '${{ github.workspace }}/wiki'
         run: |
             git config user.email "github-action@github.com"
             git config user.name "github-action"
