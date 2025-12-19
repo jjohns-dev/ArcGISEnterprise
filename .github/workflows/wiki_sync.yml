@@ -2,19 +2,12 @@ name: Wiki Sync
 run-name: Wiki Sync
 
 on:
-  push:
-    paths: 
-      - documentation/**
-    branches:
-      - documentation-sync-github-action
   pull_request:
-    branches:
-      - main
-    paths:
-      - ".github/workflows/wiki_sync.yml"
+   types: [closed]
 
 jobs:
   sync:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
