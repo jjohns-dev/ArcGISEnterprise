@@ -1,0 +1,55 @@
+name: Wiki Sync
+run-name: Wiki Sync
+
+on:
+  pull_request:
+   types: [closed]
+
+jobs:
+  sync:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6 # checkout code
+
+      - name: Checkout Wiki Repository
+        uses: actions/checkout@v6 # checkout wiki code
+        with:
+            repository: ${{ github.repository }}.wiki
+            path: wiki
+      - name: Sync Documentation to Wiki
+        shell: pwsh
+        run: |
+            $sourcePath = '${{ github.workspace }}/Documentation'
+            $targetPath = '${{ github.workspace }}/wiki'
+
+            $sourceFiles = Get-ChildItem -Path $sourcePath -Recurse
+            $targetFiles = Get-ChildItem -Path $targetPath -Recurse
+
+            # COMPARE FILES BASED ON NAME
+            $diff = Compare-Object -ReferenceObject $sourceFiles -DifferenceObject $targetFiles -Property Name -PassThru
+
+            foreach ($file in $diff) {
+                # CHECK IF THE FILE IS IN THE SOURCE BUT NOT IN THE TARGET
+                if ($file.SideIndicator -eq '<=' -and $file.Name -ne 'Index.md') {
+                    # GET FULL PATH OF THE SOURCE FILE
+                    $filePath = $file.FullName
+                    # DETERMINE DESTINATION PATH
+                    $copyPath = Join-Path -Path $targetPath -ChildPath $file.Name 
+
+                    # COPY THE FILE TO THE DESTINATION
+                    Copy-Item -Path $filePath -Destination $copyPath
+
+                    Write-Host ("Copied {0} to destination." -f $file.Name)
+                    }
+                }
+
+      - name: Push content to wiki
+        working-directory: '${{ github.workspace }}/wiki'
+        run: |
+            git config user.email "github-action@github.com"
+            git config user.name "github-action"
+            git add .
+            git commit -m "Added new file"
+            git push
