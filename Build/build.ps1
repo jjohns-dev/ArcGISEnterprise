@@ -71,13 +71,6 @@ if ($env:GITHUB_ACTIONS) {
     $env:BHBuildSystem = 'CI'
 }
 
-Write-Output "Build Environment:"
-Write-Output "  Project Path: $env:BHProjectPath"
-Write-Output "  Project Name: $env:BHProjectName"
-Write-Output "  Build System: $env:BHBuildSystem"
-Write-Output ""
-
-
 # temp fix until PlatyPS module is updated to support the ProgressAction common parameter introduced at pwsh 7.4
 $env:BHBuildSystem
 if ($env:BHBuildSystem -ieq 'Unknown') { $PlatyPSPath = '/root/.local/share/powershell/Modules/platyPS/0.14.2/platyPS.psm1' } else { $PlatyPSPath = '/home/runner/.local/share/powershell/Modules/platyPS/0.14.2/platyPS.psm1' }
