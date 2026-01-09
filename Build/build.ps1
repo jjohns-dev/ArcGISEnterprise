@@ -60,8 +60,23 @@ else {
     Write-Output "Skipping dependency check...`n" -ForegroundColor 'Yellow'
 }
 
-# Init BuildHelpers
-Set-BuildEnvironment -Force
+# Set build environment variables
+$env:BHProjectPath = $PSScriptRoot | Split-Path -Parent
+$manifestFile = Get-ChildItem -Path $env:BHProjectPath -Filter '*.psd1' -File
+$env:BHProjectName = $manifestFile.BaseName
+$env:BHPSModuleManifest = $manifestFile.FullName
+$env:BHBuildSystem = 'Unknown'
+# GitHub Actions automatically sets this environment variable to true when running in a workflow
+if ($env:GITHUB_ACTIONS) {
+    $env:BHBuildSystem = 'CI'
+}
+
+Write-Output "Build Environment:"
+Write-Output "  Project Path: $env:BHProjectPath"
+Write-Output "  Project Name: $env:BHProjectName"
+Write-Output "  Build System: $env:BHBuildSystem"
+Write-Output ""
+
 
 # temp fix until PlatyPS module is updated to support the ProgressAction common parameter introduced at pwsh 7.4
 $env:BHBuildSystem

@@ -15,7 +15,6 @@
     # PowerShellGet     = '2.0.1'
 
     # Common modules
-    BuildHelpers     = '2.0.16'
     Pester           = '5.7.1'
     PlatyPS          = '0.14.2'
     psake            = '4.9.1'
