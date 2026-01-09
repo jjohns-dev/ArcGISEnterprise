@@ -62,7 +62,7 @@ else {
 
 # Set build environment variables
 $env:BHProjectPath = $PSScriptRoot | Split-Path -Parent
-$manifestFile = Get-ChildItem -Path $env:BHProjectPath -Filter '*.psd1' -File
+$manifestFile = Get-ChildItem -Path $env:BHProjectPath -Filter '*.psd1'
 $env:BHProjectName = $manifestFile.BaseName
 $env:BHPSModuleManifest = $manifestFile.FullName
 $env:BHBuildSystem = 'Unknown'
