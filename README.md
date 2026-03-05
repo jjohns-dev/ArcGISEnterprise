@@ -98,6 +98,8 @@ Please see releases for updates and features
 | Get-ServerServiceList | Server | `[ROOT]` and `[ADMIN]/services` | Get list of services in ArcGIS Server |
 | Get-ServerServicesDirectory | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Get service directory from admin endpoint |
 | Get-ServerSetting | Server | `/[SETTINGSURL]` | Get Server settings from admin endpoint |
+| Get-ServerSSLCertificate | Server | `[ADMIN]/machines/[MACHINENAME]/sslcertificates/[CERTIFICATE]` | Get Server SSL Certificate information |
+| Get-ServerSSLCertificates | Server | `[ADMIN]/machines/[MACHINENAME]/sslcertificates` | Get a list of Server SSL Certificates |
 | Get-ServerSystemProperty | Server | `[ADMIN]/system/properties` | Get Server systems properties |
 | Get-ServerToken | Server | `[ADMIN]/generateToken` | Generate token for ArcGIS Server |
 | Get-ServerUsageReport | Server | `[ADMIN]/usagereports/[REPORTNAME]` | Return individual or all usage reports |
