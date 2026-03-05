@@ -12,7 +12,7 @@
     # Major = major changes or multiple new functions for new set of functionality
     # Minor = new individual functions
     # Build = bug fixes, minor changes, etc.
-    ModuleVersion     = '1.11.0'
+    ModuleVersion     = '1.12.0'
 
     # Supported PSEditions
     # CompatiblePSEditions = @()
@@ -116,6 +116,8 @@
         'Get-PortalSecurityConfig'
         'Get-PortalSecurityPolicy'
         'Get-PortalSettings'
+        'Get-PortalSSLCertificate'
+        'Get-PortalSSLCertificateList'
         'Get-PortalSystemProperty'
         'Get-PortalToken'
         'Get-PortalUser'
@@ -140,6 +142,8 @@
         'Get-ServerServiceReport'
         'Get-ServerServicesDirectory'
         'Get-ServerSetting'
+        'Get-ServerSSLCertificate'
+        'Get-ServerSSLCertificateList'
         'Get-ServerSystemProperty'
         'Get-ServerToken'
         'Get-ServerUsageReport'
