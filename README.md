@@ -73,7 +73,7 @@ Please see releases for updates and features
 | Get-PortalSecurityPolicy | Portal | `[ROOT]/portals/[PORTALID]/securityPolicy` | Get Portal security policy |
 | Get-PortalSettings | Portal | `[ROOT]/portals/[PORTALID]` | Get Portal configuration or "self" |
 | Get-PortalSSLCertificate | Portal | `[ADMIN]/machines/[MACHINENAME]/sslcertificates/[CERTIFICATE]` | Get Portal SSL Certificate information |
-| Get-PortalSSLCertificates | Portal | `[ADMIN]/machines/[MACHINENAME]/sslcertificates` | Get a list of Portal SSL Certificates |
+| Get-PortalSSLCertificateList | Portal | `[ADMIN]/machines/[MACHINENAME]/sslcertificates` | Get a list of Portal SSL Certificates |
 | Get-PortalSystemProperty | Portal | `[ADMIN]/system/properties` | Gets Portal system properties |
 | Get-PortalToken | Portal | `[ROOT]/generateToken` | Generate token for ArcGIS Portal |
 | Get-PortalUser | Portal | `[ROOT]/community/users/[USERNAME]` | Get Portal user |
@@ -99,7 +99,7 @@ Please see releases for updates and features
 | Get-ServerServicesDirectory | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Get service directory from admin endpoint |
 | Get-ServerSetting | Server | `/[SETTINGSURL]` | Get Server settings from admin endpoint |
 | Get-ServerSSLCertificate | Server | `[ADMIN]/machines/[MACHINENAME]/sslcertificates/[CERTIFICATE]` | Get Server SSL Certificate information |
-| Get-ServerSSLCertificates | Server | `[ADMIN]/machines/[MACHINENAME]/sslcertificates` | Get a list of Server SSL Certificates |
+| Get-ServerSSLCertificateList | Server | `[ADMIN]/machines/[MACHINENAME]/sslcertificates` | Get a list of Server SSL Certificates |
 | Get-ServerSystemProperty | Server | `[ADMIN]/system/properties` | Get Server systems properties |
 | Get-ServerToken | Server | `[ADMIN]/generateToken` | Generate token for ArcGIS Server |
 | Get-ServerUsageReport | Server | `[ADMIN]/usagereports/[REPORTNAME]` | Return individual or all usage reports |
