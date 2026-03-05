@@ -3,7 +3,7 @@ function Get-ServerSSLCertificate {
     .SYNOPSIS
         Get Server SSL certificate
     .DESCRIPTION
-        Get Server SSL certificate
+        Get Server SSL certificate information
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -20,7 +20,7 @@ function Get-ServerSSLCertificate {
         System.Object.
     .EXAMPLE
         PS C:\> Get-ServerSSLCertificate -Machine 'myMachine.com' -Context 'https://arcgis.com/arcgis' -Token $token -Certificate 'myCertificate'
-        Get SSL certificate of Server system
+        Get SSL certificate information for Server system
     .NOTES
         General notes
         https://developers.arcgis.com/rest/enterprise-administration/server/certificate.htm

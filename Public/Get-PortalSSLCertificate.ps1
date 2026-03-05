@@ -3,7 +3,7 @@ function Get-PortalSSLCertificate {
     .SYNOPSIS
         Get Portal SSL certificate
     .DESCRIPTION
-        Get Portal SSL certificate
+        Get Portal SSL certificate information
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -20,7 +20,7 @@ function Get-PortalSSLCertificate {
         System.Object.
     .EXAMPLE
         PS C:\> Get-PortalSSLCertificate -Machine 'myMachine.com' -Context 'https://arcgis.com/arcgis' -Token $token -Certificate 'myCertificate'
-        Get SSL certificate of Portal system
+        Get SSL certificate information for Portal system
     .NOTES
         General notes
         https://developers.arcgis.com/rest/enterprise-administration/server/certificate.htm
