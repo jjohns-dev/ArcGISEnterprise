@@ -48,7 +48,7 @@ function Get-PortalSSLCertificate {
     )
     Process {
         $restParams = @{
-            Uri    = '{0}/portaladmin/machines/{1}/sslcertificates/{2}' -f $Context, $Machine, $Certificate
+            Uri    = '{0}/portaladmin/machines/{1}/sslCertificates/{2}' -f $Context, $Machine, $Certificate
             Method = 'GET'
             Body   = @{
                 f     = 'json'
