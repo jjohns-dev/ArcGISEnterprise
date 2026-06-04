@@ -54,14 +54,14 @@ function Set-PortalDefaultUserLicenseType {
         Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
 
         # VALIDATE PARAMETERS
-        if (-Not $Role -and -Not $UserLicenseType) { Throw 'Role and/or UserLicenseType required' }
+        if (-Not $Role -and -Not $UserLicenseType) { Write-Error -Message 'Role and/or UserLicenseType required' -ErrorAction Stop }
 
         # GET LICENSE
         $licenses = Get-PortalLicense -Context $Context -Token $Token
 
         # VALIDATE PROVIDED LICENSE TYPE
         if ($UserLicenseType -notin $licenses.userTypes.id) {
-            Throw ('Provided user license "{0}" not valid.' -f $UserLicenseType)
+            Write-Error -Message ('Provided user license "{0}" not valid.' -f $UserLicenseType) -ErrorAction Stop
         }
     }
     Process {

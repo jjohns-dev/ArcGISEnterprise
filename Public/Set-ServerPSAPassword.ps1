@@ -70,7 +70,7 @@ function Set-ServerPSAPassword {
             Invoke-RestMethod @restParams
         }
         else {
-            throw 'ArcGIS Server PSA is disabled.'
+            Write-Error -Message 'ArcGIS Server PSA is disabled.' -ErrorAction Stop
         }
     }
 }

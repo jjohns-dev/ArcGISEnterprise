@@ -71,7 +71,7 @@ function Revoke-PortalUserItemAccess {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
     }

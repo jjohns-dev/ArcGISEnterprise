@@ -68,7 +68,7 @@ function Get-ServerServiceItemInfo {
         $service = $svcList.services | Where-Object serviceName -EQ $ServiceName
 
         # VALIDATE SERVICE
-        if (-Not $service) { throw ('Error 404: Service [{0}] not found.' -f $ServiceName) }
+        if (-Not $service) { Write-Error -Message ('Error 404: Service [{0}] not found.' -f $ServiceName) -ErrorAction Stop }
     }
     Process {
         # SET REQUEST PARAMETERS

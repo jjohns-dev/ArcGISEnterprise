@@ -85,7 +85,7 @@ function Get-PortalToken {
             elseif ( $response.ReasonPhrase ) { $msg = $response.ReasonPhrase }
             else { $msg = "Request failed with unknown error. Username and/or password may be incorrect." }
 
-            Throw $msg
+            Write-Error -Message $msg -ErrorAction Stop
         }
         else {
             $response

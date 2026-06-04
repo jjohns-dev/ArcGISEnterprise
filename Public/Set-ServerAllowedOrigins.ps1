@@ -73,7 +73,7 @@ function Set-ServerAllowedOrigins {
             $servDir = Get-ServerServicesDirectory @cmnParams
 
             # VALIDATE PREVIOUS CALL WAS SUCCESSFUL
-            if (-NOT $servDir) { Throw 'Unable to retrieve ArcGIS Server properties' }
+            if (-NOT $servDir) { Write-Error -Message 'Unable to retrieve ArcGIS Server properties' -ErrorAction Stop }
 
             # RETAIN PREVIOUS SETTINGS
             $newConfig = @{}; $members = $servDir.psobject.Members.Where({ $_.MemberType -EQ 'NoteProperty' })

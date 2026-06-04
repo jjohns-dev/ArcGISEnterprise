@@ -67,7 +67,7 @@ function Set-PortalUserPassword {
             Invoke-RestMethod @restParams
         }
         else {
-            throw ('User "{0}" not found in Portal "{1}"' -f $username, $Context)
+            Write-Error -Message ('User "{0}" not found in Portal "{1}"' -f $username, $Context) -ErrorAction Stop
         }
     }
 }

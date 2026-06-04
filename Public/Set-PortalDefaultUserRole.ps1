@@ -71,7 +71,7 @@ function Set-PortalDefaultUserRole {
         }
 
         # VALIDATE PROVIDED ROLE
-        if (-Not $inRole) { Throw ('Provided role "{0}" not valid.' -f $Role) }
+        if (-Not $inRole) { Write-Error -Message ('Provided role "{0}" not valid.' -f $Role) -ErrorAction Stop }
 
         # VERBOSE
         Write-Verbose -Message ('Role selected - Name: "{0}"; Id: "{1}"' -f $inRole.name, $inRole.id)
