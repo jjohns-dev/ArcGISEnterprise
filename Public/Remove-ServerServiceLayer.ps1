@@ -62,7 +62,7 @@ function Remove-ServerServiceLayer {
             Body   = @{
                 f                    = 'json'
                 token                = $Token
-                deleteFromDefinition = @{ layers = @( @{ id = $LayerId } ) } | ConvertTo-Json -Compress
+                deleteFromDefinition = @{ layers = @( @{ id = $LayerId } ) } | ConvertTo-Json -Depth 3 -Compress
             }
         }
 

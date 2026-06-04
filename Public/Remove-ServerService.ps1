@@ -67,7 +67,7 @@ function Remove-ServerService {
             Body   = @{
                 f        = 'json'
                 token    = $Token
-                services = @{ services = @(@{folderName = $Folder; serviceName = $ServiceName; type = $Type}) } | ConvertTo-Json -Compress
+                services = @{ services = @(@{folderName = $Folder; serviceName = $ServiceName; type = $Type}) } | ConvertTo-Json -Depth 3 -Compress
             }
         }
 

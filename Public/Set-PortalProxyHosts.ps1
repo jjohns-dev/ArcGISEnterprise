@@ -80,7 +80,7 @@ function Set-PortalProxyHosts {
             Body   = @{
                 f     = 'json'
                 token = $Token
-                securityConfig = $newConfig | ConvertTo-Json -Compress
+                securityConfig = $newConfig | ConvertTo-Json -Depth 6 -Compress
             }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

@@ -75,7 +75,7 @@ function Add-PortalOAuthRedirectURI {
         $restParams = @{
             Uri    = '{0}/portaladmin/security/oauth/updateAppInfo' -f $Context
             Method = 'POST'
-            Body   = @{ appInfo = ($appInfo | ConvertTo-Json -Compress); f = 'json'; token = $Token }
+            Body   = @{ appInfo = ($appInfo | ConvertTo-Json -Depth 6 -Compress); f = 'json'; token = $Token }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED
