@@ -43,7 +43,7 @@ function Set-PortalConnection {
             $PSDefaultParameterValues['*-Portal*:Context'] = $Context
 
             # OUTPUT SUCCESS MESSAGE
-            if ($LASTEXITCODE -eq 0) { Write-Verbose -Message ('Portal connection set to: {0}' -f $Context) }
+            Write-Verbose -Message ('Portal connection set to: {0}' -f $Context)
         }
     }
 }
