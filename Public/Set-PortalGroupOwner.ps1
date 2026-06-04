@@ -52,7 +52,7 @@ function Set-PortalGroupOwner {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # PROBABLY NO NEED TO VALIDATE THE GROUP ID OR USERNAME AS THE API WILL RESPOND WITH AN ERROR IF INVALID
     }

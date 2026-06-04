@@ -32,7 +32,7 @@ function Format-ChangeSet {
         [System.Object] $ChangeSet
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # CREATE REPORT OBJECT ARRAYS
         $report = @{

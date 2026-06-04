@@ -29,7 +29,7 @@ function ConvertFrom-Epoch {
         [System.Int64[]] $Milliseconds
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         foreach ($ms in $Milliseconds) {

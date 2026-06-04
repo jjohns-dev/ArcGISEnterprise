@@ -45,7 +45,7 @@ function Get-PortalUserList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # CREATE USER ARRAY
         $userList = [System.Collections.Generic.List[System.Object]]::new()

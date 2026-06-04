@@ -31,7 +31,7 @@ function Format-CsvHeader {
         [System.Management.Automation.SwitchParameter] $KeepHeaders
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # GET FILE CONTENT

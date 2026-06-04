@@ -48,7 +48,7 @@ function Get-PortalGroupContent {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # CREATE USER ARRAY
         $itemList = [System.Collections.Generic.List[System.Object]]::new()

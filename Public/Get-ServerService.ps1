@@ -76,7 +76,7 @@ function Get-ServerService {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

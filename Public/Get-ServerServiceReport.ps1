@@ -70,7 +70,7 @@ function Get-ServerServiceReport {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # OUTPUT VERBOSE
         Write-Verbose -Message ('Parameter set: [{0}]' -f $PSCmdlet.ParameterSetName)

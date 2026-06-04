@@ -51,7 +51,7 @@ function Set-PortalDefaultUserLicenseType {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE PARAMETERS
         if (-Not $Role -and -Not $UserLicenseType) { Write-Error -Message 'Role and/or UserLicenseType required' -ErrorAction Stop }

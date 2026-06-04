@@ -55,7 +55,7 @@ function New-TableSchemaObject {
         [System.Management.Automation.SwitchParameter] $GID
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # CREATE LOOKUP TABLE FOR PROPERTIES
         New-Variable -Name 'TableFieldTypes' -Option ReadOnly -Value @{

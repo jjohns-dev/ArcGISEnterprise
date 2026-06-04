@@ -52,7 +52,7 @@ function Get-PortalUserItemList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {

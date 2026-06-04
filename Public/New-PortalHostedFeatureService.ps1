@@ -77,7 +77,7 @@ function New-PortalHostedFeatureService {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # GET HOSTED FEATURE SERVICE TEMPLATE AND CONVERT TO OBJECT
         Write-Verbose -Message 'Getting new hosted feature service template...'

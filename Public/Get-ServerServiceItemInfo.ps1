@@ -56,7 +56,7 @@ function Get-ServerServiceItemInfo {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # SET PARAMETERS
         $svcParams = $PSBoundParameters; $svcParams.Remove('ServiceName') | Out-Null

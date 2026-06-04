@@ -48,7 +48,7 @@ function Get-PortalRoleList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # CREATE ROLE ARRAY
         $roleList = [System.Collections.Generic.List[System.Object]]::new()
