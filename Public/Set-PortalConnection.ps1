@@ -1,4 +1,3 @@
-[System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '', Justification = 'Intentionally writes to $PSDefaultParameterValues to set default connection parameters for downstream cmdlets.')]
 function Set-PortalConnection {
     <#
     .SYNOPSIS
@@ -23,6 +22,7 @@ function Set-PortalConnection {
         - Version history is captured in repository commit history
         Comments:
     #>
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '', Justification = 'Intentionally writes to $PSDefaultParameterValues to set default connection parameters for downstream cmdlets.')]
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal for ArcGIS context')]
