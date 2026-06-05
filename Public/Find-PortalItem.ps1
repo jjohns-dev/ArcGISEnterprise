@@ -101,14 +101,9 @@ function Find-PortalItem {
     Begin {
         Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
-        <# # CHECK FOR NO INPUT
-        if (-NOT $Id -AND -NOT $Owner -AND -NOT $Tag -AND -NOT $Type -AND -NOT $Title) {
-            Throw 'No seach parameter found. Please add search parameter and try again.'
-        } #>
-
         # VALIDATE DATE PARAMETERS
         if ($PSBoundParameters.Keys -match 'CreatedDate' -and $PSBoundParameters.Keys -match 'ModifiedDate') {
-            # THOW ERROR
+            # COMBINING CREATED AND MODIFIED DATE FILTERS PRODUCES UNEXPECTED API RESULTS
             Write-Error -Message 'Using both created and modified dates produces unexpected results. Please use only one date type.' -ErrorAction Stop
         }
 
