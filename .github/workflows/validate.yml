@@ -14,6 +14,12 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    env:
+      # psake 5.0+ reads PSAKE_OUTPUT_FORMAT as a fallback when -OutputFormat
+      # isn't passed. GitHubActions emits ::error::/::warning::/::debug::
+      # workflow annotations so Pester / PSScriptAnalyzer failures show up
+      # as inline annotations on the PR.
+      PSAKE_OUTPUT_FORMAT: GitHubActions
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
 

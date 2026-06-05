@@ -1,4 +1,8 @@
 # PSake makes variables declared here available in other scriptblocks
+# Require psake v5 (5.0.0 introduced the two-phase compile/run model, Inputs/Outputs
+# caching, and the structured PsakeBuildResult that this build relies on).
+Version 5
+
 Properties {
     $ProjectRoot = $env:BHProjectPath
     if (-not $ProjectRoot) {
