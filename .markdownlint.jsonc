@@ -50,6 +50,11 @@
     // MD034 no-bare-urls: PlatyPS examples and links sometimes emit bare URLs.
     "MD034": false,
 
+    // MD037 no-space-in-emphasis: PlatyPS examples are emitted as unfenced
+    // plain text, so underscores in variable names (e.g., `$_data_owner`,
+    // `_EQ`) get parsed as emphasis markers and trip this rule.
+    "MD037": false,
+
     // MD040 fenced-code-language: PlatyPS SYNTAX blocks use untagged fences
     // (` ``` ` rather than ` ```powershell `) by design.
     "MD040": false,
