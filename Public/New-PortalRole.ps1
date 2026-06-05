@@ -24,12 +24,8 @@ function New-PortalRole {
         PS C:\> New-PortalRole @commonParams -Name 'testRole' -Description 'testRole'
         Create new role 'testRole' in Portal for ArcGIS
     .NOTES
-        Name:     New-PortalRole
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2022-07-19
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/create-role.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]

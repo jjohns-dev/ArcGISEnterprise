@@ -18,7 +18,7 @@ function Get-ServerServicesDirectory {
         PS C:\> Get-ServerServicesDirectory -Context 'https://arcgis.com/arcgis' -Token $token
         Returns ArcGIS Server services directory content
     .NOTES
-        General notes
+        Status: Stable
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

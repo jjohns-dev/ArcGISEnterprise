@@ -22,13 +22,9 @@ function New-PortalUserFolder {
         PS C:\> New-PortalUserFolder -Username jsmith -Title NewFolder -Context 'https://arcgis.com/arcgis' -Token $token
         Creates a folder titled 'NewFolder' in Portal for the user 'jsmith'.
     .NOTES
-        Name:     New-PortalUserFolder
-        Author:   Phillip Glodowski
-        Version:  0.1.0 | Last Edit: 2024-03-13
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/create-folder.htm
-        General notes:
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]

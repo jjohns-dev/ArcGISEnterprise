@@ -34,10 +34,7 @@ function Update-PortalOrganizationInformation {
         PS C:\> Update-PortalOrganizationInformation @cmnParams -SharePublicly $false -DisableEditing $true
         Disables the public sharing of Portal content and Portal User Profile editing
     .NOTES
-        Name:     Update-PortalOrganizationInformation
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-05-28
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/update.htm
         This function replaced functionality from the following old, deprecated functions:

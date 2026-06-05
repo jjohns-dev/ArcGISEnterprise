@@ -19,10 +19,7 @@ function Get-PortalSystemProperty {
         PS C:\> Get-PortalSystemProperty
         Returns the system properties of the ArcGIS Portal.
     .NOTES
-        Name:     Get-PortalSystemProperty
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/system-properties/
     #>

@@ -20,9 +20,7 @@ function Get-PortalItem {
         PS C:\> Get-PortalItem -ItemId 0e68d8058b744d1c95f709d2ae975232 @commonParams
         Returns Portal item with ID 0e68d8058b744d1c95f709d2ae975232
     .NOTES
-        Name:     Get-PortalItem
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/item.htm
     #>

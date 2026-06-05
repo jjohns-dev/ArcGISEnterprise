@@ -32,11 +32,8 @@ function Write-PortalUserItem {
         PS C:\> Write-PortalUserItem -FilePath C:\Data.xlsx @commonParams
         Uploads Data.xlsx as a Portal item for the current user
     .NOTES
-        Name:     Write-PortalUserItem
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2025-01-14
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/add-item.htm
         https://developers.arcgis.com/rest/users-groups-and-items/items-and-item-types.htm
         https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod

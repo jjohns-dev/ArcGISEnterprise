@@ -24,10 +24,7 @@ function Find-ServerAddressCandidate {
         PS C:\> Find-ServerAddressCandidate @cmnParams -SingleLine '380 New York St, Redlands, CA 92373'
         Returns geocoded address candidates
     .NOTES
-        Name:     Find-ServerAddressCandidate
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-23
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/geocode/find-address-candidates/
     #>

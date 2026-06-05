@@ -24,10 +24,7 @@ function Get-ServerServiceLifecycleInfo {
         PS C:\> Get-ServerServiceLifecycleInfo -Context 'https://arcgis.com/arcgis' -Token $token -ServiceName SampleWorldCities -ServiceType MapServer
         Returns the service object lifecycle information for the SampleWorldCities service
     .NOTES
-        Name:     Get-ServerServiceLifecycleInfo
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-07-10
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/serivce-lifecycle-info/
     #>

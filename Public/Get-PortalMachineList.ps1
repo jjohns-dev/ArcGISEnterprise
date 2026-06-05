@@ -18,7 +18,7 @@ function Get-PortalMachineList {
         PS C:\> Get-PortalMachineList -Context 'https://arcgis.com/arcgis' -Token $token
         Returns a list of Portal machines
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/portal/machines.htm
     #>
     [CmdletBinding()]

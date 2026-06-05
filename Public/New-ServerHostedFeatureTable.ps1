@@ -24,11 +24,8 @@ function New-ServerHostedFeatureTable {
         PS C:\> New-ServerHostedFeatureTable -ServiceName myNewService -TableName 'DataTable' -Field $Field @commonParams
         Creates a new table "layer" in a Hosted Feature Service with the name DataTable
     .NOTES
-        Name:     New-ServerHostedFeatureTable
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-16
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/services-reference/online/add-to-definition-feature-service-.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]

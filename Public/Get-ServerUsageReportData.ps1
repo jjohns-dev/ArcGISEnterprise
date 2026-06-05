@@ -24,10 +24,7 @@ function Get-ServerUsageReportData {
         PS C:\> Get-ServerUsageReportData -ReportName 'Make_Me_Cry' -ReportFormat CSV @commonParams
         Retrieves the usage data for the 'Make_Me_Cry' report and returns it as CSV.
     .NOTES
-        Name:     Get-ServerUsageReportData
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/queryreportdata/
     #>

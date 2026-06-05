@@ -20,7 +20,7 @@ function Get-ServerSSLCertificateList {
         PS C:\> Get-ServerSSLCertificateList -Machine 'myMachine.com' -Context 'https://arcgis.com/arcgis' -Token $token
         Get a list of Server SSL certificates for the specified Server system
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/server/sslcertificates.htm
     #>
     [CmdletBinding()]

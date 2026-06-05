@@ -33,12 +33,8 @@ function Get-PortalJobStatus {
         PS C:\> Get-PortalJobStatus -JobId j59ec3a9893e840bda95d65136b99f2e2 -DataStoreId $dsId -ServerId $sId @commonParams
         Returns a job status object for a "publish all layers" job
     .NOTES
-        Name:     Get-PortalJobStatus
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-03-25
-        - 0.1.1 - (2024-03-25) Updates to include publishAllDatasets job
-        - 0.1.0 - (2024-03-15) Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/status.htm
     #>
     [CmdletBinding(DefaultParameterSetName = '_item')]

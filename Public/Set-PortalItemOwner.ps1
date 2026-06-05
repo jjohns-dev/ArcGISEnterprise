@@ -30,10 +30,7 @@ function Set-PortalItemOwner {
         PS C:\> Set-PortalItemOwner @cmnParams -ItemId 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6' -UserName 'jsmith' -TargetUserName 'jdoe'
         Changes ownership of the item with ID 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6' from user 'jsmith' to user 'jdoe'.
     .NOTES
-        Name:     Set-PortalItemOwner
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-08-01
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/reassign-items/
         (old) https://developers.arcgis.com/rest/users-groups-and-items/reassign-item/

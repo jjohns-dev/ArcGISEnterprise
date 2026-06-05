@@ -18,14 +18,8 @@ function Set-ServerPSAPassword {
         PS C:\> Set-ServerPSAPassword -Context https://arcgisonline.com/arcgis -Credential $creds -NewPassword $new
         Set the Portal user specified by the "username" property of the $creds credential object to the password in the $new credential object
     .NOTES
-        Name:     Set-ServerPSAPassword
-        Author:   Phillip Glodowski, Justin Johns
-        Version:  0.2.1 | Last Edit: 2023-12-04
-        - 0.2.1 - Fixed error handling
-        - 0.2.0 - Renamed cmdlet to Set-ServerPSAPassword
-        - 0.1.0 - Initial version (Update-ServerPSA)
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/psa.htm
         https://developers.arcgis.com/rest/enterprise-administration/server/updatepsa.htm
         https://developers.arcgis.com/rest/users-groups-and-items/update-user.htm

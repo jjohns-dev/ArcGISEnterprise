@@ -24,11 +24,8 @@ function Move-PortalUserItem {
         PS C:\> Move-PortalUserItem
         Explanation of what the example does
     .NOTES
-        Name:     Move-PortalUserItem
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-15
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/move-items.htm
     #>
     [CmdletBinding()]

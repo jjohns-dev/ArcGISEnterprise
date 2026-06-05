@@ -20,7 +20,7 @@ function Get-ServerPSA {
         PS C:\> Get-ServerPSA -Context 'https://arcgis.com/arcgis' -Token $token
         Get PSA user from Server
     .NOTES
-        General notes:
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/server/psa/
     #>
     [CmdletBinding()]

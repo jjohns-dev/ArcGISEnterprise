@@ -22,10 +22,8 @@ function Get-PortalUserItemList {
         PS C:\> Get-PortalUserItemList @commonParams -UserName 'jsmith'
         Get all Portal items belonging to 'jsmith'
     .NOTES
-        Name:     Get-PortalUserItemList
-        Author:   Justin Johns
-        Version:  0.1.4 | Last Edit: 2025-07-22
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/search.htm
     #>
     [CmdletBinding()]

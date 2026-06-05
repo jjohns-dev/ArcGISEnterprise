@@ -30,12 +30,8 @@ function New-PortalHostedFeatureService {
         PS C:\> New-PortalHostedFeatureService -ServiceName myNewService -Description 'new' -Summary 'new' -Tag 'new', 'tag1'
         Creates a new Hosted Feature Service with the name myNewService
     .NOTES
-        Name:     New-PortalHostedFeatureService
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-03-16
-        - 0.1.1 - Added FolderId parameter
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/create-service.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]

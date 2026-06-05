@@ -18,10 +18,7 @@ function Get-ServerSystemProperty {
         PS C:\> Get-ServerSystemProperty
         Get the system properties of the ArcGIS Server.
     .NOTES
-        Name:     Get-ServerSystemProperty
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/serverproperties/
     #>

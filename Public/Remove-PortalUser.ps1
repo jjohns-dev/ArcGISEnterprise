@@ -23,10 +23,7 @@ function Remove-PortalUser {
         PS C:\> Remove-PortalUser -User jsmith @commonParams
         Deletes user jsmith
     .NOTES
-        Name:     Remove-PortalUser
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-05-30
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/remove-users-portal/
     #>

@@ -18,7 +18,7 @@ function Get-PortalIndexStatus {
         PS C:\> Get-PortalIndexStatus -Context 'https://arcgis.com/arcgis' -Token $token
         Get status of Portal indexes
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/portal/indexer-status.htm
     #>
     [CmdletBinding()]

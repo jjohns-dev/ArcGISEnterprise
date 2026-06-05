@@ -18,13 +18,7 @@ function Set-PortalUserPassword {
         PS C:\> Set-PortalUserPassword -Context https://arcgisonline.com/arcgis -Credential $creds -NewPassword $new
         Set the user ArcGIS Server specified by the "username" property of the $creds credential object to the password in the $new credential object
     .NOTES
-        Name:     Set-PortalUserPassword
-        Author:   Justin Johns
-        Version:  0.2.1 | Last Edit: 2023-12-04
-        - 0.2.1 - Fixed error handling
-        - 0.2.0 - Renamed cmdlet to Set-PortalUserPassword
-        - 0.1.0 - Initial version (Update-PortalPSA)
-        General notes:
+        Status: Stable
         https://developers.arcgis.com/rest/users-groups-and-items/update-user.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]

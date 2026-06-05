@@ -22,12 +22,8 @@ function Set-PortalDefaultUserRole {
         PS C:\> Set-PortalDefaultUserRole -Role 'Viewer' @cParams
         Sets the default user type to 'Viewer'
     .NOTES
-        Name:     Set-PortalDefaultUserRole
-        Author:   Phillip Glodowski, Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-11-06
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/set-user-default-settings.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]

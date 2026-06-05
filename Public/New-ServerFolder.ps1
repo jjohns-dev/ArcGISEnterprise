@@ -20,11 +20,8 @@ function New-ServerFolder {
         PS C:\> New-ServerFolder -FolderName 'my_test_folder' @commonParams
         Creates a new folder named 'my_test_folder' in ArcGIS Server
     .NOTES
-        Name:     New-ServerFolder
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-21
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/enterprise-administration/enterprise/create-folder.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]

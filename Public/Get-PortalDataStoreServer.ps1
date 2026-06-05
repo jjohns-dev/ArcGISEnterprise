@@ -22,11 +22,8 @@ function Get-PortalDataStoreServer {
         PS C:\> Get-PortalDataStoreServer -ItemId $itemId @commonParams
         Returns an array of Servers where the DataStore item ID is registered
     .NOTES
-        Name:     Get-PortalDataStoreServer
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

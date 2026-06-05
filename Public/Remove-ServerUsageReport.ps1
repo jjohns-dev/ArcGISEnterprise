@@ -20,10 +20,7 @@ function Remove-ServerUsageReport {
         PS C:\> Remove-ServerUsageReport @cmnParams -ReportName 'Test'
         Deletes the 'Test' usage report.
     .NOTES
-        Name:     Remove-ServerUsageReport
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-17
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/deleteusagereport/
     #>

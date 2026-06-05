@@ -26,10 +26,7 @@ function Get-ServerService {
         PS C:\> Get-ServerService @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer'
         Returns service metadata for the 'Geology' FeatureServer in the 'Energy' folder
     .NOTES
-        Name:     Get-ServerService
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/service/
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/

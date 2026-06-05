@@ -20,12 +20,8 @@ function Get-PortalOIDCList {
         PS C:\> Get-PortalOIDCList @cmnParams
         Retrieves the OpenID Connect configurations from the Portal for ArcGIS.
     .NOTES
-        Name:     Get-PortalOIDCList
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
-        <Link_To_API_Documentation>
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

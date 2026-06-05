@@ -24,10 +24,7 @@ function Get-PortalGroupItemJobStatus {
         PS C:\> Get-PortalGroupItemJobStatus @cmnParams -ItemId 0123456789ABCDEF
         Returns the job status information for the Portal Group export job with the ID 0123456789ABCDEF
     .NOTES
-        Name:     Get-PortalGroupItemJobStatus
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/export-group-content/
     #>

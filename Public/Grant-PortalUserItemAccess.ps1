@@ -28,10 +28,7 @@ function Grant-PortalUserItemAccess {
         PS C:\> Grant-PortalUserItemAccess -ItemId $iId -GroupId $myGroup.id @commonParams
         Shares the current user's Portal item with ID $iId to the group with ID $myGroup.id
     .NOTES
-        Name:     Grant-PortalUserItemAccess
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-22
-        - 0.1.0 - Initial version
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/share-items.htm
     #>

@@ -22,15 +22,7 @@ function Set-ServerAllowedOrigins {
         PS C:\> Set-ServerAllowedOrigins -Origin 'https://test.com', 'https://mySite.com'
         Sets ArcGIS Server allowed origins to 'https://test.com,https://mySite.com'
     .NOTES
-        Name:     Set-ServerAllowedOrigins
-        Author:   Justin Johns
-        Version:  0.1.4 | Last Edit: 2023-05-10
-        - 0.1.4 - Added switch parameter for SOAP handler
-        - 0.1.3 - Fixed issue with [System.Uri] adding trailing slash to Origin parameter
-        - 0.1.2 - Add validation to Origin parameter
-        - 0.1.1 - Updates to account for all server properties
-        - 0.1.0 - Initial version
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/server/edit-soap-handler-config.htm
         https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit.htm
     #>

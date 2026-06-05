@@ -22,12 +22,8 @@ function Get-ServerServiceList {
         PS C:\> Get-ServerServiceList
         Returns an service info including folders from ArcGIS Server
     .NOTES
-        Name:     Get-ServerServiceList
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-03-21
-        - 0.1.1 - (2024-03-20) Changed name, added ability to get service information for services in specified folder
-        - 0.1.0 - (2023-12-20) Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory.htm (REST endpoint)
         https://developers.arcgis.com/rest/enterprise-administration/server/services.htm (Admin endpoint)
     #>

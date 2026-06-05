@@ -16,10 +16,7 @@ function Set-GeoEventConnection {
         PS C:\> Set-GeoEventConnection
         Sets the default GeoEvent connection parameters for subsequent cmdlet calls.
     .NOTES
-        Name:     Set-GeoEventConnection
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-11-26
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
     #>
     [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '', Justification = 'Intentionally writes to $PSDefaultParameterValues to set default connection parameters for downstream cmdlets.')]

@@ -18,7 +18,7 @@ function Test-PortalFederation {
         PS C:\> Test-PortalFederation -Context 'https://arcgis.com/arcgis' -Token $token
         Validates status of Portal's ArcGIS Servers
     .NOTES
-        General notes
+        Status: Stable
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

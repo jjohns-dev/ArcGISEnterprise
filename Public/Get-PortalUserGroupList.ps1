@@ -20,10 +20,8 @@ function Get-PortalUserGroupList {
         PS C:\> Get-PortalUserGroupList -UserName jsmith -Context 'https://arcgis.com/arcgis' -Token $token
         Get groups owned by user 'jsmith'
     .NOTES
-        Name:     Get-PortalUserGroupList
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/group-search.htm
     #>
     [CmdletBinding()]

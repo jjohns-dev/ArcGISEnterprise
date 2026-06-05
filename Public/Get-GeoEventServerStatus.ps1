@@ -25,9 +25,7 @@ function Get-GeoEventServerStatus {
 
         Sends a web request to the GeoEvent Server health status endpoint
     .NOTES
-        Name:     Get-GeoEventServerStatus
-        Author:   Phillip Glodowski
-        Version:  0.1.0 | Last Edit: 2025-11-14
+        Status: Stable
 
         API Documentation can be found at:
         https://yourgeoeventserver.domain/geoevent/admin/api/index.html

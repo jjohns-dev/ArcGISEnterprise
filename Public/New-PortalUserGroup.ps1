@@ -50,11 +50,8 @@ function New-PortalUserGroup {
         PS C:\> New-PortalUserGroup
         Creates a new folder named 'my_test_folder' in ArcGIS Server
     .NOTES
-        Name:     New-PortalUserGroup
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2025-05-01
-        - Version history is captured in repository commit history
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/create-group.htm
         https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#group-parameters
     #>

@@ -24,12 +24,8 @@ function Set-PortalRolePrivilege {
         PS C:\> Set-PortalRolePrivilege @commonParams -RoleId 123456 -Privilege @("portal:user:createItem","portal:user:joinGroup")
         Set Portal role privileges for role ID '123456'
     .NOTES
-        Name:     Set-PortalRolePrivilege
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2022-07-19
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/set-role-privileges.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]

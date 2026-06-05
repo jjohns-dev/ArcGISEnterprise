@@ -24,11 +24,8 @@ function Invoke-ServerHostedFeatureQuery {
         PS C:\> Invoke-ServerHostedFeatureQuery -Where 'ObjectId=1001' -ServiceName MyService -layerId 0 @commonParams
         Query MyServer LayerId 0 for a record with ObjectId 1001
     .NOTES
-        Name:     Invoke-ServerHostedFeatureQuery
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-14
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer-.htm
     #>
     [CmdletBinding()]

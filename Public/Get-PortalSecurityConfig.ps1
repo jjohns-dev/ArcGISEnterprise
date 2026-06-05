@@ -18,7 +18,7 @@ function Get-PortalSecurityConfig {
         PS C:\> Get-PortalSecurityConfig -Context 'https://arcgis.com/arcgis' -Token $token
         Get security configuration from Portal
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/portal/security-configuration.htm
     #>
     [CmdletBinding()]

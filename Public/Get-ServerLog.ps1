@@ -28,10 +28,7 @@ function Get-ServerLog {
         PS C:\> Get-ServerLog @commonParams -Level 'SEVERE'
         Get all server logs with a level of SEVERE
     .NOTES
-        Name:     Get-ServerLog @commonParams
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/logsquery.htm
     #>

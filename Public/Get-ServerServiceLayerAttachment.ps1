@@ -28,10 +28,7 @@ function Get-ServerServiceLayerAttachment {
         PS C:\> Get-ServerServiceLayerAttachment @cmnParams -GlobalId '96B099D7-C4FD-4B73-99E6-C7D6552F4E22' -LayerId 0 -ServiceName 'dashboard'
         Returns the attachment(s) for the feature with the global ID '96B099D7-C4FD-4B73-99E6-C7D6552F4E22' in the 'dashboard' service
     .NOTES
-        Name:     Get-ServerServiceLayerAttachment
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-attachments-feature-service-layer/
     #>

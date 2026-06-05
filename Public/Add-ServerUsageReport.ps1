@@ -53,10 +53,7 @@ function Add-ServerUsageReport {
         PS C:\> Add-ServerUsageReport @cmnParams @reportParams
         Creates a new usage report for the 'Make_Me_Cry' service with 1 hour aggregation interval from Dec 11 to Feb 4.
     .NOTES
-        Name:     Add-ServerUsageReport
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2025-02-06
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/createusagereport/
     #>

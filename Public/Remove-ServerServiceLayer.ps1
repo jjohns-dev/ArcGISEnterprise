@@ -23,11 +23,8 @@ function Remove-ServerServiceLayer {
         PS C:\> Remove-ServerServiceLayer -ServiceName myServer -LayerId 0
         Removes layer 0 from "myServer"
     .NOTES
-        Name:     Remove-ServerServiceLayer
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-07
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/services-reference/online/delete-from-definition-feature-service-.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]

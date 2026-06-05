@@ -20,7 +20,7 @@ function Get-PortalUser {
         PS C:\> Get-PortalUser -Context 'https://arcgis.com/arcgis' -Username 'joe' -Token $token
         Returns user object with username 'joe' from Portal
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/users-groups-and-items/user.htm
     #>
     [CmdletBinding()]

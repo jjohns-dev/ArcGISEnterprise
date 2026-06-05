@@ -23,10 +23,7 @@ function Set-PortalGroupOwner {
         PS C:\> Set-PortalGroupOwner @cmnParams -GroupID '12345678901234567890123456789012' -UserName 'jsmith'
         Reassign the group with ID '12345678901234567890123456789012' to the user 'jsmith'.
     .NOTES
-        Name:     Set-PortalGroupOwner
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-04-28
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/reassign-group/
     #>

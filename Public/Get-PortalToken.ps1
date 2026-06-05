@@ -20,7 +20,7 @@ function Get-PortalToken {
         PS C:\> Get-PortalToken -Context https://mydomain.com/arcgis -Credential $creds
         Generate token for mydomain.com
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/users-groups-and-items/generate-token.htm
     #>
     [CmdletBinding()]

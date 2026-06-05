@@ -20,7 +20,7 @@ function Get-PortalSSLCertificateList {
         PS C:\> Get-PortalSSLCertificateList -Machine 'myMachine.com' -Context 'https://arcgis.com/arcgis' -Token $token
         Get a list of Portal SSL certificates for the specified Portal system
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/server/sslcertificates.htm
     #>
     [CmdletBinding()]

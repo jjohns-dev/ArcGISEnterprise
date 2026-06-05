@@ -18,7 +18,7 @@ function Get-ServerLicense {
         PS C:\> Get-ServerLicense -Context 'https://arcgis.com/arcgis' -Token $token
         Returns ArcGIS Server license info
     .NOTES
-        General notes
+        Status: Stable
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

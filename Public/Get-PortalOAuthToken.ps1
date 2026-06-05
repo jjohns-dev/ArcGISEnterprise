@@ -18,7 +18,7 @@ function Get-PortalOAuthToken {
         PS C:\> Get-PortalOAuthToken -Context 'https://arcgis.com/arcgis' -Credential $creds
         Get OAuth token for Portal application
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/users-groups-and-items/token.htm
     #>
     [CmdletBinding()]

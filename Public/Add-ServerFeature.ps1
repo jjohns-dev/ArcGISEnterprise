@@ -28,11 +28,9 @@ function Add-ServerFeature {
         PS C:\> Add-ServerFeature @commonParams -Record $rec -ServiceName "dashboard"
         Add records to a Hosted Feature Service named "dashboard"
     .NOTES
-        Name:     Add-ServerFeature
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-02-19
+        Status: Stable
         - See commit history for version changes
-        Comments: <Comment(s)>
+        Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
     #>
     [CmdletBinding()]

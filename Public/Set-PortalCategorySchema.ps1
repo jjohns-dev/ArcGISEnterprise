@@ -23,10 +23,7 @@ function Set-PortalCategorySchema {
         PS C:\> Set-PortalCategorySchema @cmnParams -Schema $schema
         Gets the content category schema for the organization and then sets the exact same schema again.
     .NOTES
-        Name:     Set-PortalCategorySchema
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-08
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/assign-category-schema/
     #>

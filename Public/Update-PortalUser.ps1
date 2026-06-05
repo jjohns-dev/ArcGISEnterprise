@@ -42,10 +42,7 @@ function Update-PortalUser {
         arbitrary and then change it again to the correct value. This resets the "provider" property
         to "enterprise."
     .NOTES
-        Name:     Update-PortalUser
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-05-30
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/update-user/
         https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#user-parameters

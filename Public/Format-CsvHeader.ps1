@@ -16,10 +16,8 @@ function Format-CsvHeader {
         PS C:\> Format-CsvHeader -Path C:\temp\file.csv
         Sanitizes headers and returns data as array of objects
     .NOTES
-        Name:     Format-CsvHeader
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-01-20
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

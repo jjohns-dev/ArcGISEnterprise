@@ -28,10 +28,7 @@ function Import-PortalGroupItem {
         PS C:\> Import-PortalGroupItem -GroupId 'ad46a0e1a74742aeb4314250c3ea90e4' -ItemId '2b28061dc08d4834be808500ac2bd967' @commonParams
         Starts a job to import of all content from item with ID '2b28061dc08d4834be808500ac2bd967' to group ID 'ad46a0e1a74742aeb4314250c3ea90e4'
     .NOTES
-        Name:     Import-PortalGroupItem
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-15
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/import-group/
     #>

@@ -48,10 +48,7 @@ function Publish-PortalDataStoreLayer {
         PS C:\> Get-PortalJobStatus -JobId $sync.jobId -DataStoreId $sync.datastoreId -ServerId $sync.serverId @commonParams
         Syncs and update all layer item properties using using source dataset's metadata. Then check the job status.
     .NOTES
-        Name:     Publish-PortalDataStoreLayer
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-25
-        - 0.1.0 - Initial version
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/publish-layers.htm
     #>

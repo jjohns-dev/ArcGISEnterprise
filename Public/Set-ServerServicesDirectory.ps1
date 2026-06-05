@@ -24,10 +24,7 @@ function Set-ServerServicesDirectory {
         PS C:\> Set-ServerServicesDirectory @cmnParams -CallbackFunctionsEnabled $false
         Set the Callback Functions enabled property to false.
     .NOTES
-        Name:     Set-ServerServicesDirectory
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-04-15
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit/
     #>

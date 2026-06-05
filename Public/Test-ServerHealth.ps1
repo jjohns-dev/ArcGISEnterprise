@@ -20,7 +20,7 @@ function Test-ServerHealth {
         PS C:\> Test-ServerHealth -Context 'https://arcgis.com/arcgis'
         Send a request to the ArcGIS Server heealth check endpoint
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/services-reference/enterprise/health-check.htm
     #>
     [CmdletBinding()]

@@ -26,10 +26,7 @@ function Set-PortalSystemProperty {
         PS C:\> Set-PortalSystemProperty @cmnParams -EnablePrintService $false
         Set the Enable Print Service property to false.
     .NOTES
-        Name:     Set-PortalSystemProperty
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-06-12
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/update-system-properties/
     #>

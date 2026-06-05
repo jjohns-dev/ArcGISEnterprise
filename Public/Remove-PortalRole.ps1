@@ -22,12 +22,8 @@ function Remove-PortalRole {
         PS C:\> Remove-PortalRole -RoleId '123456' @commonParams
         Removes role with ID 123456 from Portal for ArcGIS
     .NOTES
-        Name:     Remove-PortalRole
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2023-03-13
-        - 0.1.1 - Added support for ShouldProcess
-        - 0.1.0 - (2022-07-19) Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/delete-role.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]

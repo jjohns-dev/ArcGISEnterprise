@@ -26,9 +26,7 @@ function Get-ServerToken {
         PS C:\> Get-ServerToken -URL https://mydomain.com/arcgis -Credential $creds
         Generate token for mydomain.com
     .NOTES
-        Name:     Get-ServerToken
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-11-14
+        Status: Stable
 
         -- SERVER ENDPONITS --
         https://myDomain.com/arcgis/admin/login

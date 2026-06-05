@@ -20,7 +20,7 @@ function Test-PortalHealth {
         PS C:\> Test-PortalHealth -Context 'https://arcgis.com/arcgis'
         Send a request to the Portal heealth check endpoint
     .NOTES
-        General notes
+        Status: Stable
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

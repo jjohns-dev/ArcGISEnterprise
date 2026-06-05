@@ -24,10 +24,7 @@ function Add-PortalUserToGroup {
         PS C:\> Add-PortalUserToGroup -GroupId $gid -UserName 'jsmith', 'jdoe' -AdminName 'jdoe' @commonParams
         Adds users 'jsmith' and 'jdoe' as members of the group and adds 'jdoe' as a group manager
     .NOTES
-        Name:     Add-PortalUserToGroup
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-05-28
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/add-users-to-group/
     #>

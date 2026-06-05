@@ -26,10 +26,7 @@ function Get-ServerServiceLayer {
         PS C:\> Get-ServerServiceLayer @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer' -LayerId 0
         Returns service layer metadata for the first layer of the 'Geology' FeatureServer in the 'Energy' folder
     .NOTES
-        Name:     Get-ServerServiceLayer
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
     #>

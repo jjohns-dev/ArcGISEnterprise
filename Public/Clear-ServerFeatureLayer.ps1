@@ -24,10 +24,7 @@ function Clear-ServerFeatureLayer {
         PS C:\> Clear-ServerFeatureLayer @cmnParams -ServiceName myCoolService -LayerId 0 -FolderName Hosted
         Truncates all features and attachments in the service layer.
     .NOTES
-        Name:     Clear-ServerFeatureLayer
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-03-06
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/fs-truncate/
 

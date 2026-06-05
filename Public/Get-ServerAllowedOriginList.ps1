@@ -20,12 +20,8 @@ function Get-ServerAllowedOriginList {
         PS C:\> Get-ServerAllowedOriginList @params
         Gets the allowed origins for ArcGIS Server
     .NOTES
-        Name:     Get-ServerAllowedOriginList
-        Author:   Justin Johns
-        Version:  0.1.3 | Last Edit: 2024-07-18
-        - Version history is capture in repository commit history
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

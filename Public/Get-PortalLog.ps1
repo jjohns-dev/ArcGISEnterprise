@@ -28,10 +28,7 @@ function Get-PortalLog {
         PS C:\> Get-PortalLog @commonParams -EndTime (Get-Date).AddDays(-7)
         Get all portal logs from the last 7 days
     .NOTES
-        Name:     Get-PortalLog
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-08-23
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/query-logs.htm
     #>

@@ -24,10 +24,7 @@ function Find-ServerReverseGeocode {
         PS C:\> Find-ServerReverseGeocode @cmnParams -ServiceName 'MyGeoCoder' -Location ([pscustomobject] @{ x = -117.187592395203; y = 34.062863813743 })
         Returns physical address for provided location coordinates
     .NOTES
-        Name:     Find-ServerReverseGeocode
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-23
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/geocode/reverse-geocode/
     #>

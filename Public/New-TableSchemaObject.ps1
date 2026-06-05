@@ -24,10 +24,7 @@ function New-TableSchemaObject {
         PS C:\> New-TableSchemaObject -Type string -Name RegionName -Alias "Region Name" -Length 255
         Returns an object with all required properties for a schema component of a Hosted Feature Service table
     .NOTES
-        Name:     New-TableSchemaObject
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-01-28
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
     #>
     [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '', Justification = 'Creates an in-memory object only; does not call any API or change any external state.')]

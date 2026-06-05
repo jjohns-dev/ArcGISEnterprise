@@ -24,11 +24,8 @@ function Remove-ServerService {
         PS C:\> Remove-ServerService
         Explanation of what the example does
     .NOTES
-        Name:     Remove-ServerService
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-07
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/deleteservices.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]

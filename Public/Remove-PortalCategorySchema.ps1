@@ -20,10 +20,7 @@ function Remove-PortalCategorySchema {
         PS C:\> Remove-PortalCategorySchema @cmnParams
         Removes the category schema set for the organization
     .NOTES
-        Name:     Remove-PortalCategorySchema
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-01-15
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/delete-category-schema/
     #>

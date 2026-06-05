@@ -22,7 +22,7 @@ function Get-ServerServiceItemInfo {
         PS C:\> Get-ServerServiceItemInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
         Returns the service item info for service $s
     .NOTES
-        General notes:
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/server/services.htm
     #>
     [CmdletBinding()]

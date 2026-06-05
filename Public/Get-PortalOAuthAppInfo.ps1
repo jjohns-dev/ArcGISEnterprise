@@ -20,12 +20,8 @@ function Get-PortalOAuthAppInfo {
         PS C:\> Get-PortalOAuthAppInfo @commonParams
         Gets the information associated with the app 'arcgisonline'
     .NOTES
-        Name:     Get-PortalOAuthAppInfo
-        Author:   Justin Johns, Phillip Glodowski
-        Version:  0.1.0 | Last Edit: 2023-03-14
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/get-app-info.htm
     #>
     [CmdletBinding()]

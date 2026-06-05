@@ -24,10 +24,8 @@ function Remove-PortalItem {
         PS C:\> Remove-PortalItem
         Explanation of what the example does
     .NOTES
-        Name:     Remove-PortalItem
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-05-15
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/delete-item.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]

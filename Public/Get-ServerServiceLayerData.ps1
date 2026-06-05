@@ -26,10 +26,7 @@ function Get-ServerServiceLayerData {
         PS C:\> Get-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -LayerId 0
         Returns all data for the first layer of the 'Geology' service
     .NOTES
-        Name:     Get-ServerServiceLayerData
-        Author:   Justin Johns
-        Version:  0.1.3 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/
     #>

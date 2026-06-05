@@ -20,10 +20,7 @@ function Unregister-ServerDataItem {
         PS C:\> Unregister-ServerDataItem -ItemPath /nosqlDatabases/AGSDataStore_cache_cs_jbpc7nk
         unregisters the DataSTore cache store data item registered with the Server's data store.
     .NOTES
-        Name:     Unregister-ServerDataItem
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-09-11
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/unregisterdataitem/
     #>

@@ -16,10 +16,8 @@ function Format-ChangeSet {
         PS C:\> Format-ChangeSet
         Explanation of what the example does
     .NOTES
-        Name:     Format-ChangeSet
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-10-30
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

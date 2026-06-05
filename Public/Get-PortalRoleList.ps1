@@ -20,13 +20,8 @@ function Get-PortalRoleList {
         PS C:\> Get-PortalRoleList @commonParams
         Get Portal for ArcGIS roles including privilege information
     .NOTES
-        Name:     Get-PortalRoleList
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2023-05-11
-        - 0.1.1 - Makes multiple requests to get all roles if more than 50
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/roles.htm
     #>
     [CmdletBinding()]

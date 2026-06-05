@@ -20,7 +20,7 @@ function Get-PortalSecurityPolicy {
         PS C:\> Get-SecurityPolicy -Context 'https://arcgis.com/arcgis' -Token $token
         Get security policy for Portal user
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/users-groups-and-items/security-policy.htm
     #>
     [CmdletBinding()]

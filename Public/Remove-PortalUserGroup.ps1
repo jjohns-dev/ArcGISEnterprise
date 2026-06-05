@@ -20,11 +20,8 @@ function Remove-PortalUserGroup {
         PS C:\> Remove-PortalUserGroup -GroupID $id @commonParams
         Deletes Portal user group with ID $id
     .NOTES
-        Name:     Remove-PortalUserGroup
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-05-30
-        - Version history is capture in repository commit history
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/delete-group.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]

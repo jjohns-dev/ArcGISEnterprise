@@ -24,9 +24,7 @@ function Get-GeoEventServerMonitorStatus {
 
         Retrieves a list of all GeoEvent Server Monitor Status objects
     .NOTES
-        Name:     Get-GeoEventServerMonitorStatus
-        Author:   Phillip Glodowski
-        Version:  0.1.0 | Last Edit: 2025-11-14
+        Status: Stable
 
         API Documentation can be found at:
         https://yourgeoeventserver.domain/geoevent/admin/api/index.html
