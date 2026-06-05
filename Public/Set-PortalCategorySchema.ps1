@@ -72,3 +72,5 @@ function Set-PortalCategorySchema {
         if ($PSCmdlet.ShouldProcess($PortalId, 'Set Portal category schema')) {
             Invoke-RestMethod @restParams
         }
+    }
+}

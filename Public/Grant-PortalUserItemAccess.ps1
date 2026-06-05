@@ -110,3 +110,5 @@ function Grant-PortalUserItemAccess {
         if ($PSCmdlet.ShouldProcess(($ItemId -join ', '), 'Grant Portal item access')) {
             Invoke-RestMethod @restParams
         }
+    }
+}
