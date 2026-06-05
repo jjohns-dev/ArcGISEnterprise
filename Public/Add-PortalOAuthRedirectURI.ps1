@@ -31,6 +31,7 @@ function Add-PortalOAuthRedirectURI {
         https://developers.arcgis.com/rest/enterprise-administration/portal/update-app-info.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'AppID')]
         [ValidateNotNullOrEmpty()]

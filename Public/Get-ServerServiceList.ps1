@@ -32,6 +32,7 @@ function Get-ServerServiceList {
         https://developers.arcgis.com/rest/enterprise-administration/server/services.htm (Admin endpoint)
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-ServerServiceInfo')]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Target folder to retrieve service info')]

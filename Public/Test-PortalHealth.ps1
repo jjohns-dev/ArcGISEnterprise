@@ -23,6 +23,7 @@ function Test-PortalHealth {
         General notes
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

@@ -35,6 +35,7 @@ function Invoke-PortalItemAnalysis {
         https://developers.arcgis.com/rest/users-groups-and-items/analyze.htm
     #>
     [CmdletBinding(DefaultParameterSetName = '_itid')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_itid', HelpMessage = 'Id of previously uploaded Portal item')]
         [ValidatePattern('[a-f0-9]{32}')]

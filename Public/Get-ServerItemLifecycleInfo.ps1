@@ -31,6 +31,7 @@ function Get-ServerItemLifecycleInfo {
         https://developers.arcgis.com/rest/enterprise-administration/server/dataitem/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Data item type')]
         [ValidateSet('enterpriseDatabases', 'fileShares', 'nosqlDatabases', 'bigDataFileShares', 'cloudStores', 'rasterStores')]

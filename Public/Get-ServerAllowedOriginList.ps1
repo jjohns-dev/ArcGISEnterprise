@@ -28,6 +28,7 @@ function Get-ServerAllowedOriginList {
         General notes
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-ServerAllowedOrigins')]
     Param(
         [Parameter(HelpMessage = 'Get SOAP Allowed Origins')]

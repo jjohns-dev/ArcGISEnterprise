@@ -32,6 +32,7 @@ function Find-ServerAddressCandidate {
         https://developers.arcgis.com/rest/geocode/find-address-candidates/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Geocode Server Service Name')]
         [ValidateNotNullOrEmpty()]

@@ -28,6 +28,7 @@ function Get-ServerHostedFeatureService {
         https://developers.arcgis.com/rest/services-reference/enterprise/layer-feature-service-.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-ServerHostedFeatureServer')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]

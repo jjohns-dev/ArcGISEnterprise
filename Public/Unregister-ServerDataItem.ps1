@@ -28,6 +28,7 @@ function Unregister-ServerDataItem {
         https://developers.arcgis.com/rest/enterprise-administration/server/unregisterdataitem/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'The item path for the data item')]
         [ValidatePattern('^[\w/]+$')]

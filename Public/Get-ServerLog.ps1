@@ -36,6 +36,7 @@ function Get-ServerLog {
         https://developers.arcgis.com/rest/enterprise-administration/server/logsquery.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Logging level to return')]
         [ValidateSet('SEVERE', 'WARNING', 'INFO', 'FINE', 'VERBOSE', 'DEBUG')]

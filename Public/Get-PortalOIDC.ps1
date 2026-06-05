@@ -30,6 +30,7 @@ function Get-PortalOIDC {
         <Link_To_API_Documentation>
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'ID of the OpenID Connect configuration')]
         [ValidateNotNullOrEmpty()]

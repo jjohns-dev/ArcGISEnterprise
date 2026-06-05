@@ -28,6 +28,7 @@ function Remove-ServerFolder {
         https://developers.arcgis.com/rest/enterprise-administration/server/deletefolder.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'New ArcGIS Server folder name')]
         [ValidatePattern('^\w{1,30}$')]

@@ -30,6 +30,7 @@ function Get-PortalRoleList {
         https://developers.arcgis.com/rest/users-groups-and-items/roles.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-PortalRole')] # be sure to export this alias in the module manifest
     Param(
         [Parameter(HelpMessage = 'Portal ID')]

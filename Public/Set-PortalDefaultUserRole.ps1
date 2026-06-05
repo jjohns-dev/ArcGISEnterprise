@@ -31,6 +31,7 @@ function Set-PortalDefaultUserRole {
         https://developers.arcgis.com/rest/users-groups-and-items/set-user-default-settings.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(HelpMessage = 'Portal ID')]
         [ValidateNotNullOrEmpty()]

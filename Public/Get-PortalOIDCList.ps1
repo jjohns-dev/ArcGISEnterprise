@@ -28,6 +28,7 @@ function Get-PortalOIDCList {
         <Link_To_API_Documentation>
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Portal application ID')]
         [ValidateNotNullOrEmpty()]

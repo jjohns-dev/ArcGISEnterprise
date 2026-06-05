@@ -32,6 +32,7 @@ function Remove-PortalUserFolder {
         https://developers.arcgis.com/rest/users-groups-and-items/delete-folder/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]

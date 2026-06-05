@@ -24,6 +24,7 @@ function Set-GeoEventConnection {
     #>
     [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '', Justification = 'Intentionally writes to $PSDefaultParameterValues to set default connection parameters for downstream cmdlets.')]
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
+    [OutputType([System.Void])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target ArcGIS GeoEvent context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

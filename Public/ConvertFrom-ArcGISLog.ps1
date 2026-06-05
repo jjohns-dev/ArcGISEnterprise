@@ -26,6 +26,7 @@ function ConvertFrom-ArcGISLog {
         General notes
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, Position = 0, ValueFromPipeline, HelpMessage = 'Path to log file')]
         [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]

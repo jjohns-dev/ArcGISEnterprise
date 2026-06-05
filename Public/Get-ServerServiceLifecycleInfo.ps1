@@ -32,6 +32,7 @@ function Get-ServerServiceLifecycleInfo {
         https://developers.arcgis.com/rest/enterprise-administration/server/serivce-lifecycle-info/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service name')]
         [ValidateNotNullOrEmpty()]

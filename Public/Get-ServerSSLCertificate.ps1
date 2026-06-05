@@ -26,6 +26,7 @@ function Get-ServerSSLCertificate {
         https://developers.arcgis.com/rest/enterprise-administration/server/certificate.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

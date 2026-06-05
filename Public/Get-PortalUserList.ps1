@@ -28,6 +28,7 @@ function Get-PortalUserList {
         https://developers.arcgis.com/rest/users-groups-and-items/users.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(HelpMessage = 'Portal ID')]
         [ValidateNotNullOrEmpty()]

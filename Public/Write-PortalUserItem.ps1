@@ -42,6 +42,7 @@ function Write-PortalUserItem {
         https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]

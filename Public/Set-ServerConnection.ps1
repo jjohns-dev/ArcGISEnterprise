@@ -24,6 +24,7 @@ function Set-ServerConnection {
     #>
     [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '', Justification = 'Intentionally writes to $PSDefaultParameterValues to set default connection parameters for downstream cmdlets.')]
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
+    [OutputType([System.Void])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target ArcGIS Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

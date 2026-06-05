@@ -26,6 +26,7 @@ function Get-ServerSystemProperty {
         https://developers.arcgis.com/rest/enterprise-administration/server/serverproperties/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

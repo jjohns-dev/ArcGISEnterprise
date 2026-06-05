@@ -34,6 +34,7 @@ function Get-ServerServiceLayerData {
         https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Find-ServerServiceLayerData')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service Layer ID')]

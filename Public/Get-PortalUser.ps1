@@ -24,6 +24,7 @@ function Get-PortalUser {
         https://developers.arcgis.com/rest/users-groups-and-items/user.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal username')]
         [ValidatePattern('^[\w\.@-]+$')]

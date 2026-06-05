@@ -59,6 +59,7 @@ function New-PortalUserGroup {
         https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#group-parameters
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Group title or name')]
         [ValidateNotNullOrEmpty()]

@@ -39,6 +39,7 @@ function Get-ServerServiceReport {
         - The function only supports the following service types: MapServer, ImageServer, FeatureServer
     #>
     [CmdletBinding(DefaultParameterSetName = '__svc')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Target folder', ParameterSetName = '__svc')]
         [Parameter(Mandatory = $false, HelpMessage = 'Target folder', ParameterSetName = '__ifd')]

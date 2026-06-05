@@ -24,6 +24,7 @@ function Get-PortalMachineStatus {
         https://developers.arcgis.com/rest/enterprise-administration/portal/status.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

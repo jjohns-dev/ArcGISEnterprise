@@ -32,6 +32,7 @@ function Revoke-PortalUserItemAccess {
         https://developers.arcgis.com/rest/users-groups-and-items/share-items.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Id of Portal item')]
         [ValidatePattern('[a-f0-9]{32}')]

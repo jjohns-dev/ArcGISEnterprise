@@ -37,6 +37,7 @@ function Get-ServerToken {
         https://developers.arcgis.com/rest/enterprise-administration/server/generatetoken.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal URL')]
         #[ValidatePattern('^https://[\w\/\.-]+[^/]$')]

@@ -32,6 +32,7 @@ function New-ServerHostedFeatureTable {
         https://developers.arcgis.com/rest/services-reference/online/add-to-definition-feature-service-.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]

@@ -33,6 +33,7 @@ function Find-ServerDataItem {
         https://developers.arcgis.com/rest/enterprise-administration/server/finddataitems/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Item type')]
         [ValidateSet('BigDataFileShare', 'CloudStore', 'EnterpriseDatabase', 'FileShare', 'NoSQLDatabase', 'RasterStore')]

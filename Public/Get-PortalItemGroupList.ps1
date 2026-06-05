@@ -28,6 +28,7 @@ function Get-PortalItemGroupList {
         https://developers.arcgis.com/rest/users-groups-and-items/groups.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal item ID')]
         [ValidatePattern('[a-f0-9]{32}')]

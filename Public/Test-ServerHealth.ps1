@@ -24,6 +24,7 @@ function Test-ServerHealth {
         https://developers.arcgis.com/rest/services-reference/enterprise/health-check.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target ArcGIS Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

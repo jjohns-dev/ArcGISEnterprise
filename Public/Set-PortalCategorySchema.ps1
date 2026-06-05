@@ -31,6 +31,7 @@ function Set-PortalCategorySchema {
         https://developers.arcgis.com/rest/users-groups-and-items/assign-category-schema/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal category schema')]
         [ValidateNotNullOrEmpty()]

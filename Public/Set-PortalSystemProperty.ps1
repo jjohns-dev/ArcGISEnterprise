@@ -34,6 +34,7 @@ function Set-PortalSystemProperty {
         https://developers.arcgis.com/rest/enterprise-administration/portal/update-system-properties/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Enable/disable Enterprise to communicate with GeoRSS feeds')]
         [ValidateNotNullOrEmpty()]

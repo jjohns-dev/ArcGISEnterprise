@@ -61,6 +61,7 @@ function Add-ServerUsageReport {
         https://developers.arcgis.com/rest/enterprise-administration/server/createusagereport/
     #>
     [CmdletBinding(DefaultParameterSetName = '__cnnd')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Report name')]
         [ValidateNotNullOrEmpty()]

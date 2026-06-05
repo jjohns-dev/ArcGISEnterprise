@@ -48,6 +48,7 @@ function Edit-ServerFeature {
         https://developers.arcgis.com/rest/services-reference/enterprise/apply-edits-feature-service-layer-.htm
     #>
     [CmdletBinding(DefaultParameterSetName = '_add')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_add', HelpMessage = 'Feature to add')]
         [ValidateScript({ $_.psobject.Properties.Name -contains 'attributes' })] # FEATURE MAY ALSO CONTAIN "geometry"

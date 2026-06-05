@@ -24,6 +24,7 @@ function Get-PortalSecurityPolicy {
         https://developers.arcgis.com/rest/users-groups-and-items/security-policy.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-SecurityPolicy')]
     Param(
         [Parameter(HelpMessage = 'Portal application ID')]

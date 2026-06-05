@@ -39,6 +39,7 @@ function Set-PortalItemOwner {
         (old) https://developers.arcgis.com/rest/users-groups-and-items/reassign-item/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ValueFromPipeline = $true, HelpMessage = 'Portal item ID')]
         [ValidatePattern('[a-f0-9]{32}')]

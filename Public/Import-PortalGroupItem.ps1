@@ -36,6 +36,7 @@ function Import-PortalGroupItem {
         https://developers.arcgis.com/rest/users-groups-and-items/import-group/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]

@@ -32,6 +32,7 @@ function Get-PortalUserFolderList {
         General notes
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]

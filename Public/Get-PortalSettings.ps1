@@ -27,6 +27,7 @@ function Get-PortalSettings {
         https://developers.arcgis.com/rest/users-groups-and-items/portal.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Test-PortalToken', 'Get-PortalSelf')]
     Param(
         <# [Parameter(HelpMessage = 'Portal ID')]

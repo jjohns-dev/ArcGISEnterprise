@@ -31,6 +31,7 @@ function Remove-PortalItem {
         https://developers.arcgis.com/rest/users-groups-and-items/delete-item.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Owner of Hosted Feature Service')]
         [ValidateNotNullOrEmpty()]

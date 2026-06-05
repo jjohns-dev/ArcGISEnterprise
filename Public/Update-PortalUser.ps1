@@ -51,6 +51,7 @@ function Update-PortalUser {
         https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#user-parameters
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]

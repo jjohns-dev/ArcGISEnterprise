@@ -36,6 +36,7 @@ function Publish-PortalCsvItemAsTable {
         https://developers.arcgis.com/documentation/mapping-apis-and-services/data-hosting/tutorials/tools/import-data-to-create-a-table/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Name of new Portal table')]
         [ValidateNotNullOrEmpty()]

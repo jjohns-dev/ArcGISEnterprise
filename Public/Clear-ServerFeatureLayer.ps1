@@ -37,6 +37,7 @@ function Clear-ServerFeatureLayer {
         service, not the current name.
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Feature Service name')]
         [ValidateNotNullOrEmpty()]

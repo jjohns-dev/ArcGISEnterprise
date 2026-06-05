@@ -29,6 +29,7 @@ function Get-PortalUserItemList {
         https://developers.arcgis.com/rest/users-groups-and-items/search.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]

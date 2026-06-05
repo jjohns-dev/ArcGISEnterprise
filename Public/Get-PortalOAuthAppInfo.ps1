@@ -29,6 +29,7 @@ function Get-PortalOAuthAppInfo {
         https://developers.arcgis.com/rest/enterprise-administration/portal/get-app-info.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'AppID')]
         [ValidateNotNullOrEmpty()]

@@ -28,6 +28,7 @@ function Remove-PortalUserGroup {
         https://developers.arcgis.com/rest/users-groups-and-items/delete-group.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]

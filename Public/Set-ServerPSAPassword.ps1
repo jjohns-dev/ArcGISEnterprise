@@ -31,6 +31,7 @@ function Set-ServerPSAPassword {
         https://developers.arcgis.com/rest/users-groups-and-items/update-user.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Update-ServerPSA')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Server base URI (a.k.a., context)')]

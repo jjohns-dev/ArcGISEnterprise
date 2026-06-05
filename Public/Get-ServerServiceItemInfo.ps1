@@ -26,6 +26,7 @@ function Get-ServerServiceItemInfo {
         https://developers.arcgis.com/rest/enterprise-administration/server/services.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         <# [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service object (use Get-ServerServiceList -Admin)')]
         [ValidateScript({ $_.serviceName -and $_.type })]

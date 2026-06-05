@@ -31,6 +31,7 @@ function Remove-PortalRole {
         https://developers.arcgis.com/rest/users-groups-and-items/delete-role.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Portal Role ID')]
         [ValidateNotNullOrEmpty()]

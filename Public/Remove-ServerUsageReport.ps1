@@ -28,6 +28,7 @@ function Remove-ServerUsageReport {
         https://developers.arcgis.com/rest/enterprise-administration/server/deleteusagereport/
     #>
     [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Report name')]
         [ValidateNotNullOrEmpty()]

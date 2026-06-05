@@ -22,6 +22,7 @@ function Format-CsvHeader {
         Comments: <Comment(s)>
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, Position = 0, HelpMessage = 'CSV file path')]
         [ValidateScript({ Test-Path -Path $_ -PathType Leaf -Filter '*.csv' })]

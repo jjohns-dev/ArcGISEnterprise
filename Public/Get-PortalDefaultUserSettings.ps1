@@ -28,6 +28,7 @@ function Get-PortalDefaultUserSettings {
         https://developers.arcgis.com/rest/users-groups-and-items/user-default-settings.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(HelpMessage = 'Portal ID')]
         [ValidateNotNullOrEmpty()]

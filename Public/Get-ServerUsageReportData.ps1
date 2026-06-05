@@ -32,6 +32,7 @@ function Get-ServerUsageReportData {
         https://developers.arcgis.com/rest/enterprise-administration/server/queryreportdata/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Report name')]
         [ValidateNotNullOrEmpty()]

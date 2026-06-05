@@ -24,6 +24,7 @@ function Get-ServerSSLCertificateList {
         https://developers.arcgis.com/rest/enterprise-administration/server/sslcertificates.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

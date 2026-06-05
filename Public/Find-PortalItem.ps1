@@ -50,6 +50,7 @@ function Find-PortalItem {
         (e.g., can only search for a single "tag" not two tags)
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Portal item Id')]
         [ValidateNotNullOrEmpty()]

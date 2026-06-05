@@ -30,6 +30,7 @@ function Set-ServerSystemProperty {
         https://developers.arcgis.com/rest/enterprise-administration/server/updateserverproperties/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Web Context URL')]
         [ValidateScript({ $_ -match '^https?://' })]

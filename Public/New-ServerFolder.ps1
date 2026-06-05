@@ -28,6 +28,7 @@ function New-ServerFolder {
         https://developers.arcgis.com/rest/enterprise-administration/enterprise/create-folder.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'New ArcGIS Server folder name')]
         [ValidatePattern('^\w{1,30}$')]

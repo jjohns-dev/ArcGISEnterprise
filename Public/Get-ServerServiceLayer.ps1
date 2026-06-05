@@ -34,6 +34,7 @@ function Get-ServerServiceLayer {
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service Layer ID')]
         [ValidateNotNullOrEmpty()]

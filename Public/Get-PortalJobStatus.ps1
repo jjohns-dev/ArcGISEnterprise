@@ -42,6 +42,7 @@ function Get-PortalJobStatus {
         https://developers.arcgis.com/rest/users-groups-and-items/status.htm
     #>
     [CmdletBinding(DefaultParameterSetName = '_item')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal job ID')]
         [ValidatePattern('j[a-f0-9]{32}')]

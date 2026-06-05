@@ -28,6 +28,7 @@ function Remove-PortalCategorySchema {
         https://developers.arcgis.com/rest/users-groups-and-items/delete-category-schema/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Portal application ID')]
         [ValidateNotNullOrEmpty()]

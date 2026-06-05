@@ -36,6 +36,7 @@ function Get-ServerServiceLayerAttachment {
         https://developers.arcgis.com/rest/services-reference/enterprise/query-attachments-feature-service-layer/
     #>
     [CmdletBinding(DefaultParameterSetName = '__gid')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '__gid', HelpMessage = 'Global ID')]
         [ValidatePattern('^[0-9a-fA-F]{8}(-[0-9a-fA-F]{4}){3}-[0-9a-fA-F]{12}$')]

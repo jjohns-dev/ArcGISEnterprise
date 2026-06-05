@@ -28,6 +28,7 @@ function Get-PortalLivingAtlasUpdate {
         https://developers.arcgis.com/rest/users-groups-and-items/check-for-updates/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(HelpMessage = 'Portal ID')]
         [ValidateNotNullOrEmpty()]

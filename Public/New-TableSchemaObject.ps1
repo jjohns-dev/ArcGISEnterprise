@@ -31,6 +31,7 @@ function New-TableSchemaObject {
         Comments:
     #>
     [CmdletBinding(DefaultParameterSetName = '_typ')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_typ', HelpMessage = 'Object type')]
         [ValidateSet('oid', 'gid', 'date', 'short', 'blob', 'double', 'guid', 'integer', 'string', 'long', 'float')]

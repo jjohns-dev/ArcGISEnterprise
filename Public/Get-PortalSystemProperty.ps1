@@ -27,6 +27,7 @@ function Get-PortalSystemProperty {
         https://developers.arcgis.com/rest/enterprise-administration/portal/system-properties/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

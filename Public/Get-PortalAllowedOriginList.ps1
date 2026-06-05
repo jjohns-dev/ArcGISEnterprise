@@ -25,6 +25,7 @@ function Get-PortalAllowedOriginList {
         General notes
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-PortalAllowedOrigins')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]

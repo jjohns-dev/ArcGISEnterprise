@@ -31,6 +31,7 @@ function Remove-ServerServiceLayer {
         https://developers.arcgis.com/rest/services-reference/online/delete-from-definition-feature-service-.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]

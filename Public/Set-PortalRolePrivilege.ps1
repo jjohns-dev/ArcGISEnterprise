@@ -33,6 +33,7 @@ function Set-PortalRolePrivilege {
         https://developers.arcgis.com/rest/users-groups-and-items/set-role-privileges.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Portal Role ID')]
         [ValidateNotNullOrEmpty()]

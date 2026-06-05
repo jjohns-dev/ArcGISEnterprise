@@ -34,6 +34,7 @@ function Get-GeoEventServerStatus {
     #>
 
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target GeoEvent Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

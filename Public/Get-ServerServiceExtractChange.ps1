@@ -36,6 +36,7 @@ function Get-ServerServiceExtractChange {
         https://developers.arcgis.com/rest/services-reference/enterprise/extract-changes-feature-service/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service name')]
         [ValidateNotNullOrEmpty()]

@@ -22,6 +22,7 @@ function Get-PortalOAuthToken {
         https://developers.arcgis.com/rest/users-groups-and-items/token.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

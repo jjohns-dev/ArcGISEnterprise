@@ -47,6 +47,7 @@ function Update-PortalOrganizationInformation {
         - Set-PortalUserProfileEditing
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Update-PortalOrgInfo')]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Share Portal items publicly')]

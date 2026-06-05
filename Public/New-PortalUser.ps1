@@ -52,6 +52,7 @@ function New-PortalUser {
         https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions_advanced_methods
     #>
     [CmdletBinding(DefaultParameterSetName = '_bltn', SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]

@@ -32,6 +32,7 @@ function Get-PortalGroupItemJobStatus {
         https://developers.arcgis.com/rest/users-groups-and-items/export-group-content/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal job ID')]
         [ValidatePattern('[a-f0-9]{32}')]

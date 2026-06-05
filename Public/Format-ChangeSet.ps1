@@ -22,6 +22,7 @@ function Format-ChangeSet {
         Comments: <Comment(s)>
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, Position = 0, HelpMessage = 'ArcGIS Server service name')]
         [ValidateNotNullOrEmpty()]

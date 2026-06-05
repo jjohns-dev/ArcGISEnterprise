@@ -27,6 +27,7 @@ function Get-PortalUserGroupList {
         https://developers.arcgis.com/rest/users-groups-and-items/group-search.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-PortalUserGroup')]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]

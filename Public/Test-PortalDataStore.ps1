@@ -34,6 +34,7 @@ function Test-PortalDataStore {
         https://developers.arcgis.com/rest/users-groups-and-items/validate-datastore.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal item ID of Data Store item')]
         [ValidatePattern('[a-f0-9]{32}')]

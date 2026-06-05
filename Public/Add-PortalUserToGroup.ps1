@@ -32,6 +32,7 @@ function Add-PortalUserToGroup {
         https://developers.arcgis.com/rest/users-groups-and-items/add-users-to-group/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]

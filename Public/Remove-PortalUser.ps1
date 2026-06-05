@@ -31,6 +31,7 @@ function Remove-PortalUser {
         https://developers.arcgis.com/rest/users-groups-and-items/remove-users-portal/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]

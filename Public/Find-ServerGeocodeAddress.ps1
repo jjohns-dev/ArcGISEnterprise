@@ -34,6 +34,7 @@ function Find-ServerGeocodeAddress {
         https://developers.arcgis.com/rest/geocode/geocode-addresses/
     #>
     [CmdletBinding(DefaultParameterSetName = '__sl')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Geocode Server Service Name')]
         [ValidateNotNullOrEmpty()]

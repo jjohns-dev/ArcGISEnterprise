@@ -24,6 +24,7 @@ function Get-ServerPSA {
         https://developers.arcgis.com/rest/enterprise-administration/server/psa/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Referer')]
         [System.String] $Referer = 'referer-value',

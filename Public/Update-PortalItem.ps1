@@ -39,6 +39,7 @@ function Update-PortalItem {
         https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-Layer.html
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Owner of Portal Item')]
         [ValidateNotNullOrEmpty()]

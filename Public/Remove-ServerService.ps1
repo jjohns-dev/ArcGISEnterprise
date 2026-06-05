@@ -32,6 +32,7 @@ function Remove-ServerService {
         https://developers.arcgis.com/rest/enterprise-administration/server/deleteservices.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidatePattern('^[\w]+$')]

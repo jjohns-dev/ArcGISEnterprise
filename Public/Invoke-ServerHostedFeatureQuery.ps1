@@ -32,6 +32,7 @@ function Invoke-ServerHostedFeatureQuery {
         https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer-.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]

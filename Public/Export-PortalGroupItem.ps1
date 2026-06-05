@@ -33,6 +33,7 @@ function Export-PortalGroupItem {
         https://www.esri.com/arcgis-blog/products/arcgis-enterprise/administration/moving-content-across-tiered-arcgis-enterprise-environments/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]

@@ -32,6 +32,7 @@ function Set-ServerServicesDirectory {
         https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Callback functions enabled')]
         [System.Boolean] $CallbackFunctionsEnabled,

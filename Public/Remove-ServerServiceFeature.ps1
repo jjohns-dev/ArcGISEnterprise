@@ -40,6 +40,7 @@ function Remove-ServerServiceFeature {
         - https://developers.arcgis.com/rest/services-reference/enterprise/delete-features/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]

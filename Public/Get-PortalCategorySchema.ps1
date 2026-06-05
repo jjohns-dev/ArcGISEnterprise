@@ -28,6 +28,7 @@ function Get-PortalCategorySchema {
         https://developers.arcgis.com/rest/users-groups-and-items/category-schema/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Portal application ID')]
         [ValidateNotNullOrEmpty()]

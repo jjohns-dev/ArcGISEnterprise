@@ -31,6 +31,7 @@ function Set-PortalGroupOwner {
         https://developers.arcgis.com/rest/users-groups-and-items/reassign-group/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]

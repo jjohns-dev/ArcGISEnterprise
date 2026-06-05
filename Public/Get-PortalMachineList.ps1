@@ -22,6 +22,7 @@ function Get-PortalMachineList {
         https://developers.arcgis.com/rest/enterprise-administration/portal/machines.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-PortalMachines')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]

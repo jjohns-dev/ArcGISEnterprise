@@ -24,6 +24,7 @@ function Get-PortalToken {
         https://developers.arcgis.com/rest/users-groups-and-items/generate-token.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal URI including context (e.g., https://arcgis.com/arcgis)')]
         [ValidateScript({ $_.OriginalString -match $context_regex })]

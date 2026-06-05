@@ -46,6 +46,7 @@ function Get-ServerService {
         }
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service name')]
         [ValidateNotNullOrEmpty()]

@@ -33,6 +33,7 @@ function New-PortalRole {
         https://developers.arcgis.com/rest/users-groups-and-items/create-role.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Portal role name')]
         [ValidateNotNullOrEmpty()]

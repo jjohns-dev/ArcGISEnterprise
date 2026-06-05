@@ -39,6 +39,7 @@ function New-PortalHostedFeatureService {
         https://developers.arcgis.com/rest/users-groups-and-items/create-service.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]

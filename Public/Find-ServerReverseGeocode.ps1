@@ -32,6 +32,7 @@ function Find-ServerReverseGeocode {
         https://developers.arcgis.com/rest/geocode/reverse-geocode/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Geocode Server Service Name')]
         [ValidateNotNullOrEmpty()]
