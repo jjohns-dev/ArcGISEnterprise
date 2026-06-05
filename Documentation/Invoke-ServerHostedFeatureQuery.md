@@ -1,133 +1,201 @@
+﻿---
+document type: cmdlet
+external help file: ArcGISEnterprise-Help.xml
+HelpUri: ''
+Locale: en-US
+Module Name: ArcGISEnterprise
+ms.date: 06/05/2026
+PlatyPS schema version: 2024-05-01
+title: Invoke-ServerHostedFeatureQuery
+---
+
 # Invoke-ServerHostedFeatureQuery
 
 ## SYNOPSIS
+
 Invoke query against a Hosted Feature Service
 
 ## SYNTAX
 
+### __AllParameterSets
+
 ```
-Invoke-ServerHostedFeatureQuery [-ServiceName] <String> [[-LayerId] <Int32>] [[-Where] <String>]
- [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+Invoke-ServerHostedFeatureQuery [-ServiceName] <string> [[-LayerId] <int>] [[-Where] <string>]
+ [-Context] <uri> [-Token] <string> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
+## ALIASES
+
 ## DESCRIPTION
+
 Invoke query against a Hosted Feature Service layer
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
 Invoke-ServerHostedFeatureQuery -Where 'ObjectId=1001' -ServiceName MyService -layerId 0 @commonParams
 Query MyServer LayerId 0 for a record with ObjectId 1001
-```
 
 ## PARAMETERS
 
-### -ServiceName
-Portal Hosted Feature Service Name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -LayerId
-Service Layer ID
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases: Layer
-
-Required: False
-Position: 2
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Where
-Query where clause
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: 1=1
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Context
+
 Portal context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
-Type: Uri
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: System.Uri
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 3
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -Token
-Portal token
+### -LayerId
+
+Service Layer ID
 
 ```yaml
-Type: String
-Parameter Sets: (All)
+Type: System.Int32
+DefaultValue: 0
+SupportsWildcards: false
 Aliases:
+- Layer
+ParameterSets:
+- Name: (All)
+  Position: 1
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: True
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -ServiceName
+
+Portal Hosted Feature Service Name
+
+```yaml
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -SkipCertificateCheck
+
 Ignore missing or invalid certificate
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: False
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Token
+
+Portal token
+
+```yaml
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 4
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Where
+
+Query where clause
+
+```yaml
+Type: System.String
+DefaultValue: 1=1
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 2
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ### None.
+
+{{ Fill in the Description }}
+
 ## OUTPUTS
 
 ### System.Object.
+
+{{ Fill in the Description }}
+
+### System.Management.Automation.PSCustomObject
+
+{{ Fill in the Description }}
+
 ## NOTES
-Name:     Invoke-ServerHostedFeatureQuery
-Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-03-14
-- 0.1.0 - Initial version
-Comments: \<Comment(s)\>
+
+Status: Stable
+Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer-.htm
 
 ## RELATED LINKS
+
+{{ Fill in the related links here }}
+

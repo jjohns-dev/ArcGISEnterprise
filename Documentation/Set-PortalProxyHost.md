@@ -1,122 +1,224 @@
+﻿---
+document type: cmdlet
+external help file: ArcGISEnterprise-Help.xml
+HelpUri: ''
+Locale: en-US
+Module Name: ArcGISEnterprise
+ms.date: 06/05/2026
+PlatyPS schema version: 2024-05-01
+title: Set-PortalProxyHost
+---
+
 # Set-PortalProxyHost
 
 ## SYNOPSIS
+
 Set Portal security configuration
 
 ## SYNTAX
 
+### __AllParameterSets
+
 ```
-Set-PortalProxyHost [-Context] <Uri> [-ProxyHost] <String[]> [[-Referer] <String>] [-Token] <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+Set-PortalProxyHost [-Context] <uri> [-ProxyHost] <string[]> [[-Referer] <string>] [-Token] <string>
+ [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
+## ALIASES
+
 ## DESCRIPTION
+
 Set Portal security configuration
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
 $cmn = @{ Context = 'https://arcgis.com/arcgis'; Token = $token }
-PS C:\> Set-PortalSecurityConfiugration -ProxyHost 'test.com' @cmn
+PS C:\> Set-PortalProxyHost -ProxyHost 'test.com' @cmn
 Set Portal allowedProxyHosts to 'test.com'
-```
 
 ## PARAMETERS
 
+### -Confirm
+
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: ''
+SupportsWildcards: false
+Aliases:
+- cf
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
 ### -Context
+
 Portal context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
-Type: Uri
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: System.Uri
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -ProxyHost
+
 Proxy host
 
 ```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: System.String[]
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 1
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Referer
+
 Referer
 
 ```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Token
-Portal token
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 2
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -SkipCertificateCheck
+
 Ignore missing or invalid certificate
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: False
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Token
+
+Portal token
+
+```yaml
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 3
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -WhatIf
+
+Runs the command in a mode that only reports what would happen without performing the actions.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: ''
+SupportsWildcards: false
+Aliases:
+- wi
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ### None.
+
+{{ Fill in the Description }}
+
 ## OUTPUTS
 
 ### System.Object.
+
+{{ Fill in the Description }}
+
+### System.Management.Automation.PSCustomObject
+
+{{ Fill in the Description }}
+
 ## NOTES
-Name:     Set-PortalProxyHost
-Author:   Justin Johns
-Version:  0.1.2 | Last Edit: 2023-01-05
-- 0.1.2 - Fixed minor issue with setting allowed origins
-- 0.1.1 - Fixed defect that removes several existing properties
-- 0.1.0 - Initial version
-Comments: \<Comment(s)\>
-General notes
+
+Status: Stable
+Comments:
 https://developers.arcgis.com/rest/enterprise-administration/portal/update-security-configuration.htm
 
 ## RELATED LINKS
+
+{{ Fill in the related links here }}
+

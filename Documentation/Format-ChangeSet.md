@@ -1,70 +1,114 @@
+﻿---
+document type: cmdlet
+external help file: ArcGISEnterprise-Help.xml
+HelpUri: ''
+Locale: en-US
+Module Name: ArcGISEnterprise
+ms.date: 06/05/2026
+PlatyPS schema version: 2024-05-01
+title: Format-ChangeSet
+---
+
 # Format-ChangeSet
 
 ## SYNOPSIS
+
 Format change set for reporting purposes
 
 ## SYNTAX
 
+### __AllParameterSets
+
 ```
-Format-ChangeSet [-ServiceName] <String> [-ChangeSet] <Object> [<CommonParameters>]
+Format-ChangeSet [-ServiceName] <string> [-ChangeSet] <Object> [<CommonParameters>]
 ```
 
+## ALIASES
+
 ## DESCRIPTION
+
 Re-format payload response from "extracChanges" API call to report-friendly object
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
 Format-ChangeSet
 Explanation of what the example does
-```
 
 ## PARAMETERS
 
-### -ServiceName
-ArcGIS Server service name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -ChangeSet
+
 Response from "extractChanges" API call
 
 ```yaml
-Type: Object
-Parameter Sets: (All)
-Aliases:
+Type: System.Object
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 1
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -ServiceName
+
+ArcGIS Server service name
+
+```yaml
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ### None.
+
+{{ Fill in the Description }}
+
 ## OUTPUTS
 
 ### System.Object.
+
+{{ Fill in the Description }}
+
+### System.Management.Automation.PSCustomObject
+
+{{ Fill in the Description }}
+
 ## NOTES
-Name:     Format-ChangeSet
-Author:   Justin Johns
-Version:  0.1.1 | Last Edit: 2024-10-30
-Comments: \<Comment(s)\>
+
+Status: Stable
+Comments: No external API reference — utility function.
 
 ## RELATED LINKS
+
+{{ Fill in the related links here }}
+

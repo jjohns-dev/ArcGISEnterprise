@@ -1,163 +1,243 @@
+﻿---
+document type: cmdlet
+external help file: ArcGISEnterprise-Help.xml
+HelpUri: ''
+Locale: en-US
+Module Name: ArcGISEnterprise
+ms.date: 06/05/2026
+PlatyPS schema version: 2024-05-01
+title: Get-PortalLog
+---
+
 # Get-PortalLog
 
 ## SYNOPSIS
+
 Get Portal for ArcGIS logs
 
 ## SYNTAX
 
+### __AllParameterSets
+
 ```
-Get-PortalLog [[-Level] <String>] [[-StartTime] <DateTime>] [[-EndTime] <DateTime>] [[-Code] <String[]>]
- [[-UserName] <String[]>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+Get-PortalLog [[-Level] <string>] [[-StartTime] <datetime>] [[-EndTime] <datetime>]
+ [[-Code] <string[]>] [[-UserName] <string[]>] [-Context] <uri> [-Token] <string>
+ [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
+## ALIASES
+
 ## DESCRIPTION
+
 Get Portal for ArcGIS logs by using the logs query endpoint
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
 Get-PortalLog @commonParams -EndTime (Get-Date).AddDays(-7)
 Get all portal logs from the last 7 days
-```
 
 ## PARAMETERS
 
-### -Level
-Returns only records with a log level at or more severe than the level specified
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 1
-Default value: WARNING
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -StartTime
-The most recent time to query
-
-```yaml
-Type: DateTime
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -EndTime
-The oldest time to include in the result set
-
-```yaml
-Type: DateTime
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Code
+
 Log code
 
 ```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -UserName
-Organization member usernames
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: System.String[]
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 3
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Context
+
 Server context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
-Type: Uri
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 6
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: System.Uri
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 5
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -Token
-Porta token
+### -EndTime
+
+The oldest time to include in the result set
 
 ```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
+Type: System.DateTime
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 2
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: True
-Position: 7
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Level
+
+Returns only records with a log level at or more severe than the level specified
+
+```yaml
+Type: System.String
+DefaultValue: WARNING
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -SkipCertificateCheck
+
 Ignore missing or invalid certificate
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: False
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
+### -StartTime
+
+The most recent time to query
+
+```yaml
+Type: System.DateTime
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 1
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Token
+
+Porta token
+
+```yaml
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 6
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -UserName
+
+Organization member usernames
+
+```yaml
+Type: System.String[]
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 4
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ### None.
+
+{{ Fill in the Description }}
+
 ## OUTPUTS
 
 ### System.Object.
+
+{{ Fill in the Description }}
+
+### System.Management.Automation.PSCustomObject
+
+{{ Fill in the Description }}
+
 ## NOTES
-Name:     Get-PortalLog
-Author:   Justin Johns
-Version:  0.1.0 | Last Edit: 2024-08-23
-- Version history is capture in repository commit history
+
+Status: Stable
 Comments:
 https://developers.arcgis.com/rest/enterprise-administration/portal/query-logs.htm
 
 ## RELATED LINKS
+
+{{ Fill in the related links here }}
+

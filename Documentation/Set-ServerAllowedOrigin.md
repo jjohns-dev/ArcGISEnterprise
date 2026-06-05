@@ -1,123 +1,223 @@
+﻿---
+document type: cmdlet
+external help file: ArcGISEnterprise-Help.xml
+HelpUri: ''
+Locale: en-US
+Module Name: ArcGISEnterprise
+ms.date: 06/05/2026
+PlatyPS schema version: 2024-05-01
+title: Set-ServerAllowedOrigin
+---
+
 # Set-ServerAllowedOrigin
 
 ## SYNOPSIS
+
 Set ArcGIS Server allowed origins
 
 ## SYNTAX
 
+### __AllParameterSets
+
 ```
-Set-ServerAllowedOrigin [-Context] <Uri> [-Origin] <String[]> [-SOAP] [-Token] <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+Set-ServerAllowedOrigin [-Context] <uri> [-Origin] <string[]> [-Token] <string> [-SOAP]
+ [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
+## ALIASES
+
 ## DESCRIPTION
+
 Set ArcGIS Server allowed origins
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
 Set-ServerAllowedOrigin -Origin 'https://test.com', 'https://mySite.com'
 Sets ArcGIS Server allowed origins to 'https://test.com,https://mySite.com'
-```
 
 ## PARAMETERS
 
+### -Confirm
+
+Prompts you for confirmation before running the cmdlet.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: ''
+SupportsWildcards: false
+Aliases:
+- cf
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
 ### -Context
+
 Portal context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
-Type: Uri
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: System.Uri
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -Origin
+
 Origin to be allowed for Portal
 
 ```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -SOAP
-Set SOAP handler allowed origins
-
-```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Token
-Portal token
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 3
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: System.String[]
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 1
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -SkipCertificateCheck
+
 Ignore missing or invalid certificate
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: False
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
+### -SOAP
+
+Set SOAP handler allowed origins
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: False
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Token
+
+Portal token
+
+```yaml
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 2
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -WhatIf
+
+Runs the command in a mode that only reports what would happen without performing the actions.
+
+```yaml
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: ''
+SupportsWildcards: false
+Aliases:
+- wi
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ### None.
+
+{{ Fill in the Description }}
+
 ## OUTPUTS
 
 ### System.Object.
+
+{{ Fill in the Description }}
+
+### System.Management.Automation.PSCustomObject
+
+{{ Fill in the Description }}
+
 ## NOTES
-Name:     Set-ServerAllowedOrigin
-Author:   Justin Johns
-Version:  0.1.4 | Last Edit: 2023-05-10
-- 0.1.4 - Added switch parameter for SOAP handler
-- 0.1.3 - Fixed issue with \[System.Uri\] adding trailing slash to Origin parameter
-- 0.1.2 - Add validation to Origin parameter
-- 0.1.1 - Updates to account for all server properties
-- 0.1.0 - Initial version
-General notes
+
+Status: Stable
 https://developers.arcgis.com/rest/enterprise-administration/server/edit-soap-handler-config.htm
 https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit.htm
 
 ## RELATED LINKS
+
+{{ Fill in the related links here }}
+

@@ -1,133 +1,201 @@
+﻿---
+document type: cmdlet
+external help file: ArcGISEnterprise-Help.xml
+HelpUri: ''
+Locale: en-US
+Module Name: ArcGISEnterprise
+ms.date: 06/05/2026
+PlatyPS schema version: 2024-05-01
+title: Get-ServerUsageReportData
+---
+
 # Get-ServerUsageReportData
 
 ## SYNOPSIS
+
 Retrieves server usage data for the report.
 
 ## SYNTAX
 
+### __AllParameterSets
+
 ```
-Get-ServerUsageReportData [-ReportName] <String> [[-ReportFormat] <String>] [[-MachineName] <String[]>]
- [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+Get-ServerUsageReportData [-ReportName] <string> [[-ReportFormat] <string>]
+ [[-MachineName] <string[]>] [-Context] <uri> [-Token] <string> [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
+## ALIASES
+
 ## DESCRIPTION
+
 This operation aggregates and filters server usage statistics for the entire ArcGIS Server site.
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
 Get-ServerUsageReportData -ReportName 'Make_Me_Cry' -ReportFormat CSV @commonParams
 Retrieves the usage data for the 'Make_Me_Cry' report and returns it as CSV.
-```
 
 ## PARAMETERS
 
-### -ReportName
-Name of the report to retrieve
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ReportFormat
-Report format
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 2
-Default value: Json
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -MachineName
-Machine name
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
-Default value: *
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Context
+
 Server context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
-Type: Uri
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: 4
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: System.Uri
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 3
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -Token
-Porta token
+### -MachineName
+
+Machine name
 
 ```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
+Type: System.String[]
+DefaultValue: '*'
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 2
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: True
-Position: 5
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -ReportFormat
+
+Report format
+
+```yaml
+Type: System.String
+DefaultValue: json
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 1
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -ReportName
+
+Name of the report to retrieve
+
+```yaml
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 0
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -SkipCertificateCheck
+
 Ignore missing or invalid certificate
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: False
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Token
+
+Porta token
+
+```yaml
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: 4
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ### None.
+
+{{ Fill in the Description }}
+
 ## OUTPUTS
 
 ### System.Object.
+
+{{ Fill in the Description }}
+
+### System.Management.Automation.PSCustomObject
+
+{{ Fill in the Description }}
+
 ## NOTES
-Name:     Get-ServerUsageReportData
-Author:   Justin Johns
-Version:  0.1.1 | Last Edit: 2025-07-22
-- Version history is capture in repository commit history
+
+Status: Stable
 Comments:
 https://developers.arcgis.com/rest/enterprise-administration/server/queryreportdata/
 
 ## RELATED LINKS
+
+{{ Fill in the related links here }}
+
