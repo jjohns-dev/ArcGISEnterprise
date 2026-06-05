@@ -8,7 +8,7 @@ ArcGIS Server and Portal for ArcGIS.
 Like all PowerShell functions and cmdlets, the functions in this module follow the `Verb` `-` `Noun` scheme.
 Each `Noun` will start with the ArcGIS Enterprise component the function should be executaged against.
 For example, to use `Get-PortalRoleList` pass a Portal for ArcGIS URI argument in the `-Context` parameter.
-Or, as another example, pass an ArcGIS Server URI argument to the `-Context` parameter for `Set-ServerAllowedOrigins`
+Or, as another example, pass an ArcGIS Server URI argument to the `-Context` parameter for `Set-ServerAllowedOrigin`
 to set/update the allowed origins property in ArcGIS Server.
 
 ## Updates
@@ -49,7 +49,7 @@ Please see releases for updates and features
 | Get-PortalAllowedOriginList | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |
 | Get-PortalCategorySchema | Portal | `[ROOT]/portals/[PORTALID]/categorySchema` | Get Portal category schema |
 | Get-PortalDataStoreServer | Portal | `[ROOT]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |
-| Get-PortalDefaultUserSettings | Portal | `[ROOT]/portals/[PORTALID]/userDefaultSettings` | Get default user settings from Portal |
+| Get-PortalDefaultUserSetting | Portal | `[ROOT]/portals/[PORTALID]/userDefaultSettings` | Get default user settings from Portal |
 | Get-PortalGroup | Portal | `[ROOT]/community/groups/[GROUPID]` | Returns Portal user group |
 | Get-PortalGroupContent | Portal | `[ROOT]/content/groups/[GROUPID]` | Get Portal group content (items) |
 | Get-PortalGroupItemJobStatus | Portal | `[ROOT]/portals/[PORTALID]/jobs/[JOBID]` | Get job status for Portal Group export job |
@@ -71,7 +71,7 @@ Please see releases for updates and features
 | Get-PortalRoleList | Portal | `[ROOT]/portals/[PORTALID]/roles` | Get Portal for ArcGIS Role |
 | Get-PortalSecurityConfig | Portal | `[ADMIN]/security/config` | Get Portal security configuration |
 | Get-PortalSecurityPolicy | Portal | `[ROOT]/portals/[PORTALID]/securityPolicy` | Get Portal security policy |
-| Get-PortalSettings | Portal | `[ROOT]/portals/[PORTALID]` | Get Portal configuration or "self" |
+| Get-PortalSetting | Portal | `[ROOT]/portals/[PORTALID]` | Get Portal configuration or "self" |
 | Get-PortalSSLCertificate | Portal | `[ADMIN]/machines/[MACHINENAME]/sslCertificates/[CERTIFICATE]` | Get Portal SSL Certificate information |
 | Get-PortalSSLCertificateList | Portal | `[ADMIN]/machines/[MACHINENAME]/sslCertificates` | Get a list of Portal SSL Certificates |
 | Get-PortalSystemProperty | Portal | `[ADMIN]/system/properties` | Gets Portal system properties |
@@ -136,11 +136,11 @@ Please see releases for updates and features
 | Set-PortalDefaultUserRole | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User Role in Portal |
 | Set-PortalGroupOwner | Portal | `[ROOT]/community/groups/[GROUPID]/reassign` | Reassign Portal group ownership to new user |
 | Set-PortalItemOwner | Portal | `[ROOT]/content/users/[USERNAME]/reassignItems` | Change Portal item owner |
-| Set-PortalProxyHosts | Portal | `[ADMIN]/security/config/update` | Set Portal security configuration |
+| Set-PortalProxyHost | Portal | `[ADMIN]/security/config/update` | Set Portal security configuration |
 | Set-PortalRolePrivilege | Portal | `[ROOT]/portals/[PORTALID]` | Set privilege for Portal for ArcGIS Role |
 | Set-PortalSystemProperty | Portal | `[ADMIN]/system/properties/update` | Sets Portal system properties |
 | Set-PortalUserPassword | Portal | `[ROOT]/community/users/[USERNAME]/update` | Set password for Portal user |
-| Set-ServerAllowedOrigins | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Set ArcGIS Server allowed origins |
+| Set-ServerAllowedOrigin | Server | `[ADMIN]/system/handlers/rest/servicesdirectory` | Set ArcGIS Server allowed origins |
 | Set-ServerPSAPassword | Server | `[ADMIN]/security/psa/update` | Set ArcGIS Server PSA Account |
 | Set-ServerSystemProperty | Server | `[ADMIN]/system/properties/update` | Set Server systems properties |
 | Test-PortalDataStore | Portal | `[ROOT]/portals/[PORTALID]/datastores/validate` | Validates Data Store connection |

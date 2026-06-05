@@ -12,7 +12,7 @@
     # Major = major changes or multiple new functions for new set of functionality
     # Minor = new individual functions
     # Build = bug fixes, minor changes, etc.
-    ModuleVersion     = '2.0.0'
+    ModuleVersion     = '2.1.0'
 
     # Supported PSEditions
     CompatiblePSEditions = @('Core')
@@ -93,7 +93,7 @@
         'Get-PortalAllowedOriginList'
         'Get-PortalCategorySchema'
         'Get-PortalDataStoreServer'
-        'Get-PortalDefaultUserSettings'
+        'Get-PortalDefaultUserSetting'
         'Get-PortalGroup'
         'Get-PortalGroupContent'
         'Get-PortalGroupItemJobStatus'
@@ -115,7 +115,7 @@
         'Get-PortalRoleList'
         'Get-PortalSecurityConfig'
         'Get-PortalSecurityPolicy'
-        'Get-PortalSettings'
+        'Get-PortalSetting'
         'Get-PortalSSLCertificate'
         'Get-PortalSSLCertificateList'
         'Get-PortalSystemProperty'
@@ -183,11 +183,11 @@
         'Set-PortalDefaultUserRole'
         'Set-PortalGroupOwner'
         'Set-PortalItemOwner'
-        'Set-PortalProxyHosts'
+        'Set-PortalProxyHost'
         'Set-PortalRolePrivilege'
         'Set-PortalSystemProperty'
         'Set-PortalUserPassword'
-        'Set-ServerAllowedOrigins'
+        'Set-ServerAllowedOrigin'
         'Set-ServerConnection'
         'Set-ServerPSAPassword'
         'Set-ServerServicesDirectory'
@@ -213,12 +213,16 @@
     AliasesToExport   = @(
         'Find-ServerServiceLayerData'
         'Get-PortalAllowedOrigins'
+        'Get-PortalDefaultUserSettings'
         'Get-PortalMachines'
         'Get-PortalRole'
         'Get-PortalSelf'
+        'Get-PortalSettings'
         'Get-PortalUserGroup'
         'Get-SecurityPolicy'
         'Get-ServerAllowedOrigins'
+        'Set-PortalProxyHosts'
+        'Set-ServerAllowedOrigins'
         'Test-PortalToken'
         'Update-PortalOrgInfo'
         'Update-PortalPSA'
