@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -26,6 +26,8 @@ Update-PortalOrganizationInformation [[-DisableEditing] <bool>] [[-MaxTokenExpir
 ```
 
 ## ALIASES
+
+- Update-PortalOrgInfo
 
 ## DESCRIPTION
 
@@ -295,6 +297,7 @@ This function replaced functionality from the following old, deprecated function
 - Set-PortalAllowedOrigins
 - Set-PortalPublicSharing
 - Set-PortalUserProfileEditing
+
 
 ## RELATED LINKS
 

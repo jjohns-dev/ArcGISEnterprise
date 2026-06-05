@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -134,9 +134,6 @@ HelpMessage: ''
 Name of the folder to move the item to (default to new folder with date).
 Use '/' for root folder.
 Creates new folder if it does not exist.
-Name of the folder to move the item to (default to new folder with date).
-Use '/' for root folder.
-Creates new folder if it does not exist.
 
 ```yaml
 Type: System.String
@@ -253,10 +250,6 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 {{ Fill in the Description }}
 
-### System.String
-
-{{ Fill in the Description }}
-
 ### System.String[]
 
 {{ Fill in the Description }}
@@ -277,6 +270,7 @@ Status: Stable
 Comments:
 https://developers.arcgis.com/rest/users-groups-and-items/reassign-items/
 (old) https://developers.arcgis.com/rest/users-groups-and-items/reassign-item/
+
 
 ## RELATED LINKS
 

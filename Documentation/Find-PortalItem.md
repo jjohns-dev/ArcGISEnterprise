@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -324,6 +324,7 @@ https://developers.arcgis.com/rest/users-groups-and-items/search.htm
 https://developers.arcgis.com/rest/users-groups-and-items/search-reference.htm
 This function does not yet support multiple search values for a given criterion
 (e.g., can only search for a single "tag" not two tags)
+
 
 ## RELATED LINKS
 

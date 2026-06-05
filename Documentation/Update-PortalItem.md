@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -302,6 +302,7 @@ Status: Stable
 Comments:
 https://developers.arcgis.com/rest/users-groups-and-items/update-item/
 https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-Layer.html
+
 
 ## RELATED LINKS
 

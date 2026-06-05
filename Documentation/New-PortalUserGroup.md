@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -516,6 +516,7 @@ Status: Stable
 Comments:
 https://developers.arcgis.com/rest/users-groups-and-items/create-group.htm
 https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#group-parameters
+
 
 ## RELATED LINKS
 

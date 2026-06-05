@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -62,8 +62,6 @@ HelpMessage: ''
 
 ### -Client
 
-Client.
-Value must be one of: requestip, referer, ip
 Client.
 Value must be one of: requestip, referer, ip
 
@@ -221,6 +219,7 @@ https://myDomain.com/arcgis/admin/login
 https://myDomain.com/arcgis/admin/generateToken
 
 https://developers.arcgis.com/rest/enterprise-administration/server/generatetoken.htm
+
 
 ## RELATED LINKS
 

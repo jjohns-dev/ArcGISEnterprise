@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -25,6 +25,8 @@ Get-PortalSecurityPolicy [[-PortalId] <string>] [-Context] <uri> [-Token] <strin
 ```
 
 ## ALIASES
+
+- Get-SecurityPolicy
 
 ## DESCRIPTION
 
@@ -151,6 +153,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 Status: Stable
 https://developers.arcgis.com/rest/users-groups-and-items/security-policy.htm
+
 
 ## RELATED LINKS
 

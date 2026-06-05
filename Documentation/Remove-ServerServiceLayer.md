@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -218,6 +218,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 Status: Stable
 Comments:
 https://developers.arcgis.com/rest/services-reference/online/delete-from-definition-feature-service-.htm
+
 
 ## RELATED LINKS
 

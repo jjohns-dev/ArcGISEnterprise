@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -25,6 +25,8 @@ Set-PortalUserPassword [-Context] <uri> [-Credential] <pscredential> [-NewPasswo
 ```
 
 ## ALIASES
+
+- Update-PortalPSA
 
 ## DESCRIPTION
 
@@ -173,6 +175,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 Status: Stable
 https://developers.arcgis.com/rest/users-groups-and-items/update-user.htm
+
 
 ## RELATED LINKS
 

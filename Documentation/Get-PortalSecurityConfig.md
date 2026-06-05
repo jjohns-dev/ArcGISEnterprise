@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -129,6 +129,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 Status: Stable
 https://developers.arcgis.com/rest/enterprise-administration/portal/security-configuration.htm
+
 
 ## RELATED LINKS
 

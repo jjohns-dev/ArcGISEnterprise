@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -243,6 +243,7 @@ We have discovered through testing that if the hosted feature service is
 renamed, the new name is only updated in Portal, not ArcGIS Server.
 Therefore, the "ServiceName" parameter should be the original name of the
 service, not the current name.
+
 
 ## RELATED LINKS
 

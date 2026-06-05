@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -25,6 +25,8 @@ Get-PortalUserGroupList [[-UserName] <string>] [-Context] <uri> [-Token] <string
 ```
 
 ## ALIASES
+
+- Get-PortalUserGroup
 
 ## DESCRIPTION
 
@@ -151,6 +153,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 Status: Stable
 Comments:
 https://developers.arcgis.com/rest/users-groups-and-items/group-search.htm
+
 
 ## RELATED LINKS
 

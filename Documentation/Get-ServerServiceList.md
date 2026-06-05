@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -25,6 +25,8 @@ Get-ServerServiceList [[-FolderName] <string>] [-Context] <uri> [[-Token] <strin
 ```
 
 ## ALIASES
+
+- Get-ServerServiceInfo
 
 ## DESCRIPTION
 
@@ -174,6 +176,7 @@ Status: Stable
 Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory.htm (REST endpoint)
 https://developers.arcgis.com/rest/enterprise-administration/server/services.htm (Admin endpoint)
+
 
 ## RELATED LINKS
 

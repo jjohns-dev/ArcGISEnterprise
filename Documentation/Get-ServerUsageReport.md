@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -157,6 +157,7 @@ Status: Stable
 Comments:
 https://developers.arcgis.com/rest/enterprise-administration/server/usagereports/
 https://developers.arcgis.com/rest/enterprise-administration/server/usagereport/
+
 
 ## RELATED LINKS
 

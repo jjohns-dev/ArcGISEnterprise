@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -25,6 +25,8 @@ Set-PortalProxyHost [-Context] <uri> [-ProxyHost] <string[]> [[-Referer] <string
 ```
 
 ## ALIASES
+
+- Set-PortalProxyHosts
 
 ## DESCRIPTION
 
@@ -217,6 +219,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 Status: Stable
 Comments:
 https://developers.arcgis.com/rest/enterprise-administration/portal/update-security-configuration.htm
+
 
 ## RELATED LINKS
 

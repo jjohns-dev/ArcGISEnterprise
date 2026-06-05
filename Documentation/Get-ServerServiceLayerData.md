@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -26,6 +26,8 @@ Get-ServerServiceLayerData [-LayerId] <int> [-ServiceName] <string> [[-Where] <s
 ```
 
 ## ALIASES
+
+- Find-ServerServiceLayerData
 
 ## DESCRIPTION
 
@@ -218,6 +220,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 Status: Stable
 Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/
+
 
 ## RELATED LINKS
 

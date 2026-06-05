@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -25,6 +25,8 @@ Set-ServerAllowedOrigin [-Context] <uri> [-Origin] <string[]> [-Token] <string> 
 ```
 
 ## ALIASES
+
+- Set-ServerAllowedOrigins
 
 ## DESCRIPTION
 
@@ -216,6 +218,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 Status: Stable
 https://developers.arcgis.com/rest/enterprise-administration/server/edit-soap-handler-config.htm
 https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit.htm
+
 
 ## RELATED LINKS
 

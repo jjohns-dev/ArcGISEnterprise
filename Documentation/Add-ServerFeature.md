@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -244,6 +244,7 @@ Status: Stable
 - See commit history for version changes
 Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
+
 
 ## RELATED LINKS
 

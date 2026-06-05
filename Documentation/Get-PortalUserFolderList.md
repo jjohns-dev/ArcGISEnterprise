@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -154,6 +154,7 @@ https://developers.arcgis.com/rest/users-groups-and-items/user-content.htm
 This endpoint can also be used to retrieve user items, however the endpoint used
 in the Get-PortalUserItemList function is a more efficient method of making sure
 all of the user's items are returned.
+
 
 ## RELATED LINKS
 

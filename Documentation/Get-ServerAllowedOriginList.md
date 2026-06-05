@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -25,6 +25,8 @@ Get-ServerAllowedOriginList [-Context] <uri> [-Token] <string> [-SOAP] [-SkipCer
 ```
 
 ## ALIASES
+
+- Get-ServerAllowedOrigins
 
 ## DESCRIPTION
 
@@ -153,6 +155,7 @@ Status: Stable
 Comments:
 https://developers.arcgis.com/rest/enterprise-administration/server/soap-handler-config/
 https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectory/
+
 
 ## RELATED LINKS
 

@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -133,6 +133,7 @@ Status: Stable
 
 API Documentation can be found at:
 https://yourgeoeventserver.domain/geoevent/admin/api/index.html
+
 
 ## RELATED LINKS
 

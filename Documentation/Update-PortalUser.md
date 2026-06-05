@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -338,6 +338,7 @@ Status: Stable
 Comments:
 https://developers.arcgis.com/rest/users-groups-and-items/update-user/
 https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#user-parameters
+
 
 ## RELATED LINKS
 

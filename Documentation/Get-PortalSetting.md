@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -24,6 +24,10 @@ Get-PortalSetting [-Context] <uri> [-Token] <string> [-SkipCertificateCheck] [<C
 ```
 
 ## ALIASES
+
+- Get-PortalSelf
+- Get-PortalSettings
+- Test-PortalToken
 
 ## DESCRIPTION
 
@@ -130,6 +134,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 Status: Stable
 Comments:
 https://developers.arcgis.com/rest/users-groups-and-items/portal.htm
+
 
 ## RELATED LINKS
 

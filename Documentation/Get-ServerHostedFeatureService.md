@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -25,6 +25,8 @@ Get-ServerHostedFeatureService [-ServiceName] <string> [-Context] <uri> [-Token]
 ```
 
 ## ALIASES
+
+- Get-ServerHostedFeatureServer
 
 ## DESCRIPTION
 
@@ -152,6 +154,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 Status: Stable
 Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/layer-feature-service-.htm
+
 
 ## RELATED LINKS
 

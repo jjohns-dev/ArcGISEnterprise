@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -228,6 +228,7 @@ Test-Performance -Runs 100 -ScriptBlock {
     }
     Get-ServerService @params | Out-Null
 }
+
 
 ## RELATED LINKS
 

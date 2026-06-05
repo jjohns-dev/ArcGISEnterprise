@@ -1,4 +1,4 @@
-﻿---
+---
 document type: cmdlet
 external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
@@ -25,6 +25,8 @@ Get-PortalMachineList [-Context] <uri> [-Token] <string> [-SkipCertificateCheck]
 ```
 
 ## ALIASES
+
+- Get-PortalMachines
 
 ## DESCRIPTION
 
@@ -129,6 +131,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 Status: Stable
 https://developers.arcgis.com/rest/enterprise-administration/portal/machines.htm
+
 
 ## RELATED LINKS
 
