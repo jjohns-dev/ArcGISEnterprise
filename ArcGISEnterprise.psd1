@@ -12,7 +12,7 @@
     # Major = major changes or multiple new functions for new set of functionality
     # Minor = new individual functions
     # Build = bug fixes, minor changes, etc.
-    ModuleVersion     = '1.12.1'
+    ModuleVersion     = '2.0.0'
 
     # Supported PSEditions
     CompatiblePSEditions = @('Core')
