@@ -17,7 +17,7 @@ function Format-CsvHeader {
         Sanitizes headers and returns data as array of objects
     .NOTES
         Status: Stable
-        Comments:
+        Comments: No external API reference — utility function.
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

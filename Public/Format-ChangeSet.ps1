@@ -17,7 +17,7 @@ function Format-ChangeSet {
         Explanation of what the example does
     .NOTES
         Status: Stable
-        Comments:
+        Comments: No external API reference — utility function.
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]
