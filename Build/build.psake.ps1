@@ -230,55 +230,68 @@ Task 'GenerateDocs' -depends 'ImportStagingModule' {
         Write-Error -Message "Module '$env:BHProjectName' is not loaded; ImportStagingModule should have loaded it." -ErrorAction Stop
     }
 
-    # Decide between New- and Update- based on the v2-schema status of any
-    # existing .md files. Measure-PlatyPSMarkdown returns a FileType containing
-    # 'V2Schema' for v2 files and 'V1Schema' for legacy v1 files.
-    $existingMd = Get-ChildItem -Path $docPath -Filter '*.ps1.md' -ErrorAction SilentlyContinue
-    if (-not $existingMd) { $existingMd = Get-ChildItem -Path $docPath -Filter '*.md' -ErrorAction SilentlyContinue }
+    # Always regenerate from scratch. Microsoft.PowerShell.PlatyPS 1.0.1's
+    # `Update-MarkdownCommandHelp` has known bugs on repeat runs (doesn't
+    # refresh `## NOTES` from comment-based help; duplicates `## DESCRIPTION`
+    # and `### -<Param>` blocks in some files). A clean delete-and-regen via
+    # `New-MarkdownCommandHelp` is reliable and the file count is small enough
+    # (~130 files) that the cost is negligible.
+    Write-Output "Generating Documentation/ from scratch using Microsoft.PowerShell.PlatyPS..."
 
-    $isV2 = $false
-    if ($existingMd) {
-        $sample = $existingMd | Where-Object { $_.Name -ne 'index.md' -and $_.Name -ne 'Index.md' } | Select-Object -First 1
-        if ($sample) {
-            $measure = Measure-PlatyPSMarkdown -Path $sample.FullName -ErrorAction SilentlyContinue
-            if ($measure -and $measure.FileType -match 'V2Schema') { $isV2 = $true }
-        }
+    # Remove existing per-function pages (preserve index.md / Index.md, which
+    # is hand-curated -- see Documentation/index.md).
+    Get-ChildItem -Path $docPath -Filter '*.md' |
+        Where-Object { $_.Name -ne 'index.md' -and $_.Name -ne 'Index.md' } |
+        Remove-Item -Force
+
+    # New-MarkdownCommandHelp ALWAYS writes to a $OutputFolder/$ModuleName/ subfolder.
+    # Generate there, then flatten the files up into $docPath so existing relative
+    # links (README, index.md) continue to work without rewrites.
+    $newParams = @{
+        ModuleInfo   = $moduleInfo
+        OutputFolder = $docPath
+        Force        = $true
+    }
+    New-MarkdownCommandHelp @newParams | Out-Null
+
+    $nestedFolder = Join-Path -Path $docPath -ChildPath $env:BHProjectName
+    if (Test-Path -Path $nestedFolder) {
+        Get-ChildItem -Path $nestedFolder -Filter '*.md' |
+            ForEach-Object { Move-Item -Path $_.FullName -Destination $docPath -Force }
+        Remove-Item -Path $nestedFolder -Recurse -Force
     }
 
-    if ($isV2) {
-        Write-Output "Existing Documentation/ contains v2-schema markdown -- updating in place..."
-        Get-ChildItem -Path $docPath -Filter '*.md' |
-            Where-Object { $_.Name -ne 'index.md' -and $_.Name -ne 'Index.md' } |
-            ForEach-Object { Update-MarkdownCommandHelp -Path $_.FullName }
+    # Populate the `## ALIASES` section from each function's `[Alias()]`
+    # attribute. PlatyPS v2 1.0.1 ignores `[Alias()]` and instead writes a
+    # `{{Insert list of aliases}}` placeholder under `## ALIASES` for every
+    # cmdlet, so post-process every generated page:
+    #   - if the function has aliases, replace the placeholder with a bullet
+    #     list of the alias names;
+    #   - if the function has no aliases, strip the placeholder so the
+    #     section stays empty rather than leaving the template text in place.
+    $utf8NoBom    = [System.Text.UTF8Encoding]::new($false)
+    $aliasPattern = '(?ms)(^## ALIASES\r?\n)(.*?)(\r?\n## )'
+    foreach ($cmd in $moduleInfo.ExportedFunctions.Values) {
+        $mdPath = Join-Path -Path $docPath -ChildPath ('{0}.md' -f $cmd.Name)
+        if (-not (Test-Path -Path $mdPath)) { continue }
 
-        # Update-MarkdownCommandHelp writes a sibling .md.bak file for every
-        # updated .md. Remove them -- the regenerated .md is what we commit.
-        Get-ChildItem -Path $docPath -Filter '*.md.bak' -ErrorAction SilentlyContinue |
-            Remove-Item -Force
-    }
-    else {
-        Write-Output "Generating Documentation/ from scratch using Microsoft.PowerShell.PlatyPS..."
+        $aliasAttr = $cmd.ScriptBlock.Attributes |
+            Where-Object { $_ -is [System.Management.Automation.AliasAttribute] }
 
-        # Remove any legacy v1-schema files (preserve index.md / Index.md hand-curated content)
-        Get-ChildItem -Path $docPath -Filter '*.md' |
-            Where-Object { $_.Name -ne 'index.md' -and $_.Name -ne 'Index.md' } |
-            Remove-Item -Force
-
-        # New-MarkdownCommandHelp ALWAYS writes to a $OutputFolder/$ModuleName/ subfolder.
-        # Generate there, then flatten the files up into $docPath so existing relative
-        # links (README, index.md) continue to work without rewrites.
-        $newParams = @{
-            ModuleInfo   = $moduleInfo
-            OutputFolder = $docPath
-            Force        = $true
+        if ($aliasAttr) {
+            $aliasBlock = (($aliasAttr.AliasNames | Sort-Object) | ForEach-Object { "- $_" }) -join [Environment]::NewLine
+            $replacement = '$1' + [Environment]::NewLine + $aliasBlock + [Environment]::NewLine + '$3'
         }
-        New-MarkdownCommandHelp @newParams | Out-Null
+        else {
+            # Empty section: just a blank line between the heading and the next ##.
+            $replacement = '$1$3'
+        }
 
-        $nestedFolder = Join-Path -Path $docPath -ChildPath $env:BHProjectName
-        if (Test-Path -Path $nestedFolder) {
-            Get-ChildItem -Path $nestedFolder -Filter '*.md' |
-                ForEach-Object { Move-Item -Path $_.FullName -Destination $docPath -Force }
-            Remove-Item -Path $nestedFolder -Recurse -Force
+        $content = [System.IO.File]::ReadAllText($mdPath)
+        $new     = [Regex]::Replace($content, $aliasPattern, $replacement)
+
+        if ($new -ne $content) {
+            [System.IO.File]::WriteAllText($mdPath, $new, $utf8NoBom)
         }
     }
 
