@@ -1,4 +1,4 @@
-function Get-PortalDefaultUserSettings {
+function Get-PortalDefaultUserSetting {
     <#
     .SYNOPSIS
         Get default user settings from Portal
@@ -17,7 +17,7 @@ function Get-PortalDefaultUserSettings {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-PortalDefaultUserSettings @cParams
+        PS C:\> Get-PortalDefaultUserSetting @cParams
         Get the default user settings from Portal
     .NOTES
         Status: Stable
@@ -26,6 +26,7 @@ function Get-PortalDefaultUserSettings {
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]
+    [Alias('Get-PortalDefaultUserSettings')]
     Param(
         [Parameter(HelpMessage = 'Portal ID')]
         [ValidateNotNullOrEmpty()]

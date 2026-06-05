@@ -1,4 +1,4 @@
-function Set-ServerAllowedOrigins {
+function Set-ServerAllowedOrigin {
     <#
     .SYNOPSIS
         Set ArcGIS Server allowed origins
@@ -19,7 +19,7 @@ function Set-ServerAllowedOrigins {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Set-ServerAllowedOrigins -Origin 'https://test.com', 'https://mySite.com'
+        PS C:\> Set-ServerAllowedOrigin -Origin 'https://test.com', 'https://mySite.com'
         Sets ArcGIS Server allowed origins to 'https://test.com,https://mySite.com'
     .NOTES
         Status: Stable
@@ -28,6 +28,7 @@ function Set-ServerAllowedOrigins {
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     [OutputType([System.Management.Automation.PSCustomObject])]
+    [Alias('Set-ServerAllowedOrigins')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

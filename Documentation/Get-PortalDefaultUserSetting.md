@@ -1,28 +1,42 @@
-# Set-PortalProxyHosts
+# Get-PortalDefaultUserSetting
 
 ## SYNOPSIS
-Set Portal security configuration
+Get default user settings from Portal
 
 ## SYNTAX
 
 ```
-Set-PortalProxyHosts [-Context] <Uri> [-ProxyHost] <String[]> [[-Referer] <String>] [-Token] <String>
- [-SkipCertificateCheck] [<CommonParameters>]
+Get-PortalDefaultUserSetting [[-PortalId] <String>] [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Set Portal security configuration
+Get default user settings from Portal
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-$cmn = @{ Context = 'https://arcgis.com/arcgis'; Token = $token }
-PS C:\> Set-PortalSecurityConfiugration -ProxyHost 'test.com' @cmn
-Set Portal allowedProxyHosts to 'test.com'
+Get-PortalDefaultUserSetting @cParams
+Get the default user settings from Portal
 ```
 
 ## PARAMETERS
+
+### -PortalId
+Portal ID
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases:
+
+Required: False
+Position: 1
+Default value: 0123456789ABCDEF
+Accept pipeline input: False
+Accept wildcard characters: False
+```
 
 ### -Context
 Portal context (e.g., https://arcgis.com/arcgis)
@@ -33,37 +47,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 1
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ProxyHost
-Proxy host
-
-```yaml
-Type: String[]
-Parameter Sets: (All)
-Aliases:
-
-Required: True
 Position: 2
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Referer
-Referer
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -78,7 +62,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 4
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -109,14 +93,11 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Set-PortalProxyHosts
-Author:   Justin Johns
-Version:  0.1.2 | Last Edit: 2023-01-05
-- 0.1.2 - Fixed minor issue with setting allowed origins
-- 0.1.1 - Fixed defect that removes several existing properties
-- 0.1.0 - Initial version
+Name:     Get-PortalDefaultUserSetting
+Author:   Phillip Glodowski, Justin Johns
+Version:  0.1.1 | Last Edit: 2025-07-22
 Comments: \<Comment(s)\>
 General notes
-https://developers.arcgis.com/rest/enterprise-administration/portal/update-security-configuration.htm
+https://developers.arcgis.com/rest/users-groups-and-items/user-default-settings.htm
 
 ## RELATED LINKS

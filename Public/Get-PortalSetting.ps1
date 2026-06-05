@@ -1,4 +1,4 @@
-function Get-PortalSettings {
+function Get-PortalSetting {
     <#
     .SYNOPSIS
         Get Portal configuration or "self"
@@ -16,7 +16,7 @@ function Get-PortalSettings {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Get-PortalSettings -Context 'https://arcgis.com/arcgis' -Token $token
+        PS C:\> Get-PortalSetting -Context 'https://arcgis.com/arcgis' -Token $token
         Gets Portal "self" configuration
     .NOTES
         Status: Stable
@@ -25,7 +25,7 @@ function Get-PortalSettings {
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]
-    [Alias('Test-PortalToken', 'Get-PortalSelf')]
+    [Alias('Get-PortalSettings', 'Test-PortalToken', 'Get-PortalSelf')]
     Param(
         <# [Parameter(HelpMessage = 'Portal ID')]
         [ValidateNotNullOrEmpty()]

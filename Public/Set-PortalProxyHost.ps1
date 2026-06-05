@@ -1,4 +1,4 @@
-function Set-PortalProxyHosts {
+function Set-PortalProxyHost {
     <#
     .SYNOPSIS
         Set Portal security configuration
@@ -20,7 +20,7 @@ function Set-PortalProxyHosts {
         System.Object.
     .EXAMPLE
         PS C:\> $cmn = @{ Context = 'https://arcgis.com/arcgis'; Token = $token }
-        PS C:\> Set-PortalSecurityConfiugration -ProxyHost 'test.com' @cmn
+        PS C:\> Set-PortalProxyHost -ProxyHost 'test.com' @cmn
         Set Portal allowedProxyHosts to 'test.com'
     .NOTES
         Status: Stable
@@ -29,6 +29,7 @@ function Set-PortalProxyHosts {
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     [OutputType([System.Management.Automation.PSCustomObject])]
+    [Alias('Set-PortalProxyHosts')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

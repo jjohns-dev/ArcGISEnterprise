@@ -1,24 +1,25 @@
-# Set-ServerAllowedOrigins
+# Set-PortalProxyHost
 
 ## SYNOPSIS
-Set ArcGIS Server allowed origins
+Set Portal security configuration
 
 ## SYNTAX
 
 ```
-Set-ServerAllowedOrigins [-Context] <Uri> [-Origin] <String[]> [-SOAP] [-Token] <String>
+Set-PortalProxyHost [-Context] <Uri> [-ProxyHost] <String[]> [[-Referer] <String>] [-Token] <String>
  [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
-Set ArcGIS Server allowed origins
+Set Portal security configuration
 
 ## EXAMPLES
 
 ### EXAMPLE 1
 ```
-Set-ServerAllowedOrigins -Origin 'https://test.com', 'https://mySite.com'
-Sets ArcGIS Server allowed origins to 'https://test.com,https://mySite.com'
+$cmn = @{ Context = 'https://arcgis.com/arcgis'; Token = $token }
+PS C:\> Set-PortalSecurityConfiugration -ProxyHost 'test.com' @cmn
+Set Portal allowedProxyHosts to 'test.com'
 ```
 
 ## PARAMETERS
@@ -38,8 +39,8 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -Origin
-Origin to be allowed for Portal
+### -ProxyHost
+Proxy host
 
 ```yaml
 Type: String[]
@@ -53,17 +54,17 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
-### -SOAP
-Set SOAP handler allowed origins
+### -Referer
+Referer
 
 ```yaml
-Type: SwitchParameter
+Type: String
 Parameter Sets: (All)
 Aliases:
 
 Required: False
-Position: Named
-Default value: False
+Position: 3
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
@@ -77,7 +78,7 @@ Parameter Sets: (All)
 Aliases:
 
 Required: True
-Position: 3
+Position: 4
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
@@ -108,16 +109,14 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Set-ServerAllowedOrigins
+Name:     Set-PortalProxyHost
 Author:   Justin Johns
-Version:  0.1.4 | Last Edit: 2023-05-10
-- 0.1.4 - Added switch parameter for SOAP handler
-- 0.1.3 - Fixed issue with \[System.Uri\] adding trailing slash to Origin parameter
-- 0.1.2 - Add validation to Origin parameter
-- 0.1.1 - Updates to account for all server properties
+Version:  0.1.2 | Last Edit: 2023-01-05
+- 0.1.2 - Fixed minor issue with setting allowed origins
+- 0.1.1 - Fixed defect that removes several existing properties
 - 0.1.0 - Initial version
+Comments: \<Comment(s)\>
 General notes
-https://developers.arcgis.com/rest/enterprise-administration/server/edit-soap-handler-config.htm
-https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit.htm
+https://developers.arcgis.com/rest/enterprise-administration/portal/update-security-configuration.htm
 
 ## RELATED LINKS

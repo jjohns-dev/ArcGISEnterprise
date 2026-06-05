@@ -1,4 +1,4 @@
-# Get-PortalSettings
+# Get-PortalSetting
 
 ## SYNOPSIS
 Get Portal configuration or "self"
@@ -6,7 +6,7 @@ Get Portal configuration or "self"
 ## SYNTAX
 
 ```
-Get-PortalSettings [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
+Get-PortalSetting [-Context] <Uri> [-Token] <String> [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -17,7 +17,7 @@ Portal token validity
 
 ### EXAMPLE 1
 ```
-Get-PortalSettings -Context 'https://arcgis.com/arcgis' -Token $token
+Get-PortalSetting -Context 'https://arcgis.com/arcgis' -Token $token
 Gets Portal "self" configuration
 ```
 
@@ -78,7 +78,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 
 ### System.Object.
 ## NOTES
-Name:     Get-PortalSettings
+Name:     Get-PortalSetting
 Author:   Phillip Glodowski, Justin Johns
 Version:  0.3.1 | Last Edit: 2025-07-22
 Comments: \<Comment(s)\>

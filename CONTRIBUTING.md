@@ -55,7 +55,7 @@ function <Verb>-<Noun> {
 #### Rules
 
 - Use only [approved PowerShell verbs](https://learn.microsoft.com/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands) when naming functions.
-- The `<Noun>` portion should start with the ArcGIS Enterprise component the function targets: `Portal`, `Server`, `GeoEvent`. Example: `Get-PortalUser`, `Set-ServerAllowedOrigins`.
+- The `<Noun>` portion should start with the ArcGIS Enterprise component the function targets: `Portal`, `Server`, `GeoEvent`. Example: `Get-PortalUser`, `Set-ServerAllowedOrigin`.
 - Every function must include complete comment-based help (`.SYNOPSIS`, `.DESCRIPTION`, `.PARAMETER` for each parameter, `.INPUTS`, `.OUTPUTS`, at least one `.EXAMPLE`, and `.NOTES`).
 - Prefer splat tables (`$params = @{...}; Invoke-Cmd @params`) over backtick line continuations.
 - Use `Write-Error -Message '...' -ErrorAction Stop` instead of `throw` for terminating errors, including inside `ValidateScript` blocks.

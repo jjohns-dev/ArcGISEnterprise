@@ -61,7 +61,7 @@ function Remove-PortalItem {
             try {
                 # GET USER PORTAL INFO
                 Write-Verbose -Message 'Getting user settings...'
-                $userSettings = Get-PortalSettings -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
+                $userSettings = Get-PortalSetting -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
 
                 # SET USER NAME
                 $UserName = $userSettings.user.username
