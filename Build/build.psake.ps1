@@ -199,3 +199,90 @@ Task 'Cleanup' {
     Remove-Item -Path $ArtifactFolder -Recurse -Force -ErrorAction 'SilentlyContinue'
     Remove-Item -Path $StagingFolder -Recurse -Force -ErrorAction 'SilentlyContinue'
 }
+
+# Regenerate per-function markdown help in $ProjectRoot/Documentation from the
+# comment-based help in Public/*.ps1, using Microsoft.PowerShell.PlatyPS (v2).
+#
+# Dev-run only -- intentionally NOT included in the Default task or CI workflows.
+# Run manually after any change to a public function's parameter signature or
+# comment-based help:
+#
+#     .\Build\build.ps1 -TaskList GenerateDocs
+#
+# Operates on the SOURCE Documentation/ folder, not the staged copy, so the
+# regenerated files are committed alongside the .ps1 changes.
+Task 'GenerateDocs' -depends 'ImportStagingModule' {
+    $lines
+
+    # Verify Microsoft.PowerShell.PlatyPS is available (declared in Build/depend.psd1)
+    if (-not (Get-Module -Name 'Microsoft.PowerShell.PlatyPS' -ListAvailable)) {
+        Write-Error -Message "Microsoft.PowerShell.PlatyPS is not installed. Run: .\Build\build.ps1 -ResolveDependency" -ErrorAction Stop
+    }
+    Import-Module -Name 'Microsoft.PowerShell.PlatyPS' -Force
+
+    $docPath = Join-Path -Path $ProjectRoot -ChildPath 'Documentation'
+    if (-not (Test-Path -Path $docPath)) {
+        New-Item -Path $docPath -ItemType 'Directory' -Force | Out-Null
+    }
+
+    $moduleInfo = Get-Module -Name $env:BHProjectName
+    if (-not $moduleInfo) {
+        Write-Error -Message "Module '$env:BHProjectName' is not loaded; ImportStagingModule should have loaded it." -ErrorAction Stop
+    }
+
+    # Decide between New- and Update- based on the v2-schema status of any
+    # existing .md files. Measure-PlatyPSMarkdown returns a FileType containing
+    # 'V2Schema' for v2 files and 'V1Schema' for legacy v1 files.
+    $existingMd = Get-ChildItem -Path $docPath -Filter '*.ps1.md' -ErrorAction SilentlyContinue
+    if (-not $existingMd) { $existingMd = Get-ChildItem -Path $docPath -Filter '*.md' -ErrorAction SilentlyContinue }
+
+    $isV2 = $false
+    if ($existingMd) {
+        $sample = $existingMd | Where-Object { $_.Name -ne 'index.md' -and $_.Name -ne 'Index.md' } | Select-Object -First 1
+        if ($sample) {
+            $measure = Measure-PlatyPSMarkdown -Path $sample.FullName -ErrorAction SilentlyContinue
+            if ($measure -and $measure.FileType -match 'V2Schema') { $isV2 = $true }
+        }
+    }
+
+    if ($isV2) {
+        Write-Output "Existing Documentation/ contains v2-schema markdown -- updating in place..."
+        Get-ChildItem -Path $docPath -Filter '*.md' |
+            Where-Object { $_.Name -ne 'index.md' -and $_.Name -ne 'Index.md' } |
+            ForEach-Object { Update-MarkdownCommandHelp -Path $_.FullName }
+
+        # Update-MarkdownCommandHelp writes a sibling .md.bak file for every
+        # updated .md. Remove them -- the regenerated .md is what we commit.
+        Get-ChildItem -Path $docPath -Filter '*.md.bak' -ErrorAction SilentlyContinue |
+            Remove-Item -Force
+    }
+    else {
+        Write-Output "Generating Documentation/ from scratch using Microsoft.PowerShell.PlatyPS..."
+
+        # Remove any legacy v1-schema files (preserve index.md / Index.md hand-curated content)
+        Get-ChildItem -Path $docPath -Filter '*.md' |
+            Where-Object { $_.Name -ne 'index.md' -and $_.Name -ne 'Index.md' } |
+            Remove-Item -Force
+
+        # New-MarkdownCommandHelp ALWAYS writes to a $OutputFolder/$ModuleName/ subfolder.
+        # Generate there, then flatten the files up into $docPath so existing relative
+        # links (README, index.md) continue to work without rewrites.
+        $newParams = @{
+            ModuleInfo   = $moduleInfo
+            OutputFolder = $docPath
+            Force        = $true
+        }
+        New-MarkdownCommandHelp @newParams | Out-Null
+
+        $nestedFolder = Join-Path -Path $docPath -ChildPath $env:BHProjectName
+        if (Test-Path -Path $nestedFolder) {
+            Get-ChildItem -Path $nestedFolder -Filter '*.md' |
+                ForEach-Object { Move-Item -Path $_.FullName -Destination $docPath -Force }
+            Remove-Item -Path $nestedFolder -Recurse -Force
+        }
+    }
+
+    $generated = Get-ChildItem -Path $docPath -Filter '*.md' |
+        Where-Object { $_.Name -ne 'index.md' -and $_.Name -ne 'Index.md' }
+    Write-Output ("Documentation regenerated: {0} command-help file(s) under [{1}]" -f $generated.Count, $docPath)
+}
