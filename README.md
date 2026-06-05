@@ -1,13 +1,8 @@
 # ArcGISEnterprise
 
-[![release](https://img.shields.io/github/v/release/PS-MCS/ArcGISEnterprise?sort=semver)](https://github.com/PS-MCS/ArcGISEnterprise/releases/latest)
 [![validate](https://github.com/PS-MCS/ArcGISEnterprise/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/PS-MCS/ArcGISEnterprise/actions/workflows/validate.yml)
 [![release workflow](https://github.com/PS-MCS/ArcGISEnterprise/actions/workflows/release.yml/badge.svg)](https://github.com/PS-MCS/ArcGISEnterprise/actions/workflows/release.yml)
-[![license](https://img.shields.io/github/license/PS-MCS/ArcGISEnterprise)](LICENSE)
 [![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-5391FE?logo=powershell&logoColor=white)](https://learn.microsoft.com/powershell/scripting/install/installing-powershell)
-[![downloads](https://img.shields.io/github/downloads/PS-MCS/ArcGISEnterprise/total)](https://github.com/PS-MCS/ArcGISEnterprise/releases)
-[![last commit](https://img.shields.io/github/last-commit/PS-MCS/ArcGISEnterprise)](https://github.com/PS-MCS/ArcGISEnterprise/commits/main)
-[![open issues](https://img.shields.io/github/issues/PS-MCS/ArcGISEnterprise)](https://github.com/PS-MCS/ArcGISEnterprise/issues)
 
 PowerShell 7 module for ArcGIS Enterprise REST APIs. Includes functions for
 both ArcGIS Server and Portal for ArcGIS.
