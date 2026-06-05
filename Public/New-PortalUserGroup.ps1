@@ -58,7 +58,7 @@ function New-PortalUserGroup {
         https://developers.arcgis.com/rest/users-groups-and-items/create-group.htm
         https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#group-parameters
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Group title or name')]
@@ -169,6 +169,8 @@ function New-PortalUserGroup {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($Title, 'Create Portal group')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

@@ -41,7 +41,7 @@ function Write-PortalUserItem {
         https://developers.arcgis.com/rest/users-groups-and-items/items-and-item-types.htm
         https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
@@ -147,6 +147,8 @@ function Write-PortalUserItem {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE UPLOAD
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(('{0} for user [{1}]' -f $file.Name, $UserName), 'Upload item to Portal')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

@@ -30,7 +30,7 @@ function Set-PortalDefaultUserLicenseType {
         General notes
         https://developers.arcgis.com/rest/users-groups-and-items/set-user-default-settings.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(HelpMessage = 'Portal ID')]
@@ -83,6 +83,8 @@ function Set-PortalDefaultUserLicenseType {
 
         # SEND REQUEST
         # THIS DOES NOT APPEAR TO RESET OR REMOVE ANY SETTINGS IN THE EXISTING CONFIGURATION
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($PortalId, 'Set Portal default user license type')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

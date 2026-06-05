@@ -30,7 +30,7 @@ function Set-ServerPSAPassword {
         https://developers.arcgis.com/rest/enterprise-administration/server/updatepsa.htm
         https://developers.arcgis.com/rest/users-groups-and-items/update-user.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Update-ServerPSA')]
     Param(
@@ -68,7 +68,9 @@ function Set-ServerPSAPassword {
             }
 
             # SEND REQUEST
-            Invoke-RestMethod @restParams
+            if ($PSCmdlet.ShouldProcess($Credential.GetNetworkCredential().UserName, 'Set ArcGIS Server PSA password')) {
+                Invoke-RestMethod @restParams
+            }
         }
         else {
             Write-Error -Message 'ArcGIS Server PSA is disabled.' -ErrorAction Stop

@@ -35,7 +35,7 @@ function Import-PortalGroupItem {
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/import-group/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Group ID')]
@@ -94,6 +94,8 @@ function Import-PortalGroupItem {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($GroupID, 'Import item into Portal group')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

@@ -32,7 +32,7 @@ function Set-PortalRolePrivilege {
         General notes
         https://developers.arcgis.com/rest/users-groups-and-items/set-role-privileges.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Portal Role ID')]
@@ -77,6 +77,8 @@ function Set-PortalRolePrivilege {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE QUERY
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($RoleId, 'Set Portal role privileges')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

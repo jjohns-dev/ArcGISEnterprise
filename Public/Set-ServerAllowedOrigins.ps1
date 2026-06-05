@@ -34,7 +34,7 @@ function Set-ServerAllowedOrigins {
         https://developers.arcgis.com/rest/enterprise-administration/server/edit-soap-handler-config.htm
         https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
@@ -67,7 +67,9 @@ function Set-ServerAllowedOrigins {
                 Body   = @{ f = 'json'; token = $Token; allowedOrigins = ($Origin -join ',') }
             }
             if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-            Invoke-RestMethod @restParams
+            if ($PSCmdlet.ShouldProcess(($Origin -join ', '), 'Set ArcGIS Server allowed origins (SOAP)')) {
+                Invoke-RestMethod @restParams
+            }
         }
         else {
             # GET SERVICES DIRECTORY DATA
@@ -95,7 +97,9 @@ function Set-ServerAllowedOrigins {
                 Body   = $newConfig
             }
             if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-            Invoke-RestMethod @restParams
+            if ($PSCmdlet.ShouldProcess(($Origin -join ', '), 'Set ArcGIS Server allowed origins (REST)')) {
+                Invoke-RestMethod @restParams
+            }
         }
     }
 }

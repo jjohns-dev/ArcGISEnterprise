@@ -30,7 +30,7 @@ function Set-PortalCategorySchema {
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/assign-category-schema/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal category schema')]
@@ -72,6 +72,6 @@ function Set-PortalCategorySchema {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
-    }
-}
+        if ($PSCmdlet.ShouldProcess($PortalId, 'Set Portal category schema')) {
+            Invoke-RestMethod @restParams
+        }

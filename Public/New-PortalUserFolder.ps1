@@ -30,7 +30,7 @@ function New-PortalUserFolder {
         https://developers.arcgis.com/rest/users-groups-and-items/create-folder.htm
         General notes:
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
@@ -88,7 +88,9 @@ function New-PortalUserFolder {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # SEND REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(('{0} for user [{1}]' -f $Title, $Username), 'Create Portal folder')) {
+            Invoke-RestMethod @restParams
+        }
 
     }
 }

@@ -32,7 +32,7 @@ function New-PortalRole {
         General notes
         https://developers.arcgis.com/rest/users-groups-and-items/create-role.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Portal role name')]
@@ -78,6 +78,8 @@ function New-PortalRole {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE QUERY
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($Name, 'Create Portal role')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

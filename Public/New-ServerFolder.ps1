@@ -27,7 +27,7 @@ function New-ServerFolder {
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/enterprise-administration/enterprise/create-folder.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'New ArcGIS Server folder name')]
@@ -64,6 +64,8 @@ function New-ServerFolder {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($FolderName, 'Create ArcGIS Server folder')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

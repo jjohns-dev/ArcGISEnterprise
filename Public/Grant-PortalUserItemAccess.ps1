@@ -35,7 +35,7 @@ function Grant-PortalUserItemAccess {
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/share-items.htm
     #>
-    [CmdletBinding(DefaultParameterSetName = '_grp')]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = '_grp')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Id of Portal item')]
@@ -110,6 +110,6 @@ function Grant-PortalUserItemAccess {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
-    }
-}
+        if ($PSCmdlet.ShouldProcess(($ItemId -join ', '), 'Grant Portal item access')) {
+            Invoke-RestMethod @restParams
+        }

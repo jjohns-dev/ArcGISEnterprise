@@ -31,7 +31,7 @@ function Revoke-PortalUserItemAccess {
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/share-items.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Id of Portal item')]
@@ -99,6 +99,8 @@ function Revoke-PortalUserItemAccess {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(($ItemId -join ', '), 'Revoke Portal item access')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

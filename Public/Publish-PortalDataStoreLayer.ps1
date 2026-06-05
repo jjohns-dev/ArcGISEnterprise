@@ -55,7 +55,7 @@ function Publish-PortalDataStoreLayer {
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/publish-layers.htm
     #>
-    [CmdletBinding(DefaultParameterSetName = '_init')]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = '_init')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_init', HelpMessage = 'DataStore Portal item ID')]
@@ -134,6 +134,8 @@ function Publish-PortalDataStoreLayer {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($DataStoreId, 'Publish DataStore layers')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

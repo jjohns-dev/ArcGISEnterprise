@@ -38,7 +38,7 @@ function New-PortalHostedFeatureService {
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/create-service.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
@@ -136,6 +136,8 @@ function New-PortalHostedFeatureService {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # SEND REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($ServiceName, 'Create Portal hosted feature service')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

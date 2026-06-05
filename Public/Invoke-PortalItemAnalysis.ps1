@@ -34,6 +34,7 @@ function Invoke-PortalItemAnalysis {
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/users-groups-and-items/analyze.htm
     #>
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '', Justification = 'Analyze is a read-only operation; it does not change any server state.')]
     [CmdletBinding(DefaultParameterSetName = '_itid')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(

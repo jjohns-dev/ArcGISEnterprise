@@ -31,7 +31,7 @@ function New-ServerHostedFeatureTable {
         Comments: <Comment(s)>
         https://developers.arcgis.com/rest/services-reference/online/add-to-definition-feature-service-.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
@@ -105,6 +105,8 @@ function New-ServerHostedFeatureTable {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # SEND REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(('{0} in service [{1}]' -f $TableName, $ServiceName), 'Create hosted feature table')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

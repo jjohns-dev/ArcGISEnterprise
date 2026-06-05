@@ -35,7 +35,7 @@ function Publish-PortalCsvItemAsTable {
         https://developers.arcgis.com/rest/users-groups-and-items/publish-item.htm
         https://developers.arcgis.com/documentation/mapping-apis-and-services/data-hosting/tutorials/tools/import-data-to-create-a-table/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Name of new Portal table')]
@@ -124,6 +124,8 @@ function Publish-PortalCsvItemAsTable {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE UPLOAD
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(('{0} (item [{1}])' -f $ItemName, $ItemId), 'Publish CSV item as hosted table')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

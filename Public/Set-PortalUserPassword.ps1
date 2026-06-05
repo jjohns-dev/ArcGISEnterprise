@@ -27,7 +27,7 @@ function Set-PortalUserPassword {
         General notes:
         https://developers.arcgis.com/rest/users-groups-and-items/update-user.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Update-PortalPSA')]
     Param(
@@ -65,7 +65,9 @@ function Set-PortalUserPassword {
             }
 
             # SEND REQUEST
-            Invoke-RestMethod @restParams
+            if ($PSCmdlet.ShouldProcess($username, 'Set Portal user password')) {
+                Invoke-RestMethod @restParams
+            }
         }
         else {
             Write-Error -Message ('User "{0}" not found in Portal "{1}"' -f $username, $Context) -ErrorAction Stop

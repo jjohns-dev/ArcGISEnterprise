@@ -33,7 +33,7 @@ function Set-PortalProxyHosts {
         General notes
         https://developers.arcgis.com/rest/enterprise-administration/portal/update-security-configuration.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
@@ -85,6 +85,8 @@ function Set-PortalProxyHosts {
             }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(($ProxyHost -join ', '), 'Set Portal proxy hosts')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

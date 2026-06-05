@@ -30,6 +30,7 @@ function New-TableSchemaObject {
         - Version history is capture in repository commit history
         Comments:
     #>
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '', Justification = 'Creates an in-memory object only; does not call any API or change any external state.')]
     [CmdletBinding(DefaultParameterSetName = '_typ')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
