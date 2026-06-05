@@ -118,7 +118,7 @@ Please see releases for updates and features
 | [Get-ServerUsageReport](Get-ServerUsageReport.md) | Server | `[ADMIN]/usagereports/[REPORTNAME]` | Return individual or all usage reports |
 | [Get-ServerUsageReportData](Get-ServerUsageReportData.md) | Server | `[ADMIN]/usagereports/[REPORTNAME]/data` | Gets the report data for a usage report |
 | [Grant-PortalUserItemAccess](Grant-PortalUserItemAccess.md) | Portal | `[ROOT]/content/users/[USERNAME]/shareItems` | Share Portal item |
-| [Import-PortalGroupItem](Import-PortalGroupItem.md) | Portal | `[ROOT]/community/groups/[GROUPID]/import` |  |
+| [Import-PortalGroupItem](Import-PortalGroupItem.md) | Portal | `[ROOT]/community/groups/[GROUPID]/import` | Imports content from an export package into a Portal group |
 | [Invoke-PortalItemAnalysis](Invoke-PortalItemAnalysis.md) | Portal | `[ROOT]/content/features/analyze` | Analyze file prior to publishing |
 | [Invoke-ServerHostedFeatureQuery](Invoke-ServerHostedFeatureQuery.md) | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query feature service layer. Additional options available |
 | [Move-PortalUserItem](Move-PortalUserItem.md) | Portal | `[ROOT]/content/users/[USERNAME]/moveItems` | Move Portal item to folder |
