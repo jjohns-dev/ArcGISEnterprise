@@ -1,170 +1,252 @@
+---
+document type: cmdlet
+external help file: ArcGISEnterprise-Help.xml
+HelpUri: ''
+Locale: en-US
+Module Name: ArcGISEnterprise
+ms.date: 06/05/2026
+PlatyPS schema version: 2024-05-01
+title: Add-ServerFeature
+---
+
 # Add-ServerFeature
 
 ## SYNOPSIS
+
 Add feature to Feature Service
 
 ## SYNTAX
 
 ### __rcd
+
 ```
-Add-ServerFeature -Record <Object[]> -ServiceName <String> [-LayerId <Int32>] [-FolderName <String>]
- -Context <Uri> -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
+Add-ServerFeature -Record <Object[]> -ServiceName <string> -Context <uri> -Token <string>
+ [-LayerId <int>] [-FolderName <string>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
 ### __ftr
+
 ```
-Add-ServerFeature -Feature <Object[]> -ServiceName <String> [-LayerId <Int32>] [-FolderName <String>]
- -Context <Uri> -Token <String> [-SkipCertificateCheck] [<CommonParameters>]
+Add-ServerFeature -Feature <Object[]> -ServiceName <string> -Context <uri> -Token <string>
+ [-LayerId <int>] [-FolderName <string>] [-SkipCertificateCheck] [<CommonParameters>]
 ```
 
+## ALIASES
+
 ## DESCRIPTION
+
 Add feature to a Feature Service
 
 ## EXAMPLES
 
 ### EXAMPLE 1
-```
+
 Add-ServerFeature @commonParams -Record $rec -ServiceName "dashboard"
 Add records to a Hosted Feature Service named "dashboard"
-```
 
 ## PARAMETERS
 
-### -Record
-Feature record or attributes to add
-
-```yaml
-Type: Object[]
-Parameter Sets: __rcd
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -Feature
-Feature to add to the Feature Service
-
-```yaml
-Type: Object[]
-Parameter Sets: __ftr
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -ServiceName
-Portal Hosted Feature Service Name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -LayerId
-Service Layer ID
-
-```yaml
-Type: Int32
-Parameter Sets: (All)
-Aliases: Layer
-
-Required: False
-Position: Named
-Default value: 0
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
-### -FolderName
-Server Service Folder Name
-
-```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
-
-Required: False
-Position: Named
-Default value: Hosted
-Accept pipeline input: False
-Accept wildcard characters: False
-```
-
 ### -Context
+
 Portal context (e.g., https://arcgis.com/arcgis)
 
 ```yaml
-Type: Uri
-Parameter Sets: (All)
-Aliases:
-
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+Type: System.Uri
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
-### -Token
-Portal token
+### -Feature
+
+Feature to add to the Feature Service
 
 ```yaml
-Type: String
-Parameter Sets: (All)
-Aliases:
+Type: System.Object[]
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: __ftr
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: True
-Position: Named
-Default value: None
-Accept pipeline input: False
-Accept wildcard characters: False
+### -FolderName
+
+Server Service Folder Name
+
+```yaml
+Type: System.String
+DefaultValue: Hosted
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -LayerId
+
+Service Layer ID
+
+```yaml
+Type: System.Int32
+DefaultValue: 0
+SupportsWildcards: false
+Aliases:
+- Layer
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -Record
+
+Feature record or attributes to add
+
+```yaml
+Type: System.Object[]
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: __rcd
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
+
+### -ServiceName
+
+Portal Hosted Feature Service Name
+
+```yaml
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### -SkipCertificateCheck
+
 Ignore missing or invalid certificate
 
 ```yaml
-Type: SwitchParameter
-Parameter Sets: (All)
-Aliases:
+Type: System.Management.Automation.SwitchParameter
+DefaultValue: False
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: false
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
+```
 
-Required: False
-Position: Named
-Default value: False
-Accept pipeline input: False
-Accept wildcard characters: False
+### -Token
+
+Portal token
+
+```yaml
+Type: System.String
+DefaultValue: ''
+SupportsWildcards: false
+Aliases: []
+ParameterSets:
+- Name: (All)
+  Position: Named
+  IsRequired: true
+  ValueFromPipeline: false
+  ValueFromPipelineByPropertyName: false
+  ValueFromRemainingArguments: false
+DontShow: false
+AcceptedValues: []
+HelpMessage: ''
 ```
 
 ### CommonParameters
-This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable. For more information, see [about_CommonParameters](http://go.microsoft.com/fwlink/?LinkID=113216).
+
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable,
+-InformationAction, -InformationVariable, -OutBuffer, -OutVariable, -PipelineVariable,
+-ProgressAction, -Verbose, -WarningAction, and -WarningVariable. For more information, see
+[about_CommonParameters](https://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
 ### None.
+
+{{ Fill in the Description }}
+
 ## OUTPUTS
 
 ### System.Object.
+
+{{ Fill in the Description }}
+
+### System.Management.Automation.PSCustomObject
+
+{{ Fill in the Description }}
+
 ## NOTES
-Name:     Add-ServerFeature
-Author:   Justin Johns
-Version:  0.1.2 | Last Edit: 2024-02-19
+
+Status: Stable
 - See commit history for version changes
-Comments: \<Comment(s)\>
+Comments:
 https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
 
+
 ## RELATED LINKS
+
+{{ Fill in the related links here }}
+

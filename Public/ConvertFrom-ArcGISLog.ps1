@@ -15,7 +15,7 @@ function ConvertFrom-ArcGISLog {
         Converts all entries in the log to objects
     .NOTES
         Status: Stable
-        Comments: No external API reference — utility function.
+        Comments: No external API reference - utility function.
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

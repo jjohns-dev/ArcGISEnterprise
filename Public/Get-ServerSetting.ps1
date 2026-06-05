@@ -21,7 +21,7 @@ function Get-ServerSetting {
         Explanation of what the example does
     .NOTES
         Status: Stable
-        Comments: No external API reference — generic admin endpoint wrapper.
+        Comments: No external API reference - generic admin endpoint wrapper.
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

@@ -17,7 +17,7 @@ function Set-PortalConnection {
         Sets the default Portal for ArcGIS connection parameters for subsequent cmdlet calls.
     .NOTES
         Status: Stable
-        Comments: No external API reference — sets $PSDefaultParameterValues for default connection parameters.
+        Comments: No external API reference - sets $PSDefaultParameterValues for default connection parameters.
     #>
     [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '', Justification = 'Intentionally writes to $PSDefaultParameterValues to set default connection parameters for downstream cmdlets.')]
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
