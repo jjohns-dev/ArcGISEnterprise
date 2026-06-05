@@ -149,7 +149,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 Status: Stable
-Comments: No external API reference — generic admin endpoint wrapper.
+Comments: No external API reference - generic admin endpoint wrapper.
 
 ## RELATED LINKS
 

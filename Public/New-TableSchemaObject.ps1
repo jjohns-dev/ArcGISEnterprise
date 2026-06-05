@@ -25,7 +25,7 @@ function New-TableSchemaObject {
         Returns an object with all required properties for a schema component of a Hosted Feature Service table
     .NOTES
         Status: Stable
-        Comments: No external API reference — utility function.
+        Comments: No external API reference - utility function.
     #>
     [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '', Justification = 'Creates an in-memory object only; does not call any API or change any external state.')]
     [CmdletBinding(DefaultParameterSetName = '_typ')]

@@ -41,7 +41,7 @@ function Get-PortalAllowedOriginList {
     }
     Process {
         # GET ALLOWED ORIGINS
-        $origins = (Get-PortalSelf @PSBoundParameters).allowedOrigins
+        $origins = (Get-PortalSetting @PSBoundParameters).allowedOrigins
 
         # RETURN ORIGINS OR NULL
         if ($origins.Count -EQ 0) { $null } else { $origins.Split(',') }

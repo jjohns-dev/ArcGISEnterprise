@@ -15,7 +15,7 @@ function ConvertFrom-Epoch {
         Convert Epoch time of 1618614176000 to a DateTime object
     .NOTES
         Status: Stable
-        Comments: No external API reference — utility function.
+        Comments: No external API reference - utility function.
     #>
     [CmdletBinding()]
     [OutputType([System.DateTime])]

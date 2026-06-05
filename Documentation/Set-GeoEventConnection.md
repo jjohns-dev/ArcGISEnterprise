@@ -150,7 +150,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 Status: Stable
-Comments: No external API reference — sets $PSDefaultParameterValues for default connection parameters.
+Comments: No external API reference - sets $PSDefaultParameterValues for default connection parameters.
 
 ## RELATED LINKS
 

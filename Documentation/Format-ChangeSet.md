@@ -106,7 +106,7 @@ This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable
 ## NOTES
 
 Status: Stable
-Comments: No external API reference — utility function.
+Comments: No external API reference - utility function.
 
 ## RELATED LINKS
 
