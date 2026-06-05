@@ -20,10 +20,28 @@
     // signature lines exceed 80 chars and shouldn't be wrapped.
     "MD013": false,
 
+    // MD012 no-multiple-blanks: PlatyPS reliably emits consecutive blank
+    // lines around `## NOTES` and `## RELATED LINKS`.
+    "MD012": false,
+
     // MD024 no-duplicate-heading: PlatyPS emits repeated `### -Param` headers
     // (one per parameter set) and identical `## DESCRIPTION` / `## NOTES`
     // headings across files. Restrict the check to sibling headings only.
     "MD024": { "siblings_only": true },
+
+    // MD025 single-h1: PlatyPS pages use a YAML frontmatter `title:` plus an
+    // H1 of the command name. Both are intentional.
+    "MD025": false,
+
+    // MD026 no-trailing-punctuation: PlatyPS writes `### None.` /
+    // `### System.Object.` / etc. -- typenames with trailing periods -- in
+    // the `## INPUTS` and `## OUTPUTS` sections.
+    "MD026": false,
+
+    // MD032 blanks-around-lists: PlatyPS `.NOTES` blocks that contain a
+    // bullet list end up flush against the preceding `Status:` / `Comments:`
+    // lines without an intervening blank.
+    "MD032": false,
 
     // MD033 no-inline-html: PlatyPS SYNTAX lines contain `<string>`, `<uri>`,
     // `<CommonParameters>`, etc., which look like inline HTML to the linter.
