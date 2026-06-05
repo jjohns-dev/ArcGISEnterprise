@@ -45,6 +45,9 @@ function Get-PortalToken {
         [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
+    Begin {
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
+    }
     Process {
         # SET REFERER IF NOT PROVIDED
         $Referer = if ($PSBoundParameters.ContainsKey('Referer')) { $Referer } else { '{0}://{1}' -f $Context.Scheme, $Context.Authority }

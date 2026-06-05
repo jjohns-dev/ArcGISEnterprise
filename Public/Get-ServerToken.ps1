@@ -65,7 +65,9 @@ function Get-ServerToken {
         [Parameter(HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
-
+    Begin {
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
+    }
     Process {
         $serverUri = '{0}/tokens/generateToken' -f $Context
         if ( $PSBoundParameters.ContainsKey('Admin') ) { $serverUri = '{0}/admin/generateToken' -f $Context }
