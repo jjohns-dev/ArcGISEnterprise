@@ -18,9 +18,12 @@ function Get-ServerServicesDirectory {
         PS C:\> Get-ServerServicesDirectory -Context 'https://arcgis.com/arcgis' -Token $token
         Returns ArcGIS Server services directory content
     .NOTES
-        General notes
+        Status: Stable
+        Comments:
+        https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectory/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

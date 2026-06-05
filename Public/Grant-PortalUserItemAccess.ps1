@@ -28,14 +28,12 @@ function Grant-PortalUserItemAccess {
         PS C:\> Grant-PortalUserItemAccess -ItemId $iId -GroupId $myGroup.id @commonParams
         Shares the current user's Portal item with ID $iId to the group with ID $myGroup.id
     .NOTES
-        Name:     Grant-PortalUserItemAccess
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-22
-        - 0.1.0 - Initial version
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/share-items.htm
     #>
-    [CmdletBinding(DefaultParameterSetName = '_grp')]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = '_grp')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Id of Portal item')]
         [ValidatePattern('[a-f0-9]{32}')]
@@ -67,7 +65,7 @@ function Grant-PortalUserItemAccess {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
@@ -81,7 +79,7 @@ function Grant-PortalUserItemAccess {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
     }
@@ -109,6 +107,8 @@ function Grant-PortalUserItemAccess {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(($ItemId -join ', '), 'Grant Portal item access')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

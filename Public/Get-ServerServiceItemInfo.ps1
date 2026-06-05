@@ -22,10 +22,11 @@ function Get-ServerServiceItemInfo {
         PS C:\> Get-ServerServiceItemInfo -Context 'https://arcgis.com/arcgis' -Token $token -Service $s
         Returns the service item info for service $s
     .NOTES
-        General notes:
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/server/services.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         <# [Parameter(Mandatory = $true, HelpMessage = 'ArcGIS Server service object (use Get-ServerServiceList -Admin)')]
         [ValidateScript({ $_.serviceName -and $_.type })]
@@ -56,7 +57,7 @@ function Get-ServerServiceItemInfo {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # SET PARAMETERS
         $svcParams = $PSBoundParameters; $svcParams.Remove('ServiceName') | Out-Null
@@ -68,7 +69,7 @@ function Get-ServerServiceItemInfo {
         $service = $svcList.services | Where-Object serviceName -EQ $ServiceName
 
         # VALIDATE SERVICE
-        if (-Not $service) { throw ('Error 404: Service [{0}] not found.' -f $ServiceName) }
+        if (-Not $service) { Write-Error -Message ('Error 404: Service [{0}] not found.' -f $ServiceName) -ErrorAction Stop }
     }
     Process {
         # SET REQUEST PARAMETERS

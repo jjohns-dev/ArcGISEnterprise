@@ -20,14 +20,12 @@ function New-ServerFolder {
         PS C:\> New-ServerFolder -FolderName 'my_test_folder' @commonParams
         Creates a new folder named 'my_test_folder' in ArcGIS Server
     .NOTES
-        Name:     New-ServerFolder
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-21
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/enterprise-administration/enterprise/create-folder.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'New ArcGIS Server folder name')]
         [ValidatePattern('^\w{1,30}$')]
@@ -45,7 +43,7 @@ function New-ServerFolder {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS
@@ -63,6 +61,8 @@ function New-ServerFolder {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($FolderName, 'Create ArcGIS Server folder')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

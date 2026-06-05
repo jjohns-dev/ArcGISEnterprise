@@ -28,14 +28,12 @@ function Get-ServerServiceExtractChange {
         Second line returns an object with the property "resultUrl" to retrieve the change data.
         Third line returns the change data for the service "MyService"
     .NOTES
-        Name:     Get-ServerServiceExtractChange
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-10-25
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/extract-changes-feature-service/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service name')]
         [ValidateNotNullOrEmpty()]
@@ -60,7 +58,7 @@ function Get-ServerServiceExtractChange {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

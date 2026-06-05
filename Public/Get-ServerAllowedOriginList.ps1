@@ -20,14 +20,13 @@ function Get-ServerAllowedOriginList {
         PS C:\> Get-ServerAllowedOriginList @params
         Gets the allowed origins for ArcGIS Server
     .NOTES
-        Name:     Get-ServerAllowedOriginList
-        Author:   Justin Johns
-        Version:  0.1.3 | Last Edit: 2024-07-18
-        - Version history is capture in repository commit history
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
+        https://developers.arcgis.com/rest/enterprise-administration/server/soap-handler-config/
+        https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectory/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-ServerAllowedOrigins')]
     Param(
         [Parameter(HelpMessage = 'Get SOAP Allowed Origins')]
@@ -45,7 +44,7 @@ function Get-ServerAllowedOriginList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         if ($PSBoundParameters.ContainsKey('SOAP')) {

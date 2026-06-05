@@ -25,15 +25,14 @@ function Get-GeoEventServerStatus {
 
         Sends a web request to the GeoEvent Server health status endpoint
     .NOTES
-        Name:     Get-GeoEventServerStatus
-        Author:   Phillip Glodowski
-        Version:  0.1.0 | Last Edit: 2025-11-14
+        Status: Stable
 
         API Documentation can be found at:
         https://yourgeoeventserver.domain/geoevent/admin/api/index.html
     #>
 
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target GeoEvent Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -47,7 +46,7 @@ function Get-GeoEventServerStatus {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

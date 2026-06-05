@@ -23,14 +23,12 @@ function Remove-ServerServiceLayer {
         PS C:\> Remove-ServerServiceLayer -ServiceName myServer -LayerId 0
         Removes layer 0 from "myServer"
     .NOTES
-        Name:     Remove-ServerServiceLayer
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-07
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/services-reference/online/delete-from-definition-feature-service-.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]
@@ -52,7 +50,7 @@ function Remove-ServerServiceLayer {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # UPDATE NAME PROPERTY IN TEMPLATE
@@ -62,7 +60,7 @@ function Remove-ServerServiceLayer {
             Body   = @{
                 f                    = 'json'
                 token                = $Token
-                deleteFromDefinition = @{ layers = @( @{ id = $LayerId } ) } | ConvertTo-Json -Compress
+                deleteFromDefinition = @{ layers = @( @{ id = $LayerId } ) } | ConvertTo-Json -Depth 3 -Compress
             }
         }
 

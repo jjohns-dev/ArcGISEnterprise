@@ -20,14 +20,12 @@ function Remove-PortalCategorySchema {
         PS C:\> Remove-PortalCategorySchema @cmnParams
         Removes the category schema set for the organization
     .NOTES
-        Name:     Remove-PortalCategorySchema
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-01-15
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/delete-category-schema/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Portal application ID')]
         [ValidateNotNullOrEmpty()]
@@ -45,7 +43,7 @@ function Remove-PortalCategorySchema {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

@@ -20,15 +20,12 @@ function Get-PortalOAuthAppInfo {
         PS C:\> Get-PortalOAuthAppInfo @commonParams
         Gets the information associated with the app 'arcgisonline'
     .NOTES
-        Name:     Get-PortalOAuthAppInfo
-        Author:   Justin Johns, Phillip Glodowski
-        Version:  0.1.0 | Last Edit: 2023-03-14
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/get-app-info.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'AppID')]
         [ValidateNotNullOrEmpty()]
@@ -46,7 +43,7 @@ function Get-PortalOAuthAppInfo {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET PARAMETERS

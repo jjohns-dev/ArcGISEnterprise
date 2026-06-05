@@ -50,15 +50,13 @@ function New-PortalUserGroup {
         PS C:\> New-PortalUserGroup
         Creates a new folder named 'my_test_folder' in ArcGIS Server
     .NOTES
-        Name:     New-PortalUserGroup
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2025-05-01
-        - Version history is captured in repository commit history
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/create-group.htm
         https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#group-parameters
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Group title or name')]
         [ValidateNotNullOrEmpty()]
@@ -134,7 +132,7 @@ function New-PortalUserGroup {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS
@@ -168,6 +166,8 @@ function New-PortalUserGroup {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($Title, 'Create Portal group')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

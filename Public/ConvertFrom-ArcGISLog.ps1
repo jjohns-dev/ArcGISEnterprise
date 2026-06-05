@@ -14,25 +14,18 @@ function ConvertFrom-ArcGISLog {
         PS C:\> ConvertFrom-ArcGISLog -Path "C:\logs\myLog.log"
         Converts all entries in the log to objects
     .NOTES
-        Name:     ConvertFrom-ArcGISLog
-        Author:   Justin Johns
-        Version:  0.1.4 | Last Edit: 2022-07-28
-        - 0.1.0 - Initial version
-        - 0.1.1 - Added pipeline input and ordered properties
-        - 0.1.2 - Added support for ArcGIS Server logs and renamed function
-        - 0.1.3 - Updated logic with try/catch for XML parsing errors
-        - 0.1.4 - Added support for dynamic columns
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments: No external API reference — utility function.
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, Position = 0, ValueFromPipeline, HelpMessage = 'Path to log file')]
         [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
         [System.String] $Path
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # GET CONTENT OF LOG FILE

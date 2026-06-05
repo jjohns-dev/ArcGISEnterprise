@@ -30,15 +30,12 @@ function New-PortalHostedFeatureService {
         PS C:\> New-PortalHostedFeatureService -ServiceName myNewService -Description 'new' -Summary 'new' -Tag 'new', 'tag1'
         Creates a new Hosted Feature Service with the name myNewService
     .NOTES
-        Name:     New-PortalHostedFeatureService
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-03-16
-        - 0.1.1 - Added FolderId parameter
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/create-service.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]
@@ -77,7 +74,7 @@ function New-PortalHostedFeatureService {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # GET HOSTED FEATURE SERVICE TEMPLATE AND CONVERT TO OBJECT
         Write-Verbose -Message 'Getting new hosted feature service template...'
@@ -101,7 +98,7 @@ function New-PortalHostedFeatureService {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
 
@@ -135,6 +132,8 @@ function New-PortalHostedFeatureService {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # SEND REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($ServiceName, 'Create Portal hosted feature service')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

@@ -53,14 +53,12 @@ function Add-ServerUsageReport {
         PS C:\> Add-ServerUsageReport @cmnParams @reportParams
         Creates a new usage report for the 'Make_Me_Cry' service with 1 hour aggregation interval from Dec 11 to Feb 4.
     .NOTES
-        Name:     Add-ServerUsageReport
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2025-02-06
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/createusagereport/
     #>
     [CmdletBinding(DefaultParameterSetName = '__cnnd')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Report name')]
         [ValidateNotNullOrEmpty()]
@@ -116,7 +114,7 @@ function Add-ServerUsageReport {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

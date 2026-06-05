@@ -24,15 +24,12 @@ function New-PortalRole {
         PS C:\> New-PortalRole @commonParams -Name 'testRole' -Description 'testRole'
         Create new role 'testRole' in Portal for ArcGIS
     .NOTES
-        Name:     New-PortalRole
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2022-07-19
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/create-role.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Portal role name')]
         [ValidateNotNullOrEmpty()]
@@ -58,7 +55,7 @@ function New-PortalRole {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET QUERY PARAMETERS
@@ -77,6 +74,8 @@ function New-PortalRole {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE QUERY
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($Name, 'Create Portal role')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

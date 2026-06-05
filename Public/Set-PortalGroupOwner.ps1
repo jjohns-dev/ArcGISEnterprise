@@ -23,14 +23,12 @@ function Set-PortalGroupOwner {
         PS C:\> Set-PortalGroupOwner @cmnParams -GroupID '12345678901234567890123456789012' -UserName 'jsmith'
         Reassign the group with ID '12345678901234567890123456789012' to the user 'jsmith'.
     .NOTES
-        Name:     Set-PortalGroupOwner
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-04-28
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/reassign-group/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]
@@ -52,7 +50,7 @@ function Set-PortalGroupOwner {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # PROBABLY NO NEED TO VALIDATE THE GROUP ID OR USERNAME AS THE API WILL RESPOND WITH AN ERROR IF INVALID
     }

@@ -26,9 +26,7 @@ function Get-ServerToken {
         PS C:\> Get-ServerToken -URL https://mydomain.com/arcgis -Credential $creds
         Generate token for mydomain.com
     .NOTES
-        Name:     Get-ServerToken
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-11-14
+        Status: Stable
 
         -- SERVER ENDPONITS --
         https://myDomain.com/arcgis/admin/login
@@ -37,6 +35,7 @@ function Get-ServerToken {
         https://developers.arcgis.com/rest/enterprise-administration/server/generatetoken.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal URL')]
         #[ValidatePattern('^https://[\w\/\.-]+[^/]$')]
@@ -64,7 +63,9 @@ function Get-ServerToken {
         [Parameter(HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
-
+    Begin {
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
+    }
     Process {
         $serverUri = '{0}/tokens/generateToken' -f $Context
         if ( $PSBoundParameters.ContainsKey('Admin') ) { $serverUri = '{0}/admin/generateToken' -f $Context }
@@ -103,7 +104,7 @@ function Get-ServerToken {
             elseif ( $response.ReasonPhrase ) { $msg = $response.ReasonPhrase }
             else { $msg = "Request failed with unknown error. Username and/or password may be incorrect." }
 
-            Throw $msg
+            Write-Error -Message $msg -ErrorAction Stop
         }
         else {
             $response

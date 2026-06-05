@@ -22,15 +22,12 @@ function Add-PortalOAuthRedirectURI {
         PS C:\> Add-PortalOAuthRedirectURI @commonParams -RedirectURI 'https://mydomain.internal.com'
         Addes the new redirect URI to the app 'arcgisonline'
     .NOTES
-        Name:     Add-PortalOAuthRedirectURI
-        Author:   Phillip Glodowski, Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-03-14
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/update-app-info.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'AppID')]
         [ValidateNotNullOrEmpty()]
@@ -52,7 +49,7 @@ function Add-PortalOAuthRedirectURI {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET PARAMETERS
@@ -75,7 +72,7 @@ function Add-PortalOAuthRedirectURI {
         $restParams = @{
             Uri    = '{0}/portaladmin/security/oauth/updateAppInfo' -f $Context
             Method = 'POST'
-            Body   = @{ appInfo = ($appInfo | ConvertTo-Json -Compress); f = 'json'; token = $Token }
+            Body   = @{ appInfo = ($appInfo | ConvertTo-Json -Depth 6 -Compress); f = 'json'; token = $Token }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED

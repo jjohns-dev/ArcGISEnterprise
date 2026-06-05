@@ -16,12 +16,11 @@ function Format-ChangeSet {
         PS C:\> Format-ChangeSet
         Explanation of what the example does
     .NOTES
-        Name:     Format-ChangeSet
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-10-30
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments: No external API reference — utility function.
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, Position = 0, HelpMessage = 'ArcGIS Server service name')]
         [ValidateNotNullOrEmpty()]
@@ -32,7 +31,7 @@ function Format-ChangeSet {
         [System.Object] $ChangeSet
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # CREATE REPORT OBJECT ARRAYS
         $report = @{

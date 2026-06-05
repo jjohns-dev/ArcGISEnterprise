@@ -22,15 +22,12 @@ function Set-PortalDefaultUserRole {
         PS C:\> Set-PortalDefaultUserRole -Role 'Viewer' @cParams
         Sets the default user type to 'Viewer'
     .NOTES
-        Name:     Set-PortalDefaultUserRole
-        Author:   Phillip Glodowski, Justin Johns
-        Version:  0.1.0 | Last Edit: 2023-11-06
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/set-user-default-settings.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(HelpMessage = 'Portal ID')]
         [ValidateNotNullOrEmpty()]
@@ -52,7 +49,7 @@ function Set-PortalDefaultUserRole {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # SET HASH FOR BUILT-IN ROLES
         $orgRoles = @(
@@ -71,7 +68,7 @@ function Set-PortalDefaultUserRole {
         }
 
         # VALIDATE PROVIDED ROLE
-        if (-Not $inRole) { Throw ('Provided role "{0}" not valid.' -f $Role) }
+        if (-Not $inRole) { Write-Error -Message ('Provided role "{0}" not valid.' -f $Role) -ErrorAction Stop }
 
         # VERBOSE
         Write-Verbose -Message ('Role selected - Name: "{0}"; Id: "{1}"' -f $inRole.name, $inRole.id)
@@ -93,6 +90,8 @@ function Set-PortalDefaultUserRole {
 
         # SEND REQUEST
         # THIS DOES NOT APPEAR TO RESET OR REMOVE ANY SETTINGS IN THE EXISTING CONFIGURATION
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($Role, 'Set Portal default user role')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

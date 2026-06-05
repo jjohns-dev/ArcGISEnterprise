@@ -17,14 +17,12 @@ function Get-PortalAllowedOriginList {
         PS C:\> Get-PortalAllowedOriginList @params
         Gets the allowed origins for ArcGIS Portal
     .NOTES
-        Name:     Get-PortalAllowedOriginList
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-07-18
-        - Version history is capture in repository commit history
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
+        https://developers.arcgis.com/rest/users-groups-and-items/portal.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-PortalAllowedOrigins')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
@@ -39,7 +37,7 @@ function Get-PortalAllowedOriginList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # GET ALLOWED ORIGINS

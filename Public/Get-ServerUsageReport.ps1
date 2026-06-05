@@ -23,15 +23,13 @@ function Get-ServerUsageReport {
         PS C:\> Get-ServerUsageReport @cmnParams
         Returns all usage reports.
     .NOTES
-        Name:     Get-ServerUsageReport
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/usagereports/
         https://developers.arcgis.com/rest/enterprise-administration/server/usagereport/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Report name')]
         [ValidateNotNullOrEmpty()]
@@ -49,7 +47,7 @@ function Get-ServerUsageReport {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

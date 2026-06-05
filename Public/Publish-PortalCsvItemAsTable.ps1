@@ -27,15 +27,13 @@ function Publish-PortalCsvItemAsTable {
         PS C:\> Publish-PortalCsvItemAsTable -ItemName SalesData -ItemId $iid -Field $schema @commonParams
         Uses the existing Portal item with ID $iid to publish a new Hosted table with name SalesData using the fields in $fields
     .NOTES
-        Name:     Publish-PortalCsvItemAsTable
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-16
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/publish-item.htm
         https://developers.arcgis.com/documentation/mapping-apis-and-services/data-hosting/tutorials/tools/import-data-to-create-a-table/
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Name of new Portal table')]
         [ValidateNotNullOrEmpty()]
@@ -70,7 +68,7 @@ function Publish-PortalCsvItemAsTable {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
@@ -84,7 +82,7 @@ function Publish-PortalCsvItemAsTable {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
 
@@ -123,6 +121,8 @@ function Publish-PortalCsvItemAsTable {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE UPLOAD
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(('{0} (item [{1}])' -f $ItemName, $ItemId), 'Publish CSV item as hosted table')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

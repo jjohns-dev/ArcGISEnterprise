@@ -24,15 +24,12 @@ function Set-PortalRolePrivilege {
         PS C:\> Set-PortalRolePrivilege @commonParams -RoleId 123456 -Privilege @("portal:user:createItem","portal:user:joinGroup")
         Set Portal role privileges for role ID '123456'
     .NOTES
-        Name:     Set-PortalRolePrivilege
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2022-07-19
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/set-role-privileges.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Portal Role ID')]
         [ValidateNotNullOrEmpty()]
@@ -58,7 +55,7 @@ function Set-PortalRolePrivilege {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET QUERY PARAMETERS
@@ -76,6 +73,8 @@ function Set-PortalRolePrivilege {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE QUERY
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($RoleId, 'Set Portal role privileges')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

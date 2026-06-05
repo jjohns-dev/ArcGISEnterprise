@@ -5,84 +5,123 @@
 
 To propose changes to the existing functions or the creation of a new one, the process is as follows:
 
-1. Create a new [issue](https://github.com/PS-MCS/MCS/issues/new/choose) using either:
-   - The `new_function_proposal` template if you want to propose a new function.
-   - The `update_function_proposal` template if you want to modify a existing function.
-2. Create a new issue
-3. Once the issue has been discussed and approved:
+1. Open a new [issue](https://github.com/PS-MCS/ArcGISEnterprise/issues/new/choose) describing the proposed addition or change.
+2. Once the issue has been discussed and approved:
     1. Clone this repository.
-    2. Create a new branch.
+    2. Create a new branch (`feature/<slug>` for additions, `fix/<slug>` for fixes).
     3. Either:
-        - Create the page using the [new function template](templates/new-function.md).
+        - Add a new function under [`Public/`](Public) following the structure in the [Style Guide](#style-guide) below.
         - Modify the target function in case of an update or refactor.
-    4. Submit your [Pull Request](https://help.github.com/articles/creating-a-pull-request/).
+    4. Submit your [Pull Request](https://help.github.com/articles/creating-a-pull-request/) and reference the issue (`refs #N` in commits, `closes #N` in the PR body).
 
 ## Style Guide
 
 ### Content
 
-The intended purpose of the functions in this module are internal functionality within the secure boundaries, specfically within virtual machines. There should be no dependency on outside libraries.
+The intended purpose of the functions in this module are internal functionality within the secure boundaries, specifically within virtual machines. There should be no dependency on outside libraries.
 
 ### Structure
 
-- Start with this general structure
+Use this general structure for new functions:
 
 ```pwsh
-function <FunctionName> {
+function <Verb>-<Noun> {
     <#
     .SYNOPSIS
-        
+        One-line summary
     .DESCRIPTION
-       
+        Longer description
+    .PARAMETER <Name>
+        Description for each parameter
     .INPUTS
-        
+        None. (or pipeline input type)
     .OUTPUTS
-        
+        System.Object. (or specific output type)
     .EXAMPLE
-        
+        PS C:\> <Verb>-<Noun> -Context $ctx -Token $tok
+        What the example does
     .NOTES
+        Status: Stable
+        Comments:
+        https://link-to-api-docs (if applicable)
     #>
 
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param()
 }
 ```
 
-- Only use approved verbs when naming functions
-- Function must include properly defined help
+#### Rules
+
+- Use only [approved PowerShell verbs](https://learn.microsoft.com/powershell/scripting/developer/cmdlet/approved-verbs-for-windows-powershell-commands) when naming functions.
+- The `<Noun>` portion should start with the ArcGIS Enterprise component the function targets: `Portal`, `Server`, `GeoEvent`. Example: `Get-PortalUser`, `Set-ServerAllowedOrigins`.
+- Every function must include complete comment-based help (`.SYNOPSIS`, `.DESCRIPTION`, `.PARAMETER` for each parameter, `.INPUTS`, `.OUTPUTS`, at least one `.EXAMPLE`, and `.NOTES`).
+- Prefer splat tables (`$params = @{...}; Invoke-Cmd @params`) over backtick line continuations.
+- Use `Write-Error -Message '...' -ErrorAction Stop` instead of `throw` for terminating errors, including inside `ValidateScript` blocks.
+
+#### `.NOTES` section
+
+The `.NOTES` block uses two fields:
+
+- **`Status:`** — a single token indicating maturity of the function. See [allowed values](#status-values) below.
+- **`Comments:`** — optional free-form text. Typically a link to the official API endpoint the function wraps, plus any caveats.
+
+##### Status values
+
+| Value | Meaning |
+| ----- | ------- |
+| `Stable` | Production-ready. Signature is unlikely to change. Fully tested against a live endpoint. Default for new functions once they're proven. |
+| `Beta` | Feature-complete but not yet hardened in production use. Signature may still change in a minor release. |
+| `Experimental` | Prototype or early implementation. Expect breaking changes. May be removed without deprecation. |
+| `Deprecated` | Still works but slated for removal in a future major version. The `Comments:` field must point to the replacement (or explain why none exists). |
+| `Untested` | Code is present but the wrapped endpoint has not been exercised against a live ArcGIS Enterprise instance. Use with caution. |
+| `Internal` | Exposed publicly for tooling or advanced use only. Not part of the supported surface. Backwards-compatibility is not guaranteed. |
+
+If you're adding a function, default to `Beta` unless you've exercised it end-to-end against a real endpoint, in which case use `Stable`.
 
 ## How to get started contributing
 
-Follow these steps:
-
-1. Install [Visual Studio Code (VSCode)](https://code.visualstudio.com/).
-2. Open the file [Project.code-workspace](project.code-workspace) from VSCode via the menu `File > Open Workspace...`.
-3. You should be prompted to open the workspace in a dev container. If you are not prompted, open the Command Palette and search for "Remote-Containers: Rebuild and Reopen in Container". When complete, you should be connected to the development container as if it was your local machine.
+1. Install [Visual Studio Code](https://code.visualstudio.com/).
+2. Clone the repo and open it in VS Code.
+3. (Optional) If you have Docker installed, open the Command Palette and run "Dev Containers: Reopen in Container" to develop inside the pre-configured [dev container](.devcontainer).
 4. You are ready to contribute :+1:
 
->:alarm_clock: What to verify before pushing the updates?
+### Before pushing
 
-1. Ensure your changes are passing PSScriptAnalyzer and Pester tests.
-
-    ```pwsh
-    ./Build/build.ps1 -ResolveDependency -TaskList Test # run pester
-    ./Build/build.ps1 -ResolveDependency -TaskList Analyze # run psscriptanalyzer
-    ```
-
-2. Ensure you have generated documentation for your function. The below command will generate a Staging folder in the root of the project with an exact copy of the repo, including generated documentation in markdown. It will then copy that generated documentation into the proper location ready to commit.
+1. Run the analyzer and tests:
 
     ```pwsh
-    ./Build/build.ps1 -ResolveDependency -TaskList CopyDocumentation # build documentation
+    ./Build/build.ps1 -ResolveDependency -TaskList Analyze
+    ./Build/build.ps1 -ResolveDependency -TaskList Test
     ```
 
-    - :heavy_exclamation_mark: Do NOT commit the Staging or Artifacts directories as they are only for testing purposes. You can safely delete them when testing is complete with the following command.
+2. Clean up the build output before committing:
 
     ```pwsh
-    ./Build/build.ps1 -ResolveDependency -TaskList Cleanup
+    ./Build/build.ps1 -TaskList Cleanup
     ```
+
+    :heavy_exclamation_mark: Do not commit the `Staging/` or `Artifacts/` directories.
+
+> **Note on `Documentation/`**
+> The per-function `.md` files under [`Documentation/`](Documentation) are currently maintained by hand. Automated regeneration (via `Microsoft.PowerShell.PlatyPS`) is tracked in [#117](https://github.com/PS-MCS/ArcGISEnterprise/issues/117). Until that lands, please update the relevant `.md` manually if you change a function's signature or comment-based help.
+
+## Commit and PR conventions
+
+- **Commit subject**: `<type>(<scope>): <title> (refs #N)` — e.g., `feat(Public): add Get-PortalThing (refs #42)`.
+  - `<type>`: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `ci`.
+  - `<scope>`: short area name (`Public`, `Private`, `Build`, `ci`, `docs`).
+- **Commit body**: multi-paragraph rationale — what changed, why, user-visible impact. No marketing language.
+- **PR title**: same as commit subject but with `(closes #N)` so the issue auto-closes on merge.
+- **PR body**: include `Closes #N.`, a summary, a changes list, and a validation checklist.
 
 ## Release
 
-This project also includes the necessary tools to automate the release of the module via GitHub Actions. The file [release.yml](.github/workflows/release.yml) handles this task.
+This project automates module releases via GitHub Actions. See [`.github/workflows/release.yml`](.github/workflows/release.yml).
 
-To create a new release of the module, first update the module manifest with the necessary version number and commit that to the main branch. Then, create a new tag with the same version number and push it to GitHub. This will start the build process and publish a new version of the module to the repo.
+To cut a new release:
+
+1. Bump `ModuleVersion` in [`ArcGISEnterprise.psd1`](ArcGISEnterprise.psd1). Follow the SemVer policy documented in the manifest comment (major = major changes / breaking; minor = new individual functions; patch = bug fixes).
+2. Merge the change to `main`.
+3. Tag the merge commit with `vMAJOR.MINOR.PATCH` and push the tag. The release workflow will build, test, package, and publish a GitHub Release with auto-generated notes (grouped by the labels defined in [`.github/release.yml`](.github/release.yml)).

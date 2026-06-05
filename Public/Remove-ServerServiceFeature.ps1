@@ -32,14 +32,12 @@ function Remove-ServerServiceFeature {
         PS C:\> Remove-ServerServiceFeature @commonParams -ServiceName dashboard -LayerId 0 -ObjectId @(1, 2, 3)
         Delete features with IDs 1, 2, and 3 from the "dashboard" Hosted Feature Service layer ID 0
     .NOTES
-        Name:     Remove-ServerServiceFeature
-        Author:   Justin Johns
-        Version:  0.2.0 | Last Edit: 2025-02-21
-        - see commit history for version changes
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         - https://developers.arcgis.com/rest/services-reference/enterprise/delete-features/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]
@@ -74,7 +72,7 @@ function Remove-ServerServiceFeature {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET TRUNCATE PARAMETERS

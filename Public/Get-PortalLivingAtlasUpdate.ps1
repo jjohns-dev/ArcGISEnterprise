@@ -21,13 +21,12 @@ function Get-PortalLivingAtlasUpdate {
         Returns a list of previously installed, as well as currently available
         for installation, ArcGIS Living Atlas content packages.
     .NOTES
-        Name:     Get-PortalLivingAtlasUpdate
-        Author:   Brandon Trampf
-        Version:  0.1.0 | Last Edit: 2025-11-12
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/check-for-updates/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(HelpMessage = 'Portal ID')]
         [ValidateNotNullOrEmpty()]
@@ -45,7 +44,7 @@ function Get-PortalLivingAtlasUpdate {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

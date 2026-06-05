@@ -20,9 +20,12 @@ function Test-PortalHealth {
         PS C:\> Test-PortalHealth -Context 'https://arcgis.com/arcgis'
         Send a request to the Portal heealth check endpoint
     .NOTES
-        General notes
+        Status: Stable
+        Comments:
+        https://developers.arcgis.com/rest/enterprise-administration/portal/health-check-portal/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

@@ -20,13 +20,12 @@ function Get-PortalItem {
         PS C:\> Get-PortalItem -ItemId 0e68d8058b744d1c95f709d2ae975232 @commonParams
         Returns Portal item with ID 0e68d8058b744d1c95f709d2ae975232
     .NOTES
-        Name:     Get-PortalItem
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/item.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal item ID')]
         [ValidatePattern('[a-f0-9]{32}')]
@@ -44,7 +43,7 @@ function Get-PortalItem {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

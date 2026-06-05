@@ -24,14 +24,12 @@ function Remove-PortalUserFolder {
         PS C:\> Remove-PortalUserFolder @cmnParams -UserName 'jsmith' -FolderID 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'
         Deletes the folder with ID 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6' from the user 'jsmith'
     .NOTES
-        Name:     Remove-PortalUserFolder
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-05-01
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/delete-folder/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
@@ -53,7 +51,7 @@ function Remove-PortalUserFolder {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {

@@ -32,16 +32,14 @@ function Write-PortalUserItem {
         PS C:\> Write-PortalUserItem -FilePath C:\Data.xlsx @commonParams
         Uploads Data.xlsx as a Portal item for the current user
     .NOTES
-        Name:     Write-PortalUserItem
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2025-01-14
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/add-item.htm
         https://developers.arcgis.com/rest/users-groups-and-items/items-and-item-types.htm
         https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.utility/invoke-restmethod
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
@@ -83,7 +81,7 @@ function Write-PortalUserItem {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
@@ -97,7 +95,7 @@ function Write-PortalUserItem {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
 
@@ -146,6 +144,8 @@ function Write-PortalUserItem {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE UPLOAD
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(('{0} for user [{1}]' -f $file.Name, $UserName), 'Upload item to Portal')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

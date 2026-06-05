@@ -20,10 +20,11 @@ function Get-PortalToken {
         PS C:\> Get-PortalToken -Context https://mydomain.com/arcgis -Credential $creds
         Generate token for mydomain.com
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/users-groups-and-items/generate-token.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal URI including context (e.g., https://arcgis.com/arcgis)')]
         [ValidateScript({ $_.OriginalString -match $context_regex })]
@@ -44,6 +45,9 @@ function Get-PortalToken {
         [Parameter(Mandatory = $false, HelpMessage = 'Skip SSL certificate check')]
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
+    Begin {
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
+    }
     Process {
         # SET REFERER IF NOT PROVIDED
         $Referer = if ($PSBoundParameters.ContainsKey('Referer')) { $Referer } else { '{0}://{1}' -f $Context.Scheme, $Context.Authority }
@@ -85,7 +89,7 @@ function Get-PortalToken {
             elseif ( $response.ReasonPhrase ) { $msg = $response.ReasonPhrase }
             else { $msg = "Request failed with unknown error. Username and/or password may be incorrect." }
 
-            Throw $msg
+            Write-Error -Message $msg -ErrorAction Stop
         }
         else {
             $response

@@ -26,14 +26,12 @@ function Set-PortalSystemProperty {
         PS C:\> Set-PortalSystemProperty @cmnParams -EnablePrintService $false
         Set the Enable Print Service property to false.
     .NOTES
-        Name:     Set-PortalSystemProperty
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-06-12
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/update-system-properties/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Enable/disable Enterprise to communicate with GeoRSS feeds')]
         [ValidateNotNullOrEmpty()]
@@ -59,7 +57,7 @@ function Set-PortalSystemProperty {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # GET EXISTING PROPERTIES
         $properties = Get-PortalSystemProperty -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck

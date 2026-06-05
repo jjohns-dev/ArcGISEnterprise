@@ -28,14 +28,13 @@ function Add-ServerFeature {
         PS C:\> Add-ServerFeature @commonParams -Record $rec -ServiceName "dashboard"
         Add records to a Hosted Feature Service named "dashboard"
     .NOTES
-        Name:     Add-ServerFeature
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-02-19
+        Status: Stable
         - See commit history for version changes
-        Comments: <Comment(s)>
+        Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/add-features.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Feature record or attributes to add', ParameterSetName = '__rcd')]
         [ValidateNotNullOrEmpty()]
@@ -71,7 +70,7 @@ function Add-ServerFeature {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # VALIDATE PARAMETER SET

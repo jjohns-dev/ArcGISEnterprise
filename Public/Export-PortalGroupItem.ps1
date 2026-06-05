@@ -24,15 +24,13 @@ function Export-PortalGroupItem {
         PS C:\> Export-PortalGroupItem -GroupId 'ad46a0e1a74742aeb4314250c3ea90e4'
         Starts and asynchronous job to export of all content from the group with ID 'ad46a0e1a74742aeb4314250c3ea90e4'
     .NOTES
-        Name:     Export-PortalGroupItem
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-15
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/export-group-content/
         https://www.esri.com/arcgis-blog/products/arcgis-enterprise/administration/moving-content-across-tiered-arcgis-enterprise-environments/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]
@@ -53,7 +51,7 @@ function Export-PortalGroupItem {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

@@ -14,12 +14,8 @@ function ConvertFrom-Epoch {
         PS C:\> 1618614176000 | ConvertFrom-Epoch
         Convert Epoch time of 1618614176000 to a DateTime object
     .NOTES
-        Name:     ConvertFrom-Epoch
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2022-06-07
-        - <VersionNotes> (or remove this line if no version notes)
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments: No external API reference — utility function.
     #>
     [CmdletBinding()]
     [OutputType([System.DateTime])]
@@ -29,7 +25,7 @@ function ConvertFrom-Epoch {
         [System.Int64[]] $Milliseconds
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         foreach ($ms in $Milliseconds) {

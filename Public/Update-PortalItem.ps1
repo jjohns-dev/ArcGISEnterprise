@@ -30,15 +30,13 @@ function Update-PortalItem {
         PS C:\> Update-PortalItem -ItemId 'fdc51cd9e3ac4f4aa8444949caf5e816' -URL 'https://arcgis.com/arcgis/rest/services/Data_Owner_Connection_Layers/Util_CommSite_SpeclUse/MapServer' @cmnParams
         Updates the URL property of item with ID 'fdc51cd9e3ac4f4aa8444949caf5e816'
     .NOTES
-        Name:     Update-PortalItem
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-06-10
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/update-item/
         https://developers.arcgis.com/javascript/latest/api-reference/esri-layers-Layer.html
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Owner of Portal Item')]
         [ValidateNotNullOrEmpty()]
@@ -76,7 +74,7 @@ function Update-PortalItem {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
@@ -90,7 +88,7 @@ function Update-PortalItem {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
     }

@@ -20,14 +20,12 @@ function Get-PortalUserList {
         PS C:\> Get-PortalUserList -Context 'https://arcgis.com/arcgis' -Token $token
         Get users from Portal
     .NOTES
-        Name:     Get-PortalUserList
-        Author:   Justin Johns
-        Version:  0.1.4 | Last Edit: 2025-07-22
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/users.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(HelpMessage = 'Portal ID')]
         [ValidateNotNullOrEmpty()]
@@ -45,7 +43,7 @@ function Get-PortalUserList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # CREATE USER ARRAY
         $userList = [System.Collections.Generic.List[System.Object]]::new()

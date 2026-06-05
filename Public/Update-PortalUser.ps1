@@ -42,15 +42,13 @@ function Update-PortalUser {
         arbitrary and then change it again to the correct value. This resets the "provider" property
         to "enterprise."
     .NOTES
-        Name:     Update-PortalUser
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-05-30
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/update-user/
         https://developers.arcgis.com/rest/users-groups-and-items/common-parameters/#user-parameters
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
@@ -96,7 +94,7 @@ function Update-PortalUser {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER PROVIDER CHANGES
         if ($PSBoundParameters.ContainsKey('IDPUserName') -and $PSBoundParameters.ContainsKey('Password')) {

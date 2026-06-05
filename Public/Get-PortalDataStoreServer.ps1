@@ -22,13 +22,11 @@ function Get-PortalDataStoreServer {
         PS C:\> Get-PortalDataStoreServer -ItemId $itemId @commonParams
         Returns an array of Servers where the DataStore item ID is registered
     .NOTES
-        Name:     Get-PortalDataStoreServer
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments: No public documentation available for this endpoint.
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal item ID of Data Store item')]
         [ValidatePattern('[a-f0-9]{32}')]
@@ -50,7 +48,7 @@ function Get-PortalDataStoreServer {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

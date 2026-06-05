@@ -26,14 +26,12 @@ function Test-PortalDataStore {
         PS C:\> Test-PortalDataStore -ItemId $item.id -ServerId $server.servers[0].id @commonParams
         Validates the Data Store item named 'test_store_internal' connection to the ArcGIS Server
     .NOTES
-        Name:     Test-PortalDataStore
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-21
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/validate-datastore.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal item ID of Data Store item')]
         [ValidatePattern('[a-f0-9]{32}')]
@@ -59,7 +57,7 @@ function Test-PortalDataStore {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

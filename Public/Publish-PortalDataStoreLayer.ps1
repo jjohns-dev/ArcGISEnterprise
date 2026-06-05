@@ -48,14 +48,12 @@ function Publish-PortalDataStoreLayer {
         PS C:\> Get-PortalJobStatus -JobId $sync.jobId -DataStoreId $sync.datastoreId -ServerId $sync.serverId @commonParams
         Syncs and update all layer item properties using using source dataset's metadata. Then check the job status.
     .NOTES
-        Name:     Publish-PortalDataStoreLayer
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-25
-        - 0.1.0 - Initial version
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/publish-layers.htm
     #>
-    [CmdletBinding(DefaultParameterSetName = '_init')]
+    [CmdletBinding(SupportsShouldProcess = $true, ConfirmImpact = 'Medium', DefaultParameterSetName = '_init')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_init', HelpMessage = 'DataStore Portal item ID')]
         [Parameter(Mandatory = $true, ParameterSetName = '_sync', HelpMessage = 'DataStore Portal item ID')]
@@ -93,7 +91,7 @@ function Publish-PortalDataStoreLayer {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # CHECK PARAMETER SET NAME
@@ -133,6 +131,8 @@ function Publish-PortalDataStoreLayer {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess($DataStoreId, 'Publish DataStore layers')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

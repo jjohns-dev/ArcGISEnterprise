@@ -22,19 +22,12 @@ function Set-ServerAllowedOrigins {
         PS C:\> Set-ServerAllowedOrigins -Origin 'https://test.com', 'https://mySite.com'
         Sets ArcGIS Server allowed origins to 'https://test.com,https://mySite.com'
     .NOTES
-        Name:     Set-ServerAllowedOrigins
-        Author:   Justin Johns
-        Version:  0.1.4 | Last Edit: 2023-05-10
-        - 0.1.4 - Added switch parameter for SOAP handler
-        - 0.1.3 - Fixed issue with [System.Uri] adding trailing slash to Origin parameter
-        - 0.1.2 - Add validation to Origin parameter
-        - 0.1.1 - Updates to account for all server properties
-        - 0.1.0 - Initial version
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/server/edit-soap-handler-config.htm
         https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -66,14 +59,16 @@ function Set-ServerAllowedOrigins {
                 Body   = @{ f = 'json'; token = $Token; allowedOrigins = ($Origin -join ',') }
             }
             if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-            Invoke-RestMethod @restParams
+            if ($PSCmdlet.ShouldProcess(($Origin -join ', '), 'Set ArcGIS Server allowed origins (SOAP)')) {
+                Invoke-RestMethod @restParams
+            }
         }
         else {
             # GET SERVICES DIRECTORY DATA
             $servDir = Get-ServerServicesDirectory @cmnParams
 
             # VALIDATE PREVIOUS CALL WAS SUCCESSFUL
-            if (-NOT $servDir) { Throw 'Unable to retrieve ArcGIS Server properties' }
+            if (-NOT $servDir) { Write-Error -Message 'Unable to retrieve ArcGIS Server properties' -ErrorAction Stop }
 
             # RETAIN PREVIOUS SETTINGS
             $newConfig = @{}; $members = $servDir.psobject.Members.Where({ $_.MemberType -EQ 'NoteProperty' })
@@ -94,7 +89,9 @@ function Set-ServerAllowedOrigins {
                 Body   = $newConfig
             }
             if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-            Invoke-RestMethod @restParams
+            if ($PSCmdlet.ShouldProcess(($Origin -join ', '), 'Set ArcGIS Server allowed origins (REST)')) {
+                Invoke-RestMethod @restParams
+            }
         }
     }
 }

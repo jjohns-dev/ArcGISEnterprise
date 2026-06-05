@@ -26,14 +26,12 @@ function Find-ServerGeocodeAddress {
         PS C:\> Find-ServerGeocodeAddress @cmnParams -SingleLine '380 New York St, Redlands, CA 92373', '1600 Amphitheatre Pkwy, Mountain View, CA 94043'
         Returns geocoded addresses with accuracy and location information
     .NOTES
-        Name:     Find-ServerGeocodeAddress
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-01-23
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/geocode/geocode-addresses/
     #>
     [CmdletBinding(DefaultParameterSetName = '__sl')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Geocode Server Service Name')]
         [ValidateNotNullOrEmpty()]
@@ -63,7 +61,7 @@ function Find-ServerGeocodeAddress {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # CREATE WRAPPER
         $addressList = @{ records = @() }

@@ -20,14 +20,12 @@ function Get-ServerHostedFeatureService {
         PS C:\> Get-ServerHostedFeatureService -Context 'https://arcgis.com/arcgis' -ServiceName myFeatureService
         Returns the Feature Service with name 'myFeatureService'
     .NOTES
-        Name:     Get-ServerHostedFeatureService
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-06
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/layer-feature-service-.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Get-ServerHostedFeatureServer')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
@@ -46,7 +44,7 @@ function Get-ServerHostedFeatureService {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

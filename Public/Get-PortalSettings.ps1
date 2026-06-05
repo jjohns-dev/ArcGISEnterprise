@@ -19,14 +19,12 @@ function Get-PortalSettings {
         PS C:\> Get-PortalSettings -Context 'https://arcgis.com/arcgis' -Token $token
         Gets Portal "self" configuration
     .NOTES
-        Name:     Get-PortalSettings
-        Author:   Phillip Glodowski, Justin Johns
-        Version:  0.3.1 | Last Edit: 2025-07-22
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/portal.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Test-PortalToken', 'Get-PortalSelf')]
     Param(
         <# [Parameter(HelpMessage = 'Portal ID')]

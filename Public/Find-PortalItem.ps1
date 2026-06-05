@@ -36,20 +36,15 @@ function Find-PortalItem {
         PS C:\> Find-PortalItem @commonParams -Owner 'jsmith'
         Get all Portal items belonging to 'jsmith'
     .NOTES
-        Name:     Find-PortalItem
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-04-02
-        - 0.1.2 - (2024-04-02) Renamed function, switch to filter rather than q (query), add support for multiple values
-        - 0.1.1 - (2023-03-21) Removed raw query
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/search.htm
         https://developers.arcgis.com/rest/users-groups-and-items/search-reference.htm
         This function does not yet support multiple search values for a given criterion
         (e.g., can only search for a single "tag" not two tags)
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Portal item Id')]
         [ValidateNotNullOrEmpty()]
@@ -99,16 +94,11 @@ function Find-PortalItem {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
-
-        <# # CHECK FOR NO INPUT
-        if (-NOT $Id -AND -NOT $Owner -AND -NOT $Tag -AND -NOT $Type -AND -NOT $Title) {
-            Throw 'No seach parameter found. Please add search parameter and try again.'
-        } #>
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE DATE PARAMETERS
         if ($PSBoundParameters.Keys -match 'CreatedDate' -and $PSBoundParameters.Keys -match 'ModifiedDate') {
-            # THOW ERROR
+            # COMBINING CREATED AND MODIFIED DATE FILTERS PRODUCES UNEXPECTED API RESULTS
             Write-Error -Message 'Using both created and modified dates produces unexpected results. Please use only one date type.' -ErrorAction Stop
         }
 

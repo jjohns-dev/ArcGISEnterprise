@@ -22,14 +22,12 @@ function Remove-PortalUserFromGroup {
         PS C:\> Remove-PortalUserFromGroup -GroupId $gid -UserName 'jsmith' @commonParams
         Remove user 'jsmith' from group
     .NOTES
-        Name:     Remove-PortalUserFromGroup
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-05-30
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/remove-users-from-group/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]
@@ -51,7 +49,7 @@ function Remove-PortalUserFromGroup {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

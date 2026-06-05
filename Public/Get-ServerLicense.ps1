@@ -18,9 +18,12 @@ function Get-ServerLicense {
         PS C:\> Get-ServerLicense -Context 'https://arcgis.com/arcgis' -Token $token
         Returns ArcGIS Server license info
     .NOTES
-        General notes
+        Status: Stable
+        Comments:
+        https://developers.arcgis.com/rest/enterprise-administration/server/licenses/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

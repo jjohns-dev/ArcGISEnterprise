@@ -22,15 +22,12 @@ function New-PortalUserFolder {
         PS C:\> New-PortalUserFolder -Username jsmith -Title NewFolder -Context 'https://arcgis.com/arcgis' -Token $token
         Creates a folder titled 'NewFolder' in Portal for the user 'jsmith'.
     .NOTES
-        Name:     New-PortalUserFolder
-        Author:   Phillip Glodowski
-        Version:  0.1.0 | Last Edit: 2024-03-13
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/create-folder.htm
-        General notes:
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
@@ -53,7 +50,7 @@ function New-PortalUserFolder {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USERNAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
@@ -67,7 +64,7 @@ function New-PortalUserFolder {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
     }
@@ -87,7 +84,9 @@ function New-PortalUserFolder {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # SEND REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(('{0} for user [{1}]' -f $Title, $Username), 'Create Portal folder')) {
+            Invoke-RestMethod @restParams
+        }
 
     }
 }

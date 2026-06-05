@@ -26,10 +26,7 @@ function Get-ServerService {
         PS C:\> Get-ServerService @cmnParams -Folder 'Energy' -ServiceName 'Geology' -ServiceType 'FeatureServer'
         Returns service metadata for the 'Geology' FeatureServer in the 'Energy' folder
     .NOTES
-        Name:     Get-ServerService
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/service/
         https://developers.arcgis.com/rest/services-reference/enterprise/get-started-with-the-services-directory/
@@ -46,6 +43,7 @@ function Get-ServerService {
         }
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service name')]
         [ValidateNotNullOrEmpty()]
@@ -76,7 +74,7 @@ function Get-ServerService {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

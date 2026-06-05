@@ -28,14 +28,12 @@ function Get-ServerLog {
         PS C:\> Get-ServerLog @commonParams -Level 'SEVERE'
         Get all server logs with a level of SEVERE
     .NOTES
-        Name:     Get-ServerLog @commonParams
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/logsquery.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Logging level to return')]
         [ValidateSet('SEVERE', 'WARNING', 'INFO', 'FINE', 'VERBOSE', 'DEBUG')]
@@ -67,7 +65,7 @@ function Get-ServerLog {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

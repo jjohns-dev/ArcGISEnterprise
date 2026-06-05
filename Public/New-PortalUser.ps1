@@ -42,16 +42,14 @@ function New-PortalUser {
         PS C:\> New-PortalUser -UserName joedoe -FirstName Joe -LastName Doe -Email joedoe@domain.com -IDPUserName joedoe -Provider $oidc[0].id @cmnParams
         Creates a new user with username joedoe using OIDC authentication from the first OIDC provider in the list
     .NOTES
-        Name:     New-PortalUser
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-06-12
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/create-user/
         https://community.esri.com/t5/arcgis-rest-apis-and-services-questions/invalid-token-for-portaladmin-security-users/td-p/303096
         https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_functions_advanced_methods
     #>
     [CmdletBinding(DefaultParameterSetName = '_bltn', SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
@@ -110,7 +108,7 @@ function New-PortalUser {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # SET PROVIDER
         $Provider = switch ($PSCmdlet.ParameterSetName) {

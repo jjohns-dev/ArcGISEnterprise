@@ -24,13 +24,12 @@ function New-TableSchemaObject {
         PS C:\> New-TableSchemaObject -Type string -Name RegionName -Alias "Region Name" -Length 255
         Returns an object with all required properties for a schema component of a Hosted Feature Service table
     .NOTES
-        Name:     New-TableSchemaObject
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-01-28
-        - Version history is capture in repository commit history
-        Comments:
+        Status: Stable
+        Comments: No external API reference — utility function.
     #>
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '', Justification = 'Creates an in-memory object only; does not call any API or change any external state.')]
     [CmdletBinding(DefaultParameterSetName = '_typ')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_typ', HelpMessage = 'Object type')]
         [ValidateSet('oid', 'gid', 'date', 'short', 'blob', 'double', 'guid', 'integer', 'string', 'long', 'float')]
@@ -55,7 +54,7 @@ function New-TableSchemaObject {
         [System.Management.Automation.SwitchParameter] $GID
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # CREATE LOOKUP TABLE FOR PROPERTIES
         New-Variable -Name 'TableFieldTypes' -Option ReadOnly -Value @{

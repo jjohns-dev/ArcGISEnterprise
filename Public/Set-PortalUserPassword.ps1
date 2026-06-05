@@ -18,16 +18,11 @@ function Set-PortalUserPassword {
         PS C:\> Set-PortalUserPassword -Context https://arcgisonline.com/arcgis -Credential $creds -NewPassword $new
         Set the user ArcGIS Server specified by the "username" property of the $creds credential object to the password in the $new credential object
     .NOTES
-        Name:     Set-PortalUserPassword
-        Author:   Justin Johns
-        Version:  0.2.1 | Last Edit: 2023-12-04
-        - 0.2.1 - Fixed error handling
-        - 0.2.0 - Renamed cmdlet to Set-PortalUserPassword
-        - 0.1.0 - Initial version (Update-PortalPSA)
-        General notes:
+        Status: Stable
         https://developers.arcgis.com/rest/users-groups-and-items/update-user.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Update-PortalPSA')]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Portal base URI (a.k.a., context)')]
@@ -64,10 +59,12 @@ function Set-PortalUserPassword {
             }
 
             # SEND REQUEST
-            Invoke-RestMethod @restParams
+            if ($PSCmdlet.ShouldProcess($username, 'Set Portal user password')) {
+                Invoke-RestMethod @restParams
+            }
         }
         else {
-            throw ('User "{0}" not found in Portal "{1}"' -f $username, $Context)
+            Write-Error -Message ('User "{0}" not found in Portal "{1}"' -f $username, $Context) -ErrorAction Stop
         }
     }
 }

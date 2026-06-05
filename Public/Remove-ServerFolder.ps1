@@ -20,14 +20,12 @@ function Remove-ServerFolder {
         PS C:\> Remove-ServerFolder -FolderName 'my_test_folder' @commonParams
         Removes ArcGIS Server folder named 'my_test_folder' and all services within the folder
     .NOTES
-        Name:     Remove-ServerFolder
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-05-30
-        - Version history is capture in repository commit history
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/deletefolder.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'New ArcGIS Server folder name')]
         [ValidatePattern('^\w{1,30}$')]
@@ -45,7 +43,7 @@ function Remove-ServerFolder {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param (
     [Parameter()]
-    [ValidateSet('Default', 'Init', 'Setup', 'CombineFunctionsAndStage', 'ImportStagingModule', 'Analyze', 'Test', 'UpdateDocumentation', 'CopyDocumentation', 'CreateBuildArtifact', 'Cleanup')]
+    [ValidateSet('Default', 'Init', 'Setup', 'CombineFunctionsAndStage', 'ImportStagingModule', 'Analyze', 'Test', 'CreateBuildArtifact', 'Cleanup')]
     [System.String[]]
     $TaskList = 'Default',
 
@@ -18,9 +18,9 @@ param (
     $ResolveDependency
 )
 
-Write-Output "`nSTARTED TASKS: $($TaskList -join ',')`n"
+Write-Output -InputObject "`nSTARTED TASKS: $($TaskList -join ',')`n"
 
-Write-Output "`nPowerShell Version Information:"
+Write-Output -InputObject "`nPowerShell Version Information:"
 $PSVersionTable
 
 # Load dependencies
@@ -30,16 +30,16 @@ if ($PSBoundParameters.Keys -contains 'ResolveDependency') {
 
     # Install PSDepend module if it is not already installed
     if (-not (Get-Module -Name 'PSDepend' -ListAvailable)) {
-        Write-Output "`nPSDepend is not yet installed...installing PSDepend now..."
+        Write-Output -InputObject "`nPSDepend is not yet installed...installing PSDepend now..."
         Install-Module -Name 'PSDepend' -Scope 'CurrentUser' -Force
     }
     else {
-        Write-Output "`nPSDepend already installed...skipping."
+        Write-Output -InputObject "`nPSDepend already installed...skipping."
     }
 
     # Install build dependencies
     $psdependencyConfigPath = Join-Path -Path $PSScriptRoot -ChildPath 'depend.psd1'
-    Write-Output "Checking / resolving module dependencies from [$psdependencyConfigPath]..."
+    Write-Output -InputObject "Checking / resolving module dependencies from [$psdependencyConfigPath]..."
     Import-Module -Name 'PSDepend'
     $invokePSDependParams = @{
         Path    = $psdependencyConfigPath
@@ -57,7 +57,7 @@ if ($PSBoundParameters.Keys -contains 'ResolveDependency') {
     $PSBoundParameters.Remove('ResolveDependency')
 }
 else {
-    Write-Output "Skipping dependency check...`n" -ForegroundColor 'Yellow'
+    Write-Output -InputObject "Skipping dependency check...`n"
 }
 
 # Set build environment variables
@@ -65,25 +65,13 @@ $env:BHProjectPath = $PSScriptRoot | Split-Path -Parent
 $manifestFile = Get-ChildItem -Path $env:BHProjectPath -Filter '*.psd1'
 $env:BHProjectName = $manifestFile.BaseName
 $env:BHPSModuleManifest = $manifestFile.FullName
-$env:BHBuildSystem = 'Unknown'
-# GitHub Actions automatically sets this environment variable to true when running in a workflow
-if ($env:GITHUB_ACTIONS) {
-    $env:BHBuildSystem = 'CI'
-}
 
-# temp fix until PlatyPS module is updated to support the ProgressAction common parameter introduced at pwsh 7.4
-$env:BHBuildSystem
-if ($env:BHBuildSystem -ieq 'Unknown') { $PlatyPSPath = '/root/.local/share/powershell/Modules/platyPS/0.14.2/platyPS.psm1' } else { $PlatyPSPath = '/home/runner/.local/share/powershell/Modules/platyPS/0.14.2/platyPS.psm1' }
-$FileContent = Get-Content -Path $PlatyPSPath
-$FileContent[2544] = "{0}`r`n{1}" -f "'ProgressAction',", $FileContent[2544]
-$FileContent | Set-Content $PlatyPSPath
-
-# Execute PSake tasts
+# Execute PSake tasks
 $invokePsakeParams = @{
     buildFile = (Join-Path -Path $env:BHProjectPath -ChildPath 'Build\build.psake.ps1')
     nologo    = $true
 }
 Invoke-psake @invokePsakeParams @PSBoundParameters
 
-Write-Output "`nFINISHED TASKS: $($TaskList -join ',')"
+Write-Output -InputObject "`nFINISHED TASKS: $($TaskList -join ',')"
 exit ( [int](-not $psake.build_success) )

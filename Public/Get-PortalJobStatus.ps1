@@ -33,15 +33,12 @@ function Get-PortalJobStatus {
         PS C:\> Get-PortalJobStatus -JobId j59ec3a9893e840bda95d65136b99f2e2 -DataStoreId $dsId -ServerId $sId @commonParams
         Returns a job status object for a "publish all layers" job
     .NOTES
-        Name:     Get-PortalJobStatus
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-03-25
-        - 0.1.1 - (2024-03-25) Updates to include publishAllDatasets job
-        - 0.1.0 - (2024-03-15) Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/status.htm
     #>
     [CmdletBinding(DefaultParameterSetName = '_item')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal job ID')]
         [ValidatePattern('j[a-f0-9]{32}')]
@@ -79,7 +76,7 @@ function Get-PortalJobStatus {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
@@ -93,7 +90,7 @@ function Get-PortalJobStatus {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
     }

@@ -20,18 +20,15 @@ function Get-PortalUserFolderList {
         PS C:\> Get-PortalUserFolderList @commonParams -Username 'jsmith'
         Get all Portal folders belonging to 'jsmith'
     .NOTES
-        Name:     Get-PortalUserFolderList
-        Author:   Phillip Glodowski
-        Version:  0.1.0 | Last Edit: 2024-3-13
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/user-content.htm
         This endpoint can also be used to retrieve user items, however the endpoint used
         in the Get-PortalUserItemList function is a more efficient method of making sure
         all of the user's items are returned.
-        General notes
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
@@ -49,7 +46,7 @@ function Get-PortalUserFolderList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # VALIDATE USER NAME
@@ -64,7 +61,7 @@ function Get-PortalUserFolderList {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
 

@@ -22,15 +22,13 @@ function Get-ServerItemLifecycleInfo {
         PS C:\> Get-ServerItemLifecycleInfo @cmnParams -DataItem 'enterpriseDatabases' -ChildItem 'AGSDataStore'
         Returns the lifecycle info for 'AGSDataStore' child item of type 'enterpriseDatabases'
     .NOTES
-        Name:     Get-ServerItemLifecycleInfo
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-10-25
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/lifecycle-info/
         https://developers.arcgis.com/rest/enterprise-administration/server/dataitem/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Data item type')]
         [ValidateSet('enterpriseDatabases', 'fileShares', 'nosqlDatabases', 'bigDataFileShares', 'cloudStores', 'rasterStores')]

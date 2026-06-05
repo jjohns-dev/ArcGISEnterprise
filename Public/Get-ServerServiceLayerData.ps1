@@ -26,14 +26,12 @@ function Get-ServerServiceLayerData {
         PS C:\> Get-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -LayerId 0
         Returns all data for the first layer of the 'Geology' service
     .NOTES
-        Name:     Get-ServerServiceLayerData
-        Author:   Justin Johns
-        Version:  0.1.3 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/query-feature-service-layer/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     [Alias('Find-ServerServiceLayerData')]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Service Layer ID')]
@@ -66,7 +64,7 @@ function Get-ServerServiceLayerData {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

@@ -24,14 +24,12 @@ function Move-PortalUserItem {
         PS C:\> Move-PortalUserItem
         Explanation of what the example does
     .NOTES
-        Name:     Move-PortalUserItem
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-15
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/move-items.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Id of Portal item')]
         [ValidatePattern('[a-f0-9]{32}')]
@@ -57,7 +55,7 @@ function Move-PortalUserItem {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
@@ -71,7 +69,7 @@ function Move-PortalUserItem {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
     }

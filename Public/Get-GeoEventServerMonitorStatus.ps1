@@ -24,15 +24,14 @@ function Get-GeoEventServerMonitorStatus {
 
         Retrieves a list of all GeoEvent Server Monitor Status objects
     .NOTES
-        Name:     Get-GeoEventServerMonitorStatus
-        Author:   Phillip Glodowski
-        Version:  0.1.0 | Last Edit: 2025-11-14
+        Status: Stable
 
         API Documentation can be found at:
         https://yourgeoeventserver.domain/geoevent/admin/api/index.html
     #>
 
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target GeoEvent Server context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -46,7 +45,7 @@ function Get-GeoEventServerMonitorStatus {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

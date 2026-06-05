@@ -22,13 +22,12 @@ function Get-PortalUserItemList {
         PS C:\> Get-PortalUserItemList @commonParams -UserName 'jsmith'
         Get all Portal items belonging to 'jsmith'
     .NOTES
-        Name:     Get-PortalUserItemList
-        Author:   Justin Johns
-        Version:  0.1.4 | Last Edit: 2025-07-22
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/search.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Username')]
         [ValidateNotNullOrEmpty()]
@@ -52,7 +51,7 @@ function Get-PortalUserItemList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
@@ -66,7 +65,7 @@ function Get-PortalUserItemList {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
 

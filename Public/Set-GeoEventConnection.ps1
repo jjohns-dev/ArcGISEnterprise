@@ -16,13 +16,12 @@ function Set-GeoEventConnection {
         PS C:\> Set-GeoEventConnection
         Sets the default GeoEvent connection parameters for subsequent cmdlet calls.
     .NOTES
-        Name:     Set-GeoEventConnection
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-11-26
-        - Version history is captured in repository commit history
-        Comments:
+        Status: Stable
+        Comments: No external API reference — sets $PSDefaultParameterValues for default connection parameters.
     #>
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidGlobalVars', '', Justification = 'Intentionally writes to $PSDefaultParameterValues to set default connection parameters for downstream cmdlets.')]
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Low')]
+    [OutputType([System.Void])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Target ArcGIS GeoEvent context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -33,7 +32,7 @@ function Set-GeoEventConnection {
         [System.String] $Token
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SHOULD PROCESS

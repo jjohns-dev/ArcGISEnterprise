@@ -24,14 +24,12 @@ function New-ServerHostedFeatureTable {
         PS C:\> New-ServerHostedFeatureTable -ServiceName myNewService -TableName 'DataTable' -Field $Field @commonParams
         Creates a new table "layer" in a Hosted Feature Service with the name DataTable
     .NOTES
-        Name:     New-ServerHostedFeatureTable
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-16
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/services-reference/online/add-to-definition-feature-service-.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'Medium')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidateNotNullOrEmpty()]
@@ -63,7 +61,7 @@ function New-ServerHostedFeatureTable {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # GET HOSTED FEATURE SERVICE TABLE TEMPLATE AND CONVERT TO OBJECT
         Write-Verbose -Message 'Getting new table template...'
@@ -104,6 +102,8 @@ function New-ServerHostedFeatureTable {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # SEND REQUEST
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(('{0} in service [{1}]' -f $TableName, $ServiceName), 'Create hosted feature table')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

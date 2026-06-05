@@ -24,14 +24,12 @@ function Get-ServerUsageReportData {
         PS C:\> Get-ServerUsageReportData -ReportName 'Make_Me_Cry' -ReportFormat CSV @commonParams
         Retrieves the usage data for the 'Make_Me_Cry' report and returns it as CSV.
     .NOTES
-        Name:     Get-ServerUsageReportData
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/queryreportdata/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Report name')]
         [ValidateNotNullOrEmpty()]
@@ -57,7 +55,7 @@ function Get-ServerUsageReportData {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

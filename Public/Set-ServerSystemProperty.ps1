@@ -22,14 +22,12 @@ function Set-ServerSystemProperty {
         PS C:\> Set-ServerSystemProperty @cmnParams -FeatureServiceXSSFilter 'input'
         Set the Feature Service XSS filter to 'input'.
     .NOTES
-        Name:     Set-ServerSystemProperty
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-04-15
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/updateserverproperties/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Web Context URL')]
         [ValidateScript({ $_ -match '^https?://' })]
@@ -51,7 +49,7 @@ function Set-ServerSystemProperty {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # GET EXISTING PROPERTIES
         $properties = Get-ServerSystemProperty -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck

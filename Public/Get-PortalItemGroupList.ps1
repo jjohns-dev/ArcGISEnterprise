@@ -21,13 +21,12 @@ function Get-PortalItemGroupList {
         Returns an array of Portal item groups based on membership type (admin, member, other)
         for the item with ID 0e68d8058b744d1c95f709d2ae975232
     .NOTES
-        Name:     Get-PortalItemGroupList
-        Author:   Brandon Trampf
-        Version:  0.1.0 | Last Edit: 2025-08-06
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/groups.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal item ID')]
         [ValidatePattern('[a-f0-9]{32}')]
@@ -45,7 +44,7 @@ function Get-PortalItemGroupList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

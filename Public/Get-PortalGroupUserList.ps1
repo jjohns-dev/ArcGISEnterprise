@@ -20,15 +20,12 @@ function Get-PortalGroupUserList {
         PS C:\> Get-PortalGroupUserList @commonParams -GroupID 'e24d7d38ce9646138fd4e5d6d17e5539'
         Explanation of what the example does
     .NOTES
-        Name:     Get-PortalGroupUserList
-        Author:   Justin Johns
-        Version:  0.1.3 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/group-users-list.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Group ID')]
         [ValidatePattern('^[A-Za-z0-9]{32}$')]
@@ -46,7 +43,7 @@ function Get-PortalGroupUserList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # CREATE USER ARRAY
         $userList = [System.Collections.Generic.List[System.Object]]::new()

@@ -30,15 +30,14 @@ function Get-ServerServiceReport {
         PS C:\> Get-ServerServiceReport -Context https://arcgis.com/arcgis -OnlyFieldData
         Returns an object with array for only field properties
     .NOTES
-        Name:     Get-ServerServiceReport
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2024-10-15
-        - Version history is capture in repository commit history
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
+        - No external API reference — aggregates multiple service and layer queries.
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
         - The function only supports the following service types: MapServer, ImageServer, FeatureServer
     #>
     [CmdletBinding(DefaultParameterSetName = '__svc')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Target folder', ParameterSetName = '__svc')]
         [Parameter(Mandatory = $false, HelpMessage = 'Target folder', ParameterSetName = '__ifd')]
@@ -70,7 +69,7 @@ function Get-ServerServiceReport {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # OUTPUT VERBOSE
         Write-Verbose -Message ('Parameter set: [{0}]' -f $PSCmdlet.ParameterSetName)

@@ -24,14 +24,12 @@ function Remove-ServerService {
         PS C:\> Remove-ServerService
         Explanation of what the example does
     .NOTES
-        Name:     Remove-ServerService
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-07
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/deleteservices.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal Hosted Feature Service Name')]
         [ValidatePattern('^[\w]+$')]
@@ -57,7 +55,7 @@ function Remove-ServerService {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS
@@ -67,7 +65,7 @@ function Remove-ServerService {
             Body   = @{
                 f        = 'json'
                 token    = $Token
-                services = @{ services = @(@{folderName = $Folder; serviceName = $ServiceName; type = $Type}) } | ConvertTo-Json -Compress
+                services = @{ services = @(@{folderName = $Folder; serviceName = $ServiceName; type = $Type}) } | ConvertTo-Json -Depth 3 -Compress
             }
         }
 

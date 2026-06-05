@@ -20,14 +20,11 @@ function Get-ServerSetting {
         PS C:\> Get-ServerSetting -Context https://arcgis.com/arcgis -SettingUrl 'admin/security/tokens'
         Explanation of what the example does
     .NOTES
-        Name:      Get-ServerSetting
-        Author:    Justin Johns
-        Version:   0.1.0 | Last Edit: 2022-04-15
-        - <VersionNotes> (or remove this line if no version notes)
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments: No external API reference — generic admin endpoint wrapper.
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

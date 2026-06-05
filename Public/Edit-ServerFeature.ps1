@@ -40,14 +40,13 @@ function Edit-ServerFeature {
         PS C:\> Edit-ServerFeature @cmnParams -DeleteObjectId @(1, 2, 3)
         Deletes features with IDs 1, 2, and 3
     .NOTES
-        Name:     Edit-ServerFeature
-        Author:   Justin Johns
-        Version:  0.2.0 | Last Edit: 2025-02-19
+        Status: Stable
         - See commit history for version changes
-        Comments: <Comment(s)>
+        Comments:
         https://developers.arcgis.com/rest/services-reference/enterprise/apply-edits-feature-service-layer-.htm
     #>
     [CmdletBinding(DefaultParameterSetName = '_add')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_add', HelpMessage = 'Feature to add')]
         [ValidateScript({ $_.psobject.Properties.Name -contains 'attributes' })] # FEATURE MAY ALSO CONTAIN "geometry"
@@ -93,7 +92,7 @@ function Edit-ServerFeature {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET PARAMETERS FOR ADDING DATA

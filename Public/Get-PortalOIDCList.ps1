@@ -20,14 +20,11 @@ function Get-PortalOIDCList {
         PS C:\> Get-PortalOIDCList @cmnParams
         Retrieves the OpenID Connect configurations from the Portal for ArcGIS.
     .NOTES
-        Name:     Get-PortalOIDCList
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        - Version history is captured in repository commit history
-        Comments:
-        <Link_To_API_Documentation>
+        Status: Stable
+        Comments: No public documentation available for this endpoint.
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Portal application ID')]
         [ValidateNotNullOrEmpty()]
@@ -45,7 +42,7 @@ function Get-PortalOIDCList {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

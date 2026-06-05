@@ -27,14 +27,13 @@ function Invoke-PortalItemAnalysis {
         PS C:\> Invoke-PortalItemAnalysis -File C:\file.csv -FileType CSV @commonParams
         Analyzes the CSV file C:\file.csv
     .NOTES
-        Name:     Invoke-PortalItemAnalysis
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2024-03-19
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/analyze.htm
     #>
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions', '', Justification = 'Analyze is a read-only operation; it does not change any server state.')]
     [CmdletBinding(DefaultParameterSetName = '_itid')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_itid', HelpMessage = 'Id of previously uploaded Portal item')]
         [ValidatePattern('[a-f0-9]{32}')]
@@ -60,7 +59,7 @@ function Invoke-PortalItemAnalysis {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET PARAMETERS FOR ANALYSIS JOB

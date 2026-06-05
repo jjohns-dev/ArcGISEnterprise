@@ -25,14 +25,12 @@ function Find-ServerDataItem {
         PS C:\> Find-ServerDataItem -ItemType NoSQLDatabase
         Returns all NoSQLDatabase data items registered with the Server's data store.
     .NOTES
-        Name:     Find-ServerDataItem
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-09-11
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/finddataitems/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Item type')]
         [ValidateSet('BigDataFileShare', 'CloudStore', 'EnterpriseDatabase', 'FileShare', 'NoSQLDatabase', 'RasterStore')]
@@ -54,7 +52,7 @@ function Find-ServerDataItem {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

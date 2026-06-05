@@ -24,13 +24,12 @@ function Remove-PortalItem {
         PS C:\> Remove-PortalItem
         Explanation of what the example does
     .NOTES
-        Name:     Remove-PortalItem
-        Author:   Justin Johns
-        Version:  0.1.1 | Last Edit: 2024-05-15
-        Comments: <Comment(s)>
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/delete-item.htm
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Owner of Hosted Feature Service')]
         [ValidateNotNullOrEmpty()]
@@ -55,7 +54,7 @@ function Remove-PortalItem {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
@@ -69,7 +68,7 @@ function Remove-PortalItem {
             }
             catch {
                 # PASS ERROR
-                throw ('Unable to get user info with error: {0}' -f $_.Exception.Message)
+                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
             }
         }
     }

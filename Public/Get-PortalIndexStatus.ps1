@@ -18,10 +18,11 @@ function Get-PortalIndexStatus {
         PS C:\> Get-PortalIndexStatus -Context 'https://arcgis.com/arcgis' -Token $token
         Get status of Portal indexes
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/portal/indexer-status.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

@@ -20,10 +20,11 @@ function Get-PortalMachineStatus {
         PS C:\> Get-PortalMachineStatus -Machine 'myMachine.com' -Context 'https://arcgis.com/arcgis' -Token $token
         Get status of Portal system
     .NOTES
-        General notes
+        Status: Stable
         https://developers.arcgis.com/rest/enterprise-administration/portal/status.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]

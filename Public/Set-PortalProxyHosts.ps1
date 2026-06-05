@@ -23,17 +23,12 @@ function Set-PortalProxyHosts {
         PS C:\> Set-PortalSecurityConfiugration -ProxyHost 'test.com' @cmn
         Set Portal allowedProxyHosts to 'test.com'
     .NOTES
-        Name:     Set-PortalProxyHosts
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2023-01-05
-        - 0.1.2 - Fixed minor issue with setting allowed origins
-        - 0.1.1 - Fixed defect that removes several existing properties
-        - 0.1.0 - Initial version
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/enterprise-administration/portal/update-security-configuration.htm
     #>
-    [CmdletBinding()]
+    [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
@@ -80,10 +75,12 @@ function Set-PortalProxyHosts {
             Body   = @{
                 f     = 'json'
                 token = $Token
-                securityConfig = $newConfig | ConvertTo-Json -Compress
+                securityConfig = $newConfig | ConvertTo-Json -Depth 6 -Compress
             }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
-        Invoke-RestMethod @restParams
+        if ($PSCmdlet.ShouldProcess(($ProxyHost -join ', '), 'Set Portal proxy hosts')) {
+            Invoke-RestMethod @restParams
+        }
     }
 }

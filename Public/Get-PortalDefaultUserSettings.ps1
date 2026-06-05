@@ -20,14 +20,12 @@ function Get-PortalDefaultUserSettings {
         PS C:\> Get-PortalDefaultUserSettings @cParams
         Get the default user settings from Portal
     .NOTES
-        Name:     Get-PortalDefaultUserSettings
-        Author:   Phillip Glodowski, Justin Johns
-        Version:  0.1.1 | Last Edit: 2025-07-22
-        Comments: <Comment(s)>
-        General notes
+        Status: Stable
+        Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/user-default-settings.htm
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(HelpMessage = 'Portal ID')]
         [ValidateNotNullOrEmpty()]
@@ -45,7 +43,7 @@ function Get-PortalDefaultUserSettings {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS

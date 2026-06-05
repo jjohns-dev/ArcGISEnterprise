@@ -24,14 +24,12 @@ function Set-ServerServicesDirectory {
         PS C:\> Set-ServerServicesDirectory @cmnParams -CallbackFunctionsEnabled $false
         Set the Callback Functions enabled property to false.
     .NOTES
-        Name:     Set-ServerServicesDirectory
-        Author:   Justin Johns
-        Version:  0.1.0 | Last Edit: 2025-04-15
-        - Version history is captured in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectoryedit/
     #>
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $false, HelpMessage = 'Callback functions enabled')]
         [System.Boolean] $CallbackFunctionsEnabled,
@@ -55,7 +53,7 @@ function Set-ServerServicesDirectory {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # GET SERVICES DIRECTORY DATA

@@ -29,14 +29,12 @@ function Get-PortalItemData {
         The first command returns a web request with content-type 'application/octet-stream' from the Portal item 'Group.epk'.
         The second command writes the data stream to a file.
     .NOTES
-        Name:     Get-PortalItemData
-        Author:   Justin Johns
-        Version:  0.1.2 | Last Edit: 2025-07-22
-        - Version history is capture in repository commit history
+        Status: Stable
         Comments:
         https://developers.arcgis.com/rest/users-groups-and-items/item-data/
     #>
     [CmdletBinding()]
+    [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, HelpMessage = 'Portal item ID')]
         [ValidatePattern('[a-f0-9]{32}')]
@@ -57,7 +55,7 @@ function Get-PortalItemData {
         [System.Management.Automation.SwitchParameter] $SkipCertificateCheck
     )
     Begin {
-        Write-Verbose -Message "Starting $($MyInvocation.Mycommand)"
+        Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
     }
     Process {
         # SET REQUEST PARAMETERS
