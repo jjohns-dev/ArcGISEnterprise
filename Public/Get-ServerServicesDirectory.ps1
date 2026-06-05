@@ -19,6 +19,8 @@ function Get-ServerServicesDirectory {
         Returns ArcGIS Server services directory content
     .NOTES
         Status: Stable
+        Comments:
+        https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectory/
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

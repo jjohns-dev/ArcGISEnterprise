@@ -32,6 +32,7 @@ function Get-ServerServiceReport {
     .NOTES
         Status: Stable
         Comments:
+        - No external API reference — aggregates multiple service and layer queries.
         - This function does not consider items in the root, meaning itesm that are not in one of the folders in ArcGIS Server.
         - The function only supports the following service types: MapServer, ImageServer, FeatureServer
     #>

@@ -19,6 +19,7 @@ function Get-PortalAllowedOriginList {
     .NOTES
         Status: Stable
         Comments:
+        https://developers.arcgis.com/rest/users-groups-and-items/portal.htm
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

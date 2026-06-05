@@ -22,6 +22,8 @@ function Get-ServerAllowedOriginList {
     .NOTES
         Status: Stable
         Comments:
+        https://developers.arcgis.com/rest/enterprise-administration/server/soap-handler-config/
+        https://developers.arcgis.com/rest/enterprise-administration/server/handlersrestservicesdirectory/
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

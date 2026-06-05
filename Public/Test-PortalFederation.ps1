@@ -19,6 +19,8 @@ function Test-PortalFederation {
         Validates status of Portal's ArcGIS Servers
     .NOTES
         Status: Stable
+        Comments:
+        https://developers.arcgis.com/rest/enterprise-administration/portal/validate-servers/
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

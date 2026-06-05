@@ -23,7 +23,7 @@ function Get-PortalDataStoreServer {
         Returns an array of Servers where the DataStore item ID is registered
     .NOTES
         Status: Stable
-        Comments:
+        Comments: No public documentation available for this endpoint.
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

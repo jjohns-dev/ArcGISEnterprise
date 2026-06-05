@@ -21,6 +21,8 @@ function Test-PortalHealth {
         Send a request to the Portal heealth check endpoint
     .NOTES
         Status: Stable
+        Comments:
+        https://developers.arcgis.com/rest/enterprise-administration/portal/health-check-portal/
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

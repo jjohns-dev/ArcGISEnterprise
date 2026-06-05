@@ -19,6 +19,8 @@ function Get-ServerLicense {
         Returns ArcGIS Server license info
     .NOTES
         Status: Stable
+        Comments:
+        https://developers.arcgis.com/rest/enterprise-administration/server/licenses/
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]

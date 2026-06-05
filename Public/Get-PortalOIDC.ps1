@@ -23,7 +23,7 @@ function Get-PortalOIDC {
         Retrieves the OpenID Connect configuration with the specified ID from the Portal for ArcGIS.
     .NOTES
         Status: Stable
-        Comments:
+        Comments: No public documentation available for this endpoint.
     #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.PSCustomObject])]
