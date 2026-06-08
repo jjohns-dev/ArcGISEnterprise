@@ -1,5 +1,19 @@
 # ArcGISEnterprise — Repository Instructions
 
+## Build and tests
+
+Run tests through the psake build harness, and always chain the `Cleanup` task so the
+generated `Artifacts` and `Staging` folders are removed from the working tree
+afterward:
+
+```powershell
+./Build/build.ps1 -TaskList Test, Cleanup
+```
+
+`Cleanup` deletes `Artifacts/` and `Staging/`. Running `Test` alone leaves the staged
+module behind, which can later cause "multiple modules named 'ArcGISEnterprise' are
+loaded" errors and clutters the working tree.
+
 ## ArcGIS Enterprise REST API: testing wins over documentation
 
 The official ArcGIS Enterprise REST API documentation (developers.arcgis.com — the
