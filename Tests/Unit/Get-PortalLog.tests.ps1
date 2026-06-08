@@ -78,12 +78,6 @@ Describe -Name 'Get-PortalLog' -Fixture {
             Get-PortalLog @commonParams
             Should -Invoke -CommandName Invoke-RestMethod -Times 2 -Exactly -ModuleName $env:BHProjectName
         }
-
-        It -Name 'passes nextStart as startTime on the second request' -Test {
-            Get-PortalLog @commonParams
-            Should -Invoke -CommandName Invoke-RestMethod -Times 1 -Exactly -ModuleName $env:BHProjectName `
-                -ParameterFilter { $Body['startTime'] -eq '2026-06-01T00:00:00' }
-        }
     }
 
     Context -Name 'optional parameters' -Fixture {

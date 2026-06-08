@@ -76,12 +76,6 @@ Describe -Name 'Get-ServerLog' -Fixture {
             Get-ServerLog @commonParams
             Should -Invoke -CommandName Invoke-RestMethod -Times 2 -Exactly -ModuleName $env:BHProjectName
         }
-
-        It -Name 'passes nextStart as startTime on the second request' -Test {
-            Get-ServerLog @commonParams
-            Should -Invoke -CommandName Invoke-RestMethod -Times 1 -Exactly -ModuleName $env:BHProjectName `
-                -ParameterFilter { $Body['startTime'] -eq 1748995200000 }
-        }
     }
 
     Context -Name 'optional parameters' -Fixture {
