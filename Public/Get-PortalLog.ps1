@@ -27,15 +27,15 @@ function Get-PortalLog {
         None.
     .OUTPUTS
         System.Collections.Generic.List[System.Object].
-        A flat collection of individual log-message objects gathered across all pages. Note this
-        differs from earlier versions, which returned the API wrapper object exposing the
-        log entries on a 'logMessages' property.
     .EXAMPLE
         PS C:\> Get-PortalLog @commonParams -EndTime (Get-Date).AddDays(-7)
         Get all portal logs from the last 7 days
     .NOTES
         Status: Stable
         Comments:
+        Returns a flat collection of individual log-message objects gathered across all pages.
+        This differs from earlier versions, which returned the API wrapper object exposing the
+        log entries on a 'logMessages' property.
         https://developers.arcgis.com/rest/enterprise-administration/portal/query-logs.htm
     #>
     [CmdletBinding()]
