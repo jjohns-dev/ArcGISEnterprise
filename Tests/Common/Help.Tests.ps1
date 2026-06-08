@@ -1,8 +1,13 @@
 BeforeDiscovery {
     # Taken with love from @juneb_get_help (https://raw.githubusercontent.com/juneb/PesterTDD/master/Module.Help.Tests.ps1)
     # Import module
-    if (-not (Get-Module -Name $env:BHProjectName -ListAvailable)) {
-        Import-Module -Name $env:BHPSModuleManifest -ErrorAction 'Stop' -Force
+    # NOTE: check only for a LOADED module (not -ListAvailable). The build harness
+    # stages the module and imports it by path; that copy is not on PSModulePath, so
+    # -ListAvailable would not find it and would import a SECOND copy from the source
+    # manifest. Two loaded copies break Mock -ModuleName ("Multiple script or manifest
+    # modules named '...' are currently loaded") in the unit tests.
+    if (-not (Get-Module -Name $env:BHProjectName)) {
+        Import-Module -Name $env:BHPSModuleManifest -ErrorAction 'Stop'
     }
     $Cmdlets = Get-Command -Module $env:BHProjectName -CommandType 'Cmdlet', 'Function' -ErrorAction 'Stop'
 }
