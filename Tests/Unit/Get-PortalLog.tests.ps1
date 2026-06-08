@@ -9,29 +9,35 @@ Describe -Name 'Get-PortalLog' -Fixture {
     BeforeAll {
         $singlePageResponse = [PSCustomObject] @{
             logMessages = @(
-                [PSCustomObject] @{ type = 'WARNING'; message = 'entry 1' }
-                [PSCustomObject] @{ type = 'SEVERE';  message = 'entry 2' }
+                [PSCustomObject] @{ type = 'WARNING'; message = 'entry 1'; time = 300 }
+                [PSCustomObject] @{ type = 'SEVERE'; message = 'entry 2'; time = 200 }
             )
             hasMore   = $false
-            nextStart = $null
+            startTime = 300
+            endTime   = 200
         }
 
-        # nextStart value is an ISO-formatted string here; the actual Portal API format is
-        # unverified — update this fixture if the API returns Unix milliseconds instead.
+        # Portal paginates by time: the response 'endTime' (Unix milliseconds) is the oldest
+        # record in the page and becomes the next request's 'startTime'. The bound is inclusive,
+        # so page 2 repeats page 1's last (boundary) record, which the function drops.
         $page1Response = [PSCustomObject] @{
             logMessages = @(
-                [PSCustomObject] @{ type = 'WARNING'; message = 'page1 entry 1' }
+                [PSCustomObject] @{ type = 'WARNING'; message = 'page1 entry 1'; time = 300 }
+                [PSCustomObject] @{ type = 'INFO'; message = 'page1 entry 2'; time = 200 }
             )
             hasMore   = $true
-            nextStart = '2026-06-01T00:00:00'
+            startTime = 300
+            endTime   = 200
         }
 
         $page2Response = [PSCustomObject] @{
             logMessages = @(
-                [PSCustomObject] @{ type = 'SEVERE'; message = 'page2 entry 1' }
+                [PSCustomObject] @{ type = 'INFO'; message = 'page1 entry 2'; time = 200 }
+                [PSCustomObject] @{ type = 'SEVERE'; message = 'page2 entry 1'; time = 100 }
             )
             hasMore   = $false
-            nextStart = $null
+            startTime = 200
+            endTime   = 100
         }
 
         $errorResponse = [PSCustomObject] @{
@@ -62,39 +68,64 @@ Describe -Name 'Get-PortalLog' -Fixture {
 
     Context -Name 'multi-page response' -Fixture {
         BeforeAll {
-            # Default mock returns page 1 (hasMore = $true)
+            # Default mock returns page 1 (hasMore = $true, endTime = 200)
             Mock -CommandName Invoke-RestMethod -MockWith { $page1Response } -ModuleName $env:BHProjectName
-            # ParameterFilter mock returns page 2 when startTime has been set by the loop
+            # When the loop sets startTime to the page 1 cursor (200), return the final page
             Mock -CommandName Invoke-RestMethod -MockWith { $page2Response } -ModuleName $env:BHProjectName `
-                -ParameterFilter { $null -ne $Body['startTime'] }
+                -ParameterFilter { $Body['startTime'] -eq 200 }
         }
 
         It -Name 'returns entries from all pages' -Test {
             $result = Get-PortalLog @commonParams
-            $result | Should -HaveCount 2
+            $result | Should -HaveCount 3
+        }
+
+        It -Name 'drops the duplicate boundary record between pages' -Test {
+            $result = Get-PortalLog @commonParams
+            @($result.time | Select-Object -Unique) | Should -HaveCount 3
         }
 
         It -Name 'makes two requests for a two-page result set' -Test {
             Get-PortalLog @commonParams
             Should -Invoke -CommandName Invoke-RestMethod -Times 2 -Exactly -ModuleName $env:BHProjectName
         }
+
+        It -Name 'uses the response endTime as the next startTime' -Test {
+            Get-PortalLog @commonParams
+            Should -Invoke -CommandName Invoke-RestMethod -Times 1 -Exactly -ModuleName $env:BHProjectName `
+                -ParameterFilter { $Body['startTime'] -eq 200 }
+        }
     }
 
-    Context -Name 'optional parameters' -Fixture {
+    Context -Name 'request body' -Fixture {
         BeforeAll {
             Mock -CommandName Invoke-RestMethod -MockWith { $singlePageResponse } -ModuleName $env:BHProjectName
         }
 
-        It -Name 'omits startTime from body when StartTime is not provided' -Test {
+        It -Name 'sends an empty startTime when StartTime is not provided' -Test {
             Get-PortalLog @commonParams
             Should -Invoke -CommandName Invoke-RestMethod -Times 1 -Exactly -ModuleName $env:BHProjectName `
-                -ParameterFilter { $null -eq $Body['startTime'] }
+                -ParameterFilter { $Body['startTime'] -eq '' }
         }
 
-        It -Name 'omits endTime from body when EndTime is not provided' -Test {
+        It -Name 'sends an empty endTime when EndTime is not provided' -Test {
             Get-PortalLog @commonParams
             Should -Invoke -CommandName Invoke-RestMethod -Times 1 -Exactly -ModuleName $env:BHProjectName `
-                -ParameterFilter { $null -eq $Body['endTime'] }
+                -ParameterFilter { $Body['endTime'] -eq '' }
+        }
+
+        It -Name 'sends StartTime as epoch milliseconds when provided' -Test {
+            $start = [System.DateTime]::new(2026, 1, 1, 0, 0, 0, [System.DateTimeKind]::Utc)
+            $expected = [System.DateTimeOffset]::new($start).ToUnixTimeMilliseconds()
+            Get-PortalLog @commonParams -StartTime $start
+            Should -Invoke -CommandName Invoke-RestMethod -Times 1 -Exactly -ModuleName $env:BHProjectName `
+                -ParameterFilter { $Body['startTime'] -eq $expected }
+        }
+
+        It -Name 'includes the required source key in the filter' -Test {
+            Get-PortalLog @commonParams
+            Should -Invoke -CommandName Invoke-RestMethod -Times 1 -Exactly -ModuleName $env:BHProjectName `
+                -ParameterFilter { ($Body['filter'] | ConvertFrom-Json).PSObject.Properties.Name -contains 'source' }
         }
 
         It -Name 'accepts PageSize below 1000' -Test {
