@@ -28,6 +28,8 @@ Properties {
     $StagingFolder = Join-Path -Path $ProjectRoot -ChildPath 'Staging'
     $StagingModulePath = Join-Path -Path $StagingFolder -ChildPath $env:BHProjectName
     #$StagingModulePath = Join-Path -Path $StagingFolder -ChildPath $ProjectName
+    $StagingModuleManifestPath = Join-Path -Path $StagingModulePath -ChildPath "$($env:BHProjectName).psd1"
+    #$StagingModuleManifestPath = Join-Path -Path $StagingModulePath -ChildPath "$($ProjectName).psd1"
 }
 
 # Define top-level tasks
@@ -180,7 +182,7 @@ Task 'CreateBuildArtifact' -depends 'Init' {
     try {
         $releaseFilename = "$($env:BHProjectName)-v$($manifestVersion.ToString()).zip"
         $releasePath = Join-Path -Path $ArtifactFolder -ChildPath $releaseFilename
-        Write-Output "Creating release artifact [$releasePath] using manifest version [$manifestVersion]" -ForegroundColor 'Yellow'
+        Write-Output "Creating release artifact [$releasePath] using manifest version [$manifestVersion]"
         Compress-Archive -Path "$StagingFolder/*" -DestinationPath $releasePath -Force -Verbose -ErrorAction 'Stop'
     }
     catch {
