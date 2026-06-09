@@ -15,16 +15,6 @@ Download the latest `.zip` from [Releases](https://github.com/PS-MCS/ArcGISEnter
 Import-Module ArcGISEnterprise
 ```
 
-## Quickstart
-
-```powershell
-$context = [System.Uri]'https://arcgis.example.com/arcgis'
-$cred    = Get-Credential
-$token   = (Get-PortalToken -Context $context -Credential $cred).token
-
-Get-PortalSetting -Context $context -Token $token
-```
-
 ## Authentication
 
 Every function that calls a secured endpoint needs two things: a `-Context` (the
@@ -35,7 +25,8 @@ token, then choose how you want to pass the context and token to subsequent call
 ### 1. Generate a token
 
 Provide credentials and request a token. The token functions return a response
-object; the token string itself is on the `.token` property.
+object; the token string itself is on the `.token` property. Pass the context and
+token to any function:
 
 ```powershell
 $context = [System.Uri]'https://arcgis.example.com/arcgis'
@@ -46,6 +37,9 @@ $token = (Get-PortalToken -Context $context -Credential $cred).token
 
 # ArcGIS Server token (add -Admin for the Server admin endpoint)
 $token = (Get-ServerToken -Context $context -Credential $cred -Admin).token
+
+# Call any function with the context and token
+Get-PortalSetting -Context $context -Token $token
 ```
 
 When Server and Data Store are federated to Portal, Portal manages authentication,
