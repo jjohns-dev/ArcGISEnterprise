@@ -36,6 +36,10 @@ function Get-PortalLog {
         Returns a flat collection of individual log-message objects gathered across all pages.
         This differs from earlier versions, which returned the API wrapper object exposing the
         log entries on a 'logMessages' property.
+        Pagination walks the time window using each response's 'endTime'. The API exposes no
+        row cursor, so if more records share a single millisecond than 'PageSize', the window
+        cannot advance and iteration stops at that boundary; the large default PageSize (1000)
+        makes this practically unreachable.
         https://developers.arcgis.com/rest/enterprise-administration/portal/query-logs.htm
     #>
     [CmdletBinding()]
@@ -60,7 +64,7 @@ function Get-PortalLog {
 
         # TODO: Verify Portal API max page size — assumed 10,000 matching Server API
         [Parameter(HelpMessage = 'Number of log entries per page')]
-        [ValidateRange(1, 10000)]
+        [ValidateRange(1000, 10000)]
         [System.Int32] $PageSize = 1000,
 
         <# # THIS DOESN'T SEEM TO WORK

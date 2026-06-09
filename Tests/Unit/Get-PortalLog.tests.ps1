@@ -128,8 +128,12 @@ Describe -Name 'Get-PortalLog' -Fixture {
                 -ParameterFilter { ($Body['filter'] | ConvertFrom-Json).PSObject.Properties.Name -contains 'source' }
         }
 
-        It -Name 'accepts PageSize below 1000' -Test {
-            { Get-PortalLog @commonParams -PageSize 100 } | Should -Not -Throw
+        It -Name 'rejects PageSize below the 1000 minimum' -Test {
+            { Get-PortalLog @commonParams -PageSize 100 } | Should -Throw
+        }
+
+        It -Name 'accepts PageSize at the 1000 minimum' -Test {
+            { Get-PortalLog @commonParams -PageSize 1000 } | Should -Not -Throw
         }
     }
 
