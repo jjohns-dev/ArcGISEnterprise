@@ -44,6 +44,18 @@ Describe -Name 'Get-PortalLog' -Fixture {
             error = [PSCustomObject] @{ code = 499; message = 'Token Required' }
         }
 
+        # A page that reports more records but whose endTime equals the previous page's cursor:
+        # more than PageSize records share one millisecond, so the time window cannot advance.
+        $stalledResponse = [PSCustomObject] @{
+            logMessages = @(
+                [PSCustomObject] @{ type = 'WARNING'; message = 'dense 1'; time = 200 }
+                [PSCustomObject] @{ type = 'INFO';    message = 'dense 2'; time = 200 }
+            )
+            hasMore   = $true
+            startTime = 200
+            endTime   = 200
+        }
+
         $commonParams = @{
             Context = [System.Uri]::new('https://portal.example.com/arcgis')
             Token   = 'testTokenValue123'
@@ -134,6 +146,23 @@ Describe -Name 'Get-PortalLog' -Fixture {
 
         It -Name 'accepts PageSize at the 1000 minimum' -Test {
             { Get-PortalLog @commonParams -PageSize 1000 } | Should -Not -Throw
+        }
+    }
+
+    Context -Name 'non-advancing window' -Fixture {
+        BeforeAll {
+            Mock -CommandName Invoke-RestMethod -MockWith { $stalledResponse } -ModuleName $env:BHProjectName
+            Mock -CommandName Write-Warning -ModuleName $env:BHProjectName
+        }
+
+        It -Name 'stops paging once the window stops advancing' -Test {
+            Get-PortalLog @commonParams
+            Should -Invoke -CommandName Invoke-RestMethod -Times 2 -Exactly -ModuleName $env:BHProjectName
+        }
+
+        It -Name 'warns that the result is truncated' -Test {
+            Get-PortalLog @commonParams
+            Should -Invoke -CommandName Write-Warning -Times 1 -Exactly -ModuleName $env:BHProjectName
         }
     }
 

@@ -36,8 +36,8 @@ function Get-ServerLog {
         log entries on a 'logMessages' property.
         Pagination walks the time window using each response's 'endTime'. The API exposes no
         row cursor, so if more records share a single millisecond than 'PageSize', the window
-        cannot advance and iteration stops at that boundary; the large default PageSize (1000)
-        makes this practically unreachable.
+        cannot advance and iteration stops at that boundary (reported via a warning); the large
+        default PageSize (1000) makes this practically unreachable.
         https://developers.arcgis.com/rest/enterprise-administration/server/logsquery.htm
     #>
     [CmdletBinding()]
@@ -150,6 +150,13 @@ function Get-ServerLog {
                 $restParams.Body = $nextBody
             }
         } while ($continue)
+
+        # If the loop exited while the server still reports more pages, the time-window cursor
+        # could not advance — more than PageSize records share a single millisecond. The result
+        # is truncated at that boundary; warn rather than return a silently-incomplete set.
+        if ($rest.hasMore -eq $true) {
+            Write-Warning -Message ('Get-ServerLog result is truncated: more than PageSize ({0}) log records share timestamp {1} (epoch ms), so the query cannot page past it. Increase -PageSize (max 10000) or narrow the time range with -StartTime/-EndTime.' -f $PageSize, $previousEndTime)
+        }
 
         $logEntries
     }
