@@ -15,15 +15,71 @@ Download the latest `.zip` from [Releases](https://github.com/PS-MCS/ArcGISEnter
 Import-Module ArcGISEnterprise
 ```
 
-## Quickstart
+## Authentication
+
+Every function that calls a secured endpoint needs two things: a `-Context` (the
+Portal or Server URI including its context, e.g. `https://arcgis.example.com/arcgis`)
+and a `-Token`. You always start by supplying a username and password to generate a
+token, then choose how you want to pass the context and token to subsequent calls.
+
+### 1. Generate a token
+
+Provide credentials and request a token. The token functions return a response
+object; the token string itself is on the `.token` property. Pass the context and
+token to any function:
 
 ```powershell
 $context = [System.Uri]'https://arcgis.example.com/arcgis'
-$cred    = Get-Credential
-$token   = Get-PortalToken -Context $context -Credential $cred
+$cred    = Get-Credential   # prompts for username and password
 
+# Portal token (default expiration is 60 minutes)
+$token = (Get-PortalToken -Context $context -Credential $cred).token
+
+# ArcGIS Server token (add -Admin for the Server admin endpoint)
+$token = (Get-ServerToken -Context $context -Credential $cred -Admin).token
+
+# Call any function with the context and token
 Get-PortalSetting -Context $context -Token $token
 ```
+
+When Server and Data Store are federated to Portal, Portal manages authentication,
+so a Portal token is accepted by the federated Server and Data Store endpoints.
+
+### 2a. Pass `-Context` and `-Token` explicitly (splatting)
+
+Keep the connection values in a hashtable and splat them into each call. This is
+explicit and works well when you talk to more than one environment in the same
+session.
+
+```powershell
+$conn = @{
+    Context = $context
+    Token   = $token
+}
+
+Get-PortalSetting  @conn
+Get-PortalUserList @conn
+```
+
+### 2b. Set a default connection for the session
+
+`Set-PortalConnection` and `Set-ServerConnection` register the context and token as
+default parameter values (via `$PSDefaultParameterValues`) for the rest of the
+session, so you can omit `-Context` and `-Token` on subsequent calls.
+
+```powershell
+# Applies to *-Portal* functions
+Set-PortalConnection -Context $context -Token $token
+Get-PortalSetting
+Get-PortalUserList
+
+# Applies to *-Server* functions
+Set-ServerConnection -Context $context -Token $token
+Get-ServerLog
+```
+
+The defaults live in the current PowerShell session only. Open a new session, or
+clear `$PSDefaultParameterValues`, to remove them.
 
 ## Function naming
 

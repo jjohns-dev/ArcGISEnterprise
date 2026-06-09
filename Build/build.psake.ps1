@@ -10,7 +10,6 @@ Properties {
     }
 
     $Timestamp = Get-Date -UFormat '%Y%m%d-%H%M%S'
-    $PSVersion = $PSVersionTable.PSVersion.Major
     $lines = '----------------------------------------------------------------------'
 
     # Pester
@@ -29,8 +28,6 @@ Properties {
     $StagingFolder = Join-Path -Path $ProjectRoot -ChildPath 'Staging'
     $StagingModulePath = Join-Path -Path $StagingFolder -ChildPath $env:BHProjectName
     #$StagingModulePath = Join-Path -Path $StagingFolder -ChildPath $ProjectName
-    $StagingModuleManifestPath = Join-Path -Path $StagingModulePath -ChildPath "$($env:BHProjectName).psd1"
-    #$StagingModuleManifestPath = Join-Path -Path $StagingModulePath -ChildPath "$($ProjectName).psd1"
 }
 
 # Define top-level tasks
