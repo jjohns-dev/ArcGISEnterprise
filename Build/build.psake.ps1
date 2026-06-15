@@ -142,8 +142,10 @@ Task 'Test' -depends 'ImportStagingModule' {
     $TestFilePath = Join-Path -Path $ArtifactFolder -ChildPath $TestFile
 
     # create a new configuration with our settings
+    # JUnitXml (not NUnitXML) is required for dorny/test-reporter compatibility in CI;
+    # the reporter's NUnit parser trips on Pester's NUnit 2.5 output.
     $PesterConfig = New-PesterConfiguration
-    $PesterConfig.TestResult.OutputFormat = 'NUnitXML'
+    $PesterConfig.TestResult.OutputFormat = 'JUnitXml'
     $PesterConfig.TestResult.OutputPath = $TestFilePath
     $PesterConfig.TestResult.Enabled = $true
     $PesterConfig.Run.PassThru = $true
