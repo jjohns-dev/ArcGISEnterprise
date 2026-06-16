@@ -5,7 +5,7 @@
 # the repo. Unless a later match takes precedence,
 # @PS-MCS/infAdmins will be requested for
 # review when someone opens a pull request.
-*       @PS-MCS/advancedplus-infAdmins
+*       @PS-MCS/infadmins
 
 # Set owner of the CODEOWNERS file
 # This should not be needed as the above line covers all files.
