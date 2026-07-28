@@ -13,43 +13,7 @@ concurrency:
 
 jobs:
   validate:
-    runs-on: ubuntu-latest
     permissions:
       contents: read
-      checks: write # required by dorny/test-reporter even when writing to the Actions Summary
-    env:
-      # psake 5.0+ reads PSAKE_OUTPUT_FORMAT as a fallback when -OutputFormat
-      # isn't passed. GitHubActions emits ::error::/::warning::/::debug::
-      # workflow annotations so Pester / PSScriptAnalyzer failures show up
-      # as inline annotations on the PR.
-      PSAKE_OUTPUT_FORMAT: GitHubActions
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - shell: pwsh # install dependencies
-        run: .\Build\build.ps1 -ResolveDependency -TaskList 'Init'
-
-      - shell: pwsh # stage module
-        run: .\Build\build.ps1 -TaskList 'CombineFunctionsAndStage'
-
-      - shell: pwsh # psscriptanalyzer
-        run: .\Build\build.ps1 -TaskList 'Analyze'
-
-      - shell: pwsh # pester
-        run: .\Build\build.ps1 -TaskList 'Test'
-
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
-        with:
-          name: Pester Results
-          path: "Artifacts/**/Test-*.xml"
-          if-no-files-found: error
-
-      - name: Publish Pester results
-        uses: dorny/test-reporter@a43b3a5f7366b97d083190328d2c652e1a8b6aa2 # v3.0.0
-        if: always()
-        with:
-          name: Pester Tests
-          path: Artifacts/**/Test-*.xml
-          reporter: java-junit # matches Pester JUnitXml output (build.psake.ps1)
-          fail-on-error: false
-          use-actions-summary: true # write the rich markdown report to the Actions run Summary tab
+      checks: write # required by dorny/test-reporter (granted to the reusable)
+    uses: PS-MCS/mcssec-ops/.github/workflows/ps-module-validate.yml@main
