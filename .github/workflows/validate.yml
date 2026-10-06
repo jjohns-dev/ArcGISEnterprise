@@ -16,4 +16,4 @@ jobs:
     permissions:
       contents: read
       checks: write # required by dorny/test-reporter (granted to the reusable)
-    uses: PS-MCS/mcssec-ops/.github/workflows/ps-module-validate.yml@14b4fd8f18098db1d9b20d3d417c292fc9b65f7b
+    uses: PS-MCS/mcssec-ops/.github/workflows/ps-module-validate.yml@main
