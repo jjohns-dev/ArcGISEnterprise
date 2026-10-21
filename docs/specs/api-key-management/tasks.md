@@ -20,7 +20,7 @@ Each task lists the check that proves it is done. Tasks are ordered so the build
 
 ## New-PortalApiKey
 
-- [ ] **5. `Public/New-PortalApiKey.ps1`** per the design:
+- [x] **5. `Public/New-PortalApiKey.ps1`** per the design:
   - check the expiration date first;
   - `ShouldProcess` with `ConfirmImpact = 'High'`;
   - set `apiToken{N}ExpirationDate`, then call `oauth2/token`;
@@ -29,7 +29,7 @@ Each task lists the check that proves it is done. Tasks are ordered so the build
   - a `Clean` block removes the plain-text values.
 
   Add it to `FunctionsToExport`.
-- [ ] **6. `Tests/Unit/New-PortalApiKey.tests.ps1`**, covering:
+- [x] **6. `Tests/Unit/New-PortalApiKey.tests.ps1`**, covering:
   - past dates and dates more than a year out are rejected with no requests made;
   - `-WhatIf` makes no update or token requests;
   - the update request carries the expected epoch ms value;

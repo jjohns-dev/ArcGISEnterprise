@@ -154,6 +154,7 @@
         'Invoke-PortalItemAnalysis'
         'Invoke-ServerHostedFeatureQuery'
         'Move-PortalUserItem'
+        'New-PortalApiKey'
         'New-PortalHostedFeatureService'
         'New-PortalRole'
         'New-PortalUser'
