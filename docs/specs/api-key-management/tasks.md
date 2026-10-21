@@ -4,14 +4,14 @@ Each task lists the check that proves it is done. Tasks are ordered so the build
 
 ## Private helper
 
-- [ ] **1. `Private/Get-PortalRegisteredAppInfo.ps1`.** POSTs `content/users/{owner}/items/{id}/registeredAppInfo`, returns the raw response, and turns an ArcGIS `error` body into a terminating error.
+- [x] **1. `Private/Get-PortalRegisteredAppInfo.ps1`.** POSTs `content/users/{owner}/items/{id}/registeredAppInfo`, returns the raw response, and turns an ArcGIS `error` body into a terminating error.
   - Verify: `Invoke-ScriptAnalyzer` shows 0 findings; the parse check passes.
 
 ## Get-PortalApiKeyCredential
 
-- [ ] **2. `Public/Get-PortalApiKeyCredential.ps1`.** Single-item mode (with `-ItemId`) per the design: type and keyword check, owner from `-UserName` or the item, flat output with `ConvertFrom-Epoch` dates and `$null` for inactive slots, no `client_secret`. Add it to `FunctionsToExport`.
-- [ ] **3. List mode** (no `-ItemId`): resolve `-UserName` with `Resolve-PortalUserName`, call `Find-PortalItem -Owner -Type 'Application'`, keep items whose `typeKeywords` contain `APIToken`, return one object per item.
-- [ ] **4. `Tests/Unit/Get-PortalApiKeyCredential.tests.ps1`**, covering:
+- [x] **2. `Public/Get-PortalApiKeyCredential.ps1`.** Single-item mode (with `-ItemId`) per the design: type and keyword check, owner from `-UserName` or the item, flat output with `ConvertFrom-Epoch` dates and `$null` for inactive slots, no `client_secret`. Add it to `FunctionsToExport`.
+- [x] **3. List mode** (no `-ItemId`): resolve `-UserName` with `Resolve-PortalUserName`, call `Find-PortalItem -Owner -Type 'Application'`, keep items whose `typeKeywords` contain `APIToken`, return one object per item.
+- [x] **4. `Tests/Unit/Get-PortalApiKeyCredential.tests.ps1`**, covering:
   - active slot returns a `DateTime`; inactive slot with a stale value returns `$null`;
   - a non-`APIToken` item raises an error;
   - list mode filters to `APIToken` items;

@@ -91,6 +91,7 @@
         'Get-GeoEventServerMonitorStatus'
         'Get-GeoEventServerStatus'
         'Get-PortalAllowedOriginList'
+        'Get-PortalApiKeyCredential'
         'Get-PortalCategorySchema'
         'Get-PortalDataStoreServer'
         'Get-PortalDefaultUserSetting'
