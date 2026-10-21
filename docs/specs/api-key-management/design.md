@@ -57,7 +57,7 @@ flowchart LR
   1. Validate `-Expiration`: it must be in the future and no more than one year out. Fail with `Write-Error -ErrorAction Stop` before any request.
   2. Read the current state with `Get-PortalApiKeyCredential`. If the slot is active, the `ShouldProcess` message says the existing key in that slot will stop working.
   3. Set `apiToken{N}ExpirationDate` with `[System.DateTimeOffset]::new($Expiration).ToUnixTimeMilliseconds()`.
-  4. Call `oauth2/token` and check that the key's slot digit equals `-Slot`; otherwise write an error.
+  4. Call `oauth2/token` and check that the key's slot digit equals `-Slot`; otherwise write an error. If the slot was active and generation fails, restore the slot's previous expiration (warn if the restore fails) and rethrow the original error.
   5. Return a `[PSCustomObject]` with PSTypeName `ArcGISEnterprise.ApiKey`: `ItemId`, `Slot`, `Expires` (`System.DateTime`), `ApiKey` (`System.Security.SecureString`).
 - A `Clean` block removes the plain-text key and the client values with `Remove-Variable -Force -ErrorAction Ignore`.
 
@@ -94,6 +94,7 @@ flowchart LR
 - **Secret exposure (Security).**
   - `client_secret` and the new key are sent only in POST bodies, never in URLs or `Write-Verbose`. The caller's token is still sent in the URL by the GET-based `Get-PortalItem` and `Get-PortalSetting`; moving tokens to a header module-wide is tracked in #138.
   - Output contains only a `SecureString`. Tests serialize every output object and assert that the secret strings are absent.
+  - `SecureString` only guards against accidental display and logging. Microsoft documents that it is not encrypted in memory on non-Windows platforms and advises against it for new .NET code; the alternative it recommends, writing the key straight to an external secret store, is out of scope.
 - **Undocumented token parameters.** `apiToken` and `regenerateApiToken` on `oauth2/token` and `revokeToken` come from Esri's REST JS source, not the REST API reference. They were verified on 11.5 only. Mitigation: record the contract in repo memory and in each function's `.NOTES`, and check the slot digit after generating.
 - **Expiration change and the other slot.** Esri documents that editing the credentials' expiration invalidates all keys. Setting a slot's `apiToken{N}ExpirationDate` is narrower than that. Verified 2026-10-21: after setting slot 2's expiration, then generating and revoking a slot 2 key, the existing slot 1 key still authenticated (`portals/self` returned its `appInfo.appId`).
 - **Stale expiration on inactive slots.** Handled by reporting `$null` unless the slot is active.

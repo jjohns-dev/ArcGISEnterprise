@@ -102,4 +102,36 @@ Describe -Name 'New-PortalApiKey' -Fixture {
             Should -Invoke -CommandName Invoke-RestMethod -ModuleName $env:BHProjectName -Times 0 -Exactly -ParameterFilter { $Uri -like '*/oauth2/token' }
         }
     }
+    Context -Name 'failed regeneration of an active slot' -Fixture {
+        BeforeAll {
+            $previousMs = 1893456000000
+            $previousExpires = [System.DateTimeOffset]::FromUnixTimeMilliseconds($previousMs).DateTime.ToLocalTime()
+            Mock -CommandName Get-PortalApiKeyCredential -ModuleName $env:BHProjectName -MockWith {
+                [PSCustomObject] @{ ItemId = '0123456789abcdef0123456789abcdef'; Title = 'test key'; Owner = 'jsmith'; Slot1Active = $false; Slot2Active = $true; Slot2Expires = $previousExpires }
+            }
+            Mock -CommandName Invoke-RestMethod -ModuleName $env:BHProjectName -ParameterFilter { $Uri -like '*/oauth2/token' } -MockWith {
+                [PSCustomObject] @{ error = [PSCustomObject] @{ code = 400; message = 'Invalid request' } }
+            }
+        }
+        It -Name 'restores the previous expiration and reports the original error' -Test {
+            { New-PortalApiKey -Expiration (Get-Date).AddDays(3) @commonParams } | Should -Throw -ExpectedMessage '*Unable to generate*400*'
+            Should -Invoke -CommandName Invoke-RestMethod -ModuleName $env:BHProjectName -Times 1 -Exactly -ParameterFilter {
+                $Uri -like '*/update' -and $Body['apiToken2ExpirationDate'] -eq $previousMs
+            }
+        }
+        It -Name 'warns and still reports the original error when the restore fails' -Test {
+            Mock -CommandName Invoke-RestMethod -ModuleName $env:BHProjectName -ParameterFilter { $Uri -like '*/update' -and $Body['apiToken2ExpirationDate'] -eq $previousMs } -MockWith {
+                [PSCustomObject] @{ error = [PSCustomObject] @{ code = 500; message = 'Server error' } }
+            }
+            Mock -CommandName Write-Warning -ModuleName $env:BHProjectName
+            { New-PortalApiKey -Expiration (Get-Date).AddDays(3) @commonParams } | Should -Throw -ExpectedMessage '*Unable to generate*400*'
+            Should -Invoke -CommandName Write-Warning -ModuleName $env:BHProjectName -Times 1 -Exactly -ParameterFilter { $Message -like '*Unable to restore*500*' }
+        }
+        It -Name 'does not restore an inactive slot' -Test {
+            $slot1Params = $commonParams.Clone()
+            $slot1Params['Slot'] = 1
+            { New-PortalApiKey -Expiration (Get-Date).AddDays(3) @slot1Params } | Should -Throw
+            Should -Invoke -CommandName Invoke-RestMethod -ModuleName $env:BHProjectName -Times 1 -Exactly -ParameterFilter { $Uri -like '*/update' }
+        }
+    }
 }

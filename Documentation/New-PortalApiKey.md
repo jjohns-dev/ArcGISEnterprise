@@ -32,8 +32,13 @@ Generate an API key in slot 1 or 2 of an API key credentials item.
 The slot's
 expiration is set on the item first, because the new key's lifetime follows it.
 Regenerating an active slot invalidates the key currently in that slot.
-The key
-is returned as a SecureString and can only be retrieved at generation time.
+If
+generation fails, the active slot's previous expiration is restored.
+The key is
+returned as a SecureString and can only be retrieved at generation time.
+The
+SecureString only guards against the key being displayed or logged by accident; it
+is not encrypted in memory on Linux or macOS.
 
 ## EXAMPLES
 

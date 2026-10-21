@@ -5,8 +5,11 @@ function New-PortalApiKey {
     .DESCRIPTION
         Generate an API key in slot 1 or 2 of an API key credentials item. The slot's
         expiration is set on the item first, because the new key's lifetime follows it.
-        Regenerating an active slot invalidates the key currently in that slot. The key
-        is returned as a SecureString and can only be retrieved at generation time.
+        Regenerating an active slot invalidates the key currently in that slot. If
+        generation fails, the active slot's previous expiration is restored. The key is
+        returned as a SecureString and can only be retrieved at generation time. The
+        SecureString only guards against the key being displayed or logged by accident; it
+        is not encrypted in memory on Linux or macOS.
     .PARAMETER ItemId
         API key credentials item ID
     .PARAMETER Slot
@@ -81,6 +84,7 @@ function New-PortalApiKey {
         $owner = $credential.Owner
 
         $slotActive = if ($Slot -eq 1) { $credential.Slot1Active } else { $credential.Slot2Active }
+        $previousExpires = if ($Slot -eq 1) { $credential.Slot1Expires } else { $credential.Slot2Expires }
         $action = if ($slotActive) {
             'Regenerate API key in slot {0}; the key currently in slot {0} will stop working' -f $Slot
         }
@@ -102,23 +106,41 @@ function New-PortalApiKey {
             Write-Error -Message ('Unable to set the expiration of slot {0}: {1} {2}' -f $Slot, $update.error.code, $update.error.message) -ErrorAction Stop
         }
 
-        $app = Get-PortalRegisteredAppInfo -ItemId $ItemId -UserName $owner @commonParams
-        $tokenParams = @{
-            Uri    = '{0}/sharing/rest/oauth2/token' -f $Context
-            Method = 'POST'
-            Body   = @{
-                f                  = 'json'
-                client_id          = $app.client_id
-                client_secret      = $app.client_secret
-                grant_type         = 'client_credentials'
-                apiToken           = $Slot
-                regenerateApiToken = 'true'
+        try {
+            $app = Get-PortalRegisteredAppInfo -ItemId $ItemId -UserName $owner @commonParams
+            $tokenParams = @{
+                Uri    = '{0}/sharing/rest/oauth2/token' -f $Context
+                Method = 'POST'
+                Body   = @{
+                    f                  = 'json'
+                    client_id          = $app.client_id
+                    client_secret      = $app.client_secret
+                    grant_type         = 'client_credentials'
+                    apiToken           = $Slot
+                    regenerateApiToken = 'true'
+                }
+            }
+            if ($SkipCertificateCheck) { $tokenParams['SkipCertificateCheck'] = $true }
+            $response = Invoke-RestMethod @tokenParams
+            if ($response.error) {
+                Write-Error -Message ('Unable to generate an API key in slot {0}: {1} {2}' -f $Slot, $response.error.code, $response.error.message) -ErrorAction Stop
             }
         }
-        if ($SkipCertificateCheck) { $tokenParams['SkipCertificateCheck'] = $true }
-        $response = Invoke-RestMethod @tokenParams
-        if ($response.error) {
-            Write-Error -Message ('Unable to generate an API key in slot {0}: {1} {2}' -f $Slot, $response.error.code, $response.error.message) -ErrorAction Stop
+        catch {
+            $generateError = $_
+            # THE EXISTING KEY STILL WORKS, SO THE ITEM SHOULD KEEP SHOWING ITS EXPIRATION
+            if ($slotActive -and $previousExpires) {
+                $restoreParams = $updateParams.Clone()
+                $restoreParams['Body'] = @{ f = 'json'; token = $Token; ('apiToken{0}ExpirationDate' -f $Slot) = [System.DateTimeOffset]::new($previousExpires).ToUnixTimeMilliseconds() }
+                try {
+                    $restore = Invoke-RestMethod @restoreParams
+                    if (-not $restore.success) { throw ('{0} {1}' -f $restore.error.code, $restore.error.message) }
+                }
+                catch {
+                    Write-Warning -Message ('Unable to restore the previous expiration of slot {0} ({1}): {2}' -f $Slot, $previousExpires, $_)
+                }
+            } $generateError
+            throw
         }
 
         # THE SLOT NUMBER IS ENCODED 10 CHARACTERS FROM THE END OF THE KEY
