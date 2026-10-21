@@ -8,9 +8,9 @@ Three public functions wrap the four Portal calls verified live on ArcGIS Enterp
 
 | Step | Request | Notes |
 | --- | --- | --- |
-| Item | `POST sharing/rest/content/items/{id}` | `type = Application`, `typeKeywords` contains `APIToken`; `apiToken1ExpirationDate` / `apiToken2ExpirationDate` are Int64 epoch ms, `-1` when never set. |
+| Item | `GET sharing/rest/content/items/{id}` (via `Get-PortalItem`) | `type = Application`, `typeKeywords` contains `APIToken`; `apiToken1ExpirationDate` / `apiToken2ExpirationDate` are Int64 epoch ms, `-1` when never set. |
 | App info | `POST sharing/rest/content/users/{owner}/items/{id}/registeredAppInfo` | `client_id`, `client_secret`, `apiToken1Active`, `apiToken2Active`, `privileges`, `httpReferrers`. |
-| List | `sharing/rest/search` via `Find-PortalItem -Owner -Type 'Application'`, then filter on `APIToken` | |
+| List | `sharing/rest/search` via `Find-PortalItem -Owner -Type 'Application'`, then filter on `APIToken` | Search results omit `apiToken*ExpirationDate`, so each match is then read with the Item request. |
 | Set expiration | `POST sharing/rest/content/users/{owner}/items/{id}/update` with `apiToken{N}ExpirationDate` | Must happen before generating; the key's `expires_in` follows it. |
 | Generate | `POST sharing/rest/oauth2/token`: `client_id`, `client_secret`, `grant_type=client_credentials`, `apiToken={N}`, `regenerateApiToken=true` | Returns `access_token` (the key, 252 chars) and `expires_in`. The slot digit is at index `length - 10`. |
 | Revoke | `POST sharing/rest/oauth2/revokeToken` with the same body | Returns `{ success: true }`; the key then gets `498`. |
@@ -37,8 +37,8 @@ flowchart LR
 ### Get-PortalApiKeyCredential
 
 - Parameters: `-ItemId` (optional, `[a-f0-9]{32}`, `ValueFromPipelineByPropertyName`), `-UserName` (optional), `-Context`, `-Token`, `-SkipCertificateCheck`.
-- With `-ItemId`, it reads the item, errors if it is not `Application` with `APIToken`, and uses `-UserName` or the item owner for `registeredAppInfo`.
-- Without `-ItemId`, it resolves `-UserName` (default: `Resolve-PortalUserName`), lists that user's `Application` items with `APIToken`, and returns one object per item.
+- With `-ItemId`, it reads the item, errors if it is not `Application` with `APIToken`, and always uses the item owner for `registeredAppInfo` (`-UserName` is ignored).
+- Without `-ItemId`, it resolves `-UserName` (default: `Resolve-PortalUserName`), lists that user's `Application` items with `APIToken`, reads each full item, and returns one object per item.
 - Output: `[PSCustomObject]` with PSTypeName `ArcGISEnterprise.ApiKeyCredential`:
   - `ItemId`, `Title`, `Owner`, `ClientId`, `Privileges`, `HttpReferrers`
   - `Slot1Active`, `Slot1Expires`, `Slot2Active`, `Slot2Expires`
@@ -51,7 +51,7 @@ flowchart LR
   - `-ItemId` (mandatory, by property name)
   - `-Slot` (mandatory, `[ValidateSet(1, 2)]`)
   - `-Expiration` (mandatory, `System.DateTime`)
-  - `-UserName`, `-Context`, `-Token`, `-SkipCertificateCheck`
+  - `-Context`, `-Token`, `-SkipCertificateCheck` (the credentials owner always comes from the item)
 - `[CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]`, so it always confirms. Automation passes `-Confirm:$false`.
 - Steps:
   1. Validate `-Expiration`: it must be in the future and no more than one year out. Fail with `Write-Error -ErrorAction Stop` before any request.
@@ -63,7 +63,7 @@ flowchart LR
 
 ### Revoke-PortalApiKey
 
-- Parameters: `-ItemId` (mandatory, by property name), `-Slot` (mandatory, `[ValidateSet(1, 2)]`), `-UserName`, `-Context`, `-Token`, `-SkipCertificateCheck`.
+- Parameters: `-ItemId` (mandatory, by property name), `-Slot` (mandatory, `[ValidateSet(1, 2)]`), `-Context`, `-Token`, `-SkipCertificateCheck`.
 - `ConfirmImpact = 'High'`. If the slot is not active, it writes a warning and makes no request.
 - It calls `oauth2/revokeToken`. It writes an error if `success` is not `true`, and produces no output.
 
@@ -92,7 +92,7 @@ flowchart LR
 ## Risks and tradeoffs
 
 - **Secret exposure (Security).**
-  - `client_secret` and the new key are sent only in POST bodies, never in URLs or `Write-Verbose`.
+  - `client_secret` and the new key are sent only in POST bodies, never in URLs or `Write-Verbose`. The caller's token is still sent in the URL by the GET-based `Get-PortalItem` and `Get-PortalSetting`; moving tokens to a header module-wide is tracked in #138.
   - Output contains only a `SecureString`. Tests serialize every output object and assert that the secret strings are absent.
 - **Undocumented token parameters.** `apiToken` and `regenerateApiToken` on `oauth2/token` and `revokeToken` come from Esri's REST JS source, not the REST API reference. They were verified on 11.5 only. Mitigation: record the contract in repo memory and in each function's `.NOTES`, and check the slot digit after generating.
 - **Expiration change and the other slot.** Esri documents that editing the credentials' expiration invalidates all keys. Setting a slot's `apiToken{N}ExpirationDate` is narrower than that. Verified 2026-10-21: after setting slot 2's expiration, then generating and revoking a slot 2 key, the existing slot 1 key still authenticated (`portals/self` returned its `appInfo.appId`).

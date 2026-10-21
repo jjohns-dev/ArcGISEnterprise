@@ -37,8 +37,8 @@ API keys (ArcGIS Enterprise 11.4+) are long-lived tokens managed through an API 
 
 ### All three
 
-- THE SYSTEM SHALL accept `-Context`, `-Token`, `-SkipCertificateCheck`, and an optional `-UserName` (credentials owner) consistent with other `*-Portal*` functions.
-- THE SYSTEM SHALL default `-UserName` to the item owner.
+- THE SYSTEM SHALL accept `-Context`, `-Token`, and `-SkipCertificateCheck` consistent with other `*-Portal*` functions.
+- WHEN an item ID is given, THE SYSTEM SHALL use the item owner for credential lookups. `-UserName` exists only on `Get-PortalApiKeyCredential`, to choose whose credentials to list.
 - THE SYSTEM SHALL surface ArcGIS errors returned in a response body as terminating errors that do not contain secrets.
 
 ## Out of scope

@@ -61,8 +61,8 @@ hosted feature service information. An API key is not tied to a user, so functio
 with a `-UserName` parameter require it to be passed explicitly.
 
 To rotate a key, generate one in the free slot, deploy it, then revoke the old slot.
-These functions need a token for the credentials owner or an administrator, not an
-API key.
+These functions have been tested with a token for the credentials owner or an
+administrator.
 
 ```powershell
 $conn = @{ Context = $context; Token = $token }
