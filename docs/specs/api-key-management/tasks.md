@@ -69,5 +69,5 @@ Each task lists the check that proves it is done. Tasks are ordered so the build
 
 ## Wrap-up
 
-- [ ] **15. Commit (signed) after each section; push; open the PR** with the same reviewers.
+- [x] **15. Commit (signed) after each section; push; open the PR** with the same reviewers.
   - Verify: CI `validate` passes.
