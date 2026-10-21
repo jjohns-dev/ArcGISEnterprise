@@ -49,13 +49,13 @@ Each task lists the check that proves it is done. Tasks are ordered so the build
 
 ## Docs and release
 
-- [ ] **9. `ModuleVersion` 2.3.1 to 2.4.0.**
+- [x] **9. `ModuleVersion` 2.3.1 to 2.4.0.**
   - Verify: the Manifest tests pass, and the file still has no BOM.
-- [ ] **10. Generate the three `Documentation/*.md` pages** with `./Build/build.ps1 -TaskList GenerateDocs`, and add the function-to-endpoint rows in `Documentation/index.md`.
+- [x] **10. Generate the three `Documentation/*.md` pages** with `./Build/build.ps1 -TaskList GenerateDocs`, and add the function-to-endpoint rows in `Documentation/index.md`.
   - Verify: `git status` shows only the three new pages plus `index.md`, and no other pages changed.
-- [ ] **11. README:** a short rotation example under "Use an API key".
+- [x] **11. README:** a short rotation example under "Use an API key".
   - Verify: markdownlint shows 0 findings.
-- [ ] **12. Full suite:** `./Build/build.ps1 -TaskList Test, Cleanup`.
+- [x] **12. Full suite:** `./Build/build.ps1 -TaskList Test, Cleanup`.
   - Verify: the result is Passed, the test count went up by the number of new tests plus the new help tests, and PSScriptAnalyzer has 0 findings on the new files.
 
 ## Live verification (11.5 test portal, `ags_module_test_api_key` only)

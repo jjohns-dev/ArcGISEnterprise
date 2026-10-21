@@ -60,6 +60,18 @@ Confirmed on ArcGIS Enterprise 11.5: reading and updating Portal items, and read
 hosted feature service information. An API key is not tied to a user, so functions
 with a `-UserName` parameter require it to be passed explicitly.
 
+To rotate a key, generate one in the free slot, deploy it, then revoke the old slot.
+These functions need a token for the credentials owner or an administrator, not an
+API key.
+
+```powershell
+$conn = @{ Context = $context; Token = $token }
+Get-PortalApiKeyCredential -ItemId $itemId @conn
+$newKey = New-PortalApiKey -ItemId $itemId -Slot 2 -Expiration (Get-Date).AddDays(90) @conn
+# Deploy $newKey.ApiKey (a SecureString), then retire slot 1
+Revoke-PortalApiKey -ItemId $itemId -Slot 1 @conn
+```
+
 ### 2a. Pass `-Context` and `-Token` explicitly (splatting)
 
 Keep the connection values in a hashtable and splat them into each call. This is

@@ -64,6 +64,7 @@ Please see releases for updates and features
 | [Get-GeoEventServerMonitorStatus](Get-GeoEventServerMonitorStatus.md) | GeoEvent | `[ADMIN]/monitoring` | Gets GeoEvent Server monitoring status |
 | [Get-GeoEventServerStatus](Get-GeoEventServerStatus.md) | GeoEvent | `[ADMIN]/health/status` | Gets GeoEvent Server health status |
 | [Get-PortalAllowedOriginList](Get-PortalAllowedOriginList.md) | Portal | `[ROOT]/portals/[PORTALID]` | Get the allowed origins configured for ArcGIS Portal |
+| [Get-PortalApiKeyCredential](Get-PortalApiKeyCredential.md) | Portal | `[ROOT]/content/users/[USERNAME]/items/[ITEMID]/registeredAppInfo` | Get API key credentials and the status of each key slot |
 | [Get-PortalCategorySchema](Get-PortalCategorySchema.md) | Portal | `[ROOT]/portals/[PORTALID]/categorySchema` | Get Portal category schema |
 | [Get-PortalDataStoreServer](Get-PortalDataStoreServer.md) | Portal | `[ROOT]/portals/[PORTALID]/datastores/getServers` | Get server object for Portal DataStore item |
 | [Get-PortalDefaultUserSetting](Get-PortalDefaultUserSetting.md) | Portal | `[ROOT]/portals/[PORTALID]/userDefaultSettings` | Get default user settings from Portal |
@@ -122,6 +123,7 @@ Please see releases for updates and features
 | [Invoke-PortalItemAnalysis](Invoke-PortalItemAnalysis.md) | Portal | `[ROOT]/content/features/analyze` | Analyze file prior to publishing |
 | [Invoke-ServerHostedFeatureQuery](Invoke-ServerHostedFeatureQuery.md) | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/query` | Query feature service layer. Additional options available |
 | [Move-PortalUserItem](Move-PortalUserItem.md) | Portal | `[ROOT]/content/users/[USERNAME]/moveItems` | Move Portal item to folder |
+| [New-PortalApiKey](New-PortalApiKey.md) | Portal | `[ROOT]/oauth2/token` | Generate an API key in slot 1 or 2 of API key credentials |
 | [New-PortalHostedFeatureService](New-PortalHostedFeatureService.md) | Portal | `[ROOT]/content/users/[USERNAME]/createService` | Creates new Hosted Feature Service |
 | [New-PortalRole](New-PortalRole.md) | Portal | `[ROOT]/portals/[PORTALID]/createRole` | Create new Role in Portal for ArcGIS |
 | [New-PortalUser](New-PortalUser.md) | Portal | `[ADMIN]/security/users/createUser` | Create new Portal user |
@@ -143,6 +145,7 @@ Please see releases for updates and features
 | [Remove-ServerServiceFeature](Remove-ServerServiceFeature.md) | Server | `[ROOT]/Hosted/[SERVICENAME]/FeatureServer/[LAYERID]/deleteFeatures` | Truncates table data in Hosted Feature Service |
 | [Remove-ServerServiceLayer](Remove-ServerServiceLayer.md) | Server | `[RADMIN]/services/Hosted/[SERVICENAME]/FeatureServer/deleteFromDefinition` | Deletes table/layer from ArcGIS Server Service |
 | [Remove-ServerUsageReport](Remove-ServerUsageReport.md) | Server | `[ADMIN]/usagereports/[REPORTNAME]/delete` | Deletes a Server usage report |
+| [Revoke-PortalApiKey](Revoke-PortalApiKey.md) | Portal | `[ROOT]/oauth2/revokeToken` | Invalidate the API key in slot 1 or 2 of API key credentials |
 | [Revoke-PortalUserItemAccess](Revoke-PortalUserItemAccess.md) | Portal | `[ROOT]/content/users/[USERNAME]/unshareItems` | Unshare Portal item |
 | [Set-PortalCategorySchema](Set-PortalCategorySchema.md) | Portal | `[ROOT]/portals/[PORTALID]/assignCategorySchema` | Write ArcGIS Portal category schema to Enterprise |
 | [Set-PortalDefaultUserLicenseType](Set-PortalDefaultUserLicenseType.md) | Portal | `[ROOT]/portals/[PORTALID]/setUserDefaultSettings` | Set the default User License Type in Portal |
