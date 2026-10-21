@@ -20,9 +20,8 @@ Generate a Portal API key
 ### __AllParameterSets
 
 ```
-New-PortalApiKey [-ItemId] <string> [-Slot] <int> [-Expiration] <datetime> [[-UserName] <string>]
- [-Context] <uri> [-Token] <string> [-SkipCertificateCheck] [-WhatIf] [-Confirm]
- [<CommonParameters>]
+New-PortalApiKey [-ItemId] <string> [-Slot] <int> [-Expiration] <datetime> [-Context] <uri>
+ [-Token] <string> [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## ALIASES
@@ -83,7 +82,7 @@ SupportsWildcards: false
 Aliases: []
 ParameterSets:
 - Name: (All)
-  Position: 4
+  Position: 3
   IsRequired: true
   ValueFromPipeline: false
   ValueFromPipelineByPropertyName: false
@@ -188,30 +187,8 @@ SupportsWildcards: false
 Aliases: []
 ParameterSets:
 - Name: (All)
-  Position: 5
+  Position: 4
   IsRequired: true
-  ValueFromPipeline: false
-  ValueFromPipelineByPropertyName: false
-  ValueFromRemainingArguments: false
-DontShow: false
-AcceptedValues: []
-HelpMessage: ''
-```
-
-### -UserName
-
-Owner of the API key credentials.
-Defaults to the item owner
-
-```yaml
-Type: System.String
-DefaultValue: ''
-SupportsWildcards: false
-Aliases: []
-ParameterSets:
-- Name: (All)
-  Position: 3
-  IsRequired: false
   ValueFromPipeline: false
   ValueFromPipelineByPropertyName: false
   ValueFromRemainingArguments: false

@@ -53,6 +53,10 @@ Describe -Name 'Get-PortalApiKeyCredential' -Fixture {
             Get-PortalApiKeyCredential -ItemId $itemId @commonParams
             Should -Invoke -CommandName Get-PortalRegisteredAppInfo -ModuleName $env:BHProjectName -Times 1 -Exactly -ParameterFilter { $UserName -eq 'jsmith' }
         }
+        It -Name 'uses the item owner even when UserName is given' -Test {
+            Get-PortalApiKeyCredential -ItemId $itemId -UserName 'someoneElse' @commonParams
+            Should -Invoke -CommandName Get-PortalRegisteredAppInfo -ModuleName $env:BHProjectName -Times 1 -Exactly -ParameterFilter { $UserName -eq 'jsmith' }
+        }
         It -Name 'does not output the client secret' -Test {
             $result = Get-PortalApiKeyCredential -ItemId $itemId @commonParams
             $result.PSObject.Properties.Name | Should -Not -Contain 'client_secret'

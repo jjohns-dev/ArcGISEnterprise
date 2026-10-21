@@ -136,9 +136,10 @@ HelpMessage: ''
 
 ### -UserName
 
-Owner of the API key credentials.
-Defaults to the item owner with -ItemId, otherwise
-to the user associated with the token
+Owner whose API key credentials are listed when -ItemId is not given.
+Defaults to the
+user associated with the token.
+Ignored with -ItemId, which always uses the item owner
 
 ```yaml
 Type: System.String

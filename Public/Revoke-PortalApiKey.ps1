@@ -10,8 +10,6 @@ function Revoke-PortalApiKey {
         API key credentials item ID
     .PARAMETER Slot
         API key slot (1 or 2)
-    .PARAMETER UserName
-        Owner of the API key credentials. Defaults to the item owner
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -47,10 +45,6 @@ function Revoke-PortalApiKey {
         [ValidateSet(1, 2)]
         [System.Int32] $Slot,
 
-        [Parameter(HelpMessage = 'Owner of the API key credentials')]
-        [ValidateNotNullOrEmpty()]
-        [System.String] $UserName,
-
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -66,13 +60,11 @@ function Revoke-PortalApiKey {
         Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         $commonParams = @{ Context = $Context; Token = $Token }
-        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $commonParams['SkipCertificateCheck'] = $true }
+        if ($SkipCertificateCheck) { $commonParams['SkipCertificateCheck'] = $true }
     }
     Process {
-        $credentialParams = @{ ItemId = $ItemId }
-        if ($PSBoundParameters.ContainsKey('UserName')) { $credentialParams['UserName'] = $UserName }
-        $credential = Get-PortalApiKeyCredential @credentialParams @commonParams
-        $owner = if ($PSBoundParameters.ContainsKey('UserName')) { $UserName } else { $credential.Owner }
+        $credential = Get-PortalApiKeyCredential -ItemId $ItemId @commonParams
+        $owner = $credential.Owner
 
         $slotActive = if ($Slot -eq 1) { $credential.Slot1Active } else { $credential.Slot2Active }
         if (-not $slotActive) {
@@ -95,7 +87,7 @@ function Revoke-PortalApiKey {
                 regenerateApiToken = 'true'
             }
         }
-        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $revokeParams['SkipCertificateCheck'] = $true }
+        if ($SkipCertificateCheck) { $revokeParams['SkipCertificateCheck'] = $true }
         $response = Invoke-RestMethod @revokeParams
 
         if (-not $response.success) {

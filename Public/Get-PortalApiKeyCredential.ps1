@@ -11,8 +11,8 @@ function Get-PortalApiKeyCredential {
     .PARAMETER ItemId
         API key credentials item ID
     .PARAMETER UserName
-        Owner of the API key credentials. Defaults to the item owner with -ItemId, otherwise
-        to the user associated with the token
+        Owner whose API key credentials are listed when -ItemId is not given. Defaults to the
+        user associated with the token. Ignored with -ItemId, which always uses the item owner
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -61,7 +61,7 @@ function Get-PortalApiKeyCredential {
         Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         $commonParams = @{ Context = $Context; Token = $Token }
-        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $commonParams['SkipCertificateCheck'] = $true }
+        if ($SkipCertificateCheck) { $commonParams['SkipCertificateCheck'] = $true }
     }
     Process {
         if ($PSBoundParameters.ContainsKey('ItemId')) {
@@ -72,7 +72,7 @@ function Get-PortalApiKeyCredential {
             if ($item.type -ne 'Application' -or $item.typeKeywords -notcontains 'APIToken') {
                 Write-Error -Message ('Item [{0}] is not an API key credentials item.' -f $ItemId) -ErrorAction Stop
             }
-            $owner = if ($PSBoundParameters.ContainsKey('UserName')) { $UserName } else { $item.owner }
+            $owner = $item.owner
             $items = @($item)
         }
         else {

@@ -13,8 +13,6 @@ function New-PortalApiKey {
         API key slot (1 or 2)
     .PARAMETER Expiration
         Expiration date of the new API key; must be in the future and no more than one year out
-    .PARAMETER UserName
-        Owner of the API key credentials. Defaults to the item owner
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -53,10 +51,6 @@ function New-PortalApiKey {
         [Parameter(Mandatory, HelpMessage = 'Expiration date of the new API key')]
         [System.DateTime] $Expiration,
 
-        [Parameter(HelpMessage = 'Owner of the API key credentials')]
-        [ValidateNotNullOrEmpty()]
-        [System.String] $UserName,
-
         [Parameter(Mandatory, HelpMessage = 'Target Portal context')]
         [ValidateScript({ $_.AbsoluteUri -match $context_regex })]
         [System.Uri] $Context,
@@ -72,7 +66,7 @@ function New-PortalApiKey {
         Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         $commonParams = @{ Context = $Context; Token = $Token }
-        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $commonParams['SkipCertificateCheck'] = $true }
+        if ($SkipCertificateCheck) { $commonParams['SkipCertificateCheck'] = $true }
     }
     Process {
         $now = Get-Date
@@ -83,10 +77,8 @@ function New-PortalApiKey {
             Write-Error -Message 'Expiration must be no more than one year from now.' -ErrorAction Stop
         }
 
-        $credentialParams = @{ ItemId = $ItemId }
-        if ($PSBoundParameters.ContainsKey('UserName')) { $credentialParams['UserName'] = $UserName }
-        $credential = Get-PortalApiKeyCredential @credentialParams @commonParams
-        $owner = if ($PSBoundParameters.ContainsKey('UserName')) { $UserName } else { $credential.Owner }
+        $credential = Get-PortalApiKeyCredential -ItemId $ItemId @commonParams
+        $owner = $credential.Owner
 
         $slotActive = if ($Slot -eq 1) { $credential.Slot1Active } else { $credential.Slot2Active }
         $action = if ($slotActive) {
@@ -104,7 +96,7 @@ function New-PortalApiKey {
             Method = 'POST'
             Body   = @{ f = 'json'; token = $Token; ('apiToken{0}ExpirationDate' -f $Slot) = $expirationMs }
         }
-        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $updateParams['SkipCertificateCheck'] = $true }
+        if ($SkipCertificateCheck) { $updateParams['SkipCertificateCheck'] = $true }
         $update = Invoke-RestMethod @updateParams
         if (-not $update.success) {
             Write-Error -Message ('Unable to set the expiration of slot {0}: {1} {2}' -f $Slot, $update.error.code, $update.error.message) -ErrorAction Stop
@@ -123,7 +115,7 @@ function New-PortalApiKey {
                 regenerateApiToken = 'true'
             }
         }
-        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $tokenParams['SkipCertificateCheck'] = $true }
+        if ($SkipCertificateCheck) { $tokenParams['SkipCertificateCheck'] = $true }
         $response = Invoke-RestMethod @tokenParams
         if ($response.error) {
             Write-Error -Message ('Unable to generate an API key in slot {0}: {1} {2}' -f $Slot, $response.error.code, $response.error.message) -ErrorAction Stop

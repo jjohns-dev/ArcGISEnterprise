@@ -59,7 +59,7 @@ function Get-PortalRegisteredAppInfo {
             Method = 'POST'
             Body   = @{ f = 'json'; token = $Token }
         }
-        if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
+        if ($SkipCertificateCheck) { $restParams['SkipCertificateCheck'] = $true }
 
         $response = Invoke-RestMethod @restParams
 

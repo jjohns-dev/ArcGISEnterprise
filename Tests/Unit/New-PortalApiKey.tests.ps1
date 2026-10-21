@@ -60,6 +60,12 @@ Describe -Name 'New-PortalApiKey' -Fixture {
             $json | Should -Not -Match $secret
             $json | Should -Not -Match $slot2Key
         }
+        It -Name 'keeps certificate checking on when SkipCertificateCheck is explicitly false' -Test {
+            New-PortalApiKey -Expiration (Get-Date).AddDays(3) -SkipCertificateCheck:$false @commonParams
+            Should -Invoke -CommandName Invoke-RestMethod -ModuleName $env:BHProjectName -Times 2 -Exactly -ParameterFilter {
+                -not $PesterBoundParameters.ContainsKey('SkipCertificateCheck')
+            }
+        }
     }
     Context -Name 'parameter validation' -Fixture {
         It -Name 'rejects a past expiration without making requests' -Test {

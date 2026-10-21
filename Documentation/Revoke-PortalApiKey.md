@@ -20,8 +20,8 @@ Revoke a Portal API key
 ### __AllParameterSets
 
 ```
-Revoke-PortalApiKey [-ItemId] <string> [-Slot] <int> [[-UserName] <string>] [-Context] <uri>
- [-Token] <string> [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
+Revoke-PortalApiKey [-ItemId] <string> [-Slot] <int> [-Context] <uri> [-Token] <string>
+ [-SkipCertificateCheck] [-WhatIf] [-Confirm] [<CommonParameters>]
 ```
 
 ## ALIASES
@@ -81,7 +81,7 @@ SupportsWildcards: false
 Aliases: []
 ParameterSets:
 - Name: (All)
-  Position: 3
+  Position: 2
   IsRequired: true
   ValueFromPipeline: false
   ValueFromPipelineByPropertyName: false
@@ -165,30 +165,8 @@ SupportsWildcards: false
 Aliases: []
 ParameterSets:
 - Name: (All)
-  Position: 4
+  Position: 3
   IsRequired: true
-  ValueFromPipeline: false
-  ValueFromPipelineByPropertyName: false
-  ValueFromRemainingArguments: false
-DontShow: false
-AcceptedValues: []
-HelpMessage: ''
-```
-
-### -UserName
-
-Owner of the API key credentials.
-Defaults to the item owner
-
-```yaml
-Type: System.String
-DefaultValue: ''
-SupportsWildcards: false
-Aliases: []
-ParameterSets:
-- Name: (All)
-  Position: 2
-  IsRequired: false
   ValueFromPipeline: false
   ValueFromPipelineByPropertyName: false
   ValueFromRemainingArguments: false
