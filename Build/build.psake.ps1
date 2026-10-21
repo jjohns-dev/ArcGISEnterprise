@@ -1,3 +1,10 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    '',
+    Justification = 'psake exposes variables assigned in the Properties block to every Task scriptblock; PSScriptAnalyzer cannot follow that scope.'
+)]
+Param()
+
 # PSake makes variables declared here available in other scriptblocks
 # Require psake v5 (5.0.0 introduced the two-phase compile/run model, Inputs/Outputs
 # caching, and the structured PsakeBuildResult that this build relies on).
