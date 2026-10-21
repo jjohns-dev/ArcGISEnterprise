@@ -65,14 +65,22 @@ Describe -Name 'Get-PortalApiKeyCredential' -Fixture {
     }
     Context -Name 'list mode' -Fixture {
         BeforeAll {
+            # Search results omit apiToken*ExpirationDate; the full item has them
+            $searchResult = [PSCustomObject] @{ id = $itemId; owner = 'jsmith'; type = 'Application'; typeKeywords = @('Application', 'Registered App', 'APIToken') }
             $otherApp = [PSCustomObject] @{ id = 'fedcba9876543210fedcba9876543210'; owner = 'jsmith'; type = 'Application'; typeKeywords = @('Application', 'Registered App') }
-            Mock -CommandName Find-PortalItem -ModuleName $env:BHProjectName -MockWith { $credentialItem, $otherApp }
+            Mock -CommandName Find-PortalItem -ModuleName $env:BHProjectName -MockWith { $searchResult, $otherApp }
+            Mock -CommandName Get-PortalItem -ModuleName $env:BHProjectName -MockWith { $credentialItem }
             Mock -CommandName Resolve-PortalUserName -ModuleName $env:BHProjectName -MockWith { 'jsmith' }
         }
         It -Name 'returns only API key credentials items' -Test {
             $result = Get-PortalApiKeyCredential @commonParams
             @($result) | Should -HaveCount 1
             $result.ItemId | Should -Be $itemId
+        }
+        It -Name 'returns slot expirations from the full item' -Test {
+            $result = Get-PortalApiKeyCredential @commonParams
+            $result.Slot1Expires | Should -BeOfType [System.DateTime]
+            Should -Invoke -CommandName Get-PortalItem -ModuleName $env:BHProjectName -Times 1 -Exactly -ParameterFilter { $ItemId -eq '0123456789abcdef0123456789abcdef' }
         }
         It -Name 'defaults the owner to the token user' -Test {
             Get-PortalApiKeyCredential @commonParams

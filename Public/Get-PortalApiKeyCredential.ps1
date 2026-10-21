@@ -82,7 +82,15 @@ function Get-PortalApiKeyCredential {
             if ($searchError) {
                 Write-Error -Message ('Unable to search items for [{0}]: {1} {2}' -f $owner, $searchError.error.code, $searchError.error.message) -ErrorAction Stop
             }
-            $items = @($found).Where({ $_.typeKeywords -contains 'APIToken' })
+            # SEARCH RESULTS OMIT THE SLOT EXPIRATIONS, SO FETCH EACH FULL ITEM
+            $items = foreach ($result in @($found).Where({ $_.typeKeywords -contains 'APIToken' })) {
+                $fullItem = Get-PortalItem -ItemId $result.id @commonParams
+                if ($fullItem.error) {
+                    Write-Error -Message ('Unable to get item [{0}]: {1} {2}' -f $result.id, $fullItem.error.code, $fullItem.error.message) -ErrorAction Stop
+                }
+                $fullItem
+            }
+            $items = @($items)
             Write-Verbose -Message ('Found [{0}] API key credentials item(s) for [{1}]' -f $items.Count, $owner)
         }
 
