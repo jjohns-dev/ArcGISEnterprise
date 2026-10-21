@@ -98,6 +98,7 @@ flowchart LR
 - **Undocumented token parameters.** `apiToken` and `regenerateApiToken` on `oauth2/token` and `revokeToken` come from Esri's REST JS source, not the REST API reference. They were verified on 11.5 only. Mitigation: record the contract in repo memory and in each function's `.NOTES`, and check the slot digit after generating.
 - **Expiration change and the other slot.** Esri documents that editing the credentials' expiration invalidates all keys. Setting a slot's `apiToken{N}ExpirationDate` is narrower than that. Verified 2026-10-21: after setting slot 2's expiration, then generating and revoking a slot 2 key, the existing slot 1 key still authenticated (`portals/self` returned its `appInfo.appId`).
 - **Stale expiration on inactive slots.** Handled by reporting `$null` unless the slot is active.
+- **Item expiration edited after generation.** A key's lifetime is fixed when it is generated. Verified 2026-10-21: a slot 2 key generated with a 15-minute expiration returned 498 after 15 minutes even though the item's slot 2 expiration had since been moved 3 days out, and Portal then reported the slot inactive. So the restore after a failed regeneration only keeps the item's date matching the existing key; it does not change that key's lifetime.
 - **Always confirming (Operational Excellence vs. convenience).** Interactive users get a prompt even for an empty slot; the gain is one predictable confirmation path.
 
 ## ADR check
