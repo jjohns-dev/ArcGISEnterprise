@@ -19,6 +19,10 @@ Describe '<_> help' -ForEach $Cmdlets {
         $Command = $_ # Get current from -ForEach $Cmdlets in discovery-phase
         $CommandParameters = $Command.ParameterSets.Parameters | Sort-Object -Property Name -Unique | Where-Object { $_.Name -notin $Common } | Select-Object Name
         $CommandParameterNames = $CommandParameters.Name
+
+        # -ForEach values are bound at discovery, so help parameters must be resolved here too
+        $Help = Get-Help $Command -ErrorAction SilentlyContinue
+        $HelpParameterNames = ($Help.Parameters.Parameter | Where-Object { $_.Name -notin $Common } | Sort-Object -Property Name -Unique).Name
     }
     BeforeAll {
         $Common = 'ProgressAction', 'Debug', 'ErrorAction', 'ErrorVariable', 'InformationAction', 'InformationVariable', 'OutBuffer', 'OutVariable', 'PipelineVariable', 'Verbose', 'WarningAction', 'WarningVariable', 'Confirm', 'Whatif'
