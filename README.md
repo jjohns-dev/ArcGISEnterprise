@@ -56,6 +56,10 @@ $apiKey = Get-Secret -Name 'arcgis_api_key' -AsPlainText
 Set-PortalConnection -Context $context -Token $apiKey
 ```
 
+Confirmed on ArcGIS Enterprise 11.5: reading and updating Portal items, and reading
+hosted feature service information. An API key is not tied to a user, so functions
+with a `-UserName` parameter require it to be passed explicitly.
+
 ### 2a. Pass `-Context` and `-Token` explicitly (splatting)
 
 Keep the connection values in a hashtable and splat them into each call. This is
