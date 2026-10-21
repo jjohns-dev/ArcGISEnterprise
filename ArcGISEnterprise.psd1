@@ -177,6 +177,7 @@
         'Remove-ServerServiceFeature'
         'Remove-ServerServiceLayer'
         'Remove-ServerUsageReport'
+        'Revoke-PortalApiKey'
         'Revoke-PortalUserItemAccess'
         'Set-GeoEventConnection'
         'Set-PortalCategorySchema'

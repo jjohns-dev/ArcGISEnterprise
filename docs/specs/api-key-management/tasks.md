@@ -39,8 +39,8 @@ Each task lists the check that proves it is done. Tasks are ordered so the build
 
 ## Revoke-PortalApiKey
 
-- [ ] **7. `Public/Revoke-PortalApiKey.ps1`** per the design: inactive slot gives a warning and no request; otherwise `ShouldProcess` and then `oauth2/revokeToken`; an error if `success` is not `true`. Add it to `FunctionsToExport`.
-- [ ] **8. `Tests/Unit/Revoke-PortalApiKey.tests.ps1`**, covering:
+- [x] **7. `Public/Revoke-PortalApiKey.ps1`** per the design: inactive slot gives a warning and no request; otherwise `ShouldProcess` and then `oauth2/revokeToken`; an error if `success` is not `true`. Add it to `FunctionsToExport`.
+- [x] **8. `Tests/Unit/Revoke-PortalApiKey.tests.ps1`**, covering:
   - an inactive slot sends no revoke request;
   - `-WhatIf` sends no request;
   - a `success: false` response raises an error;
