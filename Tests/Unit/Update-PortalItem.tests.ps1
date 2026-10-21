@@ -39,6 +39,18 @@ Describe -Name 'Update-PortalItem' -Fixture {
                 $Uri -like '*/content/users/owner1/items/*'
             }
         }
+        It -Name 'keeps certificate checking on for the user lookup by default' -Test {
+            Update-PortalItem @commonParams
+            Should -Invoke -CommandName Get-PortalSetting -Times 1 -Exactly -ModuleName $env:BHProjectName -ParameterFilter {
+                -not $PesterBoundParameters.ContainsKey('SkipCertificateCheck')
+            }
+        }
+        It -Name 'skips certificate checking for the user lookup only when requested' -Test {
+            Update-PortalItem @commonParams -SkipCertificateCheck
+            Should -Invoke -CommandName Get-PortalSetting -Times 1 -Exactly -ModuleName $env:BHProjectName -ParameterFilter {
+                $SkipCertificateCheck -eq $true
+            }
+        }
     }
     Context -Name 'token not associated with a user (API key)' -Fixture {
         BeforeAll {

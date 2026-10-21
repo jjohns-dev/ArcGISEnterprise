@@ -40,9 +40,12 @@ function Resolve-PortalUserName {
     }
     Process {
         # GET USER PORTAL INFO
+        # CALLEES CHECK WHETHER THE SWITCH IS BOUND, SO PASS IT ONLY WHEN IT IS SET
+        $settingParams = @{ Context = $Context; Token = $Token; ErrorAction = 'Stop' }
+        if ($SkipCertificateCheck) { $settingParams['SkipCertificateCheck'] = $true }
         try {
             Write-Verbose -Message 'Getting user settings...'
-            $userSettings = Get-PortalSetting -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck -ErrorAction Stop
+            $userSettings = Get-PortalSetting @settingParams
         }
         catch {
             Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
