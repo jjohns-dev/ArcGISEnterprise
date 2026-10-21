@@ -85,18 +85,7 @@ function Write-PortalUserItem {
 
         # VALIDATE USER NAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
-            try {
-                # GET USER PORTAL INFO
-                Write-Verbose -Message 'Getting user settings...'
-                $userSettings = Get-PortalSetting -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
-
-                # SET USER NAME
-                $UserName = $userSettings.user.username
-            }
-            catch {
-                # PASS ERROR
-                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
-            }
+            $UserName = Resolve-PortalUserName -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
         }
 
         # GET [System.IO.FileInfo] OBJECT

@@ -12,7 +12,7 @@
     # Major = major changes or multiple new functions for new set of functionality
     # Minor = new individual functions
     # Build = bug fixes, minor changes, etc.
-    ModuleVersion     = '2.3.0'
+    ModuleVersion     = '2.3.1'
 
     # Supported PSEditions
     CompatiblePSEditions = @('Core')
@@ -33,7 +33,7 @@
     Description       = 'PowerShell module for ArcGIS Enterprise API'
 
     # Minimum version of the PowerShell engine required by this module
-    PowerShellVersion = '7.0'
+    PowerShellVersion = '7.4'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''

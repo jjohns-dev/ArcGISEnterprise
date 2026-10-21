@@ -1,3 +1,10 @@
+[Diagnostics.CodeAnalysis.SuppressMessageAttribute(
+    'PSUseDeclaredVarsMoreThanAssignments',
+    '',
+    Justification = 'psake exposes variables assigned in the Properties block to every Task scriptblock; PSScriptAnalyzer cannot follow that scope.'
+)]
+Param()
+
 # PSake makes variables declared here available in other scriptblocks
 # Require psake v5 (5.0.0 introduced the two-phase compile/run model, Inputs/Outputs
 # caching, and the structured PsakeBuildResult that this build relies on).
@@ -156,9 +163,10 @@ Task 'Test' -depends 'ImportStagingModule' {
 
     #$TestResults = Invoke-Pester -Script $TestScripts -PassThru -OutputFormat 'NUnitXml' -OutputFile $TestFilePath -PesterOption @{IncludeVSCodeMarker = $true }
 
-    # Fail build if any tests fail
-    if ($TestResults.FailedCount -gt 0) {
-        Write-Error "Failed '$($TestResults.FailedCount)' tests, build failed"
+    # Fail build on any non-passing result. Discovery errors attach to the
+    # container rather than a test, leaving FailedCount at 0.
+    if ($TestResults.Result -ne 'Passed') {
+        Write-Error "Pester result '$($TestResults.Result)' with '$($TestResults.FailedCount)' failed test(s), build failed"
     }
 }
 

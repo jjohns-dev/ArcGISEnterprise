@@ -54,18 +54,7 @@ function New-PortalUserFolder {
 
         # VALIDATE USERNAME
         if (-Not $PSBoundParameters.ContainsKey('UserName')) {
-            try {
-                # GET USER PORTAL INFO
-                Write-Verbose -Message 'Getting user settings...'
-                $userSettings = Get-PortalSetting -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
-
-                # SET USER NAME
-                $Username = $userSettings.user.username
-            }
-            catch {
-                # PASS ERROR
-                Write-Error -Message ('Unable to get user info with error: {0}' -f $PSItem.Exception.Message) -ErrorAction Stop
-            }
+            $Username = Resolve-PortalUserName -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
         }
     }
     Process {

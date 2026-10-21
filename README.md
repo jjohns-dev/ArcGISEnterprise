@@ -2,7 +2,7 @@
 
 [![validate](https://github.com/PS-MCS/ArcGISEnterprise/actions/workflows/validate.yml/badge.svg?branch=main)](https://github.com/PS-MCS/ArcGISEnterprise/actions/workflows/validate.yml)
 [![release](https://github.com/PS-MCS/ArcGISEnterprise/actions/workflows/release.yml/badge.svg)](https://github.com/PS-MCS/ArcGISEnterprise/actions/workflows/release.yml)
-[![PowerShell](https://img.shields.io/badge/PowerShell-7%2B-5391FE?logo=powershell&logoColor=white)](https://learn.microsoft.com/powershell/scripting/install/installing-powershell)
+[![PowerShell](https://img.shields.io/badge/PowerShell-7.4%2B-5391FE?logo=powershell&logoColor=white)](https://learn.microsoft.com/powershell/scripting/install/installing-powershell)
 
 PowerShell 7 module for ArcGIS Enterprise REST APIs. Includes functions for
 both ArcGIS Server and Portal for ArcGIS.
@@ -19,8 +19,8 @@ Import-Module ArcGISEnterprise
 
 Every function that calls a secured endpoint needs two things: a `-Context` (the
 Portal or Server URI including its context, e.g. `https://arcgis.example.com/arcgis`)
-and a `-Token`. You always start by supplying a username and password to generate a
-token, then choose how you want to pass the context and token to subsequent calls.
+and a `-Token`. Either generate a token from a username and password, or use an API
+key, then choose how you want to pass the context and token to subsequent calls.
 
 ### 1. Generate a token
 
@@ -44,6 +44,21 @@ Get-PortalSetting -Context $context -Token $token
 
 When Server and Data Store are federated to Portal, Portal manages authentication,
 so a Portal token is accepted by the federated Server and Data Store endpoints.
+
+### 1b. Use an API key
+
+On ArcGIS Enterprise 11.4 and later, an [API key](https://developers.arcgis.com/documentation/security-and-authentication/api-key-authentication/)
+can be passed to `-Token` in place of a generated token. What the key can access is
+determined by the privileges and item access configured on its API key credentials.
+
+```powershell
+$apiKey = Get-Secret -Name 'arcgis_api_key' -AsPlainText
+Set-PortalConnection -Context $context -Token $apiKey
+```
+
+Confirmed on ArcGIS Enterprise 11.5: reading and updating Portal items, and reading
+hosted feature service information. An API key is not tied to a user, so functions
+with a `-UserName` parameter require it to be passed explicitly.
 
 ### 2a. Pass `-Context` and `-Token` explicitly (splatting)
 
