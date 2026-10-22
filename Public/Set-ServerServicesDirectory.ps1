@@ -61,7 +61,9 @@ function Set-ServerServicesDirectory {
         # WITH THE API DOCUMENTATION. ONE IS THAT ALL PROPERTIES MUST BE UPDATED TOGETHER AND THAT AN
         # INDIVIDUAL PROPERTY CANNOT BE UPDATED INDEPENDANTLY. ANOTHER IS THAT THE 'servicesDirEnabled'
         # PROPERTY IS STORED AS 'enabled' BUT MUST BE UPDATED AS 'servicesDirEnabled'.
-        $config = Get-ServerServicesDirectory -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
+        $configParams = @{ Context = $Context; Token = $Token }
+        if ($SkipCertificateCheck) { $configParams['SkipCertificateCheck'] = $true }
+        $config = Get-ServerServicesDirectory @configParams
 
         # VALIDATE PREVIOUS CALL WAS SUCCESSFUL
         if (-NOT $config) { Write-Error -Message 'Unable to retrieve ArcGIS Server properties' -ErrorAction Stop }

@@ -60,7 +60,9 @@ function Set-PortalSystemProperty {
         Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # GET EXISTING PROPERTIES
-        $properties = Get-PortalSystemProperty -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
+        $propertyParams = @{ Context = $Context; Token = $Token }
+        if ($SkipCertificateCheck) { $propertyParams['SkipCertificateCheck'] = $true }
+        $properties = Get-PortalSystemProperty @propertyParams
 
         # VALIDATE PROPERTIES VAR
         if ($properties) {

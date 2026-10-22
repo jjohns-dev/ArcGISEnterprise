@@ -12,7 +12,7 @@
     # Major = major changes or multiple new functions for new set of functionality
     # Minor = new individual functions
     # Build = bug fixes, minor changes, etc.
-    ModuleVersion     = '2.3.1'
+    ModuleVersion     = '2.4.0'
 
     # Supported PSEditions
     CompatiblePSEditions = @('Core')
@@ -91,6 +91,7 @@
         'Get-GeoEventServerMonitorStatus'
         'Get-GeoEventServerStatus'
         'Get-PortalAllowedOriginList'
+        'Get-PortalApiKeyCredential'
         'Get-PortalCategorySchema'
         'Get-PortalDataStoreServer'
         'Get-PortalDefaultUserSetting'
@@ -153,6 +154,7 @@
         'Invoke-PortalItemAnalysis'
         'Invoke-ServerHostedFeatureQuery'
         'Move-PortalUserItem'
+        'New-PortalApiKey'
         'New-PortalHostedFeatureService'
         'New-PortalRole'
         'New-PortalUser'
@@ -175,6 +177,7 @@
         'Remove-ServerServiceFeature'
         'Remove-ServerServiceLayer'
         'Remove-ServerUsageReport'
+        'Revoke-PortalApiKey'
         'Revoke-PortalUserItemAccess'
         'Set-GeoEventConnection'
         'Set-PortalCategorySchema'

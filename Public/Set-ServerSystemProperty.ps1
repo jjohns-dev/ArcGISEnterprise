@@ -52,7 +52,9 @@ function Set-ServerSystemProperty {
         Write-Verbose -Message ('Starting {0}' -f $MyInvocation.MyCommand)
 
         # GET EXISTING PROPERTIES
-        $properties = Get-ServerSystemProperty -Context $Context -Token $Token -SkipCertificateCheck:$SkipCertificateCheck
+        $propertyParams = @{ Context = $Context; Token = $Token }
+        if ($SkipCertificateCheck) { $propertyParams['SkipCertificateCheck'] = $true }
+        $properties = Get-ServerSystemProperty @propertyParams
     }
     Process {
         # VALIDATE REQUEST BY PARAMETER
