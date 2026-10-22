@@ -134,13 +134,15 @@ function New-PortalApiKey {
                 $restoreParams['Body'] = @{ f = 'json'; token = $Token; ('apiToken{0}ExpirationDate' -f $Slot) = [System.DateTimeOffset]::new($previousExpires).ToUnixTimeMilliseconds() }
                 try {
                     $restore = Invoke-RestMethod @restoreParams
-                    if (-not $restore.success) { throw ('{0} {1}' -f $restore.error.code, $restore.error.message) }
+                    if (-not $restore.success) {
+                        Write-Error -Message ('{0} {1}' -f $restore.error.code, $restore.error.message) -ErrorAction Stop
+                    }
                 }
                 catch {
                     Write-Warning -Message ('Unable to restore the previous expiration of slot {0} ({1}): {2}' -f $Slot, $previousExpires, $_)
                 }
-            } $generateError
-            throw
+            }
+            Write-Error -ErrorRecord $generateError -ErrorAction Stop
         }
 
         # THE SLOT NUMBER IS ENCODED 10 CHARACTERS FROM THE END OF THE KEY

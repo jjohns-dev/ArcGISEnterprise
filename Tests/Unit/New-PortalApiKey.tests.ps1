@@ -127,6 +127,11 @@ Describe -Name 'New-PortalApiKey' -Fixture {
             { New-PortalApiKey -Expiration (Get-Date).AddDays(3) @commonParams } | Should -Throw -ExpectedMessage '*Unable to generate*400*'
             Should -Invoke -CommandName Write-Warning -ModuleName $env:BHProjectName -Times 1 -Exactly -ParameterFilter { $Message -like '*Unable to restore*500*' }
         }
+        It -Name 'writes nothing to the pipeline before the error' -Test {
+            $output = [System.Collections.Generic.List[System.Object]]::new()
+            { New-PortalApiKey -Expiration (Get-Date).AddDays(3) @commonParams | ForEach-Object { $output.Add($_) } } | Should -Throw
+            $output.Count | Should -Be 0
+        }
         It -Name 'does not restore an inactive slot' -Test {
             $slot1Params = $commonParams.Clone()
             $slot1Params['Slot'] = 1
