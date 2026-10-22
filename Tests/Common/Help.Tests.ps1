@@ -28,9 +28,11 @@ Describe '<_> help' -ForEach $Cmdlets {
         $CommandParameters = $Command.ParameterSets.Parameters | Sort-Object -Property Name -Unique | Where-Object { $_.Name -notin $Common } | Select-Object Name
         $CommandParameterNames = $CommandParameters.Name
 
-        # -ForEach values are bound at discovery, so help parameters must be resolved here too
-        $Help = Get-Help $Command -ErrorAction SilentlyContinue
-        $HelpParameterNames = ($Help.Parameters.Parameter | Where-Object { $_.Name -notin $Common } | Sort-Object -Property Name -Unique).Name
+        # -ForEach is bound at discovery, so help parameter names must resolve here, not only in BeforeAll.
+        # Source them from the AST, not Get-Help: Get-Help silently drops a .PARAMETER block that names no real parameter,
+        # which makes the matching-help assertion a tautology.
+        $HelpContent = if ($Command.ScriptBlock) { $Command.ScriptBlock.Ast.GetHelpContent() }
+        $HelpParameterNames = @($HelpContent.Parameters.Keys | Where-Object { $_ -notin $Common })
     }
     BeforeAll {
         $Common = 'ProgressAction', 'Debug', 'ErrorAction', 'ErrorVariable', 'InformationAction', 'InformationVariable', 'OutBuffer', 'OutVariable', 'PipelineVariable', 'Verbose', 'WarningAction', 'WarningVariable', 'Confirm', 'Whatif'
@@ -41,7 +43,6 @@ Describe '<_> help' -ForEach $Cmdlets {
 
         $Help = Get-Help $Command -ErrorAction SilentlyContinue
         $HelpParameters = $Help.Parameters.Parameter | Where-Object { $_.Name -notin $Common } | Sort-Object -Property Name -Unique
-        $HelpParameterNames = $HelpParameters.Name
     }
 
     # If help is not found, synopsis in auto-generated help is the syntax diagram
