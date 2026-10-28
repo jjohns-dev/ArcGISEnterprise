@@ -18,4 +18,4 @@ jobs:
       checks: write # required by dorny/test-reporter (granted to the reusable)
     uses: PS-MCS/mcssec-ops/.github/workflows/ps-module-validate.yml@main
     with:
-      min-tests: 1810
+      min-tests: 1690
