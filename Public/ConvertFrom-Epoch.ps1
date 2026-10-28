@@ -16,6 +16,8 @@ function ConvertFrom-Epoch {
     .NOTES
         Status: Stable
         Comments: No external API reference - utility function.
+    .LINK
+        ftp://example.com
     #>
     [CmdletBinding()]
     [OutputType([System.DateTime])]
