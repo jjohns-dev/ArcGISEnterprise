@@ -1,4 +1,22 @@
 function ConvertFrom-Epoch {
+    <#
+    .SYNOPSIS
+        Convert from Epoch to DateTime
+    .DESCRIPTION
+        Convert from Epoch in milliseconds to DateTime
+    .PARAMETER Milliseconds
+        Epoch Time in milliseconds
+    .INPUTS
+        System.Int64.
+    .OUTPUTS
+        System.DateTime.
+    .EXAMPLE
+        PS C:\> 1618614176000 | ConvertFrom-Epoch
+        Convert Epoch time of 1618614176000 to a DateTime object
+    .NOTES
+        Status: Stable
+        Comments: No external API reference - utility function.
+    #>
     [CmdletBinding()]
     [OutputType([System.DateTime])]
     Param(
