@@ -18,4 +18,4 @@ jobs:
       checks: write # required by dorny/test-reporter (granted to the reusable)
     uses: PS-MCS/mcssec-ops/.github/workflows/ps-module-validate.yml@main
     with:
-      min-tests: 1871 # ADR-0004: 1881 executed - min(floor(1881 * 0.05) = 94, 10) = 1871
+      min-tests: 1871 # 1881 executed - min(floor(1881 * 0.05), 10) = 1881 - 10
