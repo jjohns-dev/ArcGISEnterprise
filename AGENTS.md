@@ -29,7 +29,7 @@ From pwsh at the repo root; each was run and passed 2026-11-16 (pwsh 7.7.0, macO
 | ------- | ------ |
 | `./Build/build.ps1 -ResolveDependency -TaskList Init` | Installs the pins (CI's first step) |
 | `./Build/build.ps1 -TaskList Analyze, Cleanup` | Fails only on Error-severity findings |
-| `./Build/build.ps1 -TaskList Test, Cleanup` | 2003 tests, about 5 s |
+| `./Build/build.ps1 -TaskList Test, Cleanup` | 2086 tests, about 5 s |
 | `./Build/build.ps1 -TaskList CombineFunctionsAndStage, CreateBuildArtifact, Cleanup` | `Artifacts/ArcGISEnterprise-v<ModuleVersion>.zip` |
 
 From zsh or bash, chain tasks through `pwsh -Command "./Build/build.ps1 -TaskList Test,Cleanup"`; `pwsh -File` passes `Test,` as one string and fails the `ValidateSet`.
@@ -56,6 +56,7 @@ It does **not**:
 - When adding a public function or changing the endpoint one calls, update its row in `docs/api-endpoints.md`; nothing generates or checks it.
 - GET requests send the token as `Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }`, never in `Body`: a GET body becomes the URL query string, which proxies and logs record (#138). A header named `token` is ignored (verified on `sharing/rest` and `rest/services`). If `-Token` is optional, add the header only when it is passed.
 - Multi-entry `Headers` hashtables list one entry per line; single-entry ones stay on one line.
+- Never write a token to the verbose, debug or information streams. When logging request data or `$PSBoundParameters`, pass it through the private `ConvertTo-RedactedHashtable`, which replaces `token`, `password` and `client_secret` values with `[redacted]` (#171).
 
 ## Gotchas that have bitten here
 
@@ -64,4 +65,5 @@ It does **not**:
 - **`Tests/Common/Help.Tests.ps1` is a fleet-shared template**, kept diffable with PS-MCS/MCS (#152). Do not edit it as a side effect. It passes command *names* to `-ForEach`; a CommandInfo renames every test to `...FunctionInfo{Name='Foo'} help` (#152).
 - **`FunctionsToExport` is hand-maintained and untested.** It lists `Format-ServerServiceMetadata` and `Format-ServerServiceLayerMetadata`, which do not exist. The Help suite enumerates exported commands only, so a `Public/` function left off the list is neither exported nor tested.
 - **ArcGIS returns HTTP 200 with an `error` body** (400/403/498/499/500), so `Invoke-RestMethod` doesn't throw. Check `.error` on a single object: on an array of 2+ objects, `$list.error` is an array of `$null`s and is truthy.
+- **Server `/admin` uses a different error body:** `{"status":"error","code":498,...}`, not `{"error":{...}}`, so a `.error` check misses it. `sharing/rest`, `rest/services` and `/portaladmin` use `{"error":{...}}` (#138).
 - **`.psobject.Properties` doesn't see hashtable keys.** Validate input shape with `($_ -is [System.Collections.IDictionary] -and $_.Contains('k')) -or $_.psobject.Properties.Name -contains 'k'` (#142).

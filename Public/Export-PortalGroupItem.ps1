@@ -84,7 +84,7 @@ function Export-PortalGroupItem {
             $restParams['Form']['async'] = $false
 
             # OUTPUT VERBOSE
-            Write-Verbose -Message ('Request body: {0}' -f ($restParams['Form'] | ConvertTo-Json))
+            Write-Verbose -Message ('Request body: {0}' -f (ConvertTo-RedactedHashtable -InputObject $restParams['Form'] | ConvertTo-Json))
 
             # INVOKE REQUEST AS WEB REQUEST
             Invoke-WebRequest @restParams

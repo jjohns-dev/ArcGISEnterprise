@@ -90,7 +90,7 @@ function Remove-ServerServiceFeature {
         if ($PSBoundParameters.ContainsKey('ObjectId')) { $restParams['Body']['objectIds'] = $ObjectId -join ', ' }
 
         # OUTPUT VERBOSE
-        Write-Verbose -Message ('Query parameters: [{0}]' -f ($restParams['Body'] | ConvertTo-Json -Compress -Depth 4))
+        Write-Verbose -Message ('Query parameters: [{0}]' -f (ConvertTo-RedactedHashtable -InputObject $restParams['Body'] | ConvertTo-Json -Compress -Depth 4))
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
