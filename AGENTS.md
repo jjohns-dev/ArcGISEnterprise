@@ -15,7 +15,7 @@ PowerShell 7.4+ module wrapping the ArcGIS Enterprise Portal, Server and GeoEven
 | `Tests/Common/` | Help, Manifest and Meta suites over every exported command |
 | `Tests/Unit/` | `<Function>.tests.ps1` |
 | `Build/` | `build.ps1` entry point, psake tasks, pinned `depend.psd1` |
-| `Documentation/` | PlatyPS-generated pages; only `index.md` is hand-edited |
+| `docs/` | Hand-maintained `api-endpoints.md` (function → REST endpoint) and `specs/` |
 
 ## Validating a change
 
@@ -28,7 +28,7 @@ From pwsh at the repo root; each was run and passed 2026-11-16 (pwsh 7.7.0, macO
 | `./Build/build.ps1 -TaskList Test, Cleanup` | 1881 tests, about 5 s |
 | `./Build/build.ps1 -TaskList CombineFunctionsAndStage, CreateBuildArtifact, Cleanup` | `Artifacts/ArcGISEnterprise-v<ModuleVersion>.zip` |
 
-Pins in `Build/depend.psd1`: Pester 6.2.0, psake 5.0.4, PSScriptAnalyzer 1.24.0, Microsoft.PowerShell.PlatyPS 1.0.1. `build.ps1` does not import by version, so locally the highest installed copy wins: Analyze loaded PSScriptAnalyzer 1.25.0 with 1.24.0 also installed.
+Pins in `Build/depend.psd1`: Pester 6.2.0, psake 5.0.4, PSScriptAnalyzer 1.24.0. `build.ps1` does not import by version, so locally the highest installed copy wins: Analyze loaded PSScriptAnalyzer 1.25.0 with 1.24.0 also installed.
 
 ## CI
 
@@ -37,7 +37,6 @@ Pins in `Build/depend.psd1`: Pester 6.2.0, psake 5.0.4, PSScriptAnalyzer 1.24.0,
 It does **not**:
 
 - run on Windows;
-- run `GenerateDocs`, so stale `Documentation/` is not caught;
 - block merges: the `org_protect` ruleset requires no status checks;
 - on release, enforce `min-tests` or check the tag against `ModuleVersion`.
 
@@ -46,7 +45,7 @@ It does **not**:
 - Branches `<type>/<slug>`: `feature/`, `fix/`, `test/`, `build/`, `chore/`, `docs/`.
 - Squash-merge only, with 1 code-owner approval and resolved threads (`org_protect`). The PR title becomes the commit subject: `<type>(<scope>): <title>`, and GitHub appends `(#PR)`.
 - Bump `ModuleVersion` in `ArcGISEnterprise.psd1` only for shipped-code changes; `test:`/`ci:`/`build:` PRs do not (#145, #146). The `Version:` header in `ArcGISEnterprise.psm1` is stale; ignore it.
-- After changing a public signature or its help, run `./Build/build.ps1 -TaskList GenerateDocs` and commit the pages with the change.
+- When adding a public function or changing the endpoint one calls, update its row in `docs/api-endpoints.md`; nothing generates or checks it.
 
 ## Gotchas that have bitten here
 
