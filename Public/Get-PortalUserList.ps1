@@ -53,7 +53,8 @@ function Get-PortalUserList {
         $restParams = @{
             Uri    = '{0}/sharing/rest/portals/{1}/users' -f $Context, $PortalId
             Method = 'GET'
-            Body   = @{ f = 'json'; token = $Token; num = 100 }
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Body   = @{ f = 'json'; num = 100 }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED

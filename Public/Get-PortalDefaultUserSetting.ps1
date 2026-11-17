@@ -52,7 +52,8 @@ function Get-PortalDefaultUserSetting {
             Uri    = ('{0}/sharing/rest/portals/{1}/userDefaultSettings' -f $Context, $PortalId)
             # USING "GET" METHOD RETURNS RAW HTML FOR SOME REASON. "POST" APPEARS TO BE REQUIRED
             Method = 'GET'
-            Body   = @{ Token = $Token; f = 'json' }
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Body   = @{ f = 'json' }
         }
 
         # ADD SKIP CERTIFICATE CHECK IF PROVIDED

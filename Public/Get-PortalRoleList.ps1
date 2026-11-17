@@ -54,9 +54,9 @@ function Get-PortalRoleList {
         $restParams = @{
             Uri    = '{0}/sharing/rest/portals/{1}/roles?returnPrivileges=true' -f $Context, $PortalId
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f     = 'json'
-                token = $Token
                 num = 50
             }
         }

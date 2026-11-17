@@ -48,7 +48,8 @@ function Get-PortalSetting {
             Uri    = '{0}/sharing/rest/portals/self' -f $Context
             #Uri    = ('{0}/sharing/rest/portals/{1}' -f $Context, $PortalId)
             Method = 'GET'
-            Body   = @{ token = $Token; f = 'json' }
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Body   = @{ f = 'json' }
         }
 
         # ADD SKIP CERTIFICATE CHECK IF PROVIDED

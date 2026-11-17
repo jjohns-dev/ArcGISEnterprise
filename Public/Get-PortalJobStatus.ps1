@@ -85,7 +85,7 @@ function Get-PortalJobStatus {
     }
     Process {
         # SET REQUEST BODY
-        $body = @{ f = 'json'; token = $Token }
+        $body = @{ f = 'json' }
 
         # CHECK PARAMETER SET
         switch ($PSCmdlet.ParameterSetName) {
@@ -110,6 +110,7 @@ function Get-PortalJobStatus {
         $restParams = @{
             Uri    = '{0}/sharing/rest/content/users/{1}/items/{2}/status' -f $Context, $UserName, $targetId
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = $body
         }
 
