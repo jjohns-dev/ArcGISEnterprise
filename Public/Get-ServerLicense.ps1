@@ -39,12 +39,10 @@ function Get-ServerLicense {
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/admin/system/licenses' -f $Context
-            Method = 'GET'
+            Uri     = '{0}/admin/system/licenses' -f $Context
+            Method  = 'GET'
             Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
-            Body   = @{
-                f     = 'json'
-            }
+            Body    = @{ f = 'json' }
         }
 
         # ADD SKIP CERTIFICATE CHECK

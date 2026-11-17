@@ -37,12 +37,10 @@ function Get-PortalIndexStatus {
     )
     Process {
         $restParams = @{
-            Uri    = '{0}/portaladmin/system/indexer/status' -f $Context
-            Method = 'GET'
+            Uri     = '{0}/portaladmin/system/indexer/status' -f $Context
+            Method  = 'GET'
             Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
-            Body   = @{
-                f     = 'json'
-            }
+            Body    = @{ f = 'json' }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
         Invoke-RestMethod @restParams

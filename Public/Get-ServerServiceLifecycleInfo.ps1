@@ -70,9 +70,7 @@ function Get-ServerServiceLifecycleInfo {
             Uri    = $uri
             Method = 'GET'
             Body    = @{ f = 'json' }
-            Headers = @{
-                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
-            }
+            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
         }
 
         # ADD TOKEN IF PROVIDED

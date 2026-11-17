@@ -43,12 +43,10 @@ function Get-PortalSSLCertificateList {
     )
     Process {
         $restParams = @{
-            Uri    = '{0}/portaladmin/machines/{1}/sslCertificates' -f $Context, $Machine
-            Method = 'GET'
+            Uri     = '{0}/portaladmin/machines/{1}/sslCertificates' -f $Context, $Machine
+            Method  = 'GET'
             Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
-            Body   = @{
-                f     = 'json'
-            }
+            Body    = @{ f = 'json' }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
         Invoke-RestMethod @restParams
