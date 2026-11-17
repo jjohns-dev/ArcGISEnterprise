@@ -45,8 +45,11 @@ function Get-ServerPSA {
         $restParams = @{
             Uri     = '{0}/admin/security/psa' -f $Context
             Method  = 'GET'
-            Headers = @{ Referer = $Referer }
-            Body    = @{ f = 'json'; token = $Token }
+            Headers = @{
+                Referer = $Referer
+                'X-Esri-Authorization' = 'Bearer {0}' -f $Token
+            }
+            Body    = @{ f = 'json' }
         }
 
         # ADD SKIP CERTIFICATE CHECK

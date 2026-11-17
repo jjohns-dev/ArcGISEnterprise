@@ -41,9 +41,9 @@ function Get-ServerLicense {
         $restParams = @{
             Uri    = '{0}/admin/system/licenses' -f $Context
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f     = 'json'
-                token = $Token
             }
         }
 

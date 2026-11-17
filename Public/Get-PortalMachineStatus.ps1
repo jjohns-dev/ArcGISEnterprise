@@ -45,9 +45,9 @@ function Get-PortalMachineStatus {
         $restParams = @{
             Uri    = '{0}/portaladmin/machines/status/{1}' -f $Context, $Machine
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f     = 'json'
-                token = $Token
             }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

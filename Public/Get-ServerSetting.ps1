@@ -45,9 +45,9 @@ function Get-ServerSetting {
         $restParams = @{
             Uri    = '{0}/{1}' -f $Context, $SettingUrl
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f     = 'json'
-                token = $Token
             }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

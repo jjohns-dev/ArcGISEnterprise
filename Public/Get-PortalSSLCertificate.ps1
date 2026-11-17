@@ -51,9 +51,9 @@ function Get-PortalSSLCertificate {
         $restParams = @{
             Uri    = '{0}/portaladmin/machines/{1}/sslCertificates/{2}' -f $Context, $Machine, $Certificate
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f     = 'json'
-                token = $Token
             }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

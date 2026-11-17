@@ -41,9 +41,10 @@ function Get-PortalMachineList {
         $restParams = @{
             Uri     = '{0}/portaladmin/machines' -f $Context
             Method  = 'GET'
-            Body    = @{ f = 'json'; token = $Token }
+            Body    = @{ f = 'json' }
             Headers = @{
                 referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
+                'X-Esri-Authorization' = 'Bearer {0}' -f $Token
             }
         }
 

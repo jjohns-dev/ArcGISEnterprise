@@ -61,7 +61,6 @@ function Find-ServerDataItem {
             Method = 'GET'
             Body   = @{
                 f = 'json'
-                token = $Token
                 parentPath = switch ($ItemType) {
                     'BigDataFileShare'   { '/bigDataFileShares' }
                     'CloudStore'         { '/cloudStores' }
@@ -71,7 +70,10 @@ function Find-ServerDataItem {
                     'RasterStore'        { '/rasterStores' }
                 }
             }
-            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
+            Headers = @{
+                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
+                'X-Esri-Authorization' = 'Bearer {0}' -f $Token
+            }
         }
 
         # ADD ITEM ID IF PROVIDED

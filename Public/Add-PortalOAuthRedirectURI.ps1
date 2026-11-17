@@ -56,7 +56,8 @@ function Add-PortalOAuthRedirectURI {
         $restParams = @{
             Uri    = '{0}/portaladmin/security/oauth/getAppInfo' -f $Context
             Method = 'GET'
-            Body   = @{ appID = $AppID; f = 'json'; token = $Token }
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Body   = @{ appID = $AppID; f = 'json' }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED

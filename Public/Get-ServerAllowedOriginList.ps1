@@ -52,7 +52,8 @@ function Get-ServerAllowedOriginList {
             $restParams = @{
                 Uri    = '{0}/admin/system/handlers/soap/soaphandlerconfig' -f $Context
                 Method = 'GET'
-                Body   = @{ f = 'json'; token = $Token }
+                Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+                Body   = @{ f = 'json' }
             }
 
             # ADD SKIP CERTIFICATE CHECK IF PROVIDED

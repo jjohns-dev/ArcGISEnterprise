@@ -45,9 +45,9 @@ function Get-ServerSSLCertificateList {
         $restParams = @{
             Uri    = '{0}/admin/machines/{1}/sslCertificates' -f $Context, $Machine
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f     = 'json'
-                token = $Token
             }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

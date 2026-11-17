@@ -37,8 +37,42 @@ BeforeDiscovery {
         @{ Name = 'Get-ServerServiceLayerData'; Params = @{ ServiceName = 'Svc'; LayerId = 0 } }
         @{ Name = 'Invoke-ServerHostedFeatureQuery'; Params = @{ ServiceName = 'Svc' } }
         @{ Name = 'Test-ServerHealth'; Params = @{} }
+        @{ Name = 'Add-PortalOAuthRedirectURI'; Params = @{ RedirectURI = 'https://app.example.com/callback' } }
+        @{ Name = 'Find-ServerDataItem'; Params = @{ ItemType = 'EnterpriseDatabase' } }
+        @{ Name = 'Get-PortalIndexStatus'; Params = @{} }
+        @{ Name = 'Get-PortalLicense'; Params = @{} }
+        @{ Name = 'Get-PortalLog'; Params = @{} }
+        @{ Name = 'Get-PortalMachineList'; Params = @{} }
+        @{ Name = 'Get-PortalMachineStatus'; Params = @{ Machine = 'machine1' } }
+        @{ Name = 'Get-PortalOAuthAppInfo'; Params = @{} }
+        @{ Name = 'Get-PortalSecurityConfig'; Params = @{} }
+        @{ Name = 'Get-PortalSSLCertificate'; Params = @{ Machine = 'machine1'; Certificate = 'portal' } }
+        @{ Name = 'Get-PortalSSLCertificateList'; Params = @{ Machine = 'machine1' } }
+        @{ Name = 'Get-PortalSystemProperty'; Params = @{} }
+        @{ Name = 'Get-ServerAllowedOriginList'; Params = @{} }
+        @{ Name = 'Get-ServerItemLifecycleInfo'; Params = @{ DataItem = 'enterpriseDatabases'; ChildItem = 'db1' } }
+        @{ Name = 'Get-ServerLicense'; Params = @{} }
+        @{ Name = 'Get-ServerLog'; Params = @{} }
+        @{ Name = 'Get-ServerPSA'; Params = @{} }
+        @{ Name = 'Get-ServerService'; Params = @{ ServiceName = 'Svc'; ServiceType = 'FeatureServer' } }
+        @{ Name = 'Get-ServerService -Admin'; Command = 'Get-ServerService'; Params = @{ ServiceName = 'Svc'; ServiceType = 'FeatureServer'; Admin = $true } }
+        @{ Name = 'Get-ServerServiceItemInfo'; Params = @{ ServiceName = 'Svc' } }
+        @{ Name = 'Get-ServerServiceLifecycleInfo'; Params = @{ ServiceName = 'Svc'; ServiceType = 'FeatureServer' } }
+        @{ Name = 'Get-ServerServiceList'; Params = @{} }
+        @{ Name = 'Get-ServerServiceList -Admin'; Command = 'Get-ServerServiceList'; Params = @{ Admin = $true } }
+        @{ Name = 'Get-ServerServicesDirectory'; Params = @{} }
+        @{ Name = 'Get-ServerSetting'; Params = @{ SettingUrl = 'admin/security/tokens' } }
+        @{ Name = 'Get-ServerSSLCertificate'; Params = @{ Machine = 'machine1'; Certificate = 'server' } }
+        @{ Name = 'Get-ServerSSLCertificateList'; Params = @{ Machine = 'machine1' } }
+        @{ Name = 'Get-ServerSystemProperty'; Params = @{} }
+        @{ Name = 'Get-ServerUsageReport'; Params = @{} }
+        @{ Name = 'Get-ServerUsageReportData'; Params = @{ ReportName = 'report1' } }
+        @{ Name = 'Test-PortalFederation'; Params = @{} }
+        @{ Name = 'Test-PortalHealth'; Params = @{} }
     )
-    $optionalTokenFunctions = $headerFunctions | Where-Object { $_.Name -in 'Get-ServerServiceLayer', 'Get-ServerServiceLayerAttachment', 'Get-ServerServiceLayerData', 'Test-ServerHealth' }
+    $optionalTokenFunctions = $headerFunctions | Where-Object { $_.Name -in 'Get-ServerServiceLayer', 'Get-ServerServiceLayerAttachment', 'Get-ServerServiceLayerData', 'Test-ServerHealth',
+        'Get-ServerItemLifecycleInfo', 'Get-ServerService', 'Get-ServerService -Admin', 'Get-ServerServiceItemInfo', 'Get-ServerServiceLifecycleInfo',
+        'Get-ServerServiceList', 'Get-ServerServiceList -Admin', 'Test-PortalHealth' }
 }
 
 Describe -Name 'Token transport for GET requests' -Fixture {
@@ -51,27 +85,29 @@ Describe -Name 'Token transport for GET requests' -Fixture {
                 id = '0123456789ABCDEF'; user = [PSCustomObject] @{ username = 'jdoe' }
                 total = 0; nextStart = -1; start = 1; num = 0
                 results = @(); users = @(); groups = @(); items = @(); folders = @(); roles = @()
+                redirectURIs = @(); allowedOrigins = 'https://a.example.com'
+                services = @([PSCustomObject] @{ serviceName = 'Svc'; type = 'FeatureServer' })
             }
         }
         Mock -CommandName Invoke-RestMethod -MockWith $response -ModuleName $env:BHProjectName
         Mock -CommandName Invoke-WebRequest -MockWith $response -ModuleName $env:BHProjectName
         $tokenInUrlOrBody = {
-            "$Uri" -match $token -or ($Body -is [System.Collections.IDictionary] -and @($Body.Values) -contains $token)
+            $Method -ne 'POST' -and ("$Uri" -match $token -or ($Body -is [System.Collections.IDictionary] -and @($Body.Values) -contains $token))
         }
     }
     It -Name '<Name> sends the token in the X-Esri-Authorization header' -ForEach $headerFunctions -Test {
-        & $Name @Params -Context $context -Token $token -WarningAction SilentlyContinue | Out-Null
+        & $(if ($Command) { $Command } else { $Name }) @Params -Context $context -Token $token -WarningAction SilentlyContinue | Out-Null
         Should -Invoke -CommandName Invoke-RestMethod -ModuleName $env:BHProjectName -ParameterFilter {
             $Headers -and $Headers['X-Esri-Authorization'] -ceq "Bearer $token"
         }
     }
     It -Name '<Name> never puts the token in the URL or body' -ForEach $headerFunctions -Test {
-        & $Name @Params -Context $context -Token $token -WarningAction SilentlyContinue | Out-Null
+        & $(if ($Command) { $Command } else { $Name }) @Params -Context $context -Token $token -WarningAction SilentlyContinue | Out-Null
         Should -Invoke -CommandName Invoke-RestMethod -ModuleName $env:BHProjectName -Times 0 -Exactly -ParameterFilter $tokenInUrlOrBody
         Should -Invoke -CommandName Invoke-WebRequest -ModuleName $env:BHProjectName -Times 0 -Exactly -ParameterFilter $tokenInUrlOrBody
     }
     It -Name '<Name> sends no authorization header without -Token' -ForEach $optionalTokenFunctions -Test {
-        & $Name @Params -Context $context -WarningAction SilentlyContinue | Out-Null
+        & $(if ($Command) { $Command } else { $Name }) @Params -Context $context -WarningAction SilentlyContinue | Out-Null
         Should -Invoke -CommandName Invoke-RestMethod -ModuleName $env:BHProjectName -Times 0 -Exactly -ParameterFilter {
             $Headers -and $Headers.Contains('X-Esri-Authorization')
         }

@@ -85,7 +85,7 @@ function Get-ServerServiceItemInfo {
         }
 
         # ADD TOKEN IF PROVIDED
-        if ($PSBoundParameters.ContainsKey('Token')) { $restParams.Body['token'] = $Token }
+        if ($PSBoundParameters.ContainsKey('Token')) { $restParams['Headers'] = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token } }
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

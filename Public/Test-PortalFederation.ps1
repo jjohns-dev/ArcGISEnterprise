@@ -40,9 +40,9 @@ function Test-PortalFederation {
         $restParams = @{
             Uri    = '{0}/portaladmin/federation/servers/validate' -f $Context
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f     = 'json'
-                token = $Token
             }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
