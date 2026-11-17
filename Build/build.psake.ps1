@@ -69,7 +69,7 @@ Task 'Setup' -depends 'Init' {
 }
 
 # Create a single .psm1 module file containing all functions
-# Copy new module and other supporting files (Documentation / Examples) to Staging folder
+# Copy new module and other supporting files to Staging folder
 Task 'CombineFunctionsAndStage' -depends 'Setup' {
     $lines
 
@@ -89,7 +89,6 @@ Task 'CombineFunctionsAndStage' -depends 'Setup' {
     $pathsToCopy = @(
         Join-Path -Path $ProjectRoot -ChildPath 'Private'
         Join-Path -Path $ProjectRoot -ChildPath 'Public'
-        Join-Path -Path $ProjectRoot -ChildPath 'Documentation'
         Join-Path -Path $ProjectRoot -ChildPath 'README.md'
         Join-Path -Path $ProjectRoot -ChildPath ($env:BHProjectName + '.psd1')
         Join-Path -Path $ProjectRoot -ChildPath ($env:BHProjectName + '.psm1')
@@ -211,104 +210,4 @@ Task 'Cleanup' {
     # cleanup
     Remove-Item -Path $ArtifactFolder -Recurse -Force -ErrorAction 'SilentlyContinue'
     Remove-Item -Path $StagingFolder -Recurse -Force -ErrorAction 'SilentlyContinue'
-}
-
-# Regenerate per-function markdown help in $ProjectRoot/Documentation from the
-# comment-based help in Public/*.ps1, using Microsoft.PowerShell.PlatyPS (v2).
-#
-# Dev-run only -- intentionally NOT included in the Default task or CI workflows.
-# Run manually after any change to a public function's parameter signature or
-# comment-based help:
-#
-#     .\Build\build.ps1 -TaskList GenerateDocs
-#
-# Operates on the SOURCE Documentation/ folder, not the staged copy, so the
-# regenerated files are committed alongside the .ps1 changes.
-Task 'GenerateDocs' -depends 'ImportStagingModule' {
-    $lines
-
-    # Verify Microsoft.PowerShell.PlatyPS is available (declared in Build/depend.psd1)
-    if (-not (Get-Module -Name 'Microsoft.PowerShell.PlatyPS' -ListAvailable)) {
-        Write-Error -Message "Microsoft.PowerShell.PlatyPS is not installed. Run: .\Build\build.ps1 -ResolveDependency" -ErrorAction Stop
-    }
-    Import-Module -Name 'Microsoft.PowerShell.PlatyPS' -Force
-
-    $docPath = Join-Path -Path $ProjectRoot -ChildPath 'Documentation'
-    if (-not (Test-Path -Path $docPath)) {
-        New-Item -Path $docPath -ItemType 'Directory' -Force | Out-Null
-    }
-
-    $moduleInfo = Get-Module -Name $env:BHProjectName
-    if (-not $moduleInfo) {
-        Write-Error -Message "Module '$env:BHProjectName' is not loaded; ImportStagingModule should have loaded it." -ErrorAction Stop
-    }
-
-    # Always regenerate from scratch. Microsoft.PowerShell.PlatyPS 1.0.1's
-    # `Update-MarkdownCommandHelp` has known bugs on repeat runs (doesn't
-    # refresh `## NOTES` from comment-based help; duplicates `## DESCRIPTION`
-    # and `### -<Param>` blocks in some files). A clean delete-and-regen via
-    # `New-MarkdownCommandHelp` is reliable and the file count is small enough
-    # (~130 files) that the cost is negligible.
-    Write-Output "Generating Documentation/ from scratch using Microsoft.PowerShell.PlatyPS..."
-
-    # Remove existing per-function pages (preserve index.md / Index.md, which
-    # is hand-curated -- see Documentation/index.md).
-    Get-ChildItem -Path $docPath -Filter '*.md' |
-        Where-Object { $_.Name -ne 'index.md' -and $_.Name -ne 'Index.md' } |
-        Remove-Item -Force
-
-    # New-MarkdownCommandHelp ALWAYS writes to a $OutputFolder/$ModuleName/ subfolder.
-    # Generate there, then flatten the files up into $docPath so existing relative
-    # links (README, index.md) continue to work without rewrites.
-    $newParams = @{
-        ModuleInfo   = $moduleInfo
-        OutputFolder = $docPath
-        Force        = $true
-    }
-    New-MarkdownCommandHelp @newParams | Out-Null
-
-    $nestedFolder = Join-Path -Path $docPath -ChildPath $env:BHProjectName
-    if (Test-Path -Path $nestedFolder) {
-        Get-ChildItem -Path $nestedFolder -Filter '*.md' |
-            ForEach-Object { Move-Item -Path $_.FullName -Destination $docPath -Force }
-        Remove-Item -Path $nestedFolder -Recurse -Force
-    }
-
-    # Populate the `## ALIASES` section from each function's `[Alias()]`
-    # attribute. PlatyPS v2 1.0.1 ignores `[Alias()]` and instead writes a
-    # `{{Insert list of aliases}}` placeholder under `## ALIASES` for every
-    # cmdlet, so post-process every generated page:
-    #   - if the function has aliases, replace the placeholder with a bullet
-    #     list of the alias names;
-    #   - if the function has no aliases, strip the placeholder so the
-    #     section stays empty rather than leaving the template text in place.
-    $utf8NoBom    = [System.Text.UTF8Encoding]::new($false)
-    $aliasPattern = '(?ms)(^## ALIASES\r?\n)(.*?)(\r?\n## )'
-    foreach ($cmd in $moduleInfo.ExportedFunctions.Values) {
-        $mdPath = Join-Path -Path $docPath -ChildPath ('{0}.md' -f $cmd.Name)
-        if (-not (Test-Path -Path $mdPath)) { continue }
-
-        $aliasAttr = $cmd.ScriptBlock.Attributes |
-            Where-Object { $_ -is [System.Management.Automation.AliasAttribute] }
-
-        if ($aliasAttr) {
-            $aliasBlock = (($aliasAttr.AliasNames | Sort-Object) | ForEach-Object { "- $_" }) -join [Environment]::NewLine
-            $replacement = '$1' + [Environment]::NewLine + $aliasBlock + [Environment]::NewLine + '$3'
-        }
-        else {
-            # Empty section: just a blank line between the heading and the next ##.
-            $replacement = '$1$3'
-        }
-
-        $content = [System.IO.File]::ReadAllText($mdPath)
-        $new     = [Regex]::Replace($content, $aliasPattern, $replacement)
-
-        if ($new -ne $content) {
-            [System.IO.File]::WriteAllText($mdPath, $new, $utf8NoBom)
-        }
-    }
-
-    $generated = Get-ChildItem -Path $docPath -Filter '*.md' |
-        Where-Object { $_.Name -ne 'index.md' -and $_.Name -ne 'Index.md' }
-    Write-Output ("Documentation regenerated: {0} command-help file(s) under [{1}]" -f $generated.Count, $docPath)
 }

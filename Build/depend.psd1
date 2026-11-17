@@ -19,7 +19,4 @@
     psake            = '5.0.4'
     #PSDeploy         = '1.0.5'
     PSScriptAnalyzer = '1.24.0'
-
-    # Documentation (PlatyPS v2 — supersedes the abandoned legacy 'platyPS' module)
-    'Microsoft.PowerShell.PlatyPS' = '1.0.1'
 }
