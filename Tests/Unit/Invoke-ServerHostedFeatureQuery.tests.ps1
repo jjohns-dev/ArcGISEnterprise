@@ -44,8 +44,8 @@ Describe -Name 'Invoke-ServerHostedFeatureQuery' -Fixture {
                 $Body.where -ceq $Where
             }
         }
-        It -Name 'rejects <Where>' -ForEach $invalidClauses -Test {
-            { Invoke-ServerHostedFeatureQuery @commonParams -Where $Where } | Should -Throw -ExpectedMessage "*parameter 'Where'*"
+        It -Name 'rejects <Where> with a readable message' -ForEach $invalidClauses -Test {
+            { Invoke-ServerHostedFeatureQuery @commonParams -Where $Where } | Should -Throw -ExpectedMessage '*contains unsupported characters*'
             Should -Invoke -CommandName Invoke-RestMethod -Times 0 -Exactly -ModuleName $env:BHProjectName
         }
     }
