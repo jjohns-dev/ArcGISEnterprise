@@ -18,7 +18,7 @@ To propose changes to the existing functions or the creation of a new one, the p
 
 ### Content
 
-The intended purpose of the functions in this module are internal functionality within the secure boundaries, specifically within virtual machines. There should be no dependency on outside libraries.
+Functions in this module wrap the ArcGIS Enterprise REST APIs using only built-in PowerShell. There should be no dependency on outside libraries.
 
 ### Structure
 

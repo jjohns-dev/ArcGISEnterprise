@@ -62,7 +62,7 @@ Each task lists the check that proves it is done. Tasks are ordered so the build
 
 - [x] **13. `Get-PortalApiKeyCredential`:**
   - by item ID (`faa4…`) and in list mode for `portaladmin`;
-  - as an admin, for `jjohns@esri.com`.
+  - as an admin, for another named user.
   - Verify: the slots and expiration dates match the earlier probes, and no secret appears in the output.
 - [x] **14. `New-PortalApiKey -Slot 2 -Expiration (Get-Date).AddDays(3)`, then a `portals/self` call with the returned key, then `Revoke-PortalApiKey -Slot 2`.**
   - Verify: the key authenticates before revoking and gets `498` after; the slot 1 key still authenticates at the end.
