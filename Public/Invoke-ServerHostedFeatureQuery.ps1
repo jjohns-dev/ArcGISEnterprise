@@ -9,7 +9,7 @@ function Invoke-ServerHostedFeatureQuery {
     .PARAMETER LayerId
         Service Layer ID
     .PARAMETER Where
-        Query where clause
+        Query where clause. Quote string literals (status='open'). If a value comes from user input, double any single quotes in it (O'Brien -> O''Brien) so it cannot change the clause
     .PARAMETER Context
         Portal context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -19,10 +19,16 @@ function Invoke-ServerHostedFeatureQuery {
     .INPUTS
         None.
     .OUTPUTS
-        System.Object.
+        System.Object. Stops with an error when the service returns an error (e.g., an unknown field).
     .EXAMPLE
         PS C:\> Invoke-ServerHostedFeatureQuery -Where 'ObjectId=1001' -ServiceName MyService -layerId 0 @commonParams
         Query MyServer LayerId 0 for a record with ObjectId 1001
+    .EXAMPLE
+        PS C:\> Invoke-ServerHostedFeatureQuery -Where "status = 'open' AND amount > 2.5" -ServiceName MyService @commonParams
+        Query for records by a string field and a decimal comparison
+    .EXAMPLE
+        PS C:\> Invoke-ServerHostedFeatureQuery -Where "status IN ('open','pending') OR name LIKE 'abc%'" -ServiceName MyService @commonParams
+        Query using IN and LIKE
     .NOTES
         Status: Stable
         Comments:
@@ -41,7 +47,7 @@ function Invoke-ServerHostedFeatureQuery {
         [System.Int32] $LayerId = 0,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Query where clause')]
-        [ValidatePattern('^[\w\*=]+$')]
+        [ValidatePattern('^[\w\*\s=<>''.%(),-]+$')]
         [System.String] $Where = '1=1',
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
@@ -77,6 +83,12 @@ function Invoke-ServerHostedFeatureQuery {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE QUERY
-        Invoke-RestMethod @restParams
+        $response = Invoke-RestMethod @restParams
+
+        # THE SERVICE REPORTS QUERY ERRORS IN AN HTTP 200 BODY, SO INVOKE-RESTMETHOD DOES NOT THROW
+        if ($response.error) {
+            Write-Error -Message ('Query failed for [{0}] layer [{1}]: {2} {3}' -f $ServiceName, $LayerId, $response.error.code, $response.error.message) -ErrorAction Stop
+        }
+        $response
     }
 }
