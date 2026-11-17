@@ -125,7 +125,7 @@ function Publish-PortalDataStoreLayer {
         }
 
         # OUTPUT VERBOSE
-        Write-Verbose -Message ($restParams['Body'] | Out-String)
+        Write-Verbose -Message (ConvertTo-RedactedHashtable -InputObject $restParams['Body'] | Out-String)
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

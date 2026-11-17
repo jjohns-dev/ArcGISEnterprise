@@ -73,7 +73,7 @@ function Get-ServerServiceReport {
 
         # OUTPUT VERBOSE
         Write-Verbose -Message ('Parameter set: [{0}]' -f $PSCmdlet.ParameterSetName)
-        Write-Verbose -Message ("Parameters:`n[{0}]" -f ($PSBoundParameters | Out-String))
+        Write-Verbose -Message ("Parameters:`n[{0}]" -f (ConvertTo-RedactedHashtable -InputObject $PSBoundParameters | Out-String))
 
         # SET COMMON PARAMETERS
         $cmnParams = $PSBoundParameters

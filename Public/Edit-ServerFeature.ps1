@@ -126,7 +126,7 @@ function Edit-ServerFeature {
         }
 
         # OUTPUT VERBOSE
-        Write-Verbose -Message ('Request body: {0}' -f ($restParams.Body | ConvertTo-Json -Depth 5 -Compress))
+        Write-Verbose -Message ('Request body: {0}' -f (ConvertTo-RedactedHashtable -InputObject $restParams.Body | ConvertTo-Json -Depth 5 -Compress))
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
