@@ -5,9 +5,9 @@ function Edit-ServerFeature {
     .DESCRIPTION
         Edit Feature Service using the /applyEdits endpoint. This allows for adding, updating, or deleting features.
     .PARAMETER Add
-        Feature to add to the Feature Service
+        Feature to add to the Feature Service. A hashtable or object with an 'attributes' key (and optional 'geometry')
     .PARAMETER Update
-        Feature to update
+        Feature to update. A hashtable or object with an 'attributes' key (and optional 'geometry')
     .PARAMETER DeleteObjectId
         ObjectId of feature to delete
     .PARAMETER DeleteGlobalId
@@ -37,6 +37,10 @@ function Edit-ServerFeature {
         PS C:\> Edit-ServerFeature @cmnParams -Add $feature
         Adds a new feature with geometry to the Feature Service
     .EXAMPLE
+        PS C:\> $feature = @{ attributes = @{ objectid = 1001; status = 'input_complete' } }
+        PS C:\> Edit-ServerFeature @cmnParams -Update $feature
+        Updates the status field of the feature with objectid 1001
+    .EXAMPLE
         PS C:\> Edit-ServerFeature @cmnParams -DeleteObjectId @(1, 2, 3)
         Deletes features with IDs 1, 2, and 3
     .NOTES
@@ -49,12 +53,12 @@ function Edit-ServerFeature {
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
         [Parameter(Mandatory = $true, ParameterSetName = '_add', HelpMessage = 'Feature to add')]
-        [ValidateScript({ $_.psobject.Properties.Name -contains 'attributes' })] # FEATURE MAY ALSO CONTAIN "geometry"
+        [ValidateScript({ ($_ -is [System.Collections.IDictionary] -and $_.Contains('attributes')) -or $_.psobject.Properties.Name -contains 'attributes' })] # FEATURE MAY ALSO CONTAIN "geometry"
         [ValidateNotNullOrEmpty()]
         [System.Object[]] $Add,
 
         [Parameter(Mandatory = $true, ParameterSetName = '_upd', HelpMessage = 'Feature to update')]
-        [ValidateScript({ $_.psobject.Members.Name -contains 'attributes' })]
+        [ValidateScript({ ($_ -is [System.Collections.IDictionary] -and $_.Contains('attributes')) -or $_.psobject.Properties.Name -contains 'attributes' })]
         [System.Object[]] $Update,
 
         [Parameter(Mandatory = $true, ParameterSetName = '_doi', HelpMessage = 'ObjectId of feature to delete')]
