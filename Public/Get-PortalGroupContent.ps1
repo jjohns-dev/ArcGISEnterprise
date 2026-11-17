@@ -61,7 +61,10 @@ function Get-PortalGroupContent {
                 start = 1
                 num   = 100
             }
-            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority; 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Headers = @{
+                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
+                'X-Esri-Authorization' = 'Bearer {0}' -f $Token
+            }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED

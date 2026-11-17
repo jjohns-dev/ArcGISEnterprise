@@ -62,7 +62,10 @@ function Get-PortalGroupItemJobStatus {
         $restParams = @{
             Uri     = '{0}/sharing/rest/portals/{1}/jobs/{2}' -f $Context, $PortalId, $JobId
             Method  = 'GET'
-            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority; 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Headers = @{
+                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
+                'X-Esri-Authorization' = 'Bearer {0}' -f $Token
+            }
             Body    = @{ f = 'json' }
         }
 
