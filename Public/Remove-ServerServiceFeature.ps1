@@ -24,7 +24,7 @@ function Remove-ServerServiceFeature {
     .INPUTS
         None.
     .OUTPUTS
-        System.Object.
+        System.Object. Stops with an error when the service returns an error (e.g., an unknown field in -Where).
     .EXAMPLE
         PS C:\> Remove-ServerServiceFeature @commonParams -ServiceName dashboard -LayerId 0
         Delete all data from the "dashboard" Hosted Feature Service layer ID 0
@@ -101,7 +101,13 @@ function Remove-ServerServiceFeature {
             Write-Verbose -Message 'Invoking REST API endpoint "deleteFeatures"'
 
             # INVOKE TRUNCATE PROCESS
-            Invoke-RestMethod @restParams
+            $response = Invoke-RestMethod @restParams
+
+            # THE SERVICE REPORTS ERRORS IN AN HTTP 200 BODY, SO INVOKE-RESTMETHOD DOES NOT THROW
+            if ($response.error) {
+                Write-Error -Message ('Delete failed for [{0}] layer [{1}]: {2} {3}' -f $ServiceName, $LayerId, $response.error.code, $response.error.message) -ErrorAction Stop
+            }
+            $response
         }
     }
 }

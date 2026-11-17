@@ -14,6 +14,8 @@ foreach ( $directory in @('Public', 'Private') ) {
 # ONLY VALIDATE URI DOES NOT END WITH FORWARD SLASH. OLD REGEX: '^https?://[\w\/\.:-]+[^/]$'
 New-Variable -Name 'context_regex' -Option Constant -Value '^https?://.+[^/]$'
 New-Variable -Name 'token_regex' -Option Constant -Value '^[\w\.=-]+$'
+# FEATURE LAYER QUERY WHERE CLAUSE. THE SERVICE ENFORCES STANDARDIZED QUERIES; THIS ONLY REJECTS UNEXPECTED CHARACTERS
+New-Variable -Name 'where_regex' -Option Constant -Value '^[\w\*\s=<>''.%(),-]+$'
 New-Variable -Name 'ModulePrivate' -Option Constant -Value (Join-Path -Path $PSScriptRoot -ChildPath 'Private')
 
 # EXPORT MEMBERS

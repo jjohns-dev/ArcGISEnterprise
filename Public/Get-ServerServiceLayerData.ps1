@@ -9,7 +9,7 @@ function Get-ServerServiceLayerData {
     .PARAMETER ServiceName
         Name of service
     .PARAMETER Where
-        Where clause for the query filter
+        Where clause for the query filter. Quote string literals (status='open'). If a value comes from user input, double any single quotes in it (O'Brien -> O''Brien) so it cannot change the clause
     .PARAMETER FolderName
         Folder name in ArcGIS Server
     .PARAMETER Context
@@ -21,10 +21,13 @@ function Get-ServerServiceLayerData {
     .INPUTS
         None.
     .OUTPUTS
-        System.Object.
+        System.Object. Stops with an error when the service returns an error (e.g., an unknown field).
     .EXAMPLE
         PS C:\> Get-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -LayerId 0
         Returns all data for the first layer of the 'Geology' service
+    .EXAMPLE
+        PS C:\> Get-ServerServiceLayerData @cmnParams -ServiceName 'Geology' -FolderName 'Hosted' -LayerId 0 -Where "rocktype IN ('basalt','granite') AND depth > 2.5"
+        Returns features matching a string list and a decimal comparison
     .NOTES
         Status: Stable
         Comments:
@@ -44,7 +47,7 @@ function Get-ServerServiceLayerData {
         [System.String] $ServiceName,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Where clause for the query filter')]
-        [ValidatePattern('^[\w\*\s=<>''-]+$')]
+        [ValidateScript({ $_ -match $where_regex }, ErrorMessage = 'Where clause [{0}] contains unsupported characters.')]
         [System.String] $Where = 'objectid >= 0', #'globalid >= 0' '1=1'
 
         [Parameter(Mandatory = $false, HelpMessage = 'Folder name')]
@@ -92,6 +95,12 @@ function Get-ServerServiceLayerData {
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
 
         # INVOKE REQUEST
-        Invoke-RestMethod @restParams
+        $response = Invoke-RestMethod @restParams
+
+        # THE SERVICE REPORTS QUERY ERRORS IN AN HTTP 200 BODY, SO INVOKE-RESTMETHOD DOES NOT THROW
+        if ($response.error) {
+            Write-Error -Message ('Query failed for [{0}] layer [{1}]: {2} {3}' -f $ServiceName, $LayerId, $response.error.code, $response.error.message) -ErrorAction Stop
+        }
+        $response
     }
 }

@@ -510,8 +510,14 @@ function Get-ServerServiceReport {
                                     LayerId     = $layer.id
                                 }
 
-                                # GET LAYER DATA
-                                $data = Get-ServerServiceLayerData @cmnParams @layerParams
+                                # GET LAYER DATA. A FAILING LAYER (E.G., NO 'objectid' FIELD FOR THE DEFAULT WHERE) MUST NOT STOP THE REPORT
+                                try {
+                                    $data = Get-ServerServiceLayerData @cmnParams @layerParams
+                                }
+                                catch {
+                                    Write-Error -Message ('Unable to get data for layer [{0}/{1}]: {2}' -f $service.name, $layer.name, $_.Exception.Message) -ErrorAction Continue
+                                    $data = $null
+                                }
 
                                 # EVALUATE FEATURES
                                 if ($data.features.attributes) {

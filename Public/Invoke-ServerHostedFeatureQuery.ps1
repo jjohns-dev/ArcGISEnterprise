@@ -47,7 +47,7 @@ function Invoke-ServerHostedFeatureQuery {
         [System.Int32] $LayerId = 0,
 
         [Parameter(Mandatory = $false, HelpMessage = 'Query where clause')]
-        [ValidatePattern('^[\w\*\s=<>''.%(),-]+$')]
+        [ValidateScript({ $_ -match $where_regex }, ErrorMessage = 'Where clause [{0}] contains unsupported characters.')]
         [System.String] $Where = '1=1',
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Portal context')]
