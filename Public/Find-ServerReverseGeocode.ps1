@@ -9,7 +9,7 @@ function Find-ServerReverseGeocode {
     .PARAMETER FolderName
         Folder name in ArcGIS Server
     .PARAMETER Location
-        The point from which to search for the closest address
+        The point from which to search for the closest address. A hashtable or object with numeric 'x' and 'y' (integer, single, double, or decimal; not strings)
     .PARAMETER Context
         Server context (e.g., https://arcgis.com/arcgis)
     .PARAMETER Token
@@ -23,6 +23,9 @@ function Find-ServerReverseGeocode {
     .EXAMPLE
         PS C:\> Find-ServerReverseGeocode @cmnParams -ServiceName 'MyGeoCoder' -Location ([pscustomobject] @{ x = -117.187592395203; y = 34.062863813743 })
         Returns physical address for provided location coordinates
+    .EXAMPLE
+        PS C:\> Find-ServerReverseGeocode @cmnParams -ServiceName 'MyGeoCoder' -Location @{ x = -77.306373; y = 38.855747 }
+        Returns physical address for a location passed as a hashtable
     .NOTES
         Status: Stable
         Comments:
@@ -40,8 +43,15 @@ function Find-ServerReverseGeocode {
         [System.String] $FolderName,
 
         [Parameter(Mandatory = $true, HelpMessage = 'The point from which to search for the closest address')]
-        [ValidateScript({ $_.psobject.Properties.Name -contains 'x' -and $_.psobject.Properties.Name -contains 'y' })]
-        [ValidateScript({ $_.x -is [System.Double] -and $_.y -is [System.Double] })]
+        [ValidateScript({ ($_ -is [System.Collections.IDictionary] -and $_.Contains('x') -and $_.Contains('y')) -or ($_.psobject.Properties.Name -contains 'x' -and $_.psobject.Properties.Name -contains 'y') })]
+        [ValidateScript({
+            # CHECK TYPE ONLY; CONVERTING (E.G., TO [decimal]) GIVES DIFFERENT RESULTS ON .NET 10 AND 11
+            $numeric = foreach ($v in $_.x, $_.y) {
+                $v -is [System.Int16] -or $v -is [System.Int32] -or $v -is [System.Int64] -or $v -is [System.Decimal] -or
+                (($v -is [System.Double] -or $v -is [System.Single]) -and [System.Double]::IsFinite($v))
+            }
+            $false -notin $numeric
+        })]
         [System.Object] $Location,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Target Server context')]
