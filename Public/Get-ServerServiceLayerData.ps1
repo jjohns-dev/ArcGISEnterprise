@@ -82,11 +82,13 @@ function Get-ServerServiceLayerData {
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
             Body    = @{
                 f         = 'json'
-                token     = $Token
                 where     = $Where
                 outFields = '*'
             }
         }
+
+        # SEND THE TOKEN IN A HEADER, NOT THE URL
+        if ($PSBoundParameters.ContainsKey('Token')) { $restParams['Headers']['X-Esri-Authorization'] = 'Bearer {0}' -f $Token }
 
         # OUTPUT VERBOSE
         Write-Verbose -Message ('Query parameters: [{0}]' -f ($restParams['Body'] | ConvertTo-Json -Compress))

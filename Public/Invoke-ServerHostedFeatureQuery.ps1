@@ -69,9 +69,9 @@ function Invoke-ServerHostedFeatureQuery {
         $restParams = @{
             Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer/{2}/query' -f $Context, $ServiceName, $LayerId
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f         = 'json'
-                token     = $Token
                 where     = $Where
                 outFields = '*'
                 #returnGeometry     = $true

@@ -34,9 +34,11 @@ BeforeDiscovery {
         @{ Name = 'Get-ServerHostedFeatureService'; Params = @{ ServiceName = 'Svc' } }
         @{ Name = 'Get-ServerServiceLayer'; Params = @{ ServiceName = 'Svc'; ServiceType = 'FeatureServer'; LayerId = 0 } }
         @{ Name = 'Get-ServerServiceLayerAttachment'; Params = @{ ServiceName = 'Svc'; LayerId = 0; GlobalId = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee' } }
+        @{ Name = 'Get-ServerServiceLayerData'; Params = @{ ServiceName = 'Svc'; LayerId = 0 } }
+        @{ Name = 'Invoke-ServerHostedFeatureQuery'; Params = @{ ServiceName = 'Svc' } }
         @{ Name = 'Test-ServerHealth'; Params = @{} }
     )
-    $optionalTokenFunctions = $headerFunctions | Where-Object { $_.Name -in 'Get-ServerServiceLayer', 'Get-ServerServiceLayerAttachment', 'Test-ServerHealth' }
+    $optionalTokenFunctions = $headerFunctions | Where-Object { $_.Name -in 'Get-ServerServiceLayer', 'Get-ServerServiceLayerAttachment', 'Get-ServerServiceLayerData', 'Test-ServerHealth' }
 }
 
 Describe -Name 'Token transport for GET requests' -Fixture {
