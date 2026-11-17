@@ -29,14 +29,14 @@ function Update-PortalUser {
     .OUTPUTS
         System.Object.
     .EXAMPLE
-        PS C:\> Update-PortalUser -UserName joedoe -IDPUserName 'joedoe@esri.com' @commonParams
+        PS C:\> Update-PortalUser -UserName joedoe -IDPUserName 'joedoe@example.com' @commonParams
         Add the idpUsername property to enable the user for SAML authentication
     .EXAMPLE
         PS C:\> Update-PortalUser -Username joedoe -Password (Read-Host -AsSecureString) @commonParams
         Set a password for use joedoe. This also switches the user "provier" from enterprise to arcgis removing SAML authentication
     .EXAMPLE
-        PS C:\> Update-PortalUser -UserName joedoe -IDPUserName 'joedoe123@esri.com' @commonParams
-        PS C:\> Update-PortalUser -UserName joedoe -IDPUserName 'joedoe@esri.com' @commonParams
+        PS C:\> Update-PortalUser -UserName joedoe -IDPUserName 'joedoe123@example.com' @commonParams
+        PS C:\> Update-PortalUser -UserName joedoe -IDPUserName 'joedoe@example.com' @commonParams
         Once the user's provider value has been set to "enterprise" and then reset to "arcgis," the only way
         to change it back to "enterprise" is to change the "idpUsername" value to something
         arbitrary and then change it again to the correct value. This resets the "provider" property

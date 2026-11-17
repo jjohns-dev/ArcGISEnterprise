@@ -4,7 +4,7 @@ external help file: ArcGISEnterprise-Help.xml
 HelpUri: ''
 Locale: en-US
 Module Name: ArcGISEnterprise
-ms.date: 06/05/2026
+ms.date: 11/17/2026
 PlatyPS schema version: 2024-05-01
 title: Update-PortalUser
 ---
@@ -36,7 +36,7 @@ Modify properties of Portal user (i.e., IDP type, name, email, etc.)
 
 ### EXAMPLE 1
 
-Update-PortalUser -UserName joedoe -IDPUserName 'joedoe@esri.com' @commonParams
+Update-PortalUser -UserName joedoe -IDPUserName 'joedoe@example.com' @commonParams
 Add the idpUsername property to enable the user for SAML authentication
 
 ### EXAMPLE 2
@@ -46,8 +46,8 @@ Set a password for use joedoe. This also switches the user "provier" from enterp
 
 ### EXAMPLE 3
 
-Update-PortalUser -UserName joedoe -IDPUserName 'joedoe123@esri.com' @commonParams
-PS C:\> Update-PortalUser -UserName joedoe -IDPUserName 'joedoe@esri.com' @commonParams
+Update-PortalUser -UserName joedoe -IDPUserName 'joedoe123@example.com' @commonParams
+PS C:\> Update-PortalUser -UserName joedoe -IDPUserName 'joedoe@example.com' @commonParams
 Once the user's provider value has been set to "enterprise" and then reset to "arcgis," the only way
 to change it back to "enterprise" is to change the "idpUsername" value to something
 arbitrary and then change it again to the correct value. This resets the "provider" property
