@@ -7,7 +7,7 @@ function Add-ServerFeature {
     .PARAMETER Record
         Feature record or attributes to add
     .PARAMETER Feature
-        Feature to add to the Feature Service
+        Feature to add to the Feature Service. A hashtable or object with an 'attributes' key (and optional 'geometry')
     .PARAMETER ServiceName
         Portal Hosted Feature Service Name
     .PARAMETER LayerId
@@ -41,7 +41,7 @@ function Add-ServerFeature {
         [System.Object[]] $Record,
 
         [Parameter(Mandatory = $true, HelpMessage = 'Feature to add', ParameterSetName = '__ftr')]
-        [ValidateScript({ $_.psobject.Properties.Name -contains 'attributes' })] # FEATURE MAY ALSO CONTAIN "geometry"
+        [ValidateScript({ ($_ -is [System.Collections.IDictionary] -and $_.Contains('attributes')) -or $_.psobject.Properties.Name -contains 'attributes' })] # FEATURE MAY ALSO CONTAIN "geometry"
         [ValidateNotNullOrEmpty()]
         [System.Object[]] $Feature,
 
