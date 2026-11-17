@@ -59,9 +59,9 @@ function Get-PortalUserGroupList {
         $restParams = @{
             Uri    = '{0}/sharing/rest/community/groups' -f $Context
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f     = 'json'
-                token = $Token
                 num   = 100
                 # THE SYNTAX 'q = "jsmith"' WILL FIND THE USER ACROSS MULTIPLE
                 # FIELDS RATHER THAN JUST THE OWNER FIELD. USE Find-PortalItem

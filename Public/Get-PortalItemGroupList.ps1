@@ -51,7 +51,8 @@ function Get-PortalItemGroupList {
         $restParams = @{
             Uri    = '{0}/sharing/rest/content/items/{1}/groups' -f $Context, $ItemId
             Method = 'GET'
-            Body   = @{ f = 'json'; token = $Token }
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Body   = @{ f = 'json' }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED

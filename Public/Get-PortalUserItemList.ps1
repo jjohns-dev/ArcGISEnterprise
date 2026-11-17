@@ -66,9 +66,9 @@ function Get-PortalUserItemList {
         $restParams = @{
             Uri    = '{0}/sharing/rest/search' -f $Context
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f      = 'json'
-                token  = $Token
                 filter = 'owner:"{0}"' -f $UserName
                 num    = 100
             }

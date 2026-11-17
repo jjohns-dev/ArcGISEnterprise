@@ -51,7 +51,8 @@ function Get-ServerHostedFeatureService {
         $restParams = @{
             Uri    = '{0}/rest/services/Hosted/{1}/FeatureServer' -f $Context, $ServiceName
             Method = 'GET'
-            Body   = @{ token = $Token; f = 'json' }
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Body   = @{ f = 'json' }
         }
 
         # WRITE VERBOSE MESSAGE

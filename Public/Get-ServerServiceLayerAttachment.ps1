@@ -84,7 +84,6 @@ function Get-ServerServiceLayerAttachment {
             Method  = 'GET'
             Body    = @{
                 f                    = 'json'
-                token                = $Token
                 objectIds            = if ($PSCmdlet.ParameterSetName -EQ '__oid') { $ObjectId -join ',' } else { '' } # 2353852
                 globalIds            = if ($PSCmdlet.ParameterSetName -EQ '__gid') { $GlobalId -join ',' } else { '' } # 96B099D7-C4FD-4B73-99E6-C7D6552F4E22
                 definitionExpression = ''
@@ -96,6 +95,9 @@ function Get-ServerServiceLayerAttachment {
                 referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
             }
         }
+
+        # SEND THE TOKEN IN A HEADER, NOT THE URL
+        if ($PSBoundParameters.ContainsKey('Token')) { $restParams['Headers']['X-Esri-Authorization'] = 'Bearer {0}' -f $Token }
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

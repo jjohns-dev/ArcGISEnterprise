@@ -55,9 +55,9 @@ function Get-PortalDataStoreServer {
         $restParams = @{
             Uri    = '{0}/sharing/rest/portals/{1}/datastores/getServers' -f $Context, $PortalId
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f           = 'json'
-                token       = $Token
                 datastoreId = $ItemId
             }
         }

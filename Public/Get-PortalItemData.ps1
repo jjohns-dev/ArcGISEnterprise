@@ -62,8 +62,8 @@ function Get-PortalItemData {
         $restParams = @{
             Uri     = '{0}/sharing/rest/content/items/{1}/data' -f $Context, $ItemId
             Method  = 'GET'
-            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
-            Body    = @{ token = $Token }
+            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority; 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Body    = @{}
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED

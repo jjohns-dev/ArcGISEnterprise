@@ -49,8 +49,8 @@ function Get-PortalOIDCList {
         $restParams = @{
             Uri     = '{0}/sharing/rest/portals/{1}/oidc' -f $Context, $PortalId
             Method  = 'GET'
-            Body    = @{ f = 'json'; token = $Token }
-            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
+            Body    = @{ f = 'json' }
+            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority; 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED

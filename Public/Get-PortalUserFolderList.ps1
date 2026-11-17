@@ -58,9 +58,9 @@ function Get-PortalUserFolderList {
         $restParams = @{
             Uri    = '{0}/sharing/rest/content/users/{1}' -f $Context, $Username
             Method = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
             Body   = @{
                 f     = 'json'
-                token = $Token
                 num   = 100
             }
         }

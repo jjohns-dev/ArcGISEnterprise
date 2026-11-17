@@ -76,12 +76,15 @@ function Get-ServerServiceLayer {
                 '{0}/rest/services/{1}/{2}/{3}' -f $Context, $ServiceName, $ServiceType, $LayerId
             }
             Method  = 'GET'
-            Body    = @{ f = 'json'; token = $Token }
+            Body    = @{ f = 'json' }
             Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
         }
 
         # OUTPUT VERBOSE
         Write-Verbose -Message ('Request URI: {0}' -f $restParams['Uri'])
+
+        # SEND THE TOKEN IN A HEADER, NOT THE URL
+        if ($PSBoundParameters.ContainsKey('Token')) { $restParams['Headers']['X-Esri-Authorization'] = 'Bearer {0}' -f $Token }
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

@@ -53,7 +53,8 @@ function Get-PortalGroupUserList {
         $restParams = @{
             Uri    = '{0}/sharing/rest/community/groups/{1}/userList' -f $Context, $GroupID
             Method = 'GET'
-            Body   = @{ f = 'json'; token = $Token; num = 100 } # DEFAULT 25
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Body   = @{ f = 'json'; num = 100 } # DEFAULT 25
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED
