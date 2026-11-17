@@ -39,12 +39,10 @@ function Get-ServerServicesDirectory {
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/admin/system/handlers/rest/servicesdirectory' -f $Context
-            Method = 'GET'
-            Body   = @{
-                f     = 'json'
-                token = $Token
-            }
+            Uri     = '{0}/admin/system/handlers/rest/servicesdirectory' -f $Context
+            Method  = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Body    = @{ f = 'json' }
         }
 
         # ADD SKIP CERTIFICATE CHECK

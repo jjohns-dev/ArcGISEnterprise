@@ -52,16 +52,14 @@ function Get-ServerItemLifecycleInfo {
     Process {
         # SET REQUEST PARAMETERS
         $restParams = @{
-            Uri    = '{0}/admin/data/items/{1}/{2}/lifecycleinfos' -f $Context, $DataItem, $ChildItem
-            Method = 'GET'
+            Uri     = '{0}/admin/data/items/{1}/{2}/lifecycleinfos' -f $Context, $DataItem, $ChildItem
+            Method  = 'GET'
             Body    = @{ f = 'json' }
-            Headers = @{
-                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
-            }
+            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
         }
 
         # ADD TOKEN IF PROVIDED
-        if ($PSBoundParameters.ContainsKey('Token')) { $restParams.Body['token'] = $Token }
+        if ($PSBoundParameters.ContainsKey('Token')) { $restParams['Headers']['X-Esri-Authorization'] = 'Bearer {0}' -f $Token }
 
         # ADD CERTIFICATE SKIP IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

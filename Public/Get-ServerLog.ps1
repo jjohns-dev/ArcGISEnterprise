@@ -83,7 +83,10 @@ function Get-ServerLog {
         $restParams = @{
             Uri     = '{0}/admin/logs/query' -f $Context
             Method  = 'GET'
-            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
+            Headers = @{
+                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
+                'X-Esri-Authorization' = 'Bearer {0}' -f $Token
+            }
             Body    = @{
                 level      = $Level
                 filterType = 'json'
@@ -100,7 +103,6 @@ function Get-ServerLog {
                 endTime    = if ($PSBoundParameters.ContainsKey('EndTime')) { [System.DateTimeOffset]::new($EndTime).ToUnixTimeMilliseconds() }
                 pageSize   = $PageSize # Default is 1000, max is 10,000
                 f          = 'json'
-                token      = $Token
             }
         }
 

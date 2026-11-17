@@ -62,10 +62,12 @@ function Get-ServerUsageReportData {
         $restParams = @{
             Uri     = '{0}/admin/usagereports/{1}/data' -f $Context, $ReportName
             Method  = 'GET'
-            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
+            Headers = @{
+                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
+                'X-Esri-Authorization' = 'Bearer {0}' -f $Token
+            }
             Body    = @{
                 f      = $ReportFormat
-                token  = $Token
                 filter = @{
                     machines = if ($MachineName -is [System.Array]) { @( $MachineName ) } else { $MachineName }
                 } | ConvertTo-Json -Compress

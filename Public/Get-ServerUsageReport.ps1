@@ -59,8 +59,11 @@ function Get-ServerUsageReport {
                 '{0}/admin/usagereports' -f $Context
             }
             Method  = 'GET'
-            Headers = @{ referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority }
-            Body    = @{ f = 'json'; token = $Token }
+            Headers = @{
+                referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
+                'X-Esri-Authorization' = 'Bearer {0}' -f $Token
+            }
+            Body    = @{ f = 'json' }
         }
 
         # ADD CERTIFICATE SKIP IF PROVIDED

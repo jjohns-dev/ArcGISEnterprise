@@ -85,7 +85,7 @@ function Get-ServerServiceList {
         Write-Verbose -Message ('Target URI [{0}]' -f $restParams.Uri)
 
         # ADD TOKEN IF PROVIDED
-        if ($PSBoundParameters.ContainsKey('Token')) { $restParams.Body['token'] = $Token }
+        if ($PSBoundParameters.ContainsKey('Token')) { $restParams['Headers'] = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token } }
 
         # ADD SKIP CERTIFICATE CHECK IF PROVIDED
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }

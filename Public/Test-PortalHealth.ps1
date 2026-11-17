@@ -49,7 +49,7 @@ function Test-PortalHealth {
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
         if ($PSBoundParameters.ContainsKey('TimeoutSec')) { $restParams['TimeoutSec'] = $TimeoutSec }
-        if ($PSBoundParameters.ContainsKey('Token')) { $restParams['Body'] = @{ token = $Token } }
+        if ($PSBoundParameters.ContainsKey('Token')) { $restParams['Headers'] = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token } }
         Invoke-RestMethod @restParams
     }
 }

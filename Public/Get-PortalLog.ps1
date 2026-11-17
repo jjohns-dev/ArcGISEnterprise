@@ -113,10 +113,10 @@ function Get-PortalLog {
                 } | ConvertTo-Json -Compress -Depth 4
                 pageSize   = $PageSize
                 f          = 'json'
-                token      = $Token
             }
             Headers = @{
                 referer = '{0}://{1}' -f $Context.Scheme, $Context.Authority
+                'X-Esri-Authorization' = 'Bearer {0}' -f $Token
             }
         }
 

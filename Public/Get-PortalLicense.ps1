@@ -37,12 +37,10 @@ function Get-PortalLicense {
     )
     Process {
         $restParams = @{
-            Uri    = '{0}/portaladmin/license' -f $Context
-            Method = 'GET'
-            Body   = @{
-                f     = 'json'
-                token = $Token
-            }
+            Uri     = '{0}/portaladmin/license' -f $Context
+            Method  = 'GET'
+            Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }
+            Body    = @{ f = 'json' }
         }
         if ($PSBoundParameters.ContainsKey('SkipCertificateCheck')) { $restParams['SkipCertificateCheck'] = $true }
         Invoke-RestMethod @restParams
