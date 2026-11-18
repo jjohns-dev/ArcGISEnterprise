@@ -1,6 +1,8 @@
 
 function Get-ServerAllowedOriginList {
     <#
+    .SYNOPSIS
+        Get ArcGIS Server allowed origins
     .DESCRIPTION
         Get the allowed origins for ArcGIS Server
     .PARAMETER SOAP

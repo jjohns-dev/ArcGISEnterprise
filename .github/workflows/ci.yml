@@ -1,0 +1,22 @@
+name: ci
+run-name: ci
+
+on:
+  pull_request:
+    branches: ["*"]
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    uses: jjohns-dev/pwsh-module-ci/.github/workflows/ci.yml@v2
+    with:
+      os-matrix: '["ubuntu-latest"]'
+      min-tests: 943 # 953 executed - min(floor(953 * 0.05), 10) = 953 - 10
+    permissions:
+      contents: read
+      checks: write

@@ -2,9 +2,9 @@
 
 ## Build and tests
 
-Run tests through the psake build harness, and always chain the `Cleanup` task so the
-generated `Artifacts` and `Staging` folders are removed from the working tree
-afterward:
+Run tests through the `Build/build.ps1` shim, which runs the shared pwsh-module-ci
+build harness, and always chain the `Cleanup` task so the generated `Artifacts` and
+`Staging` folders are removed from the working tree afterward:
 
 ```powershell
 ./Build/build.ps1 -TaskList Test, Cleanup

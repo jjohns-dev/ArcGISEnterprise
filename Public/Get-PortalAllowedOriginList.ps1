@@ -1,5 +1,7 @@
 function Get-PortalAllowedOriginList {
     <#
+    .SYNOPSIS
+        Get Portal allowed origins
     .DESCRIPTION
         Get the allowed origins configured for ArcGIS Portal
     .PARAMETER Context

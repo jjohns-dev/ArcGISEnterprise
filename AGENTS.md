@@ -16,42 +16,40 @@ Production (AWS Lambda) and CI run pwsh 7.6 (.NET 10); development is often 7.7 
 | ---- | ----- |
 | `Public/` | One file per exported function, `Verb-<Portal\|Server\|GeoEvent>Noun.ps1` |
 | `Private/` | Non-exported helpers and `*.template` request bodies |
-| `Tests/Common/` | Help, Manifest and Meta suites over every exported command |
 | `Tests/Unit/` | `<Function>.tests.ps1`; `TokenTransport.tests.ps1` covers token transport for every GET function |
-| `Build/` | `build.ps1` entry point, psake tasks, pinned `depend.psd1` |
+| `Build/` | Only `build.ps1`, the [pwsh-module-ci](https://github.com/jjohns-dev/pwsh-module-ci) shim. Do not edit it; it must stay byte-identical to the template |
 | `docs/` | Hand-maintained `api-endpoints.md` (function → REST endpoint) and `specs/` |
 
 ## Validating a change
 
-From pwsh at the repo root; each was run and passed 2026-11-16 (pwsh 7.7.0, macOS), test count as of 2026-11-17:
+From pwsh at the repo root. The shim reads the `@v2` pin from `.github/workflows/ci.yml`, fetches that harness into a shared cache (needs `git` and network access) and runs it against this repo; tasks and properties are in pwsh-module-ci's [consumer guide](https://github.com/jjohns-dev/pwsh-module-ci/blob/main/docs/consumer-guide.md). Run and passed 2026-11-18 (pwsh 7.7.0, macOS):
 
 | Command | Result |
 | ------- | ------ |
-| `./Build/build.ps1 -ResolveDependency -TaskList Init` | Installs the pins (CI's first step) |
+| `./Build/build.ps1 -ResolveDependency -TaskList Init` | Installs the harness's pinned build tools |
 | `./Build/build.ps1 -TaskList Analyze, Cleanup` | Fails only on Error-severity findings |
-| `./Build/build.ps1 -TaskList Test, Cleanup` | 2086 tests, about 5 s |
+| `./Build/build.ps1 -TaskList Test, Cleanup` | 953 tests, about 5 s |
 | `./Build/build.ps1 -TaskList CombineFunctionsAndStage, CreateBuildArtifact, Cleanup` | `Artifacts/ArcGISEnterprise-v<ModuleVersion>.zip` |
 
 From zsh or bash, chain tasks through `pwsh -Command "./Build/build.ps1 -TaskList Test,Cleanup"`; `pwsh -File` passes `Test,` as one string and fails the `ValidateSet`.
 
-Pins in `Build/depend.psd1`: Pester 6.2.0, psake 5.0.4, PSScriptAnalyzer 1.24.0. `build.ps1` does not import by version, so locally the highest installed copy wins: Analyze loaded PSScriptAnalyzer 1.25.0 with 1.24.0 also installed.
+`Test` runs `Tests/Unit` and then the harness's shared help, manifest, meta and path-literal suites (`15 + 5n` tests for `n` public functions). They require a `.SYNOPSIS`, `.DESCRIPTION`, `.EXAMPLE` and a `.PARAMETER` for exactly the declared parameters on every public function, and `FunctionsToExport` equal to the `Public/*.ps1` names. Analyzer exclusions go inline as `SuppressMessageAttribute` with a justification; there is no repo-wide settings file.
 
 Live verification: `sharing/rest` and `rest/services` endpoints can be tested from outside the network; `/portaladmin` and Server `/admin` are WAF-blocked externally and need an internal tunnel. Never print tokens, or URLs containing them, in test output.
 
 ## CI
 
-`validate.yml` (PRs, pushes to `main`) and `release.yml` (`v*.*.*` tags) call `PS-MCS/mcssec-ops`'s `ps-module-validate.yml` / `ps-module-release.yml` **`@main`**, so a merge there changes this repo's CI immediately. Validate runs `Init`, `CombineFunctionsAndStage`, `Analyze`, `Test` on `ubuntu-latest`, then fails when executed tests (JUnit root `tests` minus `disabled`) fall below `min-tests`. When the suite changes size, recompute the floor with the formula in the comment beside it.
+`ci.yml` (PRs, pushes to `main`), `release.yml` (PRs as a dry run, `v*.*.*` tags to publish) and `pssa-sarif.yml` (PRs, pushes to `main`) call the matching workflows in `jjohns-dev/pwsh-module-ci` at the moving **`@v2`** tag, so a new `v2.x.y` there changes this repo's CI without a commit here. `ci.yml` runs on `ubuntu-latest` only and fails when executed tests (JUnit root `tests` minus `disabled`) fall below `min-tests`. When the suite changes size, recompute the floor with the formula in the comment beside it.
 
 It does **not**:
 
 - run on Windows;
-- block merges: the `org_protect` ruleset requires no status checks;
 - on release, enforce `min-tests` or check the tag against `ModuleVersion`.
 
 ## Conventions
 
 - Branches `<type>/<slug>`: `feature/`, `fix/`, `test/`, `build/`, `chore/`, `docs/`.
-- Squash-merge only, with 1 code-owner approval and resolved threads (`org_protect`). The PR title becomes the commit subject: `<type>(<scope>): <title>`, and GitHub appends `(#PR)`.
+- Squash-merge only, with code-owner review, resolved threads and signed commits (the `protect` ruleset). The PR title becomes the commit subject: `<type>(<scope>): <title>`, and GitHub appends `(#PR)`.
 - Bump `ModuleVersion` in `ArcGISEnterprise.psd1` only for shipped-code changes; `test:`/`ci:`/`build:` PRs do not (#145, #146). The `Version:` header in `ArcGISEnterprise.psm1` is stale; ignore it.
 - Release notes are generated from PR labels by `.github/release.yml`: label every PR with its category (`bug`, `security`, `docs`, `ci`, ...) and label version-bump PRs `ignore-for-release` so they don't appear as changes.
 - When adding a public function or changing the endpoint one calls, update its row in `docs/api-endpoints.md`; nothing generates or checks it.
@@ -61,10 +59,7 @@ It does **not**:
 
 ## Gotchas that have bitten here
 
-- **A psake `Properties` variable used only by a release task can vanish unnoticed.** The psake 5 bump dropped `$StagingModuleManifestPath` and the v2.3.0 release failed (#125). After touching `build.psake.ps1`, run the artifact command above.
-- **The test gate is `$TestResults.Result -ne 'Passed'`, not `FailedCount`**: discovery errors leave `FailedCount` at 0. Do not "simplify" it.
-- **`Tests/Common/Help.Tests.ps1` is a fleet-shared template**, kept diffable with PS-MCS/MCS (#152). Do not edit it as a side effect. It passes command *names* to `-ForEach`; a CommandInfo renames every test to `...FunctionInfo{Name='Foo'} help` (#152).
-- **`FunctionsToExport` is hand-maintained and untested.** It lists `Format-ServerServiceMetadata` and `Format-ServerServiceLayerMetadata`, which do not exist. The Help suite enumerates exported commands only, so a `Public/` function left off the list is neither exported nor tested.
+- **`FunctionsToExport` is hand-maintained.** Add every new `Public/` function to it; the shared manifest suite fails when the list and `Public/*.ps1` differ.
 - **ArcGIS returns HTTP 200 with an `error` body** (400/403/498/499/500), so `Invoke-RestMethod` doesn't throw. Check `.error` on a single object: on an array of 2+ objects, `$list.error` is an array of `$null`s and is truthy.
 - **Server `/admin` uses a different error body:** `{"status":"error","code":498,...}`, not `{"error":{...}}`, so a `.error` check misses it. `sharing/rest`, `rest/services` and `/portaladmin` use `{"error":{...}}` (#138).
 - **`.psobject.Properties` doesn't see hashtable keys.** Validate input shape with `($_ -is [System.Collections.IDictionary] -and $_.Contains('k')) -or $_.psobject.Properties.Name -contains 'k'` (#142).

@@ -40,6 +40,7 @@ function New-PortalApiKey {
         ArcGIS REST JS developer-credentials package.
         https://developers.arcgis.com/rest/users-groups-and-items/token.htm
     #>
+    [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSAvoidUsingConvertToSecureStringWithPlainText', '', Justification = 'The portal returns the new API key as plain text; converting it to a SecureString immediately limits its exposure in the returned object.')]
     [CmdletBinding(SupportsShouldProcess, ConfirmImpact = 'High')]
     [OutputType([System.Management.Automation.PSCustomObject])]
     Param(
