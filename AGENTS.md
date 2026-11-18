@@ -28,7 +28,7 @@ From pwsh at the repo root. The shim reads the `@v2` pin from `.github/workflows
 | ------- | ------ |
 | `./Build/build.ps1 -ResolveDependency -TaskList Init` | Installs the harness's pinned build tools |
 | `./Build/build.ps1 -TaskList Analyze, Cleanup` | Fails only on Error-severity findings |
-| `./Build/build.ps1 -TaskList Test, Cleanup` | 953 tests, about 5 s |
+| `./Build/build.ps1 -TaskList Test, Cleanup` | 956 tests, about 5 s |
 | `./Build/build.ps1 -TaskList CombineFunctionsAndStage, CreateBuildArtifact, Cleanup` | `Artifacts/ArcGISEnterprise-v<ModuleVersion>.zip` |
 
 From zsh or bash, chain tasks through `pwsh -Command "./Build/build.ps1 -TaskList Test,Cleanup"`; `pwsh -File` passes `Test,` as one string and fails the `ValidateSet`.
