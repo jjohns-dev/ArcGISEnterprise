@@ -1,7 +1,7 @@
 # ArcGISEnterprise
 
 [![ci](https://github.com/jjohns-dev/ArcGISEnterprise/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jjohns-dev/ArcGISEnterprise/actions/workflows/ci.yml)
-[![release](https://github.com/jjohns-dev/ArcGISEnterprise/actions/workflows/release.yml/badge.svg)](https://github.com/jjohns-dev/ArcGISEnterprise/actions/workflows/release.yml)
+[![release](https://img.shields.io/github/v/release/jjohns-dev/ArcGISEnterprise)](https://github.com/jjohns-dev/ArcGISEnterprise/releases/latest)
 [![PowerShell](https://img.shields.io/badge/PowerShell-7.6%2B-5391FE?logo=powershell&logoColor=white)](https://learn.microsoft.com/powershell/scripting/install/installing-powershell)
 
 PowerShell 7 module for ArcGIS Enterprise REST APIs. Includes functions for
