@@ -14,7 +14,7 @@ Production (AWS Lambda) and CI run pwsh 7.6 (.NET 10); development is often 7.7 
 
 | Path | Holds |
 | ---- | ----- |
-| `Public/` | One file per exported function, `Verb-<Portal\|Server\|GeoEvent>Noun.ps1` |
+| `Public/` | One file per exported function, `Verb-<Portal\|Server\|GeoEvent>Noun.ps1`; helpers that work only on local data and call no endpoint (e.g. `ConvertFrom-Epoch`, `Format-CsvHeader`, `New-TableSchemaObject`) have no prefix |
 | `Private/` | Non-exported helpers and `*.template` request bodies |
 | `Tests/Unit/` | `<Function>.tests.ps1`; `TokenTransport.tests.ps1` covers token transport for every GET function |
 | `Build/` | Only `build.ps1`, the [pwsh-module-ci](https://github.com/jjohns-dev/pwsh-module-ci) shim. Do not edit it; it must stay byte-identical to the template |
@@ -35,7 +35,7 @@ From zsh or bash, chain tasks through `pwsh -Command "./Build/build.ps1 -TaskLis
 
 `Test` runs `Tests/Unit` and then the harness's shared help, manifest, meta and path-literal suites (`15 + 5n` tests for `n` public functions). They require a `.SYNOPSIS`, `.DESCRIPTION`, `.EXAMPLE` and a `.PARAMETER` for exactly the declared parameters on every public function, and `FunctionsToExport` equal to the `Public/*.ps1` names. Analyzer exclusions go inline as `SuppressMessageAttribute` with a justification; there is no repo-wide settings file.
 
-Live verification: `sharing/rest` and `rest/services` endpoints can be tested from outside the network; `/portaladmin` and Server `/admin` are WAF-blocked externally and need an internal tunnel. Never print tokens, or URLs containing them, in test output.
+Live verification: `sharing/rest` and `rest/services` endpoints can be tested from outside the network; `/portaladmin` and Server `/admin` are reachable only from inside it, so test those from an internal host. Never print tokens, or URLs containing them, in test output.
 
 ## CI
 
@@ -49,7 +49,7 @@ It does **not**:
 ## Conventions
 
 - Branches `<type>/<slug>`: `feature/`, `fix/`, `test/`, `build/`, `chore/`, `docs/`.
-- Squash-merge only, with code-owner review, resolved threads and signed commits (the `protect` ruleset). The PR title becomes the commit subject: `<type>(<scope>): <title>`, and GitHub appends `(#PR)`.
+- Squash-merge only, with code-owner review, resolved threads and signed commits (the `protect` ruleset). The squash commit subject is `<type>(<scope>): <title> (#PR)`. Pass it explicitly with `gh pr merge --subject`: the repo's `COMMIT_OR_PR_TITLE` setting defaults a single-commit PR to its commit's title rather than the PR title.
 - Bump `ModuleVersion` in `ArcGISEnterprise.psd1` only for shipped-code changes; `test:`/`ci:`/`build:` PRs do not (#145, #146). The `Version:` header in `ArcGISEnterprise.psm1` is stale; ignore it.
 - Release notes are generated from PR labels by `.github/release.yml`: label every PR with its category (`bug`, `security`, `docs`, `ci`, ...) and label version-bump PRs `ignore-for-release` so they don't appear as changes.
 - When adding a public function or changing the endpoint one calls, update its row in `docs/api-endpoints.md`; nothing generates or checks it.

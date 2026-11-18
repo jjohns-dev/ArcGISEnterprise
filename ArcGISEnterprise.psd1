@@ -8,10 +8,7 @@
     # Script module or binary module file associated with this manifest.
     RootModule        = 'ArcGISEnterprise.psm1'
 
-    # Version number of this module.
-    # Major = major changes or multiple new functions for new set of functionality
-    # Minor = new individual functions
-    # Build = bug fixes, minor changes, etc.
+    # Version number of this module. Semantic versioning; see the Release section of CONTRIBUTING.md.
     ModuleVersion     = '3.0.0'
 
     # Supported PSEditions

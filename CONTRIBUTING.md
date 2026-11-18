@@ -1,7 +1,7 @@
 # Contributing Guide
 
 - For minor fixes such as a typo, a simple pull request is all that's needed. For more involved changes, please follow the process laid out below.
-- :heavy_exclamation_mark: Focus on updating a single function/cmdlet in a Pull Request to make the review processes simpler for the core team.
+- :heavy_exclamation_mark: Focus on updating a single function/cmdlet in a Pull Request to keep it simple to review.
 
 To propose changes to the existing functions or the creation of a new one, the process is as follows:
 
@@ -71,7 +71,7 @@ The `.NOTES` block uses two fields:
 
 | Value | Meaning |
 | ----- | ------- |
-| `Stable` | Production-ready. Signature is unlikely to change. Fully tested against a live endpoint. Default for new functions once they're proven. |
+| `Stable` | Production-ready. Signature is unlikely to change. Tested end to end against a live endpoint; bugs found later are fixed as issues, without changing the status. Default for new functions once they're proven. |
 | `Beta` | Feature-complete but not yet hardened in production use. Signature may still change in a minor release. |
 | `Experimental` | Prototype or early implementation. Expect breaking changes. May be removed without deprecation. |
 | `Deprecated` | Still works but slated for removal in a future major version. The `Comments:` field must point to the replacement (or explain why none exists). |
@@ -104,13 +104,18 @@ If you're adding a function, default to `Beta` unless you've exercised it end-to
 
     :heavy_exclamation_mark: Do not commit the `Staging/` or `Artifacts/` directories.
 
-When you add a public function or change the endpoint it calls, update its row in [`docs/api-endpoints.md`](docs/api-endpoints.md).
+When you add a public function:
+
+- Add its name to `FunctionsToExport` in [`ArcGISEnterprise.psd1`](ArcGISEnterprise.psd1). The list is maintained by hand, and the build's manifest tests fail when it doesn't match the files in `Public/`.
+- Add unit tests in `Tests/Unit/<Function>.tests.ps1` for the behavior you add or fix.
+- Add its row to [`docs/api-endpoints.md`](docs/api-endpoints.md). Update the row too when you change the endpoint an existing function calls.
 
 ## Commit and PR conventions
 
 - **Commit subject**: `<type>(<scope>): <title> (refs #N)` — e.g., `feat(Public): add Get-PortalThing (refs #42)`.
-  - `<type>`: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `ci`.
+  - `<type>`: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `ci`, `build`.
   - `<scope>`: short area name (`Public`, `Private`, `Build`, `ci`, `docs`).
+  - Breaking changes add `!` after the type or scope (`feat(Public)!: ...`) and describe the break in a `BREAKING CHANGE:` footer at the end of the commit message.
 - **Commit body**: multi-paragraph rationale — what changed, why, user-visible impact. No marketing language.
 - **PR title**: same as commit subject but with `(closes #N)` so the issue auto-closes on merge.
 - **PR body**: include `Closes #N.`, a summary, a changes list, and a validation checklist.
@@ -119,8 +124,18 @@ When you add a public function or change the endpoint it calls, update its row i
 
 This project automates module releases via GitHub Actions. See [`.github/workflows/release.yml`](.github/workflows/release.yml).
 
+Versions follow [Semantic Versioning](https://semver.org/):
+
+- **Major**: breaking changes, such as removing or renaming a function or parameter, changing a function's output shape, or raising the minimum PowerShell version.
+- **Minor**: new functions or parameters that are backward compatible.
+- **Patch**: bug fixes, including fixes to comment-based help.
+
+Release notes are generated from pull request labels, grouped by the categories in [`.github/release.yml`](.github/release.yml). Maintainers give every pull request a category label (`breaking`, `enhancement`, `security`, `bug`, `docs`, `ci`, ...) before merging.
+
 To cut a new release:
 
-1. Bump `ModuleVersion` in [`ArcGISEnterprise.psd1`](ArcGISEnterprise.psd1). Follow the SemVer policy documented in the manifest comment (major = major changes / breaking; minor = new individual functions; patch = bug fixes).
-2. Merge the change to `main`.
-3. Tag the merge commit with `vMAJOR.MINOR.PATCH` and push the tag. The release workflow will build, test, package, and publish a GitHub Release with auto-generated notes (grouped by the labels defined in [`.github/release.yml`](.github/release.yml)).
+1. Open a pull request that only bumps `ModuleVersion` in [`ArcGISEnterprise.psd1`](ArcGISEnterprise.psd1), and label it `ignore-for-release` so it doesn't appear in the notes.
+2. Merge it to `main`.
+3. Tag the merge commit with `vMAJOR.MINOR.PATCH` and push the tag. The release workflow builds, tests and packages the module, then publishes a GitHub Release with the generated notes.
+
+Releases are immutable: once published, a release's tag and attached zip can't be changed or replaced, though its title and notes can still be edited. Fix a bad release with a new patch release.
