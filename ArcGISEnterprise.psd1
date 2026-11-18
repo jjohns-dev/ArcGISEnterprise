@@ -86,8 +86,6 @@
         'Find-ServerReverseGeocode'
         'Format-ChangeSet'
         'Format-CsvHeader'
-        'Format-ServerServiceLayerMetadata'
-        'Format-ServerServiceMetadata'
         'Get-GeoEventServerMonitorStatus'
         'Get-GeoEventServerStatus'
         'Get-PortalAllowedOriginList'

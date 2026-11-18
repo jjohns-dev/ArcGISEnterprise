@@ -1,5 +1,7 @@
 function Get-PortalToken {
     <#
+    .SYNOPSIS
+        Get Portal token
     .DESCRIPTION
         Generate token for ArcGIS Portal
     .PARAMETER Context
