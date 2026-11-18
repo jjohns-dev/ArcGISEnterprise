@@ -38,8 +38,8 @@ function Set-PortalConnection {
         # SHOULD PROCESS
         if ($PSCmdlet.ShouldProcess($Context, 'Create default connection')) {
             # SET DEFAULT PARAMETERS
-            $PSDefaultParameterValues['*-Portal*:Token'] = $Token
-            $PSDefaultParameterValues['*-Portal*:Context'] = $Context
+            $global:PSDefaultParameterValues['*-Portal*:Token'] = $Token
+            $global:PSDefaultParameterValues['*-Portal*:Context'] = $Context
 
             # OUTPUT SUCCESS MESSAGE
             Write-Verbose -Message ('Portal connection set to: {0}' -f $Context)

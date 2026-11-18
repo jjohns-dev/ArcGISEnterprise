@@ -50,7 +50,7 @@ It does **not**:
 
 - Branches `<type>/<slug>`: `feature/`, `fix/`, `test/`, `build/`, `chore/`, `docs/`.
 - Squash-merge only, with code-owner review, resolved threads and signed commits (the `protect` ruleset). The squash commit subject is `<type>(<scope>): <title> (#PR)`. Pass it explicitly with `gh pr merge --subject`: the repo's `COMMIT_OR_PR_TITLE` setting defaults a single-commit PR to its commit's title rather than the PR title.
-- Bump `ModuleVersion` in `ArcGISEnterprise.psd1` only for shipped-code changes; `test:`/`ci:`/`build:` PRs do not (#145, #146). The `Version:` header in `ArcGISEnterprise.psm1` is stale; ignore it.
+- Bump `ModuleVersion` in `ArcGISEnterprise.psd1` only for shipped-code changes; `test:`/`ci:`/`build:` PRs do not (#145, #146).
 - Release notes are generated from PR labels by `.github/release.yml`: label every PR with its category (`bug`, `security`, `docs`, `ci`, ...) and label version-bump PRs `ignore-for-release` so they don't appear as changes.
 - When adding a public function or changing the endpoint one calls, update its row in `docs/api-endpoints.md`; nothing generates or checks it.
 - GET requests send the token as `Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }`, never in `Body`: a GET body becomes the URL query string, which proxies and logs record (#138). A header named `token` is ignored (verified on `sharing/rest` and `rest/services`). If `-Token` is optional, add the header only when it is passed.
