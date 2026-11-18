@@ -62,7 +62,7 @@ function Get-PortalLog {
         [Parameter(HelpMessage = 'Organization member usernames')]
         [System.String[]] $UserName,
 
-        # TODO: Verify Portal API max page size — assumed 10,000 matching Server API
+        # TODO: Verify Portal API max page size - assumed 10,000 matching Server API
         [Parameter(HelpMessage = 'Number of log entries per page')]
         [ValidateRange(1000, 10000)]
         [System.Int32] $PageSize = 1000,
@@ -90,7 +90,7 @@ function Get-PortalLog {
         $logEntries = [System.Collections.Generic.List[System.Object]]::new()
     }
     Process {
-        # BUILD TIME BOUNDS — Portal expects epoch milliseconds. An empty string is treated
+        # BUILD TIME BOUNDS - Portal expects epoch milliseconds. An empty string is treated
         # by the API as "use the default" (start = now, end = beginning). The keys must always
         # be present; omitting them returns no results.
         $startTimeValue = if ($PSBoundParameters.ContainsKey('StartTime')) { [System.DateTimeOffset]::new($StartTime).ToUnixTimeMilliseconds() } else { '' }
@@ -161,7 +161,7 @@ function Get-PortalLog {
         } while ($continue)
 
         # If the loop exited while the server still reports more pages, the time-window cursor
-        # could not advance — more than PageSize records share a single millisecond. The result
+        # could not advance - more than PageSize records share a single millisecond. The result
         # is truncated at that boundary; warn rather than return a silently-incomplete set.
         if ($rest.hasMore -eq $true) {
             Write-Warning -Message ('Get-PortalLog result is truncated: more than PageSize ({0}) log records share timestamp {1} (epoch ms), so the query cannot page past it. Increase -PageSize (max 10000) or narrow the time range with -StartTime/-EndTime.' -f $PageSize, $previousEndTime)
