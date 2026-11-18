@@ -38,8 +38,8 @@ function Set-ServerConnection {
         # SHOULD PROCESS
         if ($PSCmdlet.ShouldProcess($Context, 'Create default connection')) {
             # SET DEFAULT PARAMETERS
-            $PSDefaultParameterValues['*-Server*:Token'] = $Token
-            $PSDefaultParameterValues['*-Server*:Context'] = $Context
+            $global:PSDefaultParameterValues['*-Server*:Token'] = $Token
+            $global:PSDefaultParameterValues['*-Server*:Context'] = $Context
 
             # OUTPUT SUCCESS MESSAGE
             if ($LASTEXITCODE -eq 0) { Write-Verbose -Message ('Server connection set to: {0}' -f $Context) }

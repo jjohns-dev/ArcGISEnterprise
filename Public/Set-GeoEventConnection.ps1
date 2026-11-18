@@ -38,8 +38,8 @@ function Set-GeoEventConnection {
         # SHOULD PROCESS
         if ($PSCmdlet.ShouldProcess($Context, 'Create default connection')) {
             # SET DEFAULT PARAMETERS
-            $PSDefaultParameterValues['*-GeoEventServer*:Token'] = $Token
-            $PSDefaultParameterValues['*-GeoEventServer*:Context'] = $Context
+            $global:PSDefaultParameterValues['*-GeoEventServer*:Token'] = $Token
+            $global:PSDefaultParameterValues['*-GeoEventServer*:Context'] = $Context
 
             # OUTPUT SUCCESS MESSAGE
             if ($LASTEXITCODE -eq 0) { Write-Verbose -Message ('GeoEvent connection set to: {0}' -f $Context) }
