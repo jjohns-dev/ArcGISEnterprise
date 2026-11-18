@@ -14,7 +14,7 @@ Production (AWS Lambda) and CI run pwsh 7.6 (.NET 10); development is often 7.7 
 
 | Path | Holds |
 | ---- | ----- |
-| `Public/` | One file per exported function, `Verb-<Portal\|Server\|GeoEvent>Noun.ps1`; helpers that format or convert data rather than call a component (e.g. `ConvertFrom-Epoch`, `Format-CsvHeader`) have no prefix |
+| `Public/` | One file per exported function, `Verb-<Portal\|Server\|GeoEvent>Noun.ps1`; helpers that work only on local data and call no endpoint (e.g. `ConvertFrom-Epoch`, `Format-CsvHeader`, `New-TableSchemaObject`) have no prefix |
 | `Private/` | Non-exported helpers and `*.template` request bodies |
 | `Tests/Unit/` | `<Function>.tests.ps1`; `TokenTransport.tests.ps1` covers token transport for every GET function |
 | `Build/` | Only `build.ps1`, the [pwsh-module-ci](https://github.com/jjohns-dev/pwsh-module-ci) shim. Do not edit it; it must stay byte-identical to the template |

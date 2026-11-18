@@ -9,7 +9,7 @@ both ArcGIS Server and Portal for ArcGIS.
 
 ## Install
 
-Download the latest `.zip` from [Releases](https://github.com/jjohns-dev/ArcGISEnterprise/releases/latest) and extract `ArcGISEnterprise/` into a folder on your `$env:PSModulePath`. On Windows, files downloaded from the internet are blocked, and the module is unsigned, so it must be unblocked (`Unblock-File`) before it will load. Unblocking is your decision and your risk. Then:
+Download the latest `.zip` from [Releases](https://github.com/jjohns-dev/ArcGISEnterprise/releases/latest) and extract `ArcGISEnterprise/` into a folder on your `$env:PSModulePath`. On Windows, files downloaded from the internet are marked as blocked, and the module is unsigned, so under the default `RemoteSigned` execution policy it must be unblocked (`Unblock-File`) before it will load. Unblocking is your decision and your risk. Then:
 
 ```powershell
 Import-Module ArcGISEnterprise

@@ -115,7 +115,7 @@ When you add a public function:
 - **Commit subject**: `<type>(<scope>): <title> (refs #N)` — e.g., `feat(Public): add Get-PortalThing (refs #42)`.
   - `<type>`: `feat`, `fix`, `chore`, `docs`, `refactor`, `test`, `ci`, `build`.
   - `<scope>`: short area name (`Public`, `Private`, `Build`, `ci`, `docs`).
-  - Breaking changes add `!` after the type or scope (`feat(Public)!: ...`) and describe the break in a `BREAKING CHANGE:` paragraph of the commit body.
+  - Breaking changes add `!` after the type or scope (`feat(Public)!: ...`) and describe the break in a `BREAKING CHANGE:` footer at the end of the commit message.
 - **Commit body**: multi-paragraph rationale — what changed, why, user-visible impact. No marketing language.
 - **PR title**: same as commit subject but with `(closes #N)` so the issue auto-closes on merge.
 - **PR body**: include `Closes #N.`, a summary, a changes list, and a validation checklist.
@@ -138,4 +138,4 @@ To cut a new release:
 2. Merge it to `main`.
 3. Tag the merge commit with `vMAJOR.MINOR.PATCH` and push the tag. The release workflow builds, tests and packages the module, then publishes a GitHub Release with the generated notes.
 
-Releases are immutable: once published, a release's tag and attached zip can't be changed or replaced. Fix a bad release with a new patch release.
+Releases are immutable: once published, a release's tag and attached zip can't be changed or replaced; only its title and notes can be edited. Fix a bad release with a new patch release.
