@@ -53,6 +53,7 @@ It does **not**:
 - Branches `<type>/<slug>`: `feature/`, `fix/`, `test/`, `build/`, `chore/`, `docs/`.
 - Squash-merge only, with 1 code-owner approval and resolved threads (`org_protect`). The PR title becomes the commit subject: `<type>(<scope>): <title>`, and GitHub appends `(#PR)`.
 - Bump `ModuleVersion` in `ArcGISEnterprise.psd1` only for shipped-code changes; `test:`/`ci:`/`build:` PRs do not (#145, #146). The `Version:` header in `ArcGISEnterprise.psm1` is stale; ignore it.
+- Release notes are generated from PR labels by `.github/release.yml`: label every PR with its category (`bug`, `security`, `docs`, `ci`, ...) and label version-bump PRs `ignore-for-release` so they don't appear as changes.
 - When adding a public function or changing the endpoint one calls, update its row in `docs/api-endpoints.md`; nothing generates or checks it.
 - GET requests send the token as `Headers = @{ 'X-Esri-Authorization' = 'Bearer {0}' -f $Token }`, never in `Body`: a GET body becomes the URL query string, which proxies and logs record (#138). A header named `token` is ignored (verified on `sharing/rest` and `rest/services`). If `-Token` is optional, add the header only when it is passed.
 - Multi-entry `Headers` hashtables list one entry per line; single-entry ones stay on one line.

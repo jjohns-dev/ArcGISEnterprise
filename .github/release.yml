@@ -13,13 +13,14 @@ changelog:
       labels:
         - enhancement
         - feature
+    # Before Bug Fixes: GitHub lists a PR under the first category it matches, and security fixes are often also labeled bug
+    - title: Security
+      labels:
+        - security
     - title: Bug Fixes
       labels:
         - bug
         - fix
-    - title: Security
-      labels:
-        - security
     - title: Documentation
       labels:
         - documentation
