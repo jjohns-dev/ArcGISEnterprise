@@ -33,7 +33,7 @@
     Description       = 'PowerShell module for ArcGIS Enterprise API'
 
     # Minimum version of the PowerShell engine required by this module
-    PowerShellVersion = '7.4'
+    PowerShellVersion = '7.6'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''

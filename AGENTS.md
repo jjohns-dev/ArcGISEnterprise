@@ -4,7 +4,7 @@ Guidance for AI agents working in `ArcGISEnterprise`. [.github/copilot-instructi
 
 ## What this repo is
 
-PowerShell 7.4+ module wrapping the ArcGIS Enterprise Portal, Server and GeoEvent REST APIs. Usage and auth: [README.md](README.md). Function template and `.NOTES Status:` values: [CONTRIBUTING.md](CONTRIBUTING.md).
+PowerShell 7.6+ module wrapping the ArcGIS Enterprise Portal, Server and GeoEvent REST APIs. Usage and auth: [README.md](README.md). Function template and `.NOTES Status:` values: [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Runtimes
 
