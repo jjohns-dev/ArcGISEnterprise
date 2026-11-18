@@ -9,7 +9,7 @@ both ArcGIS Server and Portal for ArcGIS.
 
 ## Install
 
-Download the latest `.zip` from [Releases](https://github.com/jjohns-dev/ArcGISEnterprise/releases/latest) and extract `ArcGISEnterprise/` into a folder on your `$env:PSModulePath`, then:
+Download the latest `.zip` from [Releases](https://github.com/jjohns-dev/ArcGISEnterprise/releases/latest) and extract `ArcGISEnterprise/` into a folder on your `$env:PSModulePath`. On Windows, files downloaded from the internet are blocked, and the module is unsigned, so it must be unblocked (`Unblock-File`) before it will load. Unblocking is your decision and your risk. Then:
 
 ```powershell
 Import-Module ArcGISEnterprise
@@ -61,7 +61,8 @@ hosted feature service information. An API key is not tied to a user, so functio
 with a `-UserName` parameter require it to be passed explicitly.
 
 To rotate a key, generate one in the free slot, deploy it, then revoke the old slot.
-These functions have been tested with a token for the credentials owner or an
+The key-management functions (`Get-PortalApiKeyCredential`, `New-PortalApiKey` and
+`Revoke-PortalApiKey`) have been tested with a token for the credentials owner or an
 administrator.
 
 ```powershell
