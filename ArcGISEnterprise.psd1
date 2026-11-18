@@ -250,7 +250,7 @@
             # LicenseUri = ''
 
             # A URL to the main website for this project.
-            ProjectUri = 'https://github.com/PS-MCS/ArcGISEnterprise'
+            ProjectUri = 'https://github.com/jjohns-dev/ArcGISEnterprise'
 
             # A URL to an icon representing this module.
             # IconUri = ''

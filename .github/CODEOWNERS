@@ -1,12 +1,3 @@
-# Each line is a file pattern followed by one or more owners.
-# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
-
-# These owners will be the default owners for everything in
-# the repo. Unless a later match takes precedence,
-# @PS-MCS/infAdmins will be requested for
-# review when someone opens a pull request.
-*       @PS-MCS/infadmins
-
-# Set owner of the CODEOWNERS file
-# This should not be needed as the above line covers all files.
-#/.github/ @PS-MCS/infAdmins
+# CODEOWNERS for ArcGISEnterprise
+# Default owner for everything in the repo
+*       @johnsarie27

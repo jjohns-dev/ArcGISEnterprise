@@ -5,7 +5,7 @@
 
 To propose changes to the existing functions or the creation of a new one, the process is as follows:
 
-1. Open a new [issue](https://github.com/PS-MCS/ArcGISEnterprise/issues/new/choose) describing the proposed addition or change.
+1. Open a new [issue](https://github.com/jjohns-dev/ArcGISEnterprise/issues/new/choose) describing the proposed addition or change.
 2. Once the issue has been discussed and approved:
     1. Clone this repository.
     2. Create a new branch (`feature/<slug>` for additions, `fix/<slug>` for fixes).
