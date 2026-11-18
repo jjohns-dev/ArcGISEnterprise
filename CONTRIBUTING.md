@@ -138,4 +138,4 @@ To cut a new release:
 2. Merge it to `main`.
 3. Tag the merge commit with `vMAJOR.MINOR.PATCH` and push the tag. The release workflow builds, tests and packages the module, then publishes a GitHub Release with the generated notes.
 
-Releases are immutable: once published, a release's tag and attached zip can't be changed or replaced; only its title and notes can be edited. Fix a bad release with a new patch release.
+Releases are immutable: once published, a release's tag and attached zip can't be changed or replaced, though its title and notes can still be edited. Fix a bad release with a new patch release.
