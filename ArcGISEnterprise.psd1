@@ -24,7 +24,7 @@
     # CompanyName       = 'Unknown'
 
     # Copyright statement for this module
-    Copyright         = '(c) Justin Johns. All rights reserved.'
+    Copyright         = '(c) 2021 Justin Johns and contributors. Licensed under the MIT License.'
 
     # Description of the functionality provided by this module
     Description       = 'PowerShell module for ArcGIS Enterprise API'
